@@ -12,6 +12,78 @@ import dev.sargunv.maplibrekmp.expression.Expression.Companion.point
 import dev.sargunv.maplibrekmp.expression.Point
 import io.github.dellisd.spatialk.geojson.Feature
 
+/**
+ * A circle layer draws points from the [sourceLayer] in the given [source] in the given style as a
+ * circles. If nothing else is specified, these will be black dots of 5 dp radius.
+ *
+ * @param id
+ *   Unique layer name.
+ *
+ * @param source
+ *   Vector data source for this layer.
+ *
+ * @param sourceLayer
+ *   Layer to use from the given vector tile [source].
+ *
+ * @param minZoom
+ *   The minimum zoom level for the layer. At zoom levels less than this, the layer will be hidden.
+ *   A value in the range of `[0..24]`.
+ *
+ * @param maxZoom
+ *   The maximum zoom level for the layer. At zoom levels equal to or greater than this, the layer
+ *   will be hidden. A value in the range of `[0..24]`.
+ *
+ * @param filter
+ *   An expression specifying conditions on source features. Only features that match the filter are
+ *   displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The
+ *   `feature-state` expression is not supported in filter expressions.
+ *
+ * @param visible
+ *   Whether the layer should be displayed.
+ *
+ * @param sortKey
+ *   Sorts features within this layer in ascending order based on this value.
+ *   Features with a higher sort key will appear above features with a lower sort key.
+ *
+ * @param radius
+ *   Circles radius in dp. A value in range `[0..infinity)`.
+ *
+ * @param color
+ *   Circles fill color.
+ *
+ * @param blur
+ *   Amount to blur the circle. A value of `1` blurs the circle such that only the centerpoint has
+ *   full opacity.
+ *
+ * @param opacity
+ *   Circles opacity. A value in range `[0..1]`.
+ *
+ * @param translate
+ *   The geometry's offset relative to the [translateAnchor]. Negative numbers indicate left and up,
+ *   respectively.
+ *
+ * @param translateAnchor
+ *   Frame of reference for offsetting geometry. See [TranslateAnchor].
+ *
+ *   Ignored if [translate] is not set.
+ *
+ * @param pitchScale
+ *   Scaling behavior of circles when the map is pitched. See [CirclePitchScale].
+ *
+ * @param pitchAlignment
+ *   Orientation of circles when the map is pitched. See [CirclePitchAlignment].
+ *
+ * @param strokeWidth
+ *   Thickness of the circles' stroke in dp. Strokes are placed outside of the [radius].
+ *   A value in range `[0..infinity)`.
+ *
+ * @param strokeColor
+ *   Circles' stroke color.
+ *
+ * @param strokeOpacity
+ *   Opacity of the circles' stroke.
+ *
+ * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun CircleLayer(
@@ -28,9 +100,9 @@ public inline fun CircleLayer(
   blur: Expression<Number> = const(0),
   opacity: Expression<Number> = const(1),
   translate: Expression<Point> = point(0, 0),
-  translateAnchor: Expression<String> = const("map"),
-  pitchScale: Expression<String> = const("map"),
-  pitchAlignment: Expression<String> = const("viewport"),
+  translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  pitchScale: Expression<String> = const(CirclePitchScale.Map),
+  pitchAlignment: Expression<String> = const(CirclePitchAlignment.Viewport),
   strokeWidth: Expression<Number> = const(0),
   strokeColor: Expression<Color> = const(Color.Black),
   strokeOpacity: Expression<Number> = const(1),
@@ -63,4 +135,23 @@ public inline fun CircleLayer(
       onLongClick = onLongClick,
     )
   }
+}
+
+/** Scaling behavior of circles when the map is pitched. */
+public object CirclePitchScale {
+  /** Circles are scaled according to their apparent distance to the camera, i.e. as if they are
+   *  on the map. */
+  public const val Map: String = "map"
+
+  /** Circles are not scaled, i.e. as if glued to the viewport. */
+  public const val Viewport: String = "viewport"
+}
+
+/** Orientation of circles when the map is pitched. */
+public object CirclePitchAlignment {
+  /** Circles are aligned to the plane of the map, i.e. flat on top of the map. */
+  public const val Map: String = "map"
+
+  /** Circles are aligned to the plane of the viewport, i.e. facing the camera. */
+  public const val Viewport: String = "viewport"
 }

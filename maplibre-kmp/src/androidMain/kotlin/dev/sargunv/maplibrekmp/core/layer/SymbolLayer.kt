@@ -45,6 +45,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconAllowOverlap(allowOverlap.toMLNExpression()))
   }
 
+  actual fun setIconOverlap(overlap: Expression<String>) {
+    // not implemented by MapLibre-native Android yet
+    //impl.setProperties(PropertyFactory.iconOverlap(overlap.toMLNExpression()))
+  }
+
   actual fun setIconIgnorePlacement(ignorePlacement: Expression<Boolean>) {
     impl.setProperties(PropertyFactory.iconIgnorePlacement(ignorePlacement.toMLNExpression()))
   }
@@ -209,6 +214,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
 
   actual fun setTextAllowOverlap(allowOverlap: Expression<Boolean>) {
     impl.setProperties(PropertyFactory.textAllowOverlap(allowOverlap.toMLNExpression()))
+  }
+
+  actual fun setTextOverlap(overlap: Expression<String>) {
+    // not implemented by MapLibre-native Android yet
+    //impl.setProperties(PropertyFactory.textOverlap(overlap.toMLNExpression()))
   }
 
   actual fun setTextIgnorePlacement(ignorePlacement: Expression<Boolean>) {

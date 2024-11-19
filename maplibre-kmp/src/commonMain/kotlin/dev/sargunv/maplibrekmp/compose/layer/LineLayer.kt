@@ -13,6 +13,105 @@ import dev.sargunv.maplibrekmp.expression.TResolvedImage
 import io.github.dellisd.spatialk.geojson.Feature
 import androidx.compose.runtime.key as composeKey
 
+/**
+ * A line layer draws polylines and polygons from the [sourceLayer] in the given [source] in the
+ * given style as a series of lines and outlines, respectively. If nothing else is specified, these
+ * will be black lines of 1 dp width.
+ *
+ * @param id
+ *   Unique layer name.
+ *
+ * @param source
+ *   Vector data source for this layer.
+ *
+ * @param sourceLayer
+ *   Layer to use from the given vector tile [source].
+ *
+ * @param minZoom
+ *   The minimum zoom level for the layer. At zoom levels less than this, the layer will be hidden.
+ *   A value in the range of `[0..24]`.
+ *
+ * @param maxZoom
+ *   The maximum zoom level for the layer. At zoom levels equal to or greater than this, the layer
+ *   will be hidden. A value in the range of `[0..24]`.
+ *
+ * @param filter
+ *   An expression specifying conditions on source features. Only features that match the filter are
+ *   displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The
+ *   `feature-state` expression is not supported in filter expressions.
+ *
+ * @param visible
+ *   Whether the layer should be displayed.
+ *
+ * @param cap
+ *   Display of line endings. See [StrokeCap].
+ *
+ * @param join
+ *   Display of joined lines. See [StrokeJoin].
+ *
+ * @param miterLimit
+ *   Limit at which to automatically convert to bevel join for sharp angles when
+ *   [join] is [StrokeJoin.Miter].
+ *
+ * @param roundLimit
+ *   Limit at which to automatically convert to miter join for sharp angles when
+ *   [join] is [StrokeJoin.Round].
+ *
+ * @param sortKey
+ *   Sorts features within this layer in ascending order based on this value.
+ *   Features with a higher sort key will appear above features with a lower sort key.
+ *
+ * @param opacity
+ *   Lines opacity. A value in range `[0..1]`.
+ *
+ * @param color
+ *   Lines color.
+ *
+ *   Ignored if [pattern] is specified.
+ *
+ * @param translate
+ *   The geometry's offset relative to the [translateAnchor]. Negative numbers indicate left and up,
+ *   respectively.
+ *
+ * @param translateAnchor
+ *   Frame of reference for offsetting geometry, see [TranslateAnchor].
+ *
+ *   Ignored if [translate] is not set.
+ *
+ * @param width
+ *   Thickness of the lines' stroke in dp. A value in range `[0..infinity)`.
+ *
+ * @param gapWidth
+ *   A value in range `[0..infinity)`. If not `0`, instead of one, two lines, each left and right of
+ *   each line's actual path are drawn, with the given gap in dp in-between them.
+ *
+ * @param offset
+ *   The lines' offset. For linear features, a positive value offsets the line to the right,
+ *   relative to the direction of the line, and a negative value to the left. For polygon features,
+ *   a positive value results in an inset, and a negative value results in an outset.
+ *
+ * @param blur
+ *   Blur applied to the lines, in dp. A value in range `0..infinity`.
+ *
+ * @param dasharray
+ *   Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The
+ *   lengths are later scaled by the line width. To convert a dash length to pixels, multiply the
+ *   length by the current line width. Note that GeoJSON sources with `lineMetrics = true` specified
+ *   won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will
+ *   be evaluated only at integer zoom levels.
+ *   Ignored if [pattern] is specified.
+ *
+ * @param pattern
+ *   Image to use for drawing image lines. For seamless patterns, image width must be a factor of
+ *   two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer
+ *   zoom levels.
+ *
+ * @param gradient
+ *   Defines a gradient with which to color a line feature. Can only be used with GeoJSON sources
+ *   that specify `lineMetrics = true`.
+ *
+ *   Ignored if [pattern] or [dasharray] is specified.
+ * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun LineLayer(
@@ -23,15 +122,15 @@ public inline fun LineLayer(
   maxZoom: Float = 24.0f,
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
-  cap: Expression<String> = const("butt"),
-  join: Expression<String> = const("miter"),
+  cap: Expression<String> = const(StrokeCap.Butt),
+  join: Expression<String> = const(StrokeJoin.Miter),
   miterLimit: Expression<Number> = const(2),
   roundLimit: Expression<Number> = const(1.05),
   sortKey: Expression<Number> = nil(),
   opacity: Expression<Number> = const(1),
   color: Expression<Color> = const(Color.Black),
   translate: Expression<Point> = point(0, 0),
-  translateAnchor: Expression<String> = const("map"),
+  translateAnchor: Expression<String> = const(TranslateAnchor.Map),
   width: Expression<Number> = const(1),
   gapWidth: Expression<Number> = const(0),
   offset: Expression<Number> = const(0),
@@ -73,3 +172,33 @@ public inline fun LineLayer(
     )
   }
 }
+
+/** Display of joined lines */
+public object StrokeJoin {
+  /** A join with a squared-off end which is drawn beyond the endpoint of the line at a distance
+   *  of one-half of the line's width. */
+  public const val Bevel: String = "bevel"
+
+  /** A join with a rounded end which is drawn beyond the endpoint of the line at a radius of
+   *  one-half of the line's width and centered on the endpoint of the line. */
+  public const val Round: String = "round"
+
+  /** A join with a sharp, angled corner which is drawn with the outer sides beyond the endpoint
+   *  of the path until they meet. */
+  public const val Miter: String = "miter"
+}
+
+/** Display of line endings */
+public object StrokeCap {
+  /** A cap with a squared-off end which is drawn to the exact endpoint of the line. */
+  public const val Butt: String = "butt"
+
+  /** A cap with a rounded end which is drawn beyond the endpoint of the line at a radius of
+   *  one-half of the line's width and centered on the endpoint of the line. */
+  public const val Round: String = "round"
+
+  /** A cap with a squared-off end which is drawn beyond the endpoint of the line at a distance of
+   * one-half of the line's width. */
+  public const val Square: String = "square"
+}
+

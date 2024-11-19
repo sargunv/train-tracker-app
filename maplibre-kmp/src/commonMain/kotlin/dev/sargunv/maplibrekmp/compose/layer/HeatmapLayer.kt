@@ -13,6 +13,55 @@ import dev.sargunv.maplibrekmp.expression.Expression.Companion.nil
 import io.github.dellisd.spatialk.geojson.Feature
 import androidx.compose.runtime.key as composeKey
 
+/**
+ * A heatmap layer draws points from the [sourceLayer] in the given [source] as a heatmap.
+ *
+ * @param id
+ *   Unique layer name.
+ *
+ * @param source
+ *   Vector data source for this layer.
+ *
+ * @param sourceLayer
+ *   Layer to use from the given vector tile [source].
+ *
+ * @param minZoom
+ *   The minimum zoom level for the layer. At zoom levels less than this, the layer will be hidden.
+ *   A value in the range of `[0..24]`.
+ *
+ * @param maxZoom
+ *   The maximum zoom level for the layer. At zoom levels equal to or greater than this, the layer
+ *   will be hidden. A value in the range of `[0..24]`.
+ *
+ * @param filter
+ *   An expression specifying conditions on source features. Only features that match the filter are
+ *   displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The
+ *   `feature-state` expression is not supported in filter expressions.
+ *
+ * @param visible
+ *   Whether the layer should be displayed.
+ *
+ * @param radius
+ *   Radius of influence of one heatmap point in dp. Increasing the value makes the heatmap
+ *   smoother, but less detailed. A value in the range of `[1..infinity)`.
+ *
+ * @param weight
+ *   A measure of how much an individual point contributes to the heatmap. A value of 10 would be
+ *   equivalent to having 10 points of weight 1 in the same spot. Especially useful when combined
+ *   with clustering. A value in the range of `[0..infinity)`.
+ *
+ * @param intensity
+ *   Similar to [weight] but controls the intensity of the heatmap globally. Primarily used for
+ *   adjusting the heatmap based on zoom level.
+ *
+ * @param color
+ *   Defines the color of each pixel based on its density value in a heatmap. Should be an
+ *   expression that uses [heatmapDensity] as input.
+ *
+ * @param opacity
+ *   The global opacity at which the heatmap layer will be drawn.
+ *
+ * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun HeatmapLayer(

@@ -9,6 +9,50 @@ import dev.sargunv.maplibrekmp.expression.Expression.Companion.const
 import io.github.dellisd.spatialk.geojson.Feature
 import androidx.compose.runtime.key as composeKey
 
+/**
+ * Client-side hillshading visualization based on DEM data. The implementation supports Mapbox
+ * Terrain RGB, Mapzen Terrarium tiles and custom encodings.
+ *
+ * @param id
+ *   Unique layer name.
+ *
+ * @param source
+ *   Vector data source for this layer.
+ *
+ * @param minZoom
+ *   The minimum zoom level for the layer. At zoom levels less than this, the layer will be hidden.
+ *   A value in the range of `[0..24]`.
+ *
+ * @param maxZoom
+ *   The maximum zoom level for the layer. At zoom levels equal to or greater than this, the layer
+ *   will be hidden. A value in the range of `[0..24]`.
+ *
+ * @param visible
+ *   Whether the layer should be displayed.
+ *
+ * @param illuminationDirection
+ *   The direction of the light source used to generate the hillshading in degrees. A value in the
+ *   range of `[0..360)`.
+ *   `0` means
+ *   - the top of the viewport if [illuminationAnchor] = [IlluminationAnchor.Viewport] or
+ *   - north if [illuminationAnchor] = [IlluminationAnchor.Map]
+ *
+ * @param illuminationAnchor
+ *   Direction of light source when map is rotated.
+ *   See [IlluminationAnchor] and [illuminationDirection].
+ *
+ * @param exaggeration
+ *   Intensity of the hillshade. A value in the range of `[0..1]`.
+ *
+ * @param shadowColor
+ *   The shading color of areas that face away from the light source.
+ *
+ * @param highlightColor
+ *   The shading color of areas that faces towards the light source.
+ *
+ * @param accentColor
+ *   The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+ * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun HillshadeLayer(
@@ -18,7 +62,7 @@ public inline fun HillshadeLayer(
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
   illuminationDirection: Expression<Number> = const(355),
-  illuminationAnchor: Expression<String> = const("viewport"),
+  illuminationAnchor: Expression<String> = const(IlluminationAnchor.Viewport),
   exaggeration: Expression<Number> = const(0.5),
   shadowColor: Expression<Color> = const(Color.Black),
   highlightColor: Expression<Color> = const(Color.White),
@@ -44,4 +88,14 @@ public inline fun HillshadeLayer(
       onLongClick = onLongClick,
     )
   }
+}
+
+/** Direction of light source when map is rotated. */
+public object IlluminationAnchor {
+
+  /** The hillshade illumination is relative to the north direction. */
+  public const val Map: String = "map"
+
+  /** The hillshade illumination is relative to the top of the viewport. */
+  public const val Viewport: String = "viewport"
 }

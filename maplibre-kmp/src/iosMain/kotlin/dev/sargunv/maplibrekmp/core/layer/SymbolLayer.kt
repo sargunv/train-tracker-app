@@ -49,6 +49,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconAllowsOverlap = allowOverlap.toNSExpression()
   }
 
+  actual fun setIconOverlap(overlap: Expression<Boolean>) {
+    // not implemented by MapLibre-native iOS yet
+    //impl.iconOverlap = overlap.toNSExpression()
+  }
+
   actual fun setIconIgnorePlacement(ignorePlacement: Expression<Boolean>) {
     impl.iconIgnoresPlacement = ignorePlacement.toNSExpression()
   }
@@ -212,6 +217,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
 
   actual fun setTextAllowOverlap(allowOverlap: Expression<Boolean>) {
     impl.textAllowsOverlap = allowOverlap.toNSExpression()
+  }
+
+  actual fun setTextOverlap(overlap: Expression<Boolean>) {
+    // not implemented by MapLibre-native iOS yet
+    //impl.textOverlap = overlap.toNSExpression()
   }
 
   actual fun setTextIgnorePlacement(ignorePlacement: Expression<Boolean>) {

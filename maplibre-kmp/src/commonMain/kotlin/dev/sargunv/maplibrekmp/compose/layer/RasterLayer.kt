@@ -8,6 +8,56 @@ import dev.sargunv.maplibrekmp.expression.Expression.Companion.const
 import io.github.dellisd.spatialk.geojson.Feature
 import androidx.compose.runtime.key as composeKey
 
+/**
+ * Raster map textures such as satellite imagery.
+ *
+ * @param id
+ *   Unique layer name.
+ *
+ * @param source
+ *   Raster data source for this layer.
+ *
+ * @param minZoom
+ *   The minimum zoom level for the layer. At zoom levels less than this, the layer will be hidden.
+ *   A value in the range of `[0..24]`.
+ *
+ * @param maxZoom
+ *   The maximum zoom level for the layer. At zoom levels equal to or greater than this, the layer
+ *   will be hidden. A value in the range of `[0..24]`.
+ *
+ * @param visible
+ *   Whether the layer should be displayed.
+ *
+ * @param opacity
+ *   The opacity at which the texture will be drawn. A value in range `[0..1]`.
+ *
+ * @param hueRotate
+ *   Rotates hues around the color wheel. Unit in degrees, i.e. a value in range `[0..360)`.
+ *
+ * @param brightnessMin
+ *   Increase or reduce the brightness of the image. The value is the minimum brightness.
+ *   A value in range `[0..1]`.
+ *
+ * @param brightnessMax
+ *   Increase or reduce the brightness of the image. The value is the maximum brightness.
+ *   A value in range `[0..1]`.
+ *
+ * @param saturation
+ *   Increase or reduce the saturation of the image.
+ *   A value in range `[-1..1]`.
+ *
+ * @param contrast
+ *   Increase or reduce the contrast of the image.
+ *   A value in range `[-1..1]`.
+ *
+ * @param resampling
+ *   The resampling/interpolation method to use for overscaling, also known as texture magnification
+ *   filter. See [RasterResampling].
+ *
+ * @param fadeDuration
+ *   Fade duration in milliseconds when a new tile is added, or when a video is started or its
+ *   coordinates are updated. A value in range `[0..infinity)`.
+ * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun RasterLayer(
@@ -22,7 +72,7 @@ public inline fun RasterLayer(
   brightnessMax: Expression<Number> = const(1),
   saturation: Expression<Number> = const(0),
   contrast: Expression<Number> = const(0),
-  resampling: Expression<String> = const("linear"),
+  resampling: Expression<String> = const(RasterResampling.Linear),
   fadeDuration: Expression<Number> = const(300),
   noinline onClick: ((features: List<Feature>) -> Unit)? = null,
   noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
@@ -47,4 +97,16 @@ public inline fun RasterLayer(
       onLongClick = onLongClick,
     )
   }
+}
+
+/** The resampling/interpolation method to use for overscaling, also known as texture magnification
+ *  filter */
+public object RasterResampling {
+  /** (Bi)linear filtering interpolates pixel values using the weighted average of the four
+   *  closest original source pixels creating a smooth but blurry look when overscaled */
+  public const val Linear: String = "linear"
+
+  /** Nearest neighbor filtering interpolates pixel values using the nearest original source pixel
+   *  creating a sharp but pixelated look when overscaled */
+  public const val Nearest: String = "nearest"
 }
