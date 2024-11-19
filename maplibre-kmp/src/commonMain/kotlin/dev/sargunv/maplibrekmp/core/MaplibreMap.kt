@@ -1,7 +1,8 @@
 package dev.sargunv.maplibrekmp.core
 
 import dev.sargunv.maplibrekmp.core.camera.CameraPosition
-import dev.sargunv.maplibrekmp.core.data.UiSettings
+import dev.sargunv.maplibrekmp.core.data.GestureSettings
+import dev.sargunv.maplibrekmp.core.data.OrnamentSettings
 import dev.sargunv.maplibrekmp.core.data.XY
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
@@ -10,8 +11,11 @@ import kotlin.time.Duration
 internal interface MaplibreMap {
   var styleUrl: String
   var isDebugEnabled: Boolean
-  var uiSettings: UiSettings
   var cameraPosition: CameraPosition
+
+  fun setOrnamentSettings(value: OrnamentSettings)
+
+  fun setGestureSettings(value: GestureSettings)
 
   suspend fun animateCameraPosition(finalPosition: CameraPosition, duration: Duration)
 

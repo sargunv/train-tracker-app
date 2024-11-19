@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrekmp.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrekmp.core.layer.SymbolLayer
 import dev.sargunv.maplibrekmp.core.source.Source
@@ -9,11 +8,16 @@ import dev.sargunv.maplibrekmp.expression.Expression
 import dev.sargunv.maplibrekmp.expression.Expression.Companion.array
 import dev.sargunv.maplibrekmp.expression.Expression.Companion.const
 import dev.sargunv.maplibrekmp.expression.Expression.Companion.literal
+import dev.sargunv.maplibrekmp.expression.Expression.Companion.insets
+import dev.sargunv.maplibrekmp.expression.Expression.Companion.literal
 import dev.sargunv.maplibrekmp.expression.Expression.Companion.nil
 import dev.sargunv.maplibrekmp.expression.Expression.Companion.point
+import dev.sargunv.maplibrekmp.expression.Insets
 import dev.sargunv.maplibrekmp.expression.Point
 import dev.sargunv.maplibrekmp.expression.TResolvedImage
+import dev.sargunv.maplibrekmp.expression.TFormatted
 import io.github.dellisd.spatialk.geojson.Feature
+import androidx.compose.runtime.key as composeKey
 
 /**
  *  A symbol layer draws data from the [sourceLayer] in the given [source] as icons and/or text
@@ -416,7 +420,7 @@ public inline fun SymbolLayer(
   iconRotationAlignment: Expression<String> = const(IconRotationAlignment.Auto),
   iconSize: Expression<Number> = const(1.0),
   iconTextFit: Expression<String> = const(IconTextFit.None),
-  iconTextFitPadding: Expression<Point> = point(0, 0),  // TODO it's four values! (top, right, bottom, left)
+  iconTextFitPadding: Expression<Insets> = insets(0, 0, 0, 0),
   iconImage: Expression<TResolvedImage> = nil(),
   iconRotate: Expression<Number> = const(0.0),
   iconPadding: Expression<Number> = const(2.0),
@@ -434,21 +438,22 @@ public inline fun SymbolLayer(
 
   textPitchAlignment: Expression<String> = const(IconPitchAlignment.Auto),
   textRotationAlignment: Expression<String> = const(TextRotationAlignment.Auto),
-  textField: Expression<String> = const(""),
-  textFont: Expression<List<String>> = const(listOf("Open Sans Regular", "Arial Unicode MS Regular")),
-  textSize: Expression<Number> = const(16),
-  textMaxWidth: Expression<Number> = const(10),
+  textField: Expression<TFormatted> = nil(),
+  textFont: Expression<List<String>> =
+    literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
+  textSize: Expression<Number> = const(16.0),
+  textMaxWidth: Expression<Number> = const(10.0),
   textLineHeight: Expression<Number> = const(1.2),
-  textLetterSpacing: Expression<Number> = const(0),
+  textLetterSpacing: Expression<Number> = const(0.0),
   textJustify: Expression<String> = const(TextJustify.Center),
-  textRadialOffset: Expression<Number> = const(0),
+  textRadialOffset: Expression<Number> = const(0.0),
   textVariableAnchor: Expression<List<String>> = nil(),
   textVariableAnchorOffset: Expression<List<Pair<String, Point>>> = nil(),
   textAnchor: Expression<String> = const(SymbolAnchor.Center),
-  textMaxAngle: Expression<Number> = const(45),
+  textMaxAngle: Expression<Number> = const(45.0),
   textWritingMode: Expression<List<String>> = nil(),
-  textRotate: Expression<Number> = const(0),
-  textPadding: Expression<Number> = const(2),
+  textRotate: Expression<Number> = const(0.0),
+  textPadding: Expression<Number> = const(2.0),
   textKeepUpright: Expression<Boolean> = const(true),
   textTransform: Expression<String> = const(TextTransform.None),
   textOffset: Expression<Point> = point(0, 0),
@@ -456,11 +461,11 @@ public inline fun SymbolLayer(
   textOverlap: Expression<String> = nil(),
   textIgnorePlacement: Expression<Boolean> = const(false),
   textOptional: Expression<Boolean> = const(false),
-  textOpacity: Expression<Number> = const(1),
+  textOpacity: Expression<Number> = const(1.0),
   textColor: Expression<Color> = const(Color.Black),
   textHaloColor: Expression<Color> = const(Color.Transparent),
-  textHaloWidth: Expression<Number> = const(0),
-  textHaloBlur: Expression<Number> = const(0),
+  textHaloWidth: Expression<Number> = const(0.0),
+  textHaloBlur: Expression<Number> = const(0.0),
   textTranslate: Expression<Point> = point(0, 0),
   textTranslateAnchor: Expression<String> = const(TranslateAnchor.Map),
 

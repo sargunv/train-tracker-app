@@ -1,5 +1,6 @@
 package dev.sargunv.traintracker.ui
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -15,17 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import dev.sargunv.maplibrekmp.compose.MaplibreMap
-import dev.sargunv.maplibrekmp.compose.layer.Anchor
-import dev.sargunv.maplibrekmp.compose.layer.FillExtrusionLayer
 import dev.sargunv.maplibrekmp.compose.rememberCameraState
-import dev.sargunv.maplibrekmp.compose.source.getBaseSource
-import dev.sargunv.maplibrekmp.compose.uiSettings
 import dev.sargunv.maplibrekmp.core.camera.CameraPosition
+import dev.sargunv.maplibrekmp.core.data.OrnamentSettings
+import dev.sargunv.traintracker.generated.BuildKonfig
 import dev.sargunv.traintracker.getColorScheme
 import dev.sargunv.traintracker.getSheetHeight
 import dev.sargunv.traintracker.max
@@ -74,38 +72,14 @@ fun App() {
             max(insetsPadding, sheetPadding + PaddingValues(8.dp))
           }
 
-        MaplibreMap(
-          styleUrl = "https://tiles.openfreemap.org/styles/liberty",
-          uiSettings = uiSettings(padding = mapPadding),
-          cameraState = cameraState,
-        ) {
-          val tiles = getBaseSource("openmaptiles")
+        val style = if (isSystemInDarkTheme()) "dark" else "light"
 
-          Anchor.Replace("building-3d") {
-            FillExtrusionLayer(
-              id = "test",
-              source = tiles,
-              sourceLayer = "building",
-              minZoom = 14f,
-              base =
-                interpolate(
-                  type = linear(),
-                  input = zoom(),
-                  14f to const(0f),
-                  16f to get(const("render_min_height")),
-                ),
-              height =
-                interpolate(
-                  type = linear(),
-                  input = zoom(),
-                  14f to const(0f),
-                  16f to get(const("render_height")),
-                ),
-              color = const(Color.Magenta),
-              opacity = const(0.8),
-            )
-          }
-        }
+        MaplibreMap(
+          styleUrl =
+            "https://api.protomaps.com/styles/v2/$style.json?key=${BuildKonfig.PROTOMAPS_KEY}",
+          ornamentSettings = OrnamentSettings(padding = mapPadding),
+          cameraState = cameraState,
+        )
       }
     }
   }

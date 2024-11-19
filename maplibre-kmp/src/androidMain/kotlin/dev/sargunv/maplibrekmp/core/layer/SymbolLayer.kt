@@ -4,7 +4,9 @@ import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrekmp.core.source.Source
 import dev.sargunv.maplibrekmp.core.util.toMLNExpression
 import dev.sargunv.maplibrekmp.expression.Expression
+import dev.sargunv.maplibrekmp.expression.Insets
 import dev.sargunv.maplibrekmp.expression.Point
+import dev.sargunv.maplibrekmp.expression.TFormatted
 import dev.sargunv.maplibrekmp.expression.TResolvedImage
 import org.maplibre.android.style.layers.PropertyFactory
 import org.maplibre.android.style.expressions.Expression as MLNExpression
@@ -70,7 +72,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconTextFit(textFit.toMLNExpression()))
   }
 
-  actual fun setIconTextFitPadding(textFitPadding: Expression<Point>) {
+  actual fun setIconTextFitPadding(textFitPadding: Expression<Insets>) {
     impl.setProperties(PropertyFactory.iconTextFitPadding(textFitPadding.toMLNExpression()))
   }
 
@@ -138,7 +140,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textRotationAlignment(rotationAlignment.toMLNExpression()))
   }
 
-  actual fun setTextField(field: Expression<String>) {
+  actual fun setTextField(field: Expression<TFormatted>) {
     impl.setProperties(PropertyFactory.textField(field.toMLNExpression()))
   }
 

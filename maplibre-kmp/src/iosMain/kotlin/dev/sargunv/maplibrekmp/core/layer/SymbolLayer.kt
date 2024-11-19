@@ -6,7 +6,9 @@ import dev.sargunv.maplibrekmp.core.source.Source
 import dev.sargunv.maplibrekmp.core.util.toNSExpression
 import dev.sargunv.maplibrekmp.core.util.toPredicate
 import dev.sargunv.maplibrekmp.expression.Expression
+import dev.sargunv.maplibrekmp.expression.Insets
 import dev.sargunv.maplibrekmp.expression.Point
+import dev.sargunv.maplibrekmp.expression.TFormatted
 import dev.sargunv.maplibrekmp.expression.TResolvedImage
 
 @PublishedApi
@@ -74,7 +76,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconTextFit = textFit.toNSExpression()
   }
 
-  actual fun setIconTextFitPadding(textFitPadding: Expression<Point>) {
+  actual fun setIconTextFitPadding(textFitPadding: Expression<Insets>) {
     impl.iconTextFitPadding = textFitPadding.toNSExpression()
   }
 
@@ -143,7 +145,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textRotationAlignment = rotationAlignment.toNSExpression()
   }
 
-  actual fun setTextField(field: Expression<String>) {
+  actual fun setTextField(field: Expression<TFormatted>) {
     impl.text = field.toNSExpression()
   }
 

@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -113,8 +114,7 @@ buildkonfig {
   require(props.containsKey("PROTOMAPS_KEY")) { "PROTOMAPS_KEY not found in local.properties" }
 
   defaultConfigs {
-    //    buildConfigField(FieldSpec.Type.STRING, "PROTOMAPS_KEY",
-    // props.getProperty("PROTOMAPS_KEY"))
+    buildConfigField(FieldSpec.Type.STRING, "PROTOMAPS_KEY", props.getProperty("PROTOMAPS_KEY"))
   }
 }
 

@@ -1,10 +1,6 @@
 package dev.sargunv.maplibrekmp.compose.engine
 
-import dev.sargunv.maplibrekmp.core.Style
-
-internal class StyleNode(style: Style) : MapNode() {
-
-  internal val styleManager = StyleManager(style)
+internal class StyleNode(internal val styleManager: StyleManager) : MapNode() {
 
   override fun allowsChild(node: MapNode) = node is LayerNode<*>
 

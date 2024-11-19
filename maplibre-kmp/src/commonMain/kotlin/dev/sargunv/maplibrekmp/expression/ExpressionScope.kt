@@ -24,6 +24,11 @@ public interface ExpressionScope {
 
   public fun point(point: Point): Expression<Point> = Expression.ofPoint(point)
 
+  public fun insets(top: Number, right: Number, bottom: Number, left: Number): Expression<Insets> =
+    Expression.ofInsets(Insets(top, right, bottom, left))
+
+  public fun insets(insets: Insets): Expression<Insets> = Expression.ofInsets(insets)
+
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 
   // variable binding
@@ -143,6 +148,14 @@ public interface ExpressionScope {
       },
     )
 
+  /**
+   * Helper function to pass a plain string to expressions that otherwise accept mixed-format text.
+   * Does not change the expression at all.
+   */
+  @Suppress("UNCHECKED_CAST")
+  public fun unformatted(value: Expression<String>): Expression<TFormatted> =
+    value as Expression<TFormatted>
+
   public data class FormatStyle(
     val textFont: Expression<String>? = null,
     val textColor: Expression<String>? = null,
@@ -150,11 +163,11 @@ public interface ExpressionScope {
   )
 
   /**
-   * Returns an image type for use in icon-image, *-pattern entries and as a section in the [format]
-   * expression. If set, the image argument will check that the requested image exists in the style
-   * and will return either the resolved image name or null, depending on whether or not the image
-   * is currently in the style. This validation process is synchronous and requires the image to
-   * have been added to the style before requesting it in the image argument.
+   * Returns an image type for use in icon-image, *-pattern entries and as a section in the
+   * [unformatted] expression. If set, the image argument will check that the requested image exists
+   * in the style and will return either the resolved image name or null, depending on whether or
+   * not the image is currently in the style. This validation process is synchronous and requires
+   * the image to have been added to the style before requesting it in the image argument.
    */
   public fun image(value: Expression<String>): Expression<TResolvedImage> = callFn("image", value)
 
@@ -346,7 +359,7 @@ public interface ExpressionScope {
    * Selects the first output whose corresponding test condition evaluates to true, or the fallback
    * value otherwise.
    */
-  public fun <T> case(branches: List<CaseBranch<T>>, fallback: Expression<T>): Expression<T> =
+  public fun <T> case(vararg branches: CaseBranch<T>, fallback: Expression<T>): Expression<T> =
     callFn(
       "case",
       *branches.foldToArgs { (test, output) ->

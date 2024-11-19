@@ -20,6 +20,8 @@ public data class Expression<out T> private constructor(internal val value: Any?
 
     internal fun ofPoint(point: Point): Expression<Point> = Expression(point)
 
+    internal fun ofInsets(insets: Insets): Expression<Insets> = Expression(insets)
+
     // return Expression<*> because without ["literal" ... ] MapLibre may not treat it as a list
     internal fun ofList(list: List<Expression<*>>): Expression<*> =
       Expression<Any?>(list.map { it.value })

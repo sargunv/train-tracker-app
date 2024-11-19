@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.viewinterop.AndroidView
+import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrekmp.core.AndroidMap
 import dev.sargunv.maplibrekmp.core.MaplibreMap
 import org.maplibre.android.MapLibre
@@ -21,6 +22,7 @@ internal actual fun ComposableMapView(
   styleUrl: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
+  logger: Logger?,
   callbacks: MaplibreMap.Callbacks,
 ) {
   AndroidMapView(
@@ -28,6 +30,7 @@ internal actual fun ComposableMapView(
     styleUrl = styleUrl,
     update = update,
     onReset = onReset,
+    logger = logger,
     callbacks = callbacks,
   )
 }
@@ -38,6 +41,7 @@ internal fun AndroidMapView(
   styleUrl: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
+  logger: Logger?,
   callbacks: MaplibreMap.Callbacks,
 ) {
   val layoutDir = LocalLayoutDirection.current
@@ -63,6 +67,7 @@ internal fun AndroidMapView(
               density = density,
               callbacks = callbacks,
               styleUrl = styleUrl,
+              logger = logger,
             )
         }
       }
@@ -73,6 +78,7 @@ internal fun AndroidMapView(
       map.density = density
       map.callbacks = callbacks
       map.styleUrl = styleUrl
+      map.logger = logger
       update(map)
     },
     onReset = {

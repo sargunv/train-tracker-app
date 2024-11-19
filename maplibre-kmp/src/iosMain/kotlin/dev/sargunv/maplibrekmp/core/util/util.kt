@@ -1,13 +1,23 @@
 package dev.sargunv.maplibrekmp.core.util
 
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import cocoapods.MapLibre.MLNFeatureProtocol
+import cocoapods.MapLibre.MLNOrnamentPosition
+import cocoapods.MapLibre.MLNOrnamentPositionBottomLeft
+import cocoapods.MapLibre.MLNOrnamentPositionBottomRight
+import cocoapods.MapLibre.MLNOrnamentPositionTopLeft
+import cocoapods.MapLibre.MLNOrnamentPositionTopRight
 import cocoapods.MapLibre.MLNShape
 import cocoapods.MapLibre.expressionWithMLNJSONObject
 import cocoapods.MapLibre.predicateWithMLNJSONObject
 import dev.sargunv.maplibrekmp.core.data.XY
 import dev.sargunv.maplibrekmp.expression.Expression
+import dev.sargunv.maplibrekmp.expression.Insets
 import dev.sargunv.maplibrekmp.expression.Point
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.GeoJson
@@ -34,7 +44,9 @@ import platform.Foundation.NSUTF8StringEncoding
 import platform.Foundation.NSValue
 import platform.Foundation.dataWithBytes
 import platform.UIKit.UIColor
+import platform.UIKit.UIEdgeInsetsMake
 import platform.UIKit.valueWithCGVector
+import platform.UIKit.valueWithUIEdgeInsets
 
 internal fun ByteArray.toNSData(): NSData {
   return usePinned { NSData.dataWithBytes(it.addressOf(0), it.get().size.toULong()) }
@@ -78,7 +90,6 @@ internal fun GeoJson.toMLNShape(): MLNShape {
   )!!
 }
 
-
 internal fun Expression<*>.toNSExpression(): NSExpression =
   when (value) {
     null -> NSExpression.expressionForConstantValue(null)
@@ -104,5 +115,24 @@ private fun normalizeJsonLike(value: Any?): Any? =
         blue = value.blue.toDouble(),
         alpha = value.alpha.toDouble(),
       )
+    is Insets ->
+      NSValue.valueWithUIEdgeInsets(
+        UIEdgeInsetsMake(
+          top = value.top.toDouble(),
+          left = value.left.toDouble(),
+          bottom = value.bottom.toDouble(),
+          right = value.right.toDouble(),
+        )
+      )
     else -> throw IllegalArgumentException("Unsupported type: ${value::class}")
   }
+
+internal fun Alignment.toMLNOrnamentPosition(layoutDir: LayoutDirection): MLNOrnamentPosition {
+  return when (align(IntSize(1, 1), IntSize(2, 2), layoutDir)) {
+    IntOffset(0, 0) -> MLNOrnamentPositionTopLeft
+    IntOffset(1, 0) -> MLNOrnamentPositionTopRight
+    IntOffset(0, 1) -> MLNOrnamentPositionBottomLeft
+    IntOffset(1, 1) -> MLNOrnamentPositionBottomRight
+    else -> error("Invalid alignment")
+  }
+}

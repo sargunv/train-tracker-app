@@ -2,7 +2,7 @@ package dev.sargunv.maplibrekmp.compose.source
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import dev.sargunv.maplibrekmp.compose.LocalStyleManager
+import dev.sargunv.maplibrekmp.compose.engine.LocalStyleManager
 import dev.sargunv.maplibrekmp.core.source.Source
 
 @Composable

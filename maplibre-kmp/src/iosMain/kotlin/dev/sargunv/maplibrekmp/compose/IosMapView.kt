@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.viewinterop.UIKitInteropInteractionMode
 import androidx.compose.ui.viewinterop.UIKitInteropProperties
 import androidx.compose.ui.viewinterop.UIKitView
+import co.touchlab.kermit.Logger
 import cocoapods.MapLibre.MLNMapView
 import dev.sargunv.maplibrekmp.core.IosMap
 import dev.sargunv.maplibrekmp.core.MaplibreMap
@@ -28,6 +29,7 @@ internal actual fun ComposableMapView(
   styleUrl: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
+  logger: Logger?,
   callbacks: MaplibreMap.Callbacks,
 ) {
   IosMapView(
@@ -35,6 +37,7 @@ internal actual fun ComposableMapView(
     styleUrl = styleUrl,
     update = update,
     onReset = onReset,
+    logger = logger,
     callbacks = callbacks,
   )
 }
@@ -45,6 +48,7 @@ internal fun IosMapView(
   styleUrl: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
+  logger: Logger?,
   callbacks: MaplibreMap.Callbacks,
 ) {
   MeasuredBox(modifier = modifier.fillMaxSize()) { x, y, width, height ->
@@ -77,6 +81,7 @@ internal fun IosMapView(
                 layoutDir = layoutDir,
                 insetPadding = insetPadding,
                 callbacks = callbacks,
+                logger = logger,
               )
           }
       },
@@ -87,6 +92,7 @@ internal fun IosMapView(
         map.insetPadding = insetPadding
         map.callbacks = callbacks
         map.styleUrl = styleUrl
+        map.logger = logger
         update(map)
       },
       onReset = {

@@ -3,7 +3,9 @@ package dev.sargunv.maplibrekmp.core.layer
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrekmp.core.source.Source
 import dev.sargunv.maplibrekmp.expression.Expression
+import dev.sargunv.maplibrekmp.expression.Insets
 import dev.sargunv.maplibrekmp.expression.Point
+import dev.sargunv.maplibrekmp.expression.TFormatted
 import dev.sargunv.maplibrekmp.expression.TResolvedImage
 
 @PublishedApi
@@ -32,7 +34,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconTextFit(textFit: Expression<String>)
 
-  fun setIconTextFitPadding(textFitPadding: Expression<Point>)
+  fun setIconTextFitPadding(textFitPadding: Expression<Insets>)
 
   fun setIconImage(image: Expression<TResolvedImage>)
 
@@ -66,7 +68,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextRotationAlignment(rotationAlignment: Expression<String>)
 
-  fun setTextField(field: Expression<String>)
+  fun setTextField(field: Expression<TFormatted>)
 
   fun setTextFont(font: Expression<List<String>>)
 
