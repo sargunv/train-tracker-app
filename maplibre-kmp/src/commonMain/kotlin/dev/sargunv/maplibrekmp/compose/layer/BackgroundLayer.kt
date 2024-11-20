@@ -26,6 +26,9 @@ import androidx.compose.runtime.key as composeKey
  * @param visible
  *   Whether the layer should be displayed.
  *
+ * @param opacity
+ *   Background opacity. A value in range `[0..1]`.
+ *
  * @param color
  *   Background color.
  *
@@ -35,10 +38,6 @@ import androidx.compose.runtime.key as composeKey
  *   Image to use for drawing image fills. For seamless patterns, image width and height must be a
  *   factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only
  *   at integer zoom levels.
- *
- * @param opacity
- *   Background opacity. A value in range `[0..1]`.
- *
  * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
@@ -47,9 +46,9 @@ public inline fun BackgroundLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
+  opacity: Expression<Number> = const(1),
   color: Expression<Color> = const(Color.Black),
   pattern: Expression<TResolvedImage> = nil(),
-  opacity: Expression<Number> = const(1),
 ) {
   composeKey(id) {
     LayerNode(

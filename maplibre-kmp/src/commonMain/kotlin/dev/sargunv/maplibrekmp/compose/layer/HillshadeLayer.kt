@@ -30,6 +30,15 @@ import androidx.compose.runtime.key as composeKey
  * @param visible
  *   Whether the layer should be displayed.
  *
+ * @param shadowColor
+ *   The shading color of areas that face away from the light source.
+ *
+ * @param highlightColor
+ *   The shading color of areas that faces towards the light source.
+ *
+ * @param accentColor
+ *   The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
+ *
  * @param illuminationDirection
  *   The direction of the light source used to generate the hillshading in degrees. A value in the
  *   range of `[0..360)`.
@@ -43,15 +52,6 @@ import androidx.compose.runtime.key as composeKey
  *
  * @param exaggeration
  *   Intensity of the hillshade. A value in the range of `[0..1]`.
- *
- * @param shadowColor
- *   The shading color of areas that face away from the light source.
- *
- * @param highlightColor
- *   The shading color of areas that faces towards the light source.
- *
- * @param accentColor
- *   The shading color used to accentuate rugged terrain like sharp cliffs and gorges.
  * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
@@ -61,12 +61,12 @@ public inline fun HillshadeLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  illuminationDirection: Expression<Number> = const(355),
-  illuminationAnchor: Expression<String> = const(IlluminationAnchor.Viewport),
-  exaggeration: Expression<Number> = const(0.5),
   shadowColor: Expression<Color> = const(Color.Black),
   highlightColor: Expression<Color> = const(Color.White),
   accentColor: Expression<Color> = const(Color.Black),
+  illuminationDirection: Expression<Number> = const(355),
+  illuminationAnchor: Expression<String> = const(IlluminationAnchor.Viewport),
+  exaggeration: Expression<Number> = const(0.5),
   noinline onClick: ((features: List<Feature>) -> Unit)? = null,
   noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
 ) {

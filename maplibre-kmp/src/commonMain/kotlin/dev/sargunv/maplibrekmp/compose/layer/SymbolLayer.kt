@@ -48,6 +48,11 @@ import androidx.compose.runtime.key as composeKey
  * @param visible
  *   Whether the layer should be displayed.
  *
+ * @param sortKey
+ *   Sorts features within this layer in ascending order based on this value.
+ *   Features with a higher sort key will appear above features with a lower sort key.
+ *
+ *
  * @param placement
  *   Symbol placement relative to its geometry. See [SymbolPlacement].
  *
@@ -61,101 +66,13 @@ import androidx.compose.runtime.key as composeKey
  *   layers that don't have enough padding in the vector tile to prevent collisions, or if it is a
  *   point symbol layer placed after a line symbol layer.
  *
- * @param sortKey
- *   Sorts features within this layer in ascending order based on this value.
- *   Features with a higher sort key will appear above features with a lower sort key.
- *
  * @param zOrder
  *   Determines whether overlapping symbols in the same layer are rendered in the order that they
  *   appear in the data source or by their y-position relative to the viewport. To control the order
  *   and prioritization of symbols otherwise, use [sortKey]. See [SymbolSortOrder].
  *
- * @param iconAllowOverlap
- *   If true, the icon will be visible even if it collides with other previously drawn symbols.
- *
- *   Ignored if [iconImage] is not specified, overridden by [iconOverlap], if specified.
- *
- * @param iconOverlap
- *   Controls whether to show an icon when it overlaps other symbols on the map.
- *   See [SymbolOverlap].
- *
- *   Ignored if [iconImage] is not specified.
- *
- *   **Note**: This property is not supported on native platforms, yet.
- *
- * @param iconIgnorePlacement
- *   If true, other symbols can be visible even if they collide with the icon.
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconOptional
- *   If true, text will display without their corresponding icons when the icon collides with other
- *   symbols and the text does not.
- *
- *   Ignored if not both [iconImage] and [textField] are specified.
- *
- * @param iconRotationAlignment
- *   In combination with [placement], determines the rotation behavior of icons.
- *   See [IconRotationAlignment].
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconSize
- *   Scales the original size of the icon by the provided factor. The new pixel size of the image
- *   will be the original pixel size multiplied by [iconSize]. 1 is the original size; 3 triples the
- *   size of the image.
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconTextFit
- *   Scales the icon to fit around the associated text. See [IconTextFit].
- *
- *   Ignored if not both [iconImage] and [textField] are specified.
- *
- * @param iconTextFitPadding
- *   Size of the additional area added to dimensions determined by [iconTextFit].
- *
- *   Only applicable when if [iconTextFit] is not [IconTextFit.None].
- *   Ignored if not both [iconImage] and [textField] are specified.
- *
  * @param iconImage
  *   Image to use for drawing an image background.
- *
- * @param iconRotate
- *   Rotates the icon clockwise by the number in degrees.
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconPadding
- *   Size of additional area round the icon bounding box used for detecting symbol collisions.
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconKeepUpright
- *   If true, the icon may be flipped to prevent it from being rendered upside-down.
- *
- *   Only applicable if [iconRotationAlignment] is [IconRotationAlignment.Map] and [placement] is
- *   either [SymbolPlacement.Line] or [SymbolPlacement.LineCenter].
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconOffset
- *   Offset distance of icon from its anchor. Positive values indicate right and down, while
- *   negative values indicate left and up. Each component is multiplied by the value of [iconSize]
- *   to obtain the final offset in dp. When combined with [iconRotate] the offset will be as if the
- *   rotated direction was up.
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconAnchor
- *   Part of the icon placed closest to the anchor. See [SymbolAnchor].
- *
- *   Ignored if [iconImage] is not specified.
- *
- * @param iconPitchAlignment
- *   Orientation of icon when map is pitched. See [IconPitchAlignment].
- *
- *   Ignored if [iconImage] is not specified.
  *
  * @param iconOpacity
  *   The opacity at which the icon will be drawn. A value in the range `[0..1]`.
@@ -184,6 +101,90 @@ import androidx.compose.runtime.key as composeKey
  *
  *   Ignored if [iconImage] is not specified.
  *
+ * @param iconSize
+ *   Scales the original size of the icon by the provided factor. The new pixel size of the image
+ *   will be the original pixel size multiplied by [iconSize]. 1 is the original size; 3 triples the
+ *   size of the image.
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconRotationAlignment
+ *   In combination with [placement], determines the rotation behavior of icons.
+ *   See [IconRotationAlignment].
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconPitchAlignment
+ *   Orientation of icon when map is pitched. See [IconPitchAlignment].
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconTextFit
+ *   Scales the icon to fit around the associated text. See [IconTextFit].
+ *
+ *   Ignored if not both [iconImage] and [textField] are specified.
+ *
+ * @param iconTextFitPadding
+ *   Size of the additional area added to dimensions determined by [iconTextFit].
+ *
+ *   Only applicable when if [iconTextFit] is not [IconTextFit.None].
+ *   Ignored if not both [iconImage] and [textField] are specified.
+ *
+ * @param iconKeepUpright
+ *   If true, the icon may be flipped to prevent it from being rendered upside-down.
+ *
+ *   Only applicable if [iconRotationAlignment] is [IconRotationAlignment.Map] and [placement] is
+ *   either [SymbolPlacement.Line] or [SymbolPlacement.LineCenter].
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconRotate
+ *   Rotates the icon clockwise by the number in degrees.
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconAnchor
+ *   Part of the icon placed closest to the anchor. See [SymbolAnchor].
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconOffset
+ *   Offset distance of icon from its anchor. Positive values indicate right and down, while
+ *   negative values indicate left and up. Each component is multiplied by the value of [iconSize]
+ *   to obtain the final offset in dp. When combined with [iconRotate] the offset will be as if the
+ *   rotated direction was up.
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconPadding
+ *   Size of additional area round the icon bounding box used for detecting symbol collisions.
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconAllowOverlap
+ *   If true, the icon will be visible even if it collides with other previously drawn symbols.
+ *
+ *   Ignored if [iconImage] is not specified, overridden by [iconOverlap], if specified.
+ *
+ * @param iconOverlap
+ *   Controls whether to show an icon when it overlaps other symbols on the map.
+ *   See [SymbolOverlap].
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ *   **Note**: This property is not supported on native platforms, yet.
+ *
+ * @param iconIgnorePlacement
+ *   If true, other symbols can be visible even if they collide with the icon.
+ *
+ *   Ignored if [iconImage] is not specified.
+ *
+ * @param iconOptional
+ *   If true, text will display without their corresponding icons when the icon collides with other
+ *   symbols and the text does not.
+ *
+ *   Ignored if not both [iconImage] and [textField] are specified.
+ *
  * @param iconTranslate
  *   The geometry's offset relative to the [iconTranslateAnchor]. Negative numbers indicate left
  *   and up, respectively.
@@ -195,8 +196,45 @@ import androidx.compose.runtime.key as composeKey
  *
  *   Ignored if [iconTranslate] is not set.
  *
- * @param textPitchAlignment
- *   Orientation of text when map is pitched. See [TextPitchAlignment].
+ * @param textField
+ *   Value to use for a text label. If a plain string is provided, it will be treated as a formatted
+ *   with default/inherited formatting options.
+ *
+ * @param textOpacity
+ *   The opacity at which the text will be drawn.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textColor
+ *   The color with which the text will be drawn.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textHaloColor
+ *   The color of the text's halo, which helps it stand out from backgrounds.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textHaloBlur
+ *   The halo's fadeout distance towards the outside in dp.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textFont
+ *   Font stack to use for displaying text.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textSize
+ *   Font size in dp.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textTransform
+ *   Specifies how to capitalize text. See [TextTransform].
+ *
+ * @param textLetterSpacing
+ *   Text tracking amount in ems.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -206,17 +244,15 @@ import androidx.compose.runtime.key as composeKey
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textField
- *   Value to use for a text label. If a plain string is provided, it will be treated as a formatted
- *   with default/inherited formatting options.
- *
- * @param textFont
- *   Font stack to use for displaying text.
+ * @param textPitchAlignment
+ *   Orientation of text when map is pitched. See [TextPitchAlignment].
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textSize
- *   Font size in dp.
+ * @param textMaxAngle
+ *   Maximum angle change in degrees between adjacent characters.
+ *
+ *   Only applicable if [placement] is [SymbolPlacement.Line] or [SymbolPlacement.LineCenter]
  *
  *   Ignored if [textField] is not specified.
  *
@@ -230,19 +266,47 @@ import androidx.compose.runtime.key as composeKey
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textLetterSpacing
- *   Text tracking amount in ems.
- *
- *   Ignored if [textField] is not specified.
- *
  * @param textJustify
  *   Text justification options. See [TextJustify].
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textRadialOffset
- *   Radial offset of text, in the direction of the symbol's anchor. Useful in combination with
- *   [textVariableAnchor], which defaults to using the two-dimensional [textOffset] if present.
+ * @param textWritingMode
+ *   The property allows control over a symbol's orientation. Note that the property values act as a
+ *   hint, so that a symbol whose language doesn’t support the provided orientation will be laid out
+ *   in its natural orientation. Example: English point symbol will be rendered horizontally even if
+ *   array value contains single 'vertical' enum value. The order of elements in an array define
+ *   priority order for the placement of an orientation variant. See [TextWritingMode]
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textKeepUpright
+ *   If true, the text may be flipped vertically to prevent it from being rendered upside-down.
+ *
+ *   Only applicable if [textRotationAlignment] is [TextRotationAlignment.Map] and
+ *   [placement] is [SymbolPlacement.Line] or [SymbolPlacement.LineCenter]
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textRotate
+ *   Rotates the text clockwise. Unit in degrees.
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textAnchor
+ *   Part of the text placed closest to the anchor. See [SymbolAnchor].
+ *
+ *   Overridden by [textVariableAnchorOffset].
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textOffset
+ *   Offset distance of text from its anchor in ems. Positive values indicate right and down, while
+ *   negative values indicate left and up. If used with [textVariableAnchor], input values will be
+ *   taken as absolute values. Offsets along the x- and y-axis will be applied automatically based
+ *   on the anchor position.
+ *
+ *   Overridden by [textRadialOffset].
  *
  *   Ignored if [textField] is not specified.
  *
@@ -254,6 +318,12 @@ import androidx.compose.runtime.key as composeKey
  *   two-dimensional [textOffset].
  *
  *   Only applicable if [placement] is [SymbolPlacement.Point].
+ *
+ *   Ignored if [textField] is not specified.
+ *
+ * @param textRadialOffset
+ *   Radial offset of text, in the direction of the symbol's anchor. Useful in combination with
+ *   [textVariableAnchor], which defaults to using the two-dimensional [textOffset] if present.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -284,58 +354,9 @@ import androidx.compose.runtime.key as composeKey
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textAnchor
- *   Part of the text placed closest to the anchor. See [SymbolAnchor].
- *
- *   Overridden by [textVariableAnchorOffset].
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textMaxAngle
- *   Maximum angle change in degrees between adjacent characters.
- *
- *   Only applicable if [placement] is [SymbolPlacement.Line] or [SymbolPlacement.LineCenter]
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textWritingMode
- *   The property allows control over a symbol's orientation. Note that the property values act as a
- *   hint, so that a symbol whose language doesn’t support the provided orientation will be laid out
- *   in its natural orientation. Example: English point symbol will be rendered horizontally even if
- *   array value contains single 'vertical' enum value. The order of elements in an array define
- *   priority order for the placement of an orientation variant. See [TextWritingMode]
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textRotate
- *   Rotates the text clockwise. Unit in degrees.
- *
- *   Ignored if [textField] is not specified.
- *
  * @param textPadding
  *   Size of the additional area in dp around the text bounding box used for detecting symbol
  *   collisions.
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textKeepUpright
- *   If true, the text may be flipped vertically to prevent it from being rendered upside-down.
- *
- *   Only applicable if [textRotationAlignment] is [TextRotationAlignment.Map] and
- *   [placement] is [SymbolPlacement.Line] or [SymbolPlacement.LineCenter]
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textTransform
- *   Specifies how to capitalize text. See [TextTransform].
- *
- * @param textOffset
- *   Offset distance of text from its anchor in ems. Positive values indicate right and down, while
- *   negative values indicate left and up. If used with [textVariableAnchor], input values will be
- *   taken as absolute values. Offsets along the x- and y-axis will be applied automatically based
- *   on the anchor position.
- *
- *   Overridden by [textRadialOffset].
  *
  *   Ignored if [textField] is not specified.
  *
@@ -365,26 +386,6 @@ import androidx.compose.runtime.key as composeKey
  *
  *   Ignored if not both [textField] and [iconImage] are specified.
  *
- * @param textOpacity
- *   The opacity at which the text will be drawn.
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textColor
- *   The color with which the text will be drawn.
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textHaloColor
- *   The color of the text's halo, which helps it stand out from backgrounds.
- *
- *   Ignored if [textField] is not specified.
- *
- * @param textHaloBlur
- *   The halo's fadeout distance towards the outside in dp.
- *
- *   Ignored if [textField] is not specified.
- *
  * @param textTranslate
  *   Distance that the text's anchor is moved from its original placement in dp. Positive values
  *   indicate right and down, while negative values indicate left and up.
@@ -406,66 +407,90 @@ public inline fun SymbolLayer(
   maxZoom: Float = 24.0f,
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
+  sortKey: Expression<Number> = nil(),
 
   placement: Expression<String> = const(SymbolPlacement.Point),
   spacing: Expression<Number> = const(250.0),
   avoidEdges: Expression<Boolean> = const(false),
-  sortKey: Expression<Number> = nil(),
   zOrder: Expression<String> = const(SymbolSortOrder.Auto),
 
-  iconAllowOverlap: Expression<Boolean> = const(false),
-  iconOverlap: Expression<String> = nil(),
-  iconIgnorePlacement: Expression<Boolean> = const(false),
-  iconOptional: Expression<Boolean> = const(false),
-  iconRotationAlignment: Expression<String> = const(IconRotationAlignment.Auto),
-  iconSize: Expression<Number> = const(1.0),
-  iconTextFit: Expression<String> = const(IconTextFit.None),
-  iconTextFitPadding: Expression<Insets> = insets(0, 0, 0, 0),
+  // icon image
   iconImage: Expression<TResolvedImage> = nil(),
-  iconRotate: Expression<Number> = const(0.0),
-  iconPadding: Expression<Number> = const(2.0),
-  iconKeepUpright: Expression<Boolean> = const(false),
-  iconOffset: Expression<Point> = point(0, 0),
-  iconAnchor: Expression<String> = const(SymbolAnchor.Center),
-  iconPitchAlignment: Expression<String> = const(IconPitchAlignment.Auto),
+
+  // icon colors
   iconOpacity: Expression<Number> = const(1.0),
   iconColor: Expression<Color> = const(Color.Black),
   iconHaloColor: Expression<Color> = const(Color.Transparent),
   iconHaloWidth: Expression<Number> = const(0.0),
   iconHaloBlur: Expression<Number> = const(0.0),
+
+  // icon layout
+  iconSize: Expression<Number> = const(1.0),
+  iconRotationAlignment: Expression<String> = const(IconRotationAlignment.Auto),
+  iconPitchAlignment: Expression<String> = const(IconPitchAlignment.Auto),
+  iconTextFit: Expression<String> = const(IconTextFit.None),
+  iconTextFitPadding: Expression<Insets> = insets(0, 0, 0, 0),
+  iconKeepUpright: Expression<Boolean> = const(false),
+  iconRotate: Expression<Number> = const(0.0),
+
+  // icon anchoring
+  iconAnchor: Expression<String> = const(SymbolAnchor.Center),
+  iconOffset: Expression<Point> = point(0, 0),
+
+  // icon collision
+  iconPadding: Expression<Number> = const(2.0),
+  iconAllowOverlap: Expression<Boolean> = const(false),
+  iconOverlap: Expression<String> = nil(),
+  iconIgnorePlacement: Expression<Boolean> = const(false),
+  iconOptional: Expression<Boolean> = const(false),
+
+  // icon translate
   iconTranslate: Expression<Point> = point(0, 0),
   iconTranslateAnchor: Expression<String> = const(TranslateAnchor.Map),
 
-  textPitchAlignment: Expression<String> = const(IconPitchAlignment.Auto),
-  textRotationAlignment: Expression<String> = const(TextRotationAlignment.Auto),
+  // text content
   textField: Expression<TFormatted> = nil(),
-  textFont: Expression<List<String>> =
-    literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
-  textSize: Expression<Number> = const(16.0),
-  textMaxWidth: Expression<Number> = const(10.0),
-  textLineHeight: Expression<Number> = const(1.2),
-  textLetterSpacing: Expression<Number> = const(0.0),
-  textJustify: Expression<String> = const(TextJustify.Center),
-  textRadialOffset: Expression<Number> = const(0.0),
-  textVariableAnchor: Expression<List<String>> = nil(),
-  textVariableAnchorOffset: Expression<List<Pair<String, Point>>> = nil(),
-  textAnchor: Expression<String> = const(SymbolAnchor.Center),
-  textMaxAngle: Expression<Number> = const(45.0),
-  textWritingMode: Expression<List<String>> = nil(),
-  textRotate: Expression<Number> = const(0.0),
-  textPadding: Expression<Number> = const(2.0),
-  textKeepUpright: Expression<Boolean> = const(true),
-  textTransform: Expression<String> = const(TextTransform.None),
-  textOffset: Expression<Point> = point(0, 0),
-  textAllowOverlap: Expression<Boolean> = const(false),
-  textOverlap: Expression<String> = nil(),
-  textIgnorePlacement: Expression<Boolean> = const(false),
-  textOptional: Expression<Boolean> = const(false),
+
+  // text glyph colors
   textOpacity: Expression<Number> = const(1.0),
   textColor: Expression<Color> = const(Color.Black),
   textHaloColor: Expression<Color> = const(Color.Transparent),
   textHaloWidth: Expression<Number> = const(0.0),
   textHaloBlur: Expression<Number> = const(0.0),
+
+  // text glyph properties
+  textFont: Expression<List<String>> =
+    literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
+  textSize: Expression<Number> = const(16.0),
+  textTransform: Expression<String> = const(TextTransform.None),
+  textLetterSpacing: Expression<Number> = const(0.0),
+  textRotationAlignment: Expression<String> = const(TextRotationAlignment.Auto),
+  textPitchAlignment: Expression<String> = const(TextPitchAlignment.Auto),
+  textMaxAngle: Expression<Number> = const(45.0),
+
+  // text paragraph layout
+  textMaxWidth: Expression<Number> = const(10.0),
+  textLineHeight: Expression<Number> = const(1.2),
+  textJustify: Expression<String> = const(TextJustify.Center),
+  textWritingMode: Expression<List<String>> = nil(),
+  textKeepUpright: Expression<Boolean> = const(true),
+  textRotate: Expression<Number> = const(0.0),
+
+  // text anchoring
+  textAnchor: Expression<String> = const(SymbolAnchor.Center),
+  textOffset: Expression<Point> = point(0, 0),
+  textVariableAnchor: Expression<List<String>> = nil(),
+  textRadialOffset: Expression<Number> = const(0.0),
+  textVariableAnchorOffset: Expression<List<Pair<String, Point>>> = nil(),
+
+  // text collision
+  textPadding: Expression<Number> = const(2.0),
+  textAllowOverlap: Expression<Boolean> = const(false),
+  textOverlap: Expression<String> = nil(),
+  textIgnorePlacement: Expression<Boolean> = const(false),
+  textOptional: Expression<Boolean> = const(false),
+
+  // text translate
   textTranslate: Expression<Point> = point(0, 0),
   textTranslateAnchor: Expression<String> = const(TranslateAnchor.Map),
 
@@ -663,7 +688,7 @@ public object IconPitchAlignment {
   /** The icon is aligned to the plane of the map. */
   public const val Map: String = "map"
 
-  /** The icon is aligned to the plane of the viewport. */
+  /** The icon is aligned to the plane of the viewport, i.e. as if glued to the screen */
   public const val Viewport: String = "viewport"
 
   /** Automatically matches the value of [IconRotationAlignment] */
@@ -675,7 +700,7 @@ public object TextPitchAlignment {
   /** The text is aligned to the plane of the map. */
   public const val Map: String = "map"
 
-  /** The text is aligned to the plane of the viewport. */
+  /** The text is aligned to the plane of the viewport, i.e. as if glued to the screen */
   public const val Viewport: String = "viewport"
 
   /** Automatically matches the value of [TextRotationAlignment] */

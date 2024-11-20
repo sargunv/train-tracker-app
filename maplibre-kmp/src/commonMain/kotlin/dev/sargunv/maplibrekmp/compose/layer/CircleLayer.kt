@@ -45,19 +45,6 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   Sorts features within this layer in ascending order based on this value.
  *   Features with a higher sort key will appear above features with a lower sort key.
  *
- * @param radius
- *   Circles radius in dp. A value in range `[0..infinity)`.
- *
- * @param color
- *   Circles fill color.
- *
- * @param blur
- *   Amount to blur the circle. A value of `1` blurs the circle such that only the centerpoint has
- *   full opacity.
- *
- * @param opacity
- *   Circles opacity. A value in range `[0..1]`.
- *
  * @param translate
  *   The geometry's offset relative to the [translateAnchor]. Negative numbers indicate left and up,
  *   respectively.
@@ -67,22 +54,34 @@ import io.github.dellisd.spatialk.geojson.Feature
  *
  *   Ignored if [translate] is not set.
  *
- * @param pitchScale
- *   Scaling behavior of circles when the map is pitched. See [CirclePitchScale].
+ * @param opacity
+ *   Circles opacity. A value in range `[0..1]`.
  *
- * @param pitchAlignment
- *   Orientation of circles when the map is pitched. See [CirclePitchAlignment].
+ * @param color
+ *   Circles fill color.
+ *
+ * @param blur
+ *   Amount to blur the circle. A value of `1` blurs the circle such that only the centerpoint has
+ *   full opacity.
+ *
+ * @param radius
+ *   Circles radius in dp. A value in range `[0..infinity)`.
+ *
+ * @param strokeOpacity
+ *   Opacity of the circles' stroke.
+ *
+ * @param strokeColor
+ *   Circles' stroke color.
  *
  * @param strokeWidth
  *   Thickness of the circles' stroke in dp. Strokes are placed outside of the [radius].
  *   A value in range `[0..infinity)`.
  *
- * @param strokeColor
- *   Circles' stroke color.
+ * @param pitchScale
+ *   Scaling behavior of circles when the map is pitched. See [CirclePitchScale].
  *
- * @param strokeOpacity
- *   Opacity of the circles' stroke.
- *
+ * @param pitchAlignment
+ *   Orientation of circles when the map is pitched. See [CirclePitchAlignment].
  * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
@@ -95,17 +94,17 @@ public inline fun CircleLayer(
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
-  radius: Expression<Number> = const(5),
-  color: Expression<Color> = const(Color.Black),
-  blur: Expression<Number> = const(0),
-  opacity: Expression<Number> = const(1),
   translate: Expression<Point> = point(0, 0),
   translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  opacity: Expression<Number> = const(1),
+  color: Expression<Color> = const(Color.Black),
+  blur: Expression<Number> = const(0),
+  radius: Expression<Number> = const(5),
+  strokeOpacity: Expression<Number> = const(1),
+  strokeColor: Expression<Color> = const(Color.Black),
+  strokeWidth: Expression<Number> = const(0),
   pitchScale: Expression<String> = const(CirclePitchScale.Map),
   pitchAlignment: Expression<String> = const(CirclePitchAlignment.Viewport),
-  strokeWidth: Expression<Number> = const(0),
-  strokeColor: Expression<Color> = const(Color.Black),
-  strokeOpacity: Expression<Number> = const(1),
   noinline onClick: ((features: List<Feature>) -> Unit)? = null,
   noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
 ) {

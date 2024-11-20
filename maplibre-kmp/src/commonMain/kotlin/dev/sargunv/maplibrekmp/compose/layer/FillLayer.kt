@@ -46,22 +46,6 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   Sorts features within this layer in ascending order based on this value.
  *   Features with a higher sort key will appear above features with a lower sort key.
  *
- * @param antialias
- *   Whether or not the fill should be antialiased.
- *
- * @param opacity
- *   Fill opacity. A value in range `[0..1]`.
- *
- * @param color
- *   Fill color.
- *
- *   Ignored if [pattern] is specified.
- *
- * @param outlineColor
- *   The outline color of the fill. The outline is drawn at a hairline width.
- *
- *   Ignored if [antialias] is `false`.
- *
  * @param translate
  *   The geometry's offset relative to the [translateAnchor]. Negative numbers indicate left and up,
  *   respectively.
@@ -71,10 +55,26 @@ import io.github.dellisd.spatialk.geojson.Feature
  *
  *   Ignored if [translate] is not set.
  *
+ * @param opacity
+ *   Fill opacity. A value in range `[0..1]`.
+ *
+ * @param color
+ *   Fill color.
+ *
+ *   Ignored if [pattern] is specified.
+ *
  * @param pattern
  *   Image to use for drawing image fills. For seamless patterns, image width and height must be a
  *   factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only
  *   at integer zoom levels.
+ *
+ * @param antialias
+ *   Whether or not the fill should be antialiased.
+ *
+ * @param outlineColor
+ *   The outline color of the fill. The outline is drawn at a hairline width.
+ *
+ *   Ignored if [antialias] is `false`.
  * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
@@ -87,13 +87,13 @@ public inline fun FillLayer(
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
-  antialias: Expression<Boolean> = const(true),
-  opacity: Expression<Number> = const(1.0),
-  color: Expression<Color> = const(Color.Black),
-  outlineColor: Expression<Color> = color,
   translate: Expression<Point> = point(0.0, 0.0),
   translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  opacity: Expression<Number> = const(1.0),
+  color: Expression<Color> = const(Color.Black),
   pattern: Expression<TResolvedImage> = nil(),
+  antialias: Expression<Boolean> = const(true),
+  outlineColor: Expression<Color> = color,
   noinline onClick: ((features: List<Feature>) -> Unit)? = null,
   noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
 ) {

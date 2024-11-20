@@ -43,15 +43,6 @@ import androidx.compose.runtime.key as composeKey
  * @param visible
  *   Whether the layer should be displayed.
  *
- * @param opacity
- *   The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not
- *   per-feature, basis, and data-driven styling is not available. A value in range `[0..1]`.
- *
- * @param color
- *   The base color of the extruded fill. The extrusion's surfaces will be shaded differently based
- *   on this color in combination with the root light settings. The alpha component of the specified
- *   color is ignored. Ignored if [pattern] is specified.
- *
  * @param translate
  *   The geometry's offset relative to the [translateAnchor]. Negative numbers indicate left and up
  *   (on the flat plane), respectively.
@@ -60,6 +51,15 @@ import androidx.compose.runtime.key as composeKey
  *   Frame of reference for offsetting geometry, see [TranslateAnchor].
  *
  *   Ignored if [translate] is not set.
+ *
+ * @param opacity
+ *   The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not
+ *   per-feature, basis, and data-driven styling is not available. A value in range `[0..1]`.
+ *
+ * @param color
+ *   The base color of the extruded fill. The extrusion's surfaces will be shaded differently based
+ *   on this color in combination with the root light settings. The alpha component of the specified
+ *   color is ignored. Ignored if [pattern] is specified.
  *
  * @param pattern
  *   Name of image in sprite to use for drawing images on extruded fills. For seamless patterns,
@@ -89,10 +89,10 @@ public inline fun FillExtrusionLayer(
   maxZoom: Float = 24.0f,
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
-  opacity: Expression<Number> = const(1.0),
-  color: Expression<Color> = const(Color.Black),
   translate: Expression<Point> = point(0.0, 0.0),
   translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  opacity: Expression<Number> = const(1.0),
+  color: Expression<Color> = const(Color.Black),
   pattern: Expression<TResolvedImage> = nil(),
   height: Expression<Number> = const(0.0),
   base: Expression<Number> = const(0.0),

@@ -41,6 +41,13 @@ import androidx.compose.runtime.key as composeKey
  * @param visible
  *   Whether the layer should be displayed.
  *
+ * @param color
+ *   Defines the color of each pixel based on its density value in a heatmap. Should be an
+ *   expression that uses [heatmapDensity] as input.
+ *
+ * @param opacity
+ *   The global opacity at which the heatmap layer will be drawn.
+ *
  * @param radius
  *   Radius of influence of one heatmap point in dp. Increasing the value makes the heatmap
  *   smoother, but less detailed. A value in the range of `[1..infinity)`.
@@ -54,13 +61,6 @@ import androidx.compose.runtime.key as composeKey
  *   Similar to [weight] but controls the intensity of the heatmap globally. Primarily used for
  *   adjusting the heatmap based on zoom level.
  *
- * @param color
- *   Defines the color of each pixel based on its density value in a heatmap. Should be an
- *   expression that uses [heatmapDensity] as input.
- *
- * @param opacity
- *   The global opacity at which the heatmap layer will be drawn.
- *
  * */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
@@ -72,9 +72,6 @@ public inline fun HeatmapLayer(
   maxZoom: Float = 24.0f,
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
-  radius: Expression<Number> = const(30),
-  weight: Expression<Number> = const(1),
-  intensity: Expression<Number> = const(1),
   color: Expression<Color> =
     interpolate(
       linear(),
@@ -87,6 +84,9 @@ public inline fun HeatmapLayer(
       1 to const(Color(0xFFFF0000)), // red
     ),
   opacity: Expression<Number> = const(1),
+  radius: Expression<Number> = const(30),
+  weight: Expression<Number> = const(1),
+  intensity: Expression<Number> = const(1),
   noinline onClick: ((features: List<Feature>) -> Unit)? = null,
   noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
 ) {
