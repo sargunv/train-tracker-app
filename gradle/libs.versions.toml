@@ -12,7 +12,7 @@ maplibre-ios = "6.8.1"
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.3" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-androidx" }
-kermit = { group = "co.touchlab", name = "kermit", version = "2.0.4" }
+kermit = { group = "co.touchlab", name = "kermit", version = "2.0.5" }
 maplibre-android = { module = "org.maplibre.gl:android-sdk", version = "11.6.1" }
 maplibre-android-plugin-annotation = { module = "org.maplibre.gl:android-plugin-annotation-v9", version.ref = "maplibre-android-plugins" }
 spatialk-geojson = { group = "io.github.dellisd.spatialk", name = "geojson", version = "0.3.0" }
