@@ -18,4 +18,5 @@ run the tests:
 
 A Git pre-commit hook is available to ensure that the code is formatted before every commit. Run
 `./gradlew installGitHooks` to install it. It will run `./gradlew spotlessApply` before every
-commit.
+commit. To run the formatter, you'll need to have `swift` installed (for `swift format`) and `npm`
+installed (for `prettier`).

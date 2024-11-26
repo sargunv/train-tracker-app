@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class, ExperimentalComposeLibrary::class)
 
+import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -14,12 +15,16 @@ plugins {
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
   alias(libs.plugins.maven.publish)
+  alias(libs.plugins.jgitver)
   id("maven-publish")
 }
 
 group = "dev.sargunv.maplibre-compose"
 
-version = project.properties["LIBRARY_VERSION"]!!.toString()
+jgitver {
+  strategy(Strategies.MAVEN)
+  nonQualifierBranches("main")
+}
 
 android {
   namespace = "dev.sargunv.maplibrecompose"

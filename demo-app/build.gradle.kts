@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -13,9 +14,13 @@ plugins {
   alias(libs.plugins.kotlin.cocoapods)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.spotless)
+  alias(libs.plugins.jgitver)
 }
 
-version = project.properties["LIBRARY_VERSION"]!!.toString()
+jgitver {
+  strategy(Strategies.PATTERN)
+  nonQualifierBranches("main")
+}
 
 android {
   namespace = "dev.sargunv.maplibrecompose.demoapp"
@@ -26,7 +31,7 @@ android {
     minSdk = libs.versions.android.minSdk.get().toInt()
     targetSdk = libs.versions.android.targetSdk.get().toInt()
     versionCode = 1
-    versionName = project.properties["LIBRARY_VERSION"]!!.toString()
+    versionName = project.version.toString()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
   packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
@@ -53,7 +58,10 @@ kotlin {
     homepage = "PLACEHOLDER HOMEPAGE"
     ios.deploymentTarget = "15.3"
     podfile = project.file("../iosApp/Podfile")
-    framework { baseName = "DemoApp" }
+    framework {
+      baseName = "DemoApp"
+      version = "0.0.0"
+    }
     pod("MapLibre", libs.versions.maplibre.ios.get())
   }
 

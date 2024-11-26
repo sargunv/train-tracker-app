@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'demo_app'
-    spec.version                  = '0.1.1-SNAPSHOT'
+    spec.version                  = '0.0.0'
     spec.homepage                 = 'PLACEHOLDER HOMEPAGE'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''

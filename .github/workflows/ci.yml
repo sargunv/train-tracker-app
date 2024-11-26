@@ -1,91 +1,121 @@
-name: CI
+---
+name: "CI"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
   check-format:
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: ./gradlew spotlessCheck
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew spotlessCheck"
+
+  check-podspec:
+    runs-on: "macos-latest"
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew podInstall"
+      - run: |
+          git diff -I '^COCOAPODS: [0-9]+\.[0-9]+\.[0-9]+$' --exit-code
 
   lint-android:
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: ./gradlew lint
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew lint"
 
   test-android:
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - name: Run with AVD ./gradlew connectedDebugAndroidTest
-        uses: ./.github/actions/run-with-avd
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - name: "Run with AVD ./gradlew connectedDebugAndroidTest"
+        uses: "./.github/actions/run-with-avd"
         with:
           api-level: 35
-          script: ./gradlew connectedDebugAndroidTest
+          script: "./gradlew connectedDebugAndroidTest"
 
   test-ios:
-    runs-on: macos-latest
+    runs-on: "macos-latest"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: ./gradlew iosSimulatorArm64Test
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew iosSimulatorArm64Test"
 
   build-docs:
-    runs-on: macos-latest
+    runs-on: "macos-latest"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: ./gradlew dokkaHtmlMultiModule
-      - uses: actions/upload-pages-artifact@v3
+      - uses: "actions/checkout@v4"
         with:
-          path: build/dokka/htmlMultiModule
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew dokkaHtmlMultiModule"
+      - uses: "actions/upload-pages-artifact@v3"
+        with:
+          path: "build/dokka/htmlMultiModule"
 
   build-android-app:
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: ./gradlew packageDebug packageRelease
-      - uses: actions/upload-artifact@v4
+      - uses: "actions/checkout@v4"
         with:
-          if-no-files-found: error
-          name: demo-app-debug
-          path: demo-app/build/outputs/apk/debug/demo-app-debug.apk
-      - uses: actions/upload-artifact@v4
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew packageDebug"
+      - uses: "actions/upload-artifact@v4"
         with:
-          if-no-files-found: error
-          name: demo-app-release-unsigned
-          path: demo-app/build/outputs/apk/release/demo-app-release-unsigned.apk
+          if-no-files-found: "error"
+          name: "demo-app-debug"
+          path: "demo-app/build/outputs/apk/debug/demo-app-debug.apk"
 
   publish-snapshot:
-    needs: [test-android, test-ios]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    runs-on: macos-latest
+    needs:
+      - "test-android"
+      - "test-ios"
+    if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+    runs-on: "macos-latest"
     permissions:
-      packages: write
+      packages: "write"
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - run: ./gradlew publishAllPublicationsToGitHubPackagesRepository
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+      - uses: "./.github/actions/setup"
+      - run: "./gradlew publishAllPublicationsToGitHubPackagesRepository"
         env:
-          ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
-          ORG_GRADLE_PROJECT_githubUser: ${{ github.actor }}
+          ORG_GRADLE_PROJECT_githubToken: "${{ secrets.GITHUB_TOKEN }}"
+          ORG_GRADLE_PROJECT_githubUser: "${{ github.actor }}"
 
   all-good:
-    needs: [check-format, lint-android, test-android, test-ios, build-docs, build-android-app]
-    runs-on: ubuntu-latest
+    needs:
+      - "check-format"
+      - "check-podspec"
+      - "lint-android"
+      - "test-android"
+      - "test-ios"
+      - "build-docs"
+      - "build-android-app"
+    runs-on: "ubuntu-latest"
     steps:
-      - run: echo "All checks passed!"
+      - run: "echo 'All checks passed!'"

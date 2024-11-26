@@ -9,7 +9,6 @@ plugins {
   alias(libs.plugins.kotlin.cocoapods) apply false
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
-  alias(libs.plugins.maven.publish) apply false
 }
 
 spotless {
@@ -21,6 +20,10 @@ spotless {
   flexmark {
     target("**/*.md")
     flexmark()
+  }
+  yaml {
+    target("**/*.yml", "**/*.yaml")
+    prettier().config(mapOf("quoteProps" to "consistent"))
   }
 }
 
