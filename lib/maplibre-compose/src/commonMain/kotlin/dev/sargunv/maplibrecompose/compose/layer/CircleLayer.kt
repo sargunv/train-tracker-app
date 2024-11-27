@@ -46,6 +46,8 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   [radius]. A value in range `[0..infinity)`.
  * @param pitchScale Scaling behavior of circles when the map is pitched. See [CirclePitchScale].
  * @param pitchAlignment Orientation of circles when the map is pitched. See [CirclePitchAlignment].
+ * @param onClick Function to call when any feature in this layer has been clicked.
+ * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
 @Suppress("NOTHING_TO_INLINE")

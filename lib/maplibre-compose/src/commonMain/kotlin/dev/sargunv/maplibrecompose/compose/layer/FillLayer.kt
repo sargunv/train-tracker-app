@@ -48,6 +48,9 @@ import io.github.dellisd.spatialk.geojson.Feature
  * @param outlineColor The outline color of the fill. The outline is drawn at a hairline width.
  *
  *   Ignored if [antialias] is `false`.
+ *
+ * @param onClick Function to call when any feature in this layer has been clicked.
+ * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
 @Suppress("NOTHING_TO_INLINE")

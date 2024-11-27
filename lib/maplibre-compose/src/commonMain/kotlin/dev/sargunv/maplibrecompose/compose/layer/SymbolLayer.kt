@@ -322,6 +322,8 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   [TranslateAnchor].
  *
  *   Ignored if [textField] is not specified.
+ * @param onClick Function to call when any feature in this layer has been clicked.
+ * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
 @Suppress("NOTHING_TO_INLINE")

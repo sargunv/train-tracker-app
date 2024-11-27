@@ -48,8 +48,6 @@ public inline fun RasterLayer(
   contrast: Expression<Number> = const(0),
   resampling: Expression<String> = const(RasterResampling.Linear),
   fadeDuration: Expression<Number> = const(300),
-  noinline onClick: ((features: List<Feature>) -> Unit)? = null,
-  noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
 ) {
   composeKey(id) {
     LayerNode(
@@ -67,8 +65,8 @@ public inline fun RasterLayer(
         set(resampling) { layer.setRasterResampling(it) }
         set(fadeDuration) { layer.setRasterFadeDuration(it) }
       },
-      onClick = onClick,
-      onLongClick = onLongClick,
+      onClick = null,
+      onLongClick = null,
     )
   }
 }

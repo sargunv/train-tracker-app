@@ -50,6 +50,8 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   [height].
  * @param verticalGradient Whether to apply a vertical gradient to the sides of this layer. If
  *   `true`, sides will be shaded slightly darker farther down.
+ * @param onClick Function to call when any feature in this layer has been clicked.
+ * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
 @Suppress("NOTHING_TO_INLINE")

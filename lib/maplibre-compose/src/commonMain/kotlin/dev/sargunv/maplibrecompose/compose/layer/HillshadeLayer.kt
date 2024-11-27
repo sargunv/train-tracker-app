@@ -47,8 +47,6 @@ public inline fun HillshadeLayer(
   illuminationDirection: Expression<Number> = const(355),
   illuminationAnchor: Expression<String> = const(IlluminationAnchor.Viewport),
   exaggeration: Expression<Number> = const(0.5),
-  noinline onClick: ((features: List<Feature>) -> Unit)? = null,
-  noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
 ) {
   composeKey(id) {
     LayerNode(
@@ -64,8 +62,8 @@ public inline fun HillshadeLayer(
         set(highlightColor) { layer.setHillshadeHighlightColor(it) }
         set(accentColor) { layer.setHillshadeAccentColor(it) }
       },
-      onClick = onClick,
-      onLongClick = onLongClick,
+      onClick = null,
+      onLongClick = null,
     )
   }
 }

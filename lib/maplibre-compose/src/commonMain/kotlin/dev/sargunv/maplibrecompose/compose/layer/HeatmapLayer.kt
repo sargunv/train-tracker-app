@@ -37,6 +37,8 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   combined with clustering. A value in the range of `[0..infinity)`.
  * @param intensity Similar to [weight] but controls the intensity of the heatmap globally.
  *   Primarily used for adjusting the heatmap based on zoom level.
+ * @param onClick Function to call when any feature in this layer has been clicked.
+ * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
 @Suppress("NOTHING_TO_INLINE")

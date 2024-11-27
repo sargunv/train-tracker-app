@@ -68,6 +68,8 @@ import io.github.dellisd.spatialk.geojson.Feature
  *   [join] is [StrokeJoin.Miter].
  * @param roundLimit Limit at which to automatically convert to miter join for sharp angles when
  *   [join] is [StrokeJoin.Round].
+ * @param onClick Function to call when any feature in this layer has been clicked.
+ * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
