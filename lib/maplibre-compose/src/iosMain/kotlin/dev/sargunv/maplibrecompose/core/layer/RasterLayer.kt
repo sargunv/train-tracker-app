@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNRasterStyleLayer
+import dev.sargunv.maplibrecompose.compose.layer.RasterResampling
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -35,7 +36,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.rasterContrast = contrast.toNSExpression()
   }
 
-  actual fun setRasterResampling(resampling: Expression<String>) {
+  actual fun setRasterResampling(resampling: Expression<RasterResampling>) {
     impl.rasterResamplingMode = resampling.toNSExpression()
   }
 

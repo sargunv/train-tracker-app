@@ -11,6 +11,7 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.layer.FillLayer
+import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**
@@ -64,7 +65,7 @@ public inline fun FillLayer(
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
   translate: Expression<Point> = point(0.0, 0.0),
-  translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   opacity: Expression<Number> = const(1.0),
   color: Expression<Color> = const(Color.Black),
   pattern: Expression<TResolvedImage> = nil(),

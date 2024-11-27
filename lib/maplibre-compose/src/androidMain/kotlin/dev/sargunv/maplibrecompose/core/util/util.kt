@@ -18,6 +18,7 @@ import com.google.gson.JsonPrimitive
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point
+import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Position
 import java.net.URI
@@ -103,6 +104,8 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
           "rgba(${(it shr 16) and 0xFF}, ${(it shr 8) and 0xFF}, ${it and 0xFF}, ${value.alpha})"
         }
       )
+
+    is LayerPropertyEnum -> JsonPrimitive(value.value)
 
     else -> throw IllegalArgumentException("Unsupported type: ${value::class}")
   }

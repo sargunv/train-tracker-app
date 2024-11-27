@@ -23,11 +23,11 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   fun setCircleTranslate(translate: Expression<Point>)
 
-  fun setCircleTranslateAnchor(translateAnchor: Expression<String>)
+  fun setCircleTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
-  fun setCirclePitchScale(pitchScale: Expression<String>)
+  fun setCirclePitchScale(pitchScale: Expression<CirclePitchScale>)
 
-  fun setCirclePitchAlignment(pitchAlignment: Expression<String>)
+  fun setCirclePitchAlignment(pitchAlignment: Expression<CirclePitchAlignment>)
 
   fun setCircleStrokeWidth(strokeWidth: Expression<Number>)
 

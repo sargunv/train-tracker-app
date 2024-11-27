@@ -14,7 +14,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   override fun setFilter(filter: Expression<Boolean>)
 
-  fun setSymbolPlacement(placement: Expression<String>)
+  fun setSymbolPlacement(placement: Expression<SymbolPlacement>)
 
   fun setSymbolSpacing(spacing: Expression<Number>)
 
@@ -22,7 +22,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setSymbolSortKey(sortKey: Expression<Number>)
 
-  fun setSymbolZOrder(zOrder: Expression<String>)
+  fun setSymbolZOrder(zOrder: Expression<SymbolZOrder>)
 
   fun setIconAllowOverlap(allowOverlap: Expression<Boolean>)
 
@@ -32,11 +32,11 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconOptional(optional: Expression<Boolean>)
 
-  fun setIconRotationAlignment(rotationAlignment: Expression<String>)
+  fun setIconRotationAlignment(rotationAlignment: Expression<IconRotationAlignment>)
 
   fun setIconSize(size: Expression<Number>)
 
-  fun setIconTextFit(textFit: Expression<String>)
+  fun setIconTextFit(textFit: Expression<IconTextFit>)
 
   fun setIconTextFitPadding(textFitPadding: Expression<Insets>)
 
@@ -50,9 +50,9 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconOffset(offset: Expression<Point>)
 
-  fun setIconAnchor(anchor: Expression<String>)
+  fun setIconAnchor(anchor: Expression<SymbolAnchor>)
 
-  fun setIconPitchAlignment(pitchAlignment: Expression<String>)
+  fun setIconPitchAlignment(pitchAlignment: Expression<IconPitchAlignment>)
 
   fun setIconOpacity(opacity: Expression<Number>)
 
@@ -66,11 +66,11 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconTranslate(translate: Expression<Point>)
 
-  fun setIconTranslateAnchor(translateAnchor: Expression<String>)
+  fun setIconTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
-  fun setTextPitchAlignment(pitchAlignment: Expression<String>)
+  fun setTextPitchAlignment(pitchAlignment: Expression<TextPitchAlignment>)
 
-  fun setTextRotationAlignment(rotationAlignment: Expression<String>)
+  fun setTextRotationAlignment(rotationAlignment: Expression<TextRotationAlignment>)
 
   fun setTextField(field: Expression<TFormatted>)
 
@@ -84,7 +84,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextLetterSpacing(letterSpacing: Expression<Number>)
 
-  fun setTextJustify(justify: Expression<String>)
+  fun setTextJustify(justify: Expression<TextJustify>)
 
   fun setTextRadialOffset(radialOffset: Expression<Number>)
 
@@ -92,7 +92,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<*>>)
 
-  fun setTextAnchor(anchor: Expression<String>)
+  fun setTextAnchor(anchor: Expression<SymbolAnchor>)
 
   fun setTextMaxAngle(maxAngle: Expression<Number>)
 
@@ -104,7 +104,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextKeepUpright(keepUpright: Expression<Boolean>)
 
-  fun setTextTransform(transform: Expression<String>)
+  fun setTextTransform(transform: Expression<TextTransform>)
 
   fun setTextOffset(offset: Expression<Point>)
 
@@ -128,5 +128,5 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextTranslate(translate: Expression<Point>)
 
-  fun setTextTranslateAnchor(translateAnchor: Expression<String>)
+  fun setTextTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 }

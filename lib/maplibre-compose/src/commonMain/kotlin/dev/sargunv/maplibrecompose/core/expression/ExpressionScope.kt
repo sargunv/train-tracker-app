@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.expression
 
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 import kotlin.jvm.JvmName
 
 @Suppress("INAPPLICABLE_JVM_NAME")
@@ -14,6 +15,10 @@ public interface ExpressionScope {
   public fun const(number: Number): Expression<Number> = Expression.ofNumber(number)
 
   public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
+
+  public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
+    Expression.ofLayerPropertyEnum(value)
+
 
   @Suppress("UNCHECKED_CAST")
   public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>

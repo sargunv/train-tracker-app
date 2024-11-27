@@ -1,6 +1,9 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.layer.CirclePitchAlignment
+import dev.sargunv.maplibrecompose.compose.layer.CirclePitchScale
+import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -44,15 +47,15 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.circleTranslate(translate.toMLNExpression()))
   }
 
-  actual fun setCircleTranslateAnchor(translateAnchor: Expression<String>) {
+  actual fun setCircleTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
     impl.setProperties(PropertyFactory.circleTranslateAnchor(translateAnchor.toMLNExpression()))
   }
 
-  actual fun setCirclePitchScale(pitchScale: Expression<String>) {
+  actual fun setCirclePitchScale(pitchScale: Expression<CirclePitchScale>) {
     impl.setProperties(PropertyFactory.circlePitchScale(pitchScale.toMLNExpression()))
   }
 
-  actual fun setCirclePitchAlignment(pitchAlignment: Expression<String>) {
+  actual fun setCirclePitchAlignment(pitchAlignment: Expression<CirclePitchAlignment>) {
     impl.setProperties(PropertyFactory.circlePitchAlignment(pitchAlignment.toMLNExpression()))
   }
 

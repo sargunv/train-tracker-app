@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
@@ -10,6 +11,9 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.layer.CircleLayer
+import dev.sargunv.maplibrecompose.core.layer.CirclePitchAlignment
+import dev.sargunv.maplibrecompose.core.layer.CirclePitchScale
+import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**
@@ -61,7 +65,7 @@ public inline fun CircleLayer(
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
   translate: Expression<Point> = point(0, 0),
-  translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   opacity: Expression<Number> = const(1),
   color: Expression<Color> = const(Color.Black),
   blur: Expression<Number> = const(0),
@@ -69,8 +73,8 @@ public inline fun CircleLayer(
   strokeOpacity: Expression<Number> = const(1),
   strokeColor: Expression<Color> = const(Color.Black),
   strokeWidth: Expression<Number> = const(0),
-  pitchScale: Expression<String> = const(CirclePitchScale.Map),
-  pitchAlignment: Expression<String> = const(CirclePitchAlignment.Viewport),
+  pitchScale: Expression<CirclePitchScale> = const(CirclePitchScale.Map),
+  pitchAlignment: Expression<CirclePitchAlignment> = const(CirclePitchAlignment.Viewport),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {
@@ -100,25 +104,4 @@ public inline fun CircleLayer(
       onLongClick = onLongClick,
     )
   }
-}
-
-/** Scaling behavior of circles when the map is pitched. */
-public object CirclePitchScale {
-  /**
-   * Circles are scaled according to their apparent distance to the camera, i.e. as if they are on
-   * the map.
-   */
-  public const val Map: String = "map"
-
-  /** Circles are not scaled, i.e. as if glued to the viewport. */
-  public const val Viewport: String = "viewport"
-}
-
-/** Orientation of circles when the map is pitched. */
-public object CirclePitchAlignment {
-  /** Circles are aligned to the plane of the map, i.e. flat on top of the map. */
-  public const val Map: String = "map"
-
-  /** Circles are aligned to the plane of the viewport, i.e. facing the camera. */
-  public const val Viewport: String = "viewport"
 }

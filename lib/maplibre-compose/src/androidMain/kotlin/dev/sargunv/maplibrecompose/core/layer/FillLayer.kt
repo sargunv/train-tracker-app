@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
@@ -45,7 +46,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.setProperties(PropertyFactory.fillTranslate(translate.toMLNExpression()))
   }
 
-  actual fun setFillTranslateAnchor(translateAnchor: Expression<String>) {
+  actual fun setFillTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
     impl.setProperties(PropertyFactory.fillTranslateAnchor(translateAnchor.toMLNExpression()))
   }
 

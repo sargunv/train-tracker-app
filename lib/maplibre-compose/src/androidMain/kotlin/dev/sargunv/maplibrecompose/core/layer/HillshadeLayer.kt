@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.layer.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -16,7 +17,7 @@ internal actual class HillshadeLayer actual constructor(id: String, actual val s
     impl.setProperties(PropertyFactory.hillshadeIlluminationDirection(direction.toMLNExpression()))
   }
 
-  actual fun setHillshadeIlluminationAnchor(anchor: Expression<String>) {
+  actual fun setHillshadeIlluminationAnchor(anchor: Expression<IlluminationAnchor>) {
     impl.setProperties(PropertyFactory.hillshadeIlluminationAnchor(anchor.toMLNExpression()))
   }
 

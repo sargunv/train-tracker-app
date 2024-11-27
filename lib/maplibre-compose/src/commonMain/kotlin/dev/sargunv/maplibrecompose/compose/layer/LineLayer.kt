@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
@@ -10,7 +11,10 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
+import dev.sargunv.maplibrecompose.core.layer.LineCap
+import dev.sargunv.maplibrecompose.core.layer.LineJoin
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
+import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**
@@ -62,12 +66,12 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param offset The lines' offset. For linear features, a positive value offsets the line to the
  *   right, relative to the direction of the line, and a negative value to the left. For polygon
  *   features, a positive value results in an inset, and a negative value results in an outset.
- * @param cap Display of line endings. See [StrokeCap].
- * @param join Display of joined lines. See [StrokeJoin].
+ * @param cap Display of line endings. See [LineCap].
+ * @param join Display of joined lines. See [LineJoin].
  * @param miterLimit Limit at which to automatically convert to bevel join for sharp angles when
- *   [join] is [StrokeJoin.Miter].
+ *   [join] is [LineJoin.Miter].
  * @param roundLimit Limit at which to automatically convert to miter join for sharp angles when
- *   [join] is [StrokeJoin.Round].
+ *   [join] is [LineJoin.Round].
  * @param onClick Function to call when any feature in this layer has been clicked.
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
@@ -83,7 +87,7 @@ public inline fun LineLayer(
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
   translate: Expression<Point> = point(0, 0),
-  translateAnchor: Expression<String> = const(TranslateAnchor.Map),
+  translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   opacity: Expression<Number> = const(1),
   color: Expression<Color> = const(Color.Black),
   dasharray: Expression<List<Number>> = nil(),
@@ -93,8 +97,8 @@ public inline fun LineLayer(
   width: Expression<Number> = const(1),
   gapWidth: Expression<Number> = const(0),
   offset: Expression<Number> = const(0),
-  cap: Expression<String> = const(StrokeCap.Butt),
-  join: Expression<String> = const(StrokeJoin.Miter),
+  cap: Expression<LineCap> = const(LineCap.Butt),
+  join: Expression<LineJoin> = const(LineJoin.Miter),
   miterLimit: Expression<Number> = const(2),
   roundLimit: Expression<Number> = const(1.05),
   noinline onClick: FeaturesClickHandler? = null,
@@ -130,43 +134,4 @@ public inline fun LineLayer(
       onLongClick = onLongClick,
     )
   }
-}
-
-/** Display of joined lines */
-public object StrokeJoin {
-  /**
-   * A join with a squared-off end which is drawn beyond the endpoint of the line at a distance of
-   * one-half of the line's width.
-   */
-  public const val Bevel: String = "bevel"
-
-  /**
-   * A join with a rounded end which is drawn beyond the endpoint of the line at a radius of
-   * one-half of the line's width and centered on the endpoint of the line.
-   */
-  public const val Round: String = "round"
-
-  /**
-   * A join with a sharp, angled corner which is drawn with the outer sides beyond the endpoint of
-   * the path until they meet.
-   */
-  public const val Miter: String = "miter"
-}
-
-/** Display of line endings */
-public object StrokeCap {
-  /** A cap with a squared-off end which is drawn to the exact endpoint of the line. */
-  public const val Butt: String = "butt"
-
-  /**
-   * A cap with a rounded end which is drawn beyond the endpoint of the line at a radius of one-half
-   * of the line's width and centered on the endpoint of the line.
-   */
-  public const val Round: String = "round"
-
-  /**
-   * A cap with a squared-off end which is drawn beyond the endpoint of the line at a distance of
-   * one-half of the line's width.
-   */
-  public const val Square: String = "square"
 }

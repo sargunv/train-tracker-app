@@ -10,7 +10,7 @@ internal expect class HillshadeLayer(id: String, source: Source) : Layer {
 
   fun setHillshadeIlluminationDirection(direction: Expression<Number>)
 
-  fun setHillshadeIlluminationAnchor(anchor: Expression<String>)
+  fun setHillshadeIlluminationAnchor(anchor: Expression<IlluminationAnchor>)
 
   fun setHillshadeExaggeration(exaggeration: Expression<Number>)
 

@@ -19,7 +19,7 @@ internal expect class RasterLayer(id: String, source: Source) : Layer {
 
   fun setRasterContrast(contrast: Expression<Number>)
 
-  fun setRasterResampling(resampling: Expression<String>)
+  fun setRasterResampling(resampling: Expression<RasterResampling>)
 
   fun setRasterFadeDuration(fadeDuration: Expression<Number>)
 }

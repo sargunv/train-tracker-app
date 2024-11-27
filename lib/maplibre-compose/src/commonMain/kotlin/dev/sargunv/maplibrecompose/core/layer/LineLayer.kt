@@ -12,9 +12,9 @@ internal expect class LineLayer(id: String, source: Source) : FeatureLayer {
 
   override fun setFilter(filter: Expression<Boolean>)
 
-  fun setLineCap(cap: Expression<String>)
+  fun setLineCap(cap: Expression<LineCap>)
 
-  fun setLineJoin(join: Expression<String>)
+  fun setLineJoin(join: Expression<LineJoin>)
 
   fun setLineMiterLimit(miterLimit: Expression<Number>)
 
@@ -28,7 +28,7 @@ internal expect class LineLayer(id: String, source: Source) : FeatureLayer {
 
   fun setLineTranslate(translate: Expression<Point>)
 
-  fun setLineTranslateAnchor(translateAnchor: Expression<String>)
+  fun setLineTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
   fun setLineWidth(width: Expression<Number>)
 

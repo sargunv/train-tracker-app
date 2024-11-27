@@ -24,7 +24,7 @@ internal expect class FillLayer(id: String, source: Source) : FeatureLayer {
 
   fun setFillTranslate(translate: Expression<Point>)
 
-  fun setFillTranslateAnchor(translateAnchor: Expression<String>)
+  fun setFillTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
   fun setFillPattern(pattern: Expression<TResolvedImage>)
 }

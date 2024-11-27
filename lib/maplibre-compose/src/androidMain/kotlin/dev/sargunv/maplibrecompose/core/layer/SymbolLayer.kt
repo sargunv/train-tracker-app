@@ -1,6 +1,17 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.layer.IconPitchAlignment
+import dev.sargunv.maplibrecompose.compose.layer.IconRotationAlignment
+import dev.sargunv.maplibrecompose.compose.layer.IconTextFit
+import dev.sargunv.maplibrecompose.compose.layer.SymbolAnchor
+import dev.sargunv.maplibrecompose.compose.layer.SymbolPlacement
+import dev.sargunv.maplibrecompose.compose.layer.SymbolZOrder
+import dev.sargunv.maplibrecompose.compose.layer.TextJustify
+import dev.sargunv.maplibrecompose.compose.layer.TextPitchAlignment
+import dev.sargunv.maplibrecompose.compose.layer.TextRotationAlignment
+import dev.sargunv.maplibrecompose.compose.layer.TextTransform
+import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point
@@ -23,7 +34,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setFilter(filter.toMLNExpression() ?: MLNExpression.literal(true))
   }
 
-  actual fun setSymbolPlacement(placement: Expression<String>) {
+  actual fun setSymbolPlacement(placement: Expression<SymbolPlacement>) {
     impl.setProperties(PropertyFactory.symbolPlacement(placement.toMLNExpression()))
   }
 
@@ -39,7 +50,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.symbolSortKey(sortKey.toMLNExpression()))
   }
 
-  actual fun setSymbolZOrder(zOrder: Expression<String>) {
+  actual fun setSymbolZOrder(zOrder: Expression<SymbolZOrder>) {
     impl.setProperties(PropertyFactory.symbolZOrder(zOrder.toMLNExpression()))
   }
 
@@ -60,7 +71,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconOptional(optional.toMLNExpression()))
   }
 
-  actual fun setIconRotationAlignment(rotationAlignment: Expression<String>) {
+  actual fun setIconRotationAlignment(rotationAlignment: Expression<IconRotationAlignment>) {
     impl.setProperties(PropertyFactory.iconRotationAlignment(rotationAlignment.toMLNExpression()))
   }
 
@@ -68,7 +79,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconSize(size.toMLNExpression()))
   }
 
-  actual fun setIconTextFit(textFit: Expression<String>) {
+  actual fun setIconTextFit(textFit: Expression<IconTextFit>) {
     impl.setProperties(PropertyFactory.iconTextFit(textFit.toMLNExpression()))
   }
 
@@ -96,11 +107,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconOffset(offset.toMLNExpression()))
   }
 
-  actual fun setIconAnchor(anchor: Expression<String>) {
+  actual fun setIconAnchor(anchor: Expression<SymbolAnchor>) {
     impl.setProperties(PropertyFactory.iconAnchor(anchor.toMLNExpression()))
   }
 
-  actual fun setIconPitchAlignment(pitchAlignment: Expression<String>) {
+  actual fun setIconPitchAlignment(pitchAlignment: Expression<IconPitchAlignment>) {
     impl.setProperties(PropertyFactory.iconPitchAlignment(pitchAlignment.toMLNExpression()))
   }
 
@@ -128,15 +139,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconTranslate(translate.toMLNExpression()))
   }
 
-  actual fun setIconTranslateAnchor(translateAnchor: Expression<String>) {
+  actual fun setIconTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
     impl.setProperties(PropertyFactory.iconTranslateAnchor(translateAnchor.toMLNExpression()))
   }
 
-  actual fun setTextPitchAlignment(pitchAlignment: Expression<String>) {
+  actual fun setTextPitchAlignment(pitchAlignment: Expression<TextPitchAlignment>) {
     impl.setProperties(PropertyFactory.textPitchAlignment(pitchAlignment.toMLNExpression()))
   }
 
-  actual fun setTextRotationAlignment(rotationAlignment: Expression<String>) {
+  actual fun setTextRotationAlignment(rotationAlignment: Expression<TextRotationAlignment>) {
     impl.setProperties(PropertyFactory.textRotationAlignment(rotationAlignment.toMLNExpression()))
   }
 
@@ -164,7 +175,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textLetterSpacing(letterSpacing.toMLNExpression()))
   }
 
-  actual fun setTextJustify(justify: Expression<String>) {
+  actual fun setTextJustify(justify: Expression<TextJustify>) {
     impl.setProperties(PropertyFactory.textJustify(justify.toMLNExpression()))
   }
 
@@ -182,7 +193,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     )
   }
 
-  actual fun setTextAnchor(anchor: Expression<String>) {
+  actual fun setTextAnchor(anchor: Expression<SymbolAnchor>) {
     impl.setProperties(PropertyFactory.textAnchor(anchor.toMLNExpression()))
   }
 
@@ -206,7 +217,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textKeepUpright(keepUpright.toMLNExpression()))
   }
 
-  actual fun setTextTransform(transform: Expression<String>) {
+  actual fun setTextTransform(transform: Expression<TextTransform>) {
     impl.setProperties(PropertyFactory.textTransform(transform.toMLNExpression()))
   }
 
@@ -255,7 +266,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textTranslate(translate.toMLNExpression()))
   }
 
-  actual fun setTextTranslateAnchor(translateAnchor: Expression<String>) {
+  actual fun setTextTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
     impl.setProperties(PropertyFactory.textTranslateAnchor(translateAnchor.toMLNExpression()))
   }
 }

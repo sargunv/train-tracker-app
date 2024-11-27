@@ -2,6 +2,17 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNSymbolStyleLayer
+import dev.sargunv.maplibrecompose.compose.layer.IconPitchAlignment
+import dev.sargunv.maplibrecompose.compose.layer.IconRotationAlignment
+import dev.sargunv.maplibrecompose.compose.layer.IconTextFit
+import dev.sargunv.maplibrecompose.compose.layer.SymbolAnchor
+import dev.sargunv.maplibrecompose.compose.layer.SymbolPlacement
+import dev.sargunv.maplibrecompose.compose.layer.SymbolZOrder
+import dev.sargunv.maplibrecompose.compose.layer.TextJustify
+import dev.sargunv.maplibrecompose.compose.layer.TextPitchAlignment
+import dev.sargunv.maplibrecompose.compose.layer.TextRotationAlignment
+import dev.sargunv.maplibrecompose.compose.layer.TextTransform
+import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point
@@ -27,7 +38,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setSymbolPlacement(placement: Expression<String>) {
+  actual fun setSymbolPlacement(placement: Expression<SymbolPlacement>) {
     impl.symbolPlacement = placement.toNSExpression()
   }
 
@@ -43,7 +54,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.symbolSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setSymbolZOrder(zOrder: Expression<String>) {
+  actual fun setSymbolZOrder(zOrder: Expression<SymbolZOrder>) {
     impl.symbolZOrder = zOrder.toNSExpression()
   }
 
@@ -64,7 +75,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconOptional = optional.toNSExpression()
   }
 
-  actual fun setIconRotationAlignment(rotationAlignment: Expression<String>) {
+  actual fun setIconRotationAlignment(rotationAlignment: Expression<IconRotationAlignment>) {
     impl.iconRotationAlignment = rotationAlignment.toNSExpression()
   }
 
@@ -72,7 +83,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconScale = size.toNSExpression()
   }
 
-  actual fun setIconTextFit(textFit: Expression<String>) {
+  actual fun setIconTextFit(textFit: Expression<IconTextFit>) {
     impl.iconTextFit = textFit.toNSExpression()
   }
 
@@ -101,11 +112,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconOffset = offset.toNSExpression()
   }
 
-  actual fun setIconAnchor(anchor: Expression<String>) {
+  actual fun setIconAnchor(anchor: Expression<SymbolAnchor>) {
     impl.iconAnchor = anchor.toNSExpression()
   }
 
-  actual fun setIconPitchAlignment(pitchAlignment: Expression<String>) {
+  actual fun setIconPitchAlignment(pitchAlignment: Expression<IconPitchAlignment>) {
     impl.iconPitchAlignment = pitchAlignment.toNSExpression()
   }
 
@@ -133,15 +144,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconTranslation = translate.toNSExpression()
   }
 
-  actual fun setIconTranslateAnchor(translateAnchor: Expression<String>) {
+  actual fun setIconTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
     impl.iconTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setTextPitchAlignment(pitchAlignment: Expression<String>) {
+  actual fun setTextPitchAlignment(pitchAlignment: Expression<TextPitchAlignment>) {
     impl.textPitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setTextRotationAlignment(rotationAlignment: Expression<String>) {
+  actual fun setTextRotationAlignment(rotationAlignment: Expression<TextRotationAlignment>) {
     impl.textRotationAlignment = rotationAlignment.toNSExpression()
   }
 
@@ -169,7 +180,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textLetterSpacing = letterSpacing.toNSExpression()
   }
 
-  actual fun setTextJustify(justify: Expression<String>) {
+  actual fun setTextJustify(justify: Expression<TextJustify>) {
     impl.textJustification = justify.toNSExpression()
   }
 
@@ -185,7 +196,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
   }
 
-  actual fun setTextAnchor(anchor: Expression<String>) {
+  actual fun setTextAnchor(anchor: Expression<SymbolAnchor>) {
     impl.textAnchor = anchor.toNSExpression()
   }
 
@@ -209,7 +220,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.keepsTextUpright = keepUpright.toNSExpression()
   }
 
-  actual fun setTextTransform(transform: Expression<String>) {
+  actual fun setTextTransform(transform: Expression<TextTransform>) {
     impl.textTransform = transform.toNSExpression()
   }
 
@@ -258,7 +269,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textTranslation = translate.toNSExpression()
   }
 
-  actual fun setTextTranslateAnchor(translateAnchor: Expression<String>) {
+  actual fun setTextTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
     impl.textTranslationAnchor = translateAnchor.toNSExpression()
   }
 }

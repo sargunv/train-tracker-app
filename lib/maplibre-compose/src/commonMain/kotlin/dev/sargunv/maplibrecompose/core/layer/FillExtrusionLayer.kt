@@ -18,7 +18,7 @@ internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLa
 
   fun setFillExtrusionTranslate(translate: Expression<Point>)
 
-  fun setFillExtrusionTranslateAnchor(anchor: Expression<String>)
+  fun setFillExtrusionTranslateAnchor(anchor: Expression<TranslateAnchor>)
 
   fun setFillExtrusionPattern(pattern: Expression<TResolvedImage>)
 

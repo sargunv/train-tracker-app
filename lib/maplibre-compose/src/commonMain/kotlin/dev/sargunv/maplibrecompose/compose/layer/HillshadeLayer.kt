@@ -1,11 +1,13 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.layer.HillshadeLayer
+import dev.sargunv.maplibrecompose.core.layer.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**
@@ -44,7 +46,7 @@ public inline fun HillshadeLayer(
   highlightColor: Expression<Color> = const(Color.White),
   accentColor: Expression<Color> = const(Color.Black),
   illuminationDirection: Expression<Number> = const(355),
-  illuminationAnchor: Expression<String> = const(IlluminationAnchor.Viewport),
+  illuminationAnchor: Expression<IlluminationAnchor> = const(IlluminationAnchor.Viewport),
   exaggeration: Expression<Number> = const(0.5),
 ) {
   composeKey(id) {
@@ -65,14 +67,4 @@ public inline fun HillshadeLayer(
       onLongClick = null,
     )
   }
-}
-
-/** Direction of light source when map is rotated. */
-public object IlluminationAnchor {
-
-  /** The hillshade illumination is relative to the north direction. */
-  public const val Map: String = "map"
-
-  /** The hillshade illumination is relative to the top of the viewport. */
-  public const val Viewport: String = "viewport"
 }
