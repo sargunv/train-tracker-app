@@ -151,11 +151,15 @@ internal class StyleManager(var style: Style, private var logger: Logger?) {
   }
 
   private fun Anchor.validate() {
-    when (this) {
-      is Anchor.WithLayerId ->
-        require(baseLayers.containsKey(layerId)) { "Layer ID '$layerId' not found in base style" }
-
-      else -> Unit
+    layerIdOrNull?.let { layerId ->
+      require(baseLayers.containsKey(layerId)) { "Layer ID '$layerId' not found in base style" }
     }
+  }
+
+  private val Anchor.layerIdOrNull: String? get() = when (this) {
+    is Anchor.Above -> layerId
+    is Anchor.Below -> layerId
+    is Anchor.Replace -> layerId
+    else -> null
   }
 }
