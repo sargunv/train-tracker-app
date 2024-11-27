@@ -3,7 +3,7 @@ name: "CI"
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -15,22 +15,22 @@ concurrency:
 jobs:
   check-format:
     runs-on: "ubuntu-latest"
+    permissions:
+      checks: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
       - uses: "./.github/actions/setup"
-      - if: "${{ github.event_name == 'push' }}"
-        run: "./gradlew spotlessCheck"
-      - if: "${{ github.event_name == 'pull_request' }}"
-        run: "./gradlew spotlessApply"
+      - run: "./gradlew spotlessApply"
       - if: "${{ github.event_name == 'pull_request' }}"
         uses: reviewdog/action-suggester@v1
         with:
           tool_name: spotless
           cleanup: false
-      - if: "${{ github.event_name == 'pull_request' }}"
-        run: "git diff --exit-code"
+      - run: "git diff --exit-code"
 
   check-podspec:
     runs-on: "macos-latest"
