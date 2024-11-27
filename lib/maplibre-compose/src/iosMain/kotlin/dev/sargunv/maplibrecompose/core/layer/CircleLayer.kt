@@ -2,9 +2,6 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNCircleStyleLayer
-import dev.sargunv.maplibrecompose.compose.layer.CirclePitchAlignment
-import dev.sargunv.maplibrecompose.compose.layer.CirclePitchScale
-import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.source.Source
