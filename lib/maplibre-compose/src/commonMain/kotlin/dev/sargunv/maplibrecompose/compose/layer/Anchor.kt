@@ -15,8 +15,8 @@ internal val LocalAnchor: ProvidableCompositionLocal<Anchor> = compositionLocalO
  * This allows for layers declared in Compose to be inserted at any location of the layers defined
  * in the base style JSON rather than exclusively on top of these.
  *
- * See [AnchorTop], [AnchorBottom], [AnchorAbove], [AnchorBelow], [AnchorReplace] to use in the
- * layers composition.
+ * See [AnchorTop], [AnchorBottom], [AnchorAbove], [AnchorBelow], [AnchorReplace] and [AnchorAt] to
+ * use in the layers composition.
  * */
 @Immutable
 public sealed interface Anchor {
