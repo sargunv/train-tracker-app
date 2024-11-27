@@ -156,10 +156,12 @@ internal class StyleManager(var style: Style, private var logger: Logger?) {
     }
   }
 
-  private val Anchor.layerIdOrNull: String? get() = when (this) {
-    is Anchor.Above -> layerId
-    is Anchor.Below -> layerId
-    is Anchor.Replace -> layerId
-    else -> null
-  }
+  private val Anchor.layerIdOrNull: String?
+    get() =
+      when (this) {
+        is Anchor.Above -> layerId
+        is Anchor.Below -> layerId
+        is Anchor.Replace -> layerId
+        else -> null
+      }
 }
