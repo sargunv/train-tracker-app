@@ -20,7 +20,16 @@ jobs:
         with:
           fetch-depth: 0
       - uses: "./.github/actions/setup"
-      - run: "./gradlew spotlessCheck"
+      - if: "${{ github.event_name == 'push' }}"
+        run: "./gradlew spotlessCheck"
+      - if: "${{ github.event_name == 'pull_request' }}"
+        run: "./gradlew spotlessApply"
+      - if: "${{ github.event_name == 'pull_request' }}"
+        uses: "getsentry/action-git-diff-suggestions@v1"
+        with:
+          message: Generated with `./gradlew spotlessApply`
+      - if: "${{ github.event_name == 'pull_request' }}"
+        run: "git diff --exit-code"
 
   check-podspec:
     runs-on: "macos-latest"
