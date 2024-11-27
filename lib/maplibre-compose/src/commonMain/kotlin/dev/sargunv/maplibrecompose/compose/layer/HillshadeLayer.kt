@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.layer.HillshadeLayer
 import dev.sargunv.maplibrecompose.core.source.Source
-import io.github.dellisd.spatialk.geojson.Feature
 
 /**
  * Client-side hillshading visualization based on DEM data. The implementation supports Mapbox

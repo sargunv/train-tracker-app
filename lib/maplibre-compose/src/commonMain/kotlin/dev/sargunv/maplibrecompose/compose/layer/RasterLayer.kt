@@ -6,7 +6,6 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.layer.RasterLayer
 import dev.sargunv.maplibrecompose.core.source.Source
-import io.github.dellisd.spatialk.geojson.Feature
 
 /**
  * Raster map textures such as satellite imagery.
