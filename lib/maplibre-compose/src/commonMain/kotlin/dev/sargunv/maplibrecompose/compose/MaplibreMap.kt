@@ -24,6 +24,8 @@ public fun MaplibreMap(
   gestureSettings: GestureSettings = GestureSettings(),
   ornamentSettings: OrnamentSettings = OrnamentSettings(),
   cameraState: CameraState = rememberCameraState(),
+  onMapClick: MapClickHandler = { _, _ -> ClickResult.Pass },
+  onMapLongClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   isDebugEnabled: Boolean = false,
   maximumFps: Int = 120, // TODO detect device native frame rate
   debugLogger: Logger? = remember { Logger.withTag("maplibre-compose") },
@@ -44,24 +46,28 @@ public fun MaplibreMap(
         }
 
         override fun onClick(map: MaplibreMap, latLng: Position, xy: XY) {
+          if (onMapClick(latLng, xy).consumed) return
           styleComposition
             ?.children
+            ?.asReversed()
             ?.mapNotNull { node -> (node as? LayerNode<*>)?.onClick?.let { node.layer.id to it } }
-            ?.forEach { (layerId, handle) ->
+            ?.find { (layerId, handle) ->
               val features = map.queryRenderedFeatures(xy, setOf(layerId))
-              if (features.isNotEmpty()) handle(features)
+              features.isNotEmpty() && handle(features).consumed
             }
         }
 
         override fun onLongClick(map: MaplibreMap, latLng: Position, xy: XY) {
+          if (onMapLongClick(latLng, xy).consumed) return
           styleComposition
             ?.children
+            ?.asReversed()
             ?.mapNotNull { node ->
               (node as? LayerNode<*>)?.onLongClick?.let { node.layer.id to it }
             }
-            ?.forEach { (layerId, handle) ->
+            ?.find { (layerId, handle) ->
               val features = map.queryRenderedFeatures(xy, setOf(layerId))
-              if (features.isNotEmpty()) handle(features)
+              features.isNotEmpty() && handle(features).consumed
             }
         }
       }

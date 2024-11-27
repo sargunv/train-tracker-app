@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.heatmapDensity
@@ -11,7 +12,6 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.linear
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.layer.HeatmapLayer
 import dev.sargunv.maplibrecompose.core.source.Source
-import io.github.dellisd.spatialk.geojson.Feature
 
 /**
  * A heatmap layer draws points from the [sourceLayer] in the given [source] as a heatmap.
@@ -65,8 +65,8 @@ public inline fun HeatmapLayer(
   radius: Expression<Number> = const(30),
   weight: Expression<Number> = const(1),
   intensity: Expression<Number> = const(1),
-  noinline onClick: ((features: List<Feature>) -> Unit)? = null,
-  noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
+  noinline onClick: FeaturesClickHandler? = null,
+  noinline onLongClick: FeaturesClickHandler? = null,
 ) {
   composeKey(id) {
     LayerNode(

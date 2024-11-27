@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
@@ -11,7 +12,6 @@ import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.Source
-import io.github.dellisd.spatialk.geojson.Feature
 
 /**
  * A line layer draws polylines and polygons from the [sourceLayer] in the given [source] in the
@@ -97,8 +97,8 @@ public inline fun LineLayer(
   join: Expression<String> = const(StrokeJoin.Miter),
   miterLimit: Expression<Number> = const(2),
   roundLimit: Expression<Number> = const(1.05),
-  noinline onClick: ((features: List<Feature>) -> Unit)? = null,
-  noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
+  noinline onClick: FeaturesClickHandler? = null,
+  noinline onLongClick: FeaturesClickHandler? = null,
 ) {
   composeKey(id) {
     LayerNode(

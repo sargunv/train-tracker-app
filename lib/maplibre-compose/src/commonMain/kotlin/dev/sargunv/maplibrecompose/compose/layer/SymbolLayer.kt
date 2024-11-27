@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.insets
@@ -15,7 +16,6 @@ import dev.sargunv.maplibrecompose.core.expression.TFormatted
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.layer.SymbolLayer
 import dev.sargunv.maplibrecompose.core.source.Source
-import io.github.dellisd.spatialk.geojson.Feature
 
 /**
  * A symbol layer draws data from the [sourceLayer] in the given [source] as icons and/or text
@@ -421,8 +421,8 @@ public inline fun SymbolLayer(
   // text translate
   textTranslate: Expression<Point> = point(0, 0),
   textTranslateAnchor: Expression<String> = const(TranslateAnchor.Map),
-  noinline onClick: ((features: List<Feature>) -> Unit)? = null,
-  noinline onLongClick: ((features: List<Feature>) -> Unit)? = null,
+  noinline onClick: FeaturesClickHandler? = null,
+  noinline onLongClick: FeaturesClickHandler? = null,
 ) {
   composeKey(id) {
     LayerNode(
