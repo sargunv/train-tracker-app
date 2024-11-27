@@ -1,17 +1,6 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
-import dev.sargunv.maplibrecompose.compose.layer.IconPitchAlignment
-import dev.sargunv.maplibrecompose.compose.layer.IconRotationAlignment
-import dev.sargunv.maplibrecompose.compose.layer.IconTextFit
-import dev.sargunv.maplibrecompose.compose.layer.SymbolAnchor
-import dev.sargunv.maplibrecompose.compose.layer.SymbolPlacement
-import dev.sargunv.maplibrecompose.compose.layer.SymbolZOrder
-import dev.sargunv.maplibrecompose.compose.layer.TextJustify
-import dev.sargunv.maplibrecompose.compose.layer.TextPitchAlignment
-import dev.sargunv.maplibrecompose.compose.layer.TextRotationAlignment
-import dev.sargunv.maplibrecompose.compose.layer.TextTransform
-import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point

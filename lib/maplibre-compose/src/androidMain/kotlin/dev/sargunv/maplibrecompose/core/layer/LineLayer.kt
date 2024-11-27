@@ -1,9 +1,6 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
-import dev.sargunv.maplibrecompose.compose.layer.LineCap
-import dev.sargunv.maplibrecompose.compose.layer.LineJoin
-import dev.sargunv.maplibrecompose.compose.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
