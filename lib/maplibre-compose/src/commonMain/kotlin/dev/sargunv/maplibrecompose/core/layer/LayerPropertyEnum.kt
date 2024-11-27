@@ -2,8 +2,8 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.runtime.Immutable
 
-public interface LayerPropertyEnum {
-  public val value: String
+internal interface LayerPropertyEnum {
+  val value: String
 }
 
 /** Frame of reference for offsetting geometry */
