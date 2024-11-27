@@ -15,7 +15,6 @@ internal fun <T : Layer> LayerNode(
   factory: () -> T,
   update: Updater<LayerNode<T>>.() -> Unit,
   onClick: FeaturesClickHandler?,
-
   onLongClick: FeaturesClickHandler?,
 ) {
   val anchor = LocalAnchor.current

@@ -63,15 +63,15 @@ fun ClusteredPointsDemo() = Column {
       color = const(LIME_GREEN),
       opacity = const(0.5f),
       radius =
-      step(
-        input = get(const("point_count")),
-        fallback = const(15),
-        25 to const(20),
-        100 to const(30),
-        500 to const(40),
-        1000 to const(50),
-        5000 to const(60),
-      ),
+        step(
+          input = get(const("point_count")),
+          fallback = const(15),
+          25 to const(20),
+          100 to const(30),
+          500 to const(40),
+          1000 to const(50),
+          5000 to const(60),
+        ),
       onClick = { features ->
         features.firstOrNull()?.geometry?.let {
           coroutineScope.launch {
@@ -138,21 +138,21 @@ private suspend fun readGbfsData(gbfsFilePath: String): FeatureCollection {
       Feature(
         id = bike["bike_id"]!!.jsonPrimitive.content,
         geometry =
-        Point(
-          Position(
-            longitude = bike["lon"]!!.jsonPrimitive.double,
-            latitude = bike["lat"]!!.jsonPrimitive.double,
-          )
-        ),
+          Point(
+            Position(
+              longitude = bike["lon"]!!.jsonPrimitive.double,
+              latitude = bike["lat"]!!.jsonPrimitive.double,
+            )
+          ),
         properties =
-        mapOf(
-          "vehicle_type" to (bike["vehicle_type"] ?: JsonNull),
-          "vehicle_type_id" to (bike["vehicle_type_id"] ?: JsonNull),
-          "last_reported" to (bike["last_reported"] ?: JsonNull),
-          "vehicle_range_meters" to (bike["vehicle_range_meters"] ?: JsonNull),
-          "is_reserved" to (bike["is_reserved"] ?: JsonNull),
-          "is_disabled" to (bike["is_disabled"] ?: JsonNull),
-        ),
+          mapOf(
+            "vehicle_type" to (bike["vehicle_type"] ?: JsonNull),
+            "vehicle_type_id" to (bike["vehicle_type_id"] ?: JsonNull),
+            "last_reported" to (bike["last_reported"] ?: JsonNull),
+            "vehicle_range_meters" to (bike["vehicle_range_meters"] ?: JsonNull),
+            "is_reserved" to (bike["is_reserved"] ?: JsonNull),
+            "is_disabled" to (bike["is_disabled"] ?: JsonNull),
+          ),
       )
     }
   return FeatureCollection(features)
