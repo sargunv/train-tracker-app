@@ -2,6 +2,8 @@ package dev.sargunv.maplibrecompose.core
 
 import android.graphics.PointF
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.coerceAtLeast
@@ -10,13 +12,15 @@ import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
-import dev.sargunv.maplibrecompose.core.data.XY
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.util.correctedAndroidUri
 import dev.sargunv.maplibrecompose.core.util.toGravity
 import dev.sargunv.maplibrecompose.core.util.toLatLng
+import dev.sargunv.maplibrecompose.core.util.toMLNExpression
+import dev.sargunv.maplibrecompose.core.util.toOffset
 import dev.sargunv.maplibrecompose.core.util.toPointF
 import dev.sargunv.maplibrecompose.core.util.toPosition
-import dev.sargunv.maplibrecompose.core.util.toXY
+import dev.sargunv.maplibrecompose.core.util.toRectF
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.coroutines.resume
@@ -161,14 +165,56 @@ internal class AndroidMap(
       )
     }
 
-  override fun positionFromScreenLocation(xy: XY): Position =
-    map.projection.fromScreenLocation(PointF(xy.x, xy.y)).toPosition()
+  override fun positionFromScreenLocation(offset: Offset): Position =
+    map.projection.fromScreenLocation(PointF(offset.x, offset.y)).toPosition()
 
-  override fun screenLocationFromPosition(position: Position): XY =
-    map.projection.toScreenLocation(position.toLatLng()).toXY()
+  override fun screenLocationFromPosition(position: Position): Offset =
+    map.projection.toScreenLocation(position.toLatLng()).toOffset()
 
-  override fun queryRenderedFeatures(xy: XY, layerIds: Set<String>): List<Feature> =
-    map.queryRenderedFeatures(xy.toPointF(), *layerIds.toTypedArray()).map {
+  override fun queryRenderedFeatures(offset: Offset): List<Feature> {
+    return map.queryRenderedFeatures(offset.toPointF()).map { Feature.fromJson(it.toJson()) }
+  }
+
+  override fun queryRenderedFeatures(offset: Offset, layerIds: Set<String>): List<Feature> {
+    return map.queryRenderedFeatures(offset.toPointF(), *layerIds.toTypedArray()).map {
       Feature.fromJson(it.toJson())
     }
+  }
+
+  override fun queryRenderedFeatures(
+    offset: Offset,
+    layerIds: Set<String>,
+    predicate: Expression<Boolean>,
+  ): List<Feature> {
+    return map
+      .queryRenderedFeatures(
+        offset.toPointF(),
+        predicate.toMLNExpression(),
+        *layerIds.toTypedArray(),
+      )
+      .map { Feature.fromJson(it.toJson()) }
+  }
+
+  override fun queryRenderedFeatures(rect: androidx.compose.ui.geometry.Rect): List<Feature> {
+    return map.queryRenderedFeatures(rect.toRectF()).map { Feature.fromJson(it.toJson()) }
+  }
+
+  override fun queryRenderedFeatures(
+    rect: androidx.compose.ui.geometry.Rect,
+    layerIds: Set<String>,
+  ): List<Feature> {
+    return map.queryRenderedFeatures(rect.toRectF(), *layerIds.toTypedArray()).map {
+      Feature.fromJson(it.toJson())
+    }
+  }
+
+  override fun queryRenderedFeatures(
+    rect: Rect,
+    layerIds: Set<String>,
+    predicate: Expression<Boolean>,
+  ): List<Feature> {
+    return map
+      .queryRenderedFeatures(rect.toRectF(), predicate.toMLNExpression(), *layerIds.toTypedArray())
+      .map { Feature.fromJson(it.toJson()) }
+  }
 }

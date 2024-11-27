@@ -44,6 +44,7 @@ private val LIME_GREEN = Color(50, 205, 5)
 fun ClusteredPointsDemo() = Column {
   val cameraState =
     rememberCameraState(firstPosition = CameraPosition(target = SEATTLE, zoom = 10.0))
+
   val coroutineScope = rememberCoroutineScope()
 
   MaplibreMap(modifier = Modifier.weight(1f), styleUrl = DEFAULT_STYLE, cameraState = cameraState) {

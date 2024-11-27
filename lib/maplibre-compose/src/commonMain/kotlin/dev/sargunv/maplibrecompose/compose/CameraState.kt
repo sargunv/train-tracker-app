@@ -4,8 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import io.github.dellisd.spatialk.geojson.Feature
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.channels.Channel
@@ -44,5 +48,37 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   ) {
     val map = map ?: mapAttachSignal.receive()
     map.animateCameraPosition(finalPosition, duration)
+  }
+
+  public fun queryRenderedFeatures(offset: Offset): List<Feature> {
+    return map?.queryRenderedFeatures(offset) ?: emptyList()
+  }
+
+  public fun queryRenderedFeatures(offset: Offset, layerIds: Set<String>): List<Feature> {
+    return map?.queryRenderedFeatures(offset, layerIds) ?: emptyList()
+  }
+
+  public fun queryRenderedFeatures(
+    offset: Offset,
+    layerIds: Set<String>,
+    predicate: Expression<Boolean>,
+  ): List<Feature> {
+    return map?.queryRenderedFeatures(offset, layerIds, predicate) ?: emptyList()
+  }
+
+  public fun queryRenderedFeatures(rect: Rect): List<Feature> {
+    return map?.queryRenderedFeatures(rect) ?: emptyList()
+  }
+
+  public fun queryRenderedFeatures(rect: Rect, layerIds: Set<String>): List<Feature> {
+    return map?.queryRenderedFeatures(rect, layerIds) ?: emptyList()
+  }
+
+  public fun queryRenderedFeatures(
+    rect: Rect,
+    layerIds: Set<String>,
+    predicate: Expression<Boolean>,
+  ): List<Feature> {
+    return map?.queryRenderedFeatures(rect, layerIds, predicate) ?: emptyList()
   }
 }

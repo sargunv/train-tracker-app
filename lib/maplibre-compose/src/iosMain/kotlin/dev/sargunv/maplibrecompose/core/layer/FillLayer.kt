@@ -7,7 +7,7 @@ import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
-import dev.sargunv.maplibrecompose.core.util.toPredicate
+import dev.sargunv.maplibrecompose.core.util.toNSPredicate
 
 @PublishedApi
 internal actual class FillLayer actual constructor(id: String, source: Source) :
@@ -22,7 +22,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     }
 
   actual override fun setFilter(filter: Expression<Boolean>) {
-    impl.predicate = filter.toPredicate()
+    impl.predicate = filter.toNSPredicate()
   }
 
   actual fun setFillSortKey(sortKey: Expression<Number>) {

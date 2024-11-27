@@ -1,6 +1,8 @@
 package dev.sargunv.maplibrecompose.core.util
 
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
@@ -15,14 +17,16 @@ import cocoapods.MapLibre.MLNOrnamentPositionTopRight
 import cocoapods.MapLibre.MLNShape
 import cocoapods.MapLibre.expressionWithMLNJSONObject
 import cocoapods.MapLibre.predicateWithMLNJSONObject
-import dev.sargunv.maplibrecompose.core.data.XY
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.GeoJson
 import io.github.dellisd.spatialk.geojson.Position
-import kotlinx.cinterop.*
+import kotlinx.cinterop.CValue
+import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.useContents
+import kotlinx.cinterop.usePinned
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -30,6 +34,8 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import platform.CoreGraphics.CGPoint
 import platform.CoreGraphics.CGPointMake
+import platform.CoreGraphics.CGRect
+import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSizeMake
 import platform.CoreGraphics.CGVectorMake
 import platform.CoreLocation.CLLocationCoordinate2D
@@ -65,9 +71,28 @@ internal fun JsonElement.Companion.convert(any: Any?): JsonElement {
   }
 }
 
-internal fun CValue<CGPoint>.toXY(): XY = useContents { XY(x = x.toFloat(), y = y.toFloat()) }
+internal fun CValue<CGPoint>.toOffset(): Offset = useContents {
+  Offset(x = x.toFloat(), y = y.toFloat())
+}
 
-internal fun XY.toCGPoint(): CValue<CGPoint> = CGPointMake(x = x.toDouble(), y = y.toDouble())
+internal fun Offset.toCGPoint(): CValue<CGPoint> = CGPointMake(x = x.toDouble(), y = y.toDouble())
+
+internal fun CValue<CGRect>.toRect(): Rect = useContents {
+  Rect(
+    left = origin.x.toFloat(),
+    top = origin.y.toFloat(),
+    right = origin.x.toFloat() + size.width.toFloat(),
+    bottom = origin.y.toFloat() + size.height.toFloat(),
+  )
+}
+
+internal fun Rect.toCGRect(): CValue<CGRect> =
+  CGRectMake(
+    x = left.toDouble(),
+    y = top.toDouble(),
+    width = (right - left).toDouble(),
+    height = (bottom - top).toDouble(),
+  )
 
 internal fun CValue<CLLocationCoordinate2D>.toPosition(): Position = useContents {
   Position(longitude = longitude, latitude = latitude)
@@ -93,7 +118,7 @@ internal fun Expression<*>.toNSExpression(): NSExpression =
     else -> NSExpression.expressionWithMLNJSONObject(normalizeJsonLike(value)!!)
   }
 
-internal fun Expression<Boolean>.toPredicate(): NSPredicate? =
+internal fun Expression<Boolean>.toNSPredicate(): NSPredicate? =
   value?.let { NSPredicate.predicateWithMLNJSONObject(normalizeJsonLike(it)!!) }
 
 private fun normalizeJsonLike(value: Any?): Any? =

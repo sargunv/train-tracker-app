@@ -1,6 +1,8 @@
 package dev.sargunv.maplibrecompose.core
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
@@ -24,13 +26,15 @@ import cocoapods.MapLibre.allowsTilting
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
-import dev.sargunv.maplibrecompose.core.data.XY
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.util.toCGPoint
+import dev.sargunv.maplibrecompose.core.util.toCGRect
 import dev.sargunv.maplibrecompose.core.util.toCLLocationCoordinate2D
 import dev.sargunv.maplibrecompose.core.util.toFeature
 import dev.sargunv.maplibrecompose.core.util.toMLNOrnamentPosition
+import dev.sargunv.maplibrecompose.core.util.toNSPredicate
+import dev.sargunv.maplibrecompose.core.util.toOffset
 import dev.sargunv.maplibrecompose.core.util.toPosition
-import dev.sargunv.maplibrecompose.core.util.toXY
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.coroutines.resume
@@ -84,12 +88,12 @@ internal class IosMap(
     addGestures(
       Gesture(UITapGestureRecognizer()) {
         if (state != UIGestureRecognizerStateEnded) return@Gesture
-        val point = locationInView(this@IosMap.mapView).toXY()
+        val point = locationInView(this@IosMap.mapView).toOffset()
         callbacks.onClick(this@IosMap, positionFromScreenLocation(point), point)
       },
       Gesture(UILongPressGestureRecognizer()) {
         if (state != UIGestureRecognizerStateBegan) return@Gesture
-        val point = locationInView(this@IosMap.mapView).toXY()
+        val point = locationInView(this@IosMap.mapView).toOffset()
         callbacks.onLongClick(this@IosMap, positionFromScreenLocation(point), point)
       },
     )
@@ -314,14 +318,61 @@ internal class IosMap(
       )
     }
 
-  override fun positionFromScreenLocation(xy: XY): Position =
-    mapView.convertPoint(point = xy.toCGPoint(), toCoordinateFromView = null).toPosition()
+  override fun positionFromScreenLocation(offset: Offset): Position =
+    mapView.convertPoint(point = offset.toCGPoint(), toCoordinateFromView = null).toPosition()
 
-  override fun screenLocationFromPosition(position: Position): XY =
-    mapView.convertCoordinate(position.toCLLocationCoordinate2D(), toPointToView = null).toXY()
+  override fun screenLocationFromPosition(position: Position): Offset =
+    mapView.convertCoordinate(position.toCLLocationCoordinate2D(), toPointToView = null).toOffset()
 
-  override fun queryRenderedFeatures(xy: XY, layerIds: Set<String>): List<Feature> =
-    mapView.visibleFeaturesAtPoint(CGPointMake(xy.x.toDouble(), xy.y.toDouble()), layerIds).map {
+  override fun queryRenderedFeatures(offset: Offset): List<Feature> {
+    return mapView.visibleFeaturesAtPoint(point = offset.toCGPoint()).map {
       (it as MLNFeatureProtocol).toFeature()
     }
+  }
+
+  override fun queryRenderedFeatures(offset: Offset, layerIds: Set<String>): List<Feature> {
+    return mapView
+      .visibleFeaturesAtPoint(point = offset.toCGPoint(), inStyleLayersWithIdentifiers = layerIds)
+      .map { (it as MLNFeatureProtocol).toFeature() }
+  }
+
+  override fun queryRenderedFeatures(
+    offset: Offset,
+    layerIds: Set<String>,
+    predicate: Expression<Boolean>,
+  ): List<Feature> {
+    return mapView
+      .visibleFeaturesAtPoint(
+        point = offset.toCGPoint(),
+        inStyleLayersWithIdentifiers = layerIds,
+        predicate = predicate.toNSPredicate(),
+      )
+      .map { (it as MLNFeatureProtocol).toFeature() }
+  }
+
+  override fun queryRenderedFeatures(rect: Rect): List<Feature> {
+    return mapView.visibleFeaturesInRect(rect = rect.toCGRect()).map {
+      (it as MLNFeatureProtocol).toFeature()
+    }
+  }
+
+  override fun queryRenderedFeatures(rect: Rect, layerIds: Set<String>): List<Feature> {
+    return mapView
+      .visibleFeaturesInRect(rect = rect.toCGRect(), inStyleLayersWithIdentifiers = layerIds)
+      .map { (it as MLNFeatureProtocol).toFeature() }
+  }
+
+  override fun queryRenderedFeatures(
+    rect: Rect,
+    layerIds: Set<String>,
+    predicate: Expression<Boolean>,
+  ): List<Feature> {
+    return mapView
+      .visibleFeaturesInRect(
+        rect = rect.toCGRect(),
+        inStyleLayersWithIdentifiers = layerIds,
+        predicate = predicate.toNSPredicate(),
+      )
+      .map { (it as MLNFeatureProtocol).toFeature() }
+  }
 }

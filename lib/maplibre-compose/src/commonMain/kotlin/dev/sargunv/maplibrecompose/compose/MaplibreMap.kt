@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.compose.engine.LayerNode
 import dev.sargunv.maplibrecompose.compose.engine.rememberStyleComposition
@@ -13,7 +14,6 @@ import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.Style
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
-import dev.sargunv.maplibrecompose.core.data.XY
 import dev.sargunv.maplibrecompose.core.expression.ExpressionScope
 import io.github.dellisd.spatialk.geojson.Position
 
@@ -45,20 +45,20 @@ public fun MaplibreMap(
           cameraState.positionState.value = map.cameraPosition
         }
 
-        override fun onClick(map: MaplibreMap, latLng: Position, xy: XY) {
-          if (onMapClick(latLng, xy).consumed) return
+        override fun onClick(map: MaplibreMap, latLng: Position, offset: Offset) {
+          if (onMapClick(latLng, offset).consumed) return
           styleComposition
             ?.children
             ?.asReversed()
             ?.mapNotNull { node -> (node as? LayerNode<*>)?.onClick?.let { node.layer.id to it } }
             ?.find { (layerId, handle) ->
-              val features = map.queryRenderedFeatures(xy, setOf(layerId))
+              val features = map.queryRenderedFeatures(offset, setOf(layerId))
               features.isNotEmpty() && handle(features).consumed
             }
         }
 
-        override fun onLongClick(map: MaplibreMap, latLng: Position, xy: XY) {
-          if (onMapLongClick(latLng, xy).consumed) return
+        override fun onLongClick(map: MaplibreMap, latLng: Position, offset: Offset) {
+          if (onMapLongClick(latLng, offset).consumed) return
           styleComposition
             ?.children
             ?.asReversed()
@@ -66,7 +66,7 @@ public fun MaplibreMap(
               (node as? LayerNode<*>)?.onLongClick?.let { node.layer.id to it }
             }
             ?.find { (layerId, handle) ->
-              val features = map.queryRenderedFeatures(xy, setOf(layerId))
+              val features = map.queryRenderedFeatures(offset, setOf(layerId))
               features.isNotEmpty() && handle(features).consumed
             }
         }

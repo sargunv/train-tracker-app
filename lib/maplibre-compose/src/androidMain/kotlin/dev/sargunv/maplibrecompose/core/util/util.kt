@@ -1,8 +1,11 @@
 package dev.sargunv.maplibrecompose.core.util
 
 import android.graphics.PointF
+import android.graphics.RectF
 import android.view.Gravity
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.IntSize
@@ -12,7 +15,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import dev.sargunv.maplibrecompose.core.data.XY
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point
@@ -32,9 +34,13 @@ internal fun String.correctedAndroidUri(): URI {
   }
 }
 
-internal fun XY.toPointF(): PointF = PointF(x, y)
+internal fun Offset.toPointF(): PointF = PointF(x, y)
 
-internal fun PointF.toXY(): XY = XY(x = x, y = y)
+internal fun PointF.toOffset(): Offset = Offset(x = x, y = y)
+
+internal fun Rect.toRectF(): RectF = RectF(left, top, right, bottom)
+
+internal fun RectF.toRect(): Rect = Rect(left = left, top = top, right = right, bottom = bottom)
 
 internal fun LatLng.toPosition(): Position = Position(longitude = longitude, latitude = latitude)
 
@@ -66,6 +72,7 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
     is List<*> -> JsonArray().apply { value.forEach { add(normalizeJsonLike(it)) } }
     is Map<*, *> ->
       JsonObject().apply { value.forEach { add(it.key as String, normalizeJsonLike(it.value)) } }
+
     is Point ->
       JsonArray().apply {
         add("literal")
@@ -76,6 +83,7 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
           }
         )
       }
+
     is Insets ->
       JsonArray().apply {
         add("literal")
@@ -88,12 +96,14 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
           }
         )
       }
+
     is Color ->
       JsonPrimitive(
         value.toArgb().let {
           "rgba(${(it shr 16) and 0xFF}, ${(it shr 8) and 0xFF}, ${it and 0xFF}, ${value.alpha})"
         }
       )
+
     else -> throw IllegalArgumentException("Unsupported type: ${value::class}")
   }
 
