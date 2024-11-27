@@ -52,7 +52,8 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   }
 
   public fun screenLocationFromPosition(position: Position): Offset {
-    return map?.screenLocationFromPosition(position) ?: error("Map requested before it was initialized")
+    return map?.screenLocationFromPosition(position)
+      ?: error("Map requested before it was initialized")
   }
 
   public fun queryRenderedFeatures(offset: Offset): List<Feature> {
