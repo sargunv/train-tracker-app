@@ -2,7 +2,6 @@
 
 import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
@@ -36,12 +35,12 @@ dokka {
         localDirectory.set(rootDir)
       }
       externalDocumentationLinks {
-        create("spatial-k") {
-          url("https://dellisd.github.io/spatial-k/api/")
-        }
+        create("spatial-k") { url("https://dellisd.github.io/spatial-k/api/") }
         create("maplibre-native") {
           url("https://maplibre.org/maplibre-native/android/api/")
-          packageListUrl("https://maplibre.org/maplibre-native/android/api/-map-libre%20-native%20-android/package-list")
+          packageListUrl(
+            "https://maplibre.org/maplibre-native/android/api/-map-libre%20-native%20-android/package-list"
+          )
         }
       }
     }
