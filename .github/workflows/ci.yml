@@ -25,9 +25,10 @@ jobs:
       - if: "${{ github.event_name == 'pull_request' }}"
         run: "./gradlew spotlessApply"
       - if: "${{ github.event_name == 'pull_request' }}"
-        uses: "getsentry/action-git-diff-suggestions@v1"
+        uses: reviewdog/action-suggester@v1
         with:
-          message: Generated with `./gradlew spotlessApply`
+          tool_name: spotless
+          cleanup: false
       - if: "${{ github.event_name == 'pull_request' }}"
         run: "git diff --exit-code"
 
