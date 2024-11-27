@@ -10,6 +10,7 @@ import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import io.github.dellisd.spatialk.geojson.Feature
+import io.github.dellisd.spatialk.geojson.Position
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.channels.Channel
@@ -48,6 +49,10 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   ) {
     val map = map ?: mapAttachSignal.receive()
     map.animateCameraPosition(finalPosition, duration)
+  }
+
+  public fun screenLocationFromPosition(position: Position): Offset? {
+    return map?.screenLocationFromPosition(position)
   }
 
   public fun queryRenderedFeatures(offset: Offset): List<Feature> {
