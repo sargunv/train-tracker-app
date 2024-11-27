@@ -11,6 +11,10 @@ plugins {
   alias(libs.plugins.dokka)
 }
 
+dokka { moduleName = "MapLibre Compose" }
+
+dependencies { dokka(project(":lib:maplibre-compose:")) }
+
 spotless {
   kotlinGradle { ktfmt().googleStyle() }
   format("swift") {

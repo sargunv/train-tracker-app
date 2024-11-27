@@ -27,7 +27,7 @@ spatialk-geojson = { group = "io.github.dellisd.spatialk", name = "geojson", ver
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
+dokka = { id = "org.jetbrains.dokka", version = "2.0.0-Beta" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 jgitver = { id = "fr.brouillard.oss.gradle.jgitver", version = "0.10.0-rc03" }
 kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }

@@ -71,10 +71,10 @@ jobs:
         with:
           fetch-depth: 0
       - uses: "./.github/actions/setup"
-      - run: "./gradlew dokkaHtmlMultiModule"
+      - run: "./gradlew :dokkaGenerate"
       - uses: "actions/upload-pages-artifact@v3"
         with:
-          path: "build/dokka/htmlMultiModule"
+          path: "build/dokka/html"
 
   build-android-app:
     runs-on: "ubuntu-latest"
