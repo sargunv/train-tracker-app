@@ -294,8 +294,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   When present, this property takes precedence over [textAnchor], [textVariableAnchor],
  *   [textOffset] and [textRadialOffset].
  *
- *   Example: ```
- *   listOf( SymbolAnchor.Top to Point(0, 4), SymbolAnchor.Left to Point(3, 0),
+ *   Example: ``` listOf( SymbolAnchor.Top to Point(0, 4), SymbolAnchor.Left to Point(3, 0),
  *   SymbolAnchor.Bottom to Point(1, 1) ``` When the renderer chooses the top anchor, [0, 4] will be
  *   used for [textOffset]; the text will be shifted down by 4 ems. When the renderer chooses the
  *   left anchor, [3, 0] will be used for [textOffset]; the text will be shifted right by 3 ems.
