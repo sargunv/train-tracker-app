@@ -178,6 +178,11 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
+ * @param textHaloWidth Distance of halo to the font outline. Max text halo width is 1/4 of the
+ *   font-size.
+ *
+ *   Ignored if [textField] is not specified.
+ *
  * @param textHaloBlur The halo's fadeout distance towards the outside in dp.
  *
  *   Ignored if [textField] is not specified.
