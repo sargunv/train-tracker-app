@@ -105,7 +105,9 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextVariableAnchor(variableAnchor: Expression<List<SymbolAnchor>>)
 
-  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>)
+  fun setTextVariableAnchorOffset(
+    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>
+  )
 
   fun setTextAnchor(anchor: Expression<SymbolAnchor>)
 

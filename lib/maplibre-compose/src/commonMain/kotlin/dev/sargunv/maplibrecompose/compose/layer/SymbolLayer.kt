@@ -2,7 +2,6 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
