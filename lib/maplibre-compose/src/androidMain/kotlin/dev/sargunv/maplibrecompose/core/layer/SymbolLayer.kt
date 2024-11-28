@@ -176,7 +176,9 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textVariableAnchor(variableAnchor.toMLNExpression()))
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>) {
+  actual fun setTextVariableAnchorOffset(
+    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>
+  ) {
     impl.setProperties(
       PropertyFactory.textVariableAnchorOffset(variableAnchorOffset.toMLNExpression())
     )

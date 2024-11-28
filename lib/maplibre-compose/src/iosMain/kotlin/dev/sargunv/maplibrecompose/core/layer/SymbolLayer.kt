@@ -181,7 +181,9 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textVariableAnchor = variableAnchor.toNSExpression()
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>) {
+  actual fun setTextVariableAnchorOffset(
+    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>
+  ) {
     impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
   }
 
