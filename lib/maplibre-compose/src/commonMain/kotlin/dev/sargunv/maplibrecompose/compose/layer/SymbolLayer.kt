@@ -25,6 +25,7 @@ import dev.sargunv.maplibrecompose.core.layer.TextJustify
 import dev.sargunv.maplibrecompose.core.layer.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.layer.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.layer.TextTransform
+import dev.sargunv.maplibrecompose.core.layer.TextWritingMode
 import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -411,16 +412,16 @@ public inline fun SymbolLayer(
   textMaxWidth: Expression<Number> = const(10.0),
   textLineHeight: Expression<Number> = const(1.2),
   textJustify: Expression<TextJustify> = const(TextJustify.Center),
-  textWritingMode: Expression<List<String>> = nil(),
+  textWritingMode: Expression<List<TextWritingMode>> = nil(),
   textKeepUpright: Expression<Boolean> = const(true),
   textRotate: Expression<Number> = const(0.0),
 
   // text anchoring
   textAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
   textOffset: Expression<Point> = point(0, 0),
-  textVariableAnchor: Expression<List<String>> = nil(),
+  textVariableAnchor: Expression<List<SymbolAnchor>> = nil(),
   textRadialOffset: Expression<Number> = const(0.0),
-  textVariableAnchorOffset: Expression<List<Pair<String, Point>>> = nil(),
+  textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>> = nil(),
 
   // text collision
   textPadding: Expression<Number> = const(2.0),

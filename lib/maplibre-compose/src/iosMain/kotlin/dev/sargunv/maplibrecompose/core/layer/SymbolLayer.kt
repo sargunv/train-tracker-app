@@ -177,11 +177,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textRadialOffset = radialOffset.toNSExpression()
   }
 
-  actual fun setTextVariableAnchor(variableAnchor: Expression<List<String>>) {
+  actual fun setTextVariableAnchor(variableAnchor: Expression<List<SymbolAnchor>>) {
     impl.textVariableAnchor = variableAnchor.toNSExpression()
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<*>>) {
+  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>) {
     impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
   }
 
@@ -193,7 +193,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.maximumTextAngle = maxAngle.toNSExpression()
   }
 
-  actual fun setTextWritingMode(writingMode: Expression<List<String>>) {
+  actual fun setTextWritingMode(writingMode: Expression<List<TextWritingMode>>) {
     impl.textWritingModes = writingMode.toNSExpression()
   }
 

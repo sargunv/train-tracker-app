@@ -172,11 +172,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textRadialOffset(radialOffset.toMLNExpression()))
   }
 
-  actual fun setTextVariableAnchor(variableAnchor: Expression<List<String>>) {
+  actual fun setTextVariableAnchor(variableAnchor: Expression<List<SymbolAnchor>>) {
     impl.setProperties(PropertyFactory.textVariableAnchor(variableAnchor.toMLNExpression()))
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<*>>) {
+  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>) {
     impl.setProperties(
       PropertyFactory.textVariableAnchorOffset(variableAnchorOffset.toMLNExpression())
     )
@@ -190,7 +190,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textMaxAngle(maxAngle.toMLNExpression()))
   }
 
-  actual fun setTextWritingMode(writingMode: Expression<List<String>>) {
+  actual fun setTextWritingMode(writingMode: Expression<List<TextWritingMode>>) {
     impl.setProperties(PropertyFactory.textWritingMode(writingMode.toMLNExpression()))
   }
 

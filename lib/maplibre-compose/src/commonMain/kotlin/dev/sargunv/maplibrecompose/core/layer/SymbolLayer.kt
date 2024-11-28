@@ -88,15 +88,15 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextRadialOffset(radialOffset: Expression<Number>)
 
-  fun setTextVariableAnchor(variableAnchor: Expression<List<String>>)
+  fun setTextVariableAnchor(variableAnchor: Expression<List<SymbolAnchor>>)
 
-  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<*>>)
+  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>)
 
   fun setTextAnchor(anchor: Expression<SymbolAnchor>)
 
   fun setTextMaxAngle(maxAngle: Expression<Number>)
 
-  fun setTextWritingMode(writingMode: Expression<List<String>>)
+  fun setTextWritingMode(writingMode: Expression<List<TextWritingMode>>)
 
   fun setTextRotate(rotate: Expression<Number>)
 
