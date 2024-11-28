@@ -46,7 +46,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param visible Whether the layer should be displayed.
  * @param sortKey Sorts features within this layer in ascending order based on this value. Features
  *   with a higher sort key will appear above features with a lower sort key.
- * @param placement Symbol placement relative to its geometry. See [SymbolPlacement].
+ * @param placement Symbol placement relative to its geometry.
  * @param spacing Distance between two symbol anchors in dp.
  *
  *   Only applicable when [placement] is [SymbolPlacement.Line].
@@ -56,7 +56,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   or if it is a point symbol layer placed after a line symbol layer.
  * @param zOrder Determines whether overlapping symbols in the same layer are rendered in the order
  *   that they appear in the data source or by their y-position relative to the viewport. To control
- *   the order and prioritization of symbols otherwise, use [sortKey]. See [SymbolZOrder].
+ *   the order and prioritization of symbols otherwise, use [sortKey].
  * @param iconImage Image to use for drawing an image background.
  * @param iconOpacity The opacity at which the icon will be drawn. A value in the range `[0..1]`.
  *
@@ -87,15 +87,15 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   Ignored if [iconImage] is not specified.
  *
  * @param iconRotationAlignment In combination with [placement], determines the rotation behavior of
- *   icons. See [IconRotationAlignment].
+ *   icons.
  *
  *   Ignored if [iconImage] is not specified.
  *
- * @param iconPitchAlignment Orientation of icon when map is pitched. See [IconPitchAlignment].
+ * @param iconPitchAlignment Orientation of icon when map is pitched.
  *
  *   Ignored if [iconImage] is not specified.
  *
- * @param iconTextFit Scales the icon to fit around the associated text. See [IconTextFit].
+ * @param iconTextFit Scales the icon to fit around the associated text.
  *
  *   Ignored if not both [iconImage] and [textField] are specified.
  *
@@ -117,7 +117,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [iconImage] is not specified.
  *
- * @param iconAnchor Part of the icon placed closest to the anchor. See [SymbolAnchor].
+ * @param iconAnchor Part of the icon placed closest to the anchor.
  *
  *   Ignored if [iconImage] is not specified.
  *
@@ -139,7 +139,6 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   Ignored if [iconImage] is not specified, overridden by [iconOverlap], if specified.
  *
  * @param iconOverlap Controls whether to show an icon when it overlaps other symbols on the map.
- *   See [SymbolOverlap].
  *
  *   Ignored if [iconImage] is not specified.
  *
@@ -160,7 +159,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [iconImage] is not specified.
  *
- * @param iconTranslateAnchor Frame of reference for offsetting geometry, see [TranslateAnchor].
+ * @param iconTranslateAnchor Frame of reference for offsetting geometry.
  *
  *   Ignored if [iconTranslate] is not set.
  *
@@ -195,17 +194,17 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textTransform Specifies how to capitalize text. See [TextTransform].
+ * @param textTransform Specifies how to capitalize text.
  * @param textLetterSpacing Text tracking amount in ems.
  *
  *   Ignored if [textField] is not specified.
  *
  * @param textRotationAlignment In combination with [placement], determines the rotation behavior of
- *   the individual glyphs forming the text. See [TextRotationAlignment].
+ *   the individual glyphs forming the text.
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textPitchAlignment Orientation of text when map is pitched. See [TextPitchAlignment].
+ * @param textPitchAlignment Orientation of text when map is pitched.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -223,7 +222,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textJustify Text justification options. See [TextJustify].
+ * @param textJustify Text justification options.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -231,8 +230,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   property values act as a hint, so that a symbol whose language doesn’t support the provided
  *   orientation will be laid out in its natural orientation. Example: English point symbol will be
  *   rendered horizontally even if array value contains single 'vertical' enum value. The order of
- *   elements in an array define priority order for the placement of an orientation variant. See
- *   [TextWritingMode]
+ *   elements in an array define priority order for the placement of an orientation variant.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -248,7 +246,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textAnchor Part of the text placed closest to the anchor. See [SymbolAnchor].
+ * @param textAnchor Part of the text placed closest to the anchor.
  *
  *   Overridden by [textVariableAnchorOffset].
  *
@@ -335,8 +333,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textTranslateAnchor Controls the frame of reference for [textTranslate]. See
- *   [TranslateAnchor].
+ * @param textTranslateAnchor Controls the frame of reference for [textTranslate].
  *
  *   Ignored if [textField] is not specified.
  *

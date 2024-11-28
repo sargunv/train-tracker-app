@@ -29,8 +29,8 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *     - the top of the viewport if [illuminationAnchor] = [IlluminationAnchor.Viewport] or
  *     - north if [illuminationAnchor] = [IlluminationAnchor.Map]
  *
- * @param illuminationAnchor Direction of light source when map is rotated. See [IlluminationAnchor]
- *   and [illuminationDirection].
+ * @param illuminationAnchor Direction of light source when map is rotated. See
+ *   [illuminationDirection].
  * @param exaggeration Intensity of the hillshade. A value in the range of `[0..1]`.
  */
 @Composable

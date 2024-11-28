@@ -32,7 +32,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param visible Whether the layer should be displayed.
  * @param translate The geometry's offset relative to the [translateAnchor]. Negative numbers
  *   indicate left and up (on the flat plane), respectively.
- * @param translateAnchor Frame of reference for offsetting geometry, see [TranslateAnchor].
+ * @param translateAnchor Frame of reference for offsetting geometry.
  *
  *   Ignored if [translate] is not set.
  *

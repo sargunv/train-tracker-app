@@ -36,7 +36,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   with a higher sort key will appear above features with a lower sort key.
  * @param translate The geometry's offset relative to the [translateAnchor]. Negative numbers
  *   indicate left and up, respectively.
- * @param translateAnchor Frame of reference for offsetting geometry, see [TranslateAnchor].
+ * @param translateAnchor Frame of reference for offsetting geometry.
  *
  *   Ignored if [translate] is not set.
  *
@@ -65,8 +65,8 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param offset The lines' offset. For linear features, a positive value offsets the line to the
  *   right, relative to the direction of the line, and a negative value to the left. For polygon
  *   features, a positive value results in an inset, and a negative value results in an outset.
- * @param cap Display of line endings. See [LineCap].
- * @param join Display of joined lines. See [LineJoin].
+ * @param cap Display of line endings.
+ * @param join Display of joined lines.
  * @param miterLimit Limit at which to automatically convert to bevel join for sharp angles when
  *   [join] is [LineJoin.Miter].
  * @param roundLimit Limit at which to automatically convert to miter join for sharp angles when

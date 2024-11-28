@@ -33,7 +33,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   with a higher sort key will appear above features with a lower sort key.
  * @param translate The geometry's offset relative to the [translateAnchor]. Negative numbers
  *   indicate left and up, respectively.
- * @param translateAnchor Frame of reference for offsetting geometry, see [TranslateAnchor].
+ * @param translateAnchor Frame of reference for offsetting geometry.
  *
  *   Ignored if [translate] is not set.
  *

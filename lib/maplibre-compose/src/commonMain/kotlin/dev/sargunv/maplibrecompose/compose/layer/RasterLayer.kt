@@ -28,7 +28,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param saturation Increase or reduce the saturation of the image. A value in range `[-1..1]`.
  * @param contrast Increase or reduce the contrast of the image. A value in range `[-1..1]`.
  * @param resampling The resampling/interpolation method to use for overscaling, also known as
- *   texture magnification filter. See [RasterResampling].
+ *   texture magnification filter.
  * @param fadeDuration Fade duration in milliseconds when a new tile is added, or when a video is
  *   started or its coordinates are updated. A value in range `[0..infinity)`.
  */
