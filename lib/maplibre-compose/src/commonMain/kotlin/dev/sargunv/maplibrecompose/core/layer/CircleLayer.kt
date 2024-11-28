@@ -2,6 +2,8 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -16,7 +18,7 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   fun setCircleSortKey(sortKey: Expression<Number>)
 
-  fun setCircleRadius(radius: Expression<Number>)
+  fun setCircleRadius(radius: Expression<Dp>)
 
   fun setCircleColor(color: Expression<Color>)
 
@@ -24,7 +26,7 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   fun setCircleOpacity(opacity: Expression<Number>)
 
-  fun setCircleTranslate(translate: Expression<Offset>)
+  fun setCircleTranslate(translate: Expression<DpOffset>)
 
   fun setCircleTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
@@ -32,7 +34,7 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   fun setCirclePitchAlignment(pitchAlignment: Expression<CirclePitchAlignment>)
 
-  fun setCircleStrokeWidth(strokeWidth: Expression<Number>)
+  fun setCircleStrokeWidth(strokeWidth: Expression<Dp>)
 
   fun setCircleStrokeColor(strokeColor: Expression<Color>)
 

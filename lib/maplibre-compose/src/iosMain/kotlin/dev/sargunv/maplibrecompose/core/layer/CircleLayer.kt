@@ -2,6 +2,8 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import cocoapods.MapLibre.MLNCircleStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
@@ -31,7 +33,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.circleSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setCircleRadius(radius: Expression<Number>) {
+  actual fun setCircleRadius(radius: Expression<Dp>) {
     impl.circleRadius = radius.toNSExpression()
   }
 
@@ -47,7 +49,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.circleOpacity = opacity.toNSExpression()
   }
 
-  actual fun setCircleTranslate(translate: Expression<Offset>) {
+  actual fun setCircleTranslate(translate: Expression<DpOffset>) {
     impl.circleTranslation = translate.toNSExpression()
   }
 
@@ -63,7 +65,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.circlePitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setCircleStrokeWidth(strokeWidth: Expression<Number>) {
+  actual fun setCircleStrokeWidth(strokeWidth: Expression<Dp>) {
     impl.circleStrokeWidth = strokeWidth.toNSExpression()
   }
 

@@ -2,9 +2,14 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
@@ -46,7 +51,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param sortKey Sorts features within this layer in ascending order based on this value. Features
  *   with a higher sort key will appear above features with a lower sort key.
  * @param placement Symbol placement relative to its geometry.
- * @param spacing Distance between two symbol anchors in dp.
+ * @param spacing Distance between two symbol anchors.
  *
  *   Only applicable when [placement] is [SymbolPlacement.Line].
  *
@@ -75,7 +80,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [iconImage] is not specified.
  *
- * @param iconHaloBlur Fade out the halo towards the outside, in dp.
+ * @param iconHaloBlur Fade out the halo towards the outside.
  *
  *   Ignored if [iconImage] is not specified.
  *
@@ -181,7 +186,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textHaloBlur The halo's fadeout distance towards the outside in dp.
+ * @param textHaloBlur The halo's fadeout distance towards the outside.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -189,7 +194,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textSize Font size in dp.
+ * @param textSize Font size.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -270,9 +275,9 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textRadialOffset Radial offset of text, in the direction of the symbol's anchor. Useful in
- *   combination with [textVariableAnchor], which defaults to using the two-dimensional [textOffset]
- *   if present.
+ * @param textRadialOffset Radial offset of text in ems, in the direction of the symbol's anchor.
+ *   Useful in combination with [textVariableAnchor], which defaults to using the two-dimensional
+ *   [textOffset] if present.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -290,7 +295,8 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   When present, this property takes precedence over [textAnchor], [textVariableAnchor],
  *   [textOffset] and [textRadialOffset].
  *
- *   Example: ``` listOf( SymbolAnchor.Top to Point(0, 4), SymbolAnchor.Left to Point(3, 0),
+ *   Example: ```
+ *   listOf( SymbolAnchor.Top to Point(0, 4), SymbolAnchor.Left to Point(3, 0),
  *   SymbolAnchor.Bottom to Point(1, 1) ``` When the renderer chooses the top anchor, [0, 4] will be
  *   used for [textOffset]; the text will be shifted down by 4 ems. When the renderer chooses the
  *   left anchor, [3, 0] will be used for [textOffset]; the text will be shifted right by 3 ems.
@@ -351,7 +357,7 @@ public inline fun SymbolLayer(
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
   placement: Expression<SymbolPlacement> = const(SymbolPlacement.Point),
-  spacing: Expression<Number> = const(250f),
+  spacing: Expression<Dp> = const(250.dp),
   avoidEdges: Expression<Boolean> = const(false),
   zOrder: Expression<SymbolZOrder> = const(SymbolZOrder.Auto),
 
@@ -362,31 +368,31 @@ public inline fun SymbolLayer(
   iconOpacity: Expression<Number> = const(1f),
   iconColor: Expression<Color> = const(Color.Black),
   iconHaloColor: Expression<Color> = const(Color.Transparent),
-  iconHaloWidth: Expression<Number> = const(0f),
-  iconHaloBlur: Expression<Number> = const(0f),
+  iconHaloWidth: Expression<Dp> = const(0.dp),
+  iconHaloBlur: Expression<Dp> = const(0.dp),
 
   // icon layout
   iconSize: Expression<Number> = const(1f),
   iconRotationAlignment: Expression<IconRotationAlignment> = const(IconRotationAlignment.Auto),
   iconPitchAlignment: Expression<IconPitchAlignment> = const(IconPitchAlignment.Auto),
   iconTextFit: Expression<IconTextFit> = const(IconTextFit.None),
-  iconTextFitPadding: Expression<PaddingValues.Absolute> = const(ZeroPadding),
+  iconTextFitPadding: Expression<DpRect> = const(DpRect(0.dp, 0.dp, 0.dp, 0.dp)),
   iconKeepUpright: Expression<Boolean> = const(false),
   iconRotate: Expression<Number> = const(0f),
 
   // icon anchoring
   iconAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
-  iconOffset: Expression<Offset> = const(Offset.Zero),
+  iconOffset: Expression<DpOffset> = const(DpOffset.Zero),
 
   // icon collision
-  iconPadding: Expression<Number> = const(2f),
+  iconPadding: Expression<Dp> = const(2.dp),
   iconAllowOverlap: Expression<Boolean> = const(false),
   iconOverlap: Expression<String> = nil(),
   iconIgnorePlacement: Expression<Boolean> = const(false),
   iconOptional: Expression<Boolean> = const(false),
 
   // icon translate
-  iconTranslate: Expression<Offset> = const(Offset.Zero),
+  iconTranslate: Expression<DpOffset> = const(DpOffset.Zero),
   iconTranslateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
 
   // text content
@@ -396,13 +402,13 @@ public inline fun SymbolLayer(
   textOpacity: Expression<Number> = const(1f),
   textColor: Expression<Color> = const(Color.Black),
   textHaloColor: Expression<Color> = const(Color.Transparent),
-  textHaloWidth: Expression<Number> = const(0f),
-  textHaloBlur: Expression<Number> = const(0f),
+  textHaloWidth: Expression<Dp> = const(0.dp),
+  textHaloBlur: Expression<Dp> = const(0.dp),
 
   // text glyph properties
   textFont: Expression<List<String>> =
     literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
-  textSize: Expression<Number> = const(16f),
+  textSize: Expression<Dp> = const(16.dp),
   textTransform: Expression<TextTransform> = const(TextTransform.None),
   textLetterSpacing: Expression<Number> = const(0f),
   textRotationAlignment: Expression<TextRotationAlignment> = const(TextRotationAlignment.Auto),
@@ -425,14 +431,14 @@ public inline fun SymbolLayer(
   textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>> = nil(),
 
   // text collision
-  textPadding: Expression<Number> = const(2f),
+  textPadding: Expression<Dp> = const(2.dp),
   textAllowOverlap: Expression<Boolean> = const(false),
   textOverlap: Expression<String> = nil(),
   textIgnorePlacement: Expression<Boolean> = const(false),
   textOptional: Expression<Boolean> = const(false),
 
   // text translate
-  textTranslate: Expression<Offset> = const(Offset.Zero),
+  textTranslate: Expression<DpOffset> = const(DpOffset.Zero),
   textTranslateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,

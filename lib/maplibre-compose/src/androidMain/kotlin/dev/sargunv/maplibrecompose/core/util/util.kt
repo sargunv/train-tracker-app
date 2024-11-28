@@ -8,9 +8,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import com.google.gson.JsonArray
@@ -68,10 +69,10 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
       JsonObject().apply { value.forEach { add(it.key as String, normalizeJsonLike(it.value)) } }
 
     is Offset ->
-      JsonArray().apply {
+      JsonArray(2).apply {
         add("literal")
         add(
-          JsonArray().apply {
+          JsonArray(2).apply {
             add(value.x)
             add(value.y)
           }
@@ -79,10 +80,10 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
       }
 
     is PaddingValues.Absolute ->
-      JsonArray().apply {
+      JsonArray(2).apply {
         add("literal")
         add(
-          JsonArray().apply {
+          JsonArray(4).apply {
             add(value.calculateTopPadding().value)
             add(value.calculateRightPadding(LayoutDirection.Ltr).value)
             add(value.calculateBottomPadding().value)

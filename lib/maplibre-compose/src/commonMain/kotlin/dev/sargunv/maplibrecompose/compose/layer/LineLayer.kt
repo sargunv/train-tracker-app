@@ -4,13 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
+import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -57,10 +60,10 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [pattern] or [dasharray] is specified.
  *
- * @param blur Blur applied to the lines, in dp. A value in range `0..infinity`.
- * @param width Thickness of the lines' stroke in dp. A value in range `[0..infinity)`.
- * @param gapWidth A value in range `[0..infinity)`. If not `0`, instead of one, two lines, each
- *   left and right of each line's actual path are drawn, with the given gap in dp in-between them.
+ * @param blur Blur applied to the lines.
+ * @param width Thickness of the lines' stroke.
+ * @param gapWidth If not `0`, instead of one, two lines, each left and right of each line's actual
+ *   path are drawn, with the given gap in-between them.
  * @param offset The lines' offset. For linear features, a positive value offsets the line to the
  *   right, relative to the direction of the line, and a negative value to the left. For polygon
  *   features, a positive value results in an inset, and a negative value results in an outset.
@@ -84,17 +87,17 @@ public inline fun LineLayer(
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
-  translate: Expression<Offset> = const(Offset.Zero),
+  translate: Expression<DpOffset> = const(DpOffset.Zero),
   translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   opacity: Expression<Number> = const(1f),
   color: Expression<Color> = const(Color.Black),
   dasharray: Expression<List<Number>> = nil(),
   pattern: Expression<TResolvedImage> = nil(),
   gradient: Expression<Color> = nil(),
-  blur: Expression<Number> = const(0f),
-  width: Expression<Number> = const(1f),
-  gapWidth: Expression<Number> = const(0f),
-  offset: Expression<Number> = const(0f),
+  blur: Expression<Dp> = const(0.dp),
+  width: Expression<Dp> = const(1.dp),
+  gapWidth: Expression<Dp> = const(0.dp),
+  offset: Expression<Dp> = const(0.dp),
   cap: Expression<LineCap> = const(LineCap.Butt),
   join: Expression<LineJoin> = const(LineJoin.Miter),
   miterLimit: Expression<Number> = const(2f),

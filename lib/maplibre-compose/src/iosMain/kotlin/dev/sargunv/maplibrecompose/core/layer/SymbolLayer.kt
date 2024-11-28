@@ -3,6 +3,9 @@ package dev.sargunv.maplibrecompose.core.layer
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
 import cocoapods.MapLibre.MLNSymbolStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -43,7 +46,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.symbolPlacement = placement.toNSExpression()
   }
 
-  actual fun setSymbolSpacing(spacing: Expression<Number>) {
+  actual fun setSymbolSpacing(spacing: Expression<Dp>) {
     impl.symbolSpacing = spacing.toNSExpression()
   }
 
@@ -101,7 +104,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconRotation = rotate.toNSExpression()
   }
 
-  actual fun setIconPadding(padding: Expression<Number>) {
+  actual fun setIconPadding(padding: Expression<Dp>) {
     impl.iconPadding = padding.toNSExpression()
   }
 
@@ -109,7 +112,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.keepsIconUpright = keepUpright.toNSExpression()
   }
 
-  actual fun setIconOffset(offset: Expression<Offset>) {
+  actual fun setIconOffset(offset: Expression<DpOffset>) {
     impl.iconOffset = offset.toNSExpression()
   }
 
@@ -133,15 +136,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconHaloColor = haloColor.toNSExpression()
   }
 
-  actual fun setIconHaloWidth(haloWidth: Expression<Number>) {
+  actual fun setIconHaloWidth(haloWidth: Expression<Dp>) {
     impl.iconHaloWidth = haloWidth.toNSExpression()
   }
 
-  actual fun setIconHaloBlur(haloBlur: Expression<Number>) {
+  actual fun setIconHaloBlur(haloBlur: Expression<Dp>) {
     impl.iconHaloBlur = haloBlur.toNSExpression()
   }
 
-  actual fun setIconTranslate(translate: Expression<Offset>) {
+  actual fun setIconTranslate(translate: Expression<DpOffset>) {
     impl.iconTranslation = translate.toNSExpression()
   }
 
@@ -165,7 +168,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textFontNames = font.toNSExpression()
   }
 
-  actual fun setTextSize(size: Expression<Number>) {
+  actual fun setTextSize(size: Expression<Dp>) {
     impl.textFontSize = size.toNSExpression()
   }
 
@@ -215,7 +218,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textRotation = rotate.toNSExpression()
   }
 
-  actual fun setTextPadding(padding: Expression<Number>) {
+  actual fun setTextPadding(padding: Expression<Dp>) {
     impl.textPadding = padding.toNSExpression()
   }
 
@@ -260,15 +263,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textHaloColor = haloColor.toNSExpression()
   }
 
-  actual fun setTextHaloWidth(haloWidth: Expression<Number>) {
+  actual fun setTextHaloWidth(haloWidth: Expression<Dp>) {
     impl.textHaloWidth = haloWidth.toNSExpression()
   }
 
-  actual fun setTextHaloBlur(haloBlur: Expression<Number>) {
+  actual fun setTextHaloBlur(haloBlur: Expression<Dp>) {
     impl.textHaloBlur = haloBlur.toNSExpression()
   }
 
-  actual fun setTextTranslate(translate: Expression<Offset>) {
+  actual fun setTextTranslate(translate: Expression<DpOffset>) {
     impl.textTranslation = translate.toNSExpression()
   }
 

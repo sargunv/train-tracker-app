@@ -2,6 +2,8 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import cocoapods.MapLibre.MLNLineStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.LineCap
@@ -56,7 +58,7 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.lineColor = color.toNSExpression()
   }
 
-  actual fun setLineTranslate(translate: Expression<Offset>) {
+  actual fun setLineTranslate(translate: Expression<DpOffset>) {
     impl.lineTranslation = translate.toNSExpression()
   }
 
@@ -64,19 +66,19 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.lineTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setLineWidth(width: Expression<Number>) {
+  actual fun setLineWidth(width: Expression<Dp>) {
     impl.lineWidth = width.toNSExpression()
   }
 
-  actual fun setLineGapWidth(gapWidth: Expression<Number>) {
+  actual fun setLineGapWidth(gapWidth: Expression<Dp>) {
     impl.lineGapWidth = gapWidth.toNSExpression()
   }
 
-  actual fun setLineOffset(offset: Expression<Number>) {
+  actual fun setLineOffset(offset: Expression<Dp>) {
     impl.lineOffset = offset.toNSExpression()
   }
 
-  actual fun setLineBlur(blur: Expression<Number>) {
+  actual fun setLineBlur(blur: Expression<Dp>) {
     impl.lineBlur = blur.toNSExpression()
   }
 

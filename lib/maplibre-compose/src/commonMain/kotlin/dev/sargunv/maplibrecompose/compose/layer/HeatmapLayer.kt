@@ -3,6 +3,8 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
@@ -30,8 +32,8 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param color Defines the color of each pixel based on its density value in a heatmap. Should be
  *   an expression that uses [heatmapDensity] as input.
  * @param opacity The global opacity at which the heatmap layer will be drawn.
- * @param radius Radius of influence of one heatmap point in dp. Increasing the value makes the
- *   heatmap smoother, but less detailed. A value in the range of `[1..infinity)`.
+ * @param radius Radius of influence of one heatmap point. Increasing the value makes the heatmap
+ *   smoother, but less detailed.
  * @param weight A measure of how much an individual point contributes to the heatmap. A value of 10
  *   would be equivalent to having 10 points of weight 1 in the same spot. Especially useful when
  *   combined with clustering. A value in the range of `[0..infinity)`.
@@ -62,7 +64,7 @@ public inline fun HeatmapLayer(
       1 to const(Color(0xFFFF0000)), // red
     ),
   opacity: Expression<Number> = const(1f),
-  radius: Expression<Number> = const(30f),
+  radius: Expression<Dp> = const(30.dp), // TODO is this in pixels, or meters?
   weight: Expression<Number> = const(1f),
   intensity: Expression<Number> = const(1f),
   noinline onClick: FeaturesClickHandler? = null,

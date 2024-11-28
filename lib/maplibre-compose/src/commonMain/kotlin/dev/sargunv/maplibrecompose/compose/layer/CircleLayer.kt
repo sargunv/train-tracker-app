@@ -4,14 +4,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
-import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.CircleLayer
+import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**
@@ -41,11 +44,10 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param color Circles fill color.
  * @param blur Amount to blur the circle. A value of `1` blurs the circle such that only the
  *   centerpoint has full opacity.
- * @param radius Circles radius in dp. A value in range `[0..infinity)`.
+ * @param radius Circles radius.
  * @param strokeOpacity Opacity of the circles' stroke.
  * @param strokeColor Circles' stroke color.
- * @param strokeWidth Thickness of the circles' stroke in dp. Strokes are placed outside of the
- *   [radius]. A value in range `[0..infinity)`.
+ * @param strokeWidth Thickness of the circles' stroke. Strokes are placed outside of the [radius].
  * @param pitchScale Scaling behavior of circles when the map is pitched.
  * @param pitchAlignment Orientation of circles when the map is pitched.
  * @param onClick Function to call when any feature in this layer has been clicked.
@@ -62,15 +64,15 @@ public inline fun CircleLayer(
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
-  translate: Expression<Offset> = const(Offset.Zero),
+  translate: Expression<DpOffset> = const(DpOffset.Zero),
   translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   opacity: Expression<Number> = const(1f),
   color: Expression<Color> = const(Color.Black),
   blur: Expression<Number> = const(0f),
-  radius: Expression<Number> = const(5f),
+  radius: Expression<Dp> = const(5.dp),
   strokeOpacity: Expression<Number> = const(1f),
   strokeColor: Expression<Color> = const(Color.Black),
-  strokeWidth: Expression<Number> = const(0f),
+  strokeWidth: Expression<Dp> = const(0.dp),
   pitchScale: Expression<CirclePitchScale> = const(CirclePitchScale.Map),
   pitchAlignment: Expression<CirclePitchAlignment> = const(CirclePitchAlignment.Viewport),
   noinline onClick: FeaturesClickHandler? = null,

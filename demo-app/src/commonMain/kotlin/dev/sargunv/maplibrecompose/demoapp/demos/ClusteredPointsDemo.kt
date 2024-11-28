@@ -12,6 +12,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.layer.CircleLayer
@@ -67,12 +69,12 @@ fun ClusteredPointsDemo() = Column {
       radius =
         step(
           input = get(const("point_count")),
-          fallback = const(15f),
-          25 to const(20f),
-          100 to const(30f),
-          500 to const(40f),
-          1000 to const(50f),
-          5000 to const(60f),
+          fallback = const(15.dp),
+          25 to const(20.dp),
+          100 to const(30.dp),
+          500 to const(40.dp),
+          1000 to const(50.dp),
+          5000 to const(60.dp),
         ),
       onClick = { features ->
         features.firstOrNull()?.geometry?.let {
@@ -102,10 +104,10 @@ fun ClusteredPointsDemo() = Column {
       id = "unclustered-bikes-shadow",
       source = bikeSource,
       filter = !has(const("point_count")),
-      radius = const(13f),
+      radius = const(13.dp),
       color = const(Color.Black),
-      blur = const(1f),
-      translate = const(Offset(0f, 1f)),
+      blur = const(1.0),
+      translate = const(DpOffset(0.dp, 1.dp)),
     )
 
     CircleLayer(
@@ -113,8 +115,8 @@ fun ClusteredPointsDemo() = Column {
       source = bikeSource,
       filter = !has(const("point_count")),
       color = const(LIME_GREEN),
-      radius = const(7f),
-      strokeWidth = const(3f),
+      radius = const(7.dp),
+      strokeWidth = const(3.dp),
       strokeColor = const(Color.White),
     )
   }

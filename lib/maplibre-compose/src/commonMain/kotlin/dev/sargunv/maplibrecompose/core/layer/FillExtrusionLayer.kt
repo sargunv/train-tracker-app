@@ -2,6 +2,7 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
@@ -17,7 +18,7 @@ internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLa
 
   fun setFillExtrusionColor(color: Expression<Color>)
 
-  fun setFillExtrusionTranslate(translate: Expression<Offset>)
+  fun setFillExtrusionTranslate(translate: Expression<DpOffset>)
 
   fun setFillExtrusionTranslateAnchor(anchor: Expression<TranslateAnchor>)
 

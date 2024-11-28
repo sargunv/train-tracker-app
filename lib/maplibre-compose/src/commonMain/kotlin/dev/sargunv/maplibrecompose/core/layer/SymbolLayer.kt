@@ -3,6 +3,9 @@ package dev.sargunv.maplibrecompose.core.layer
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
@@ -28,7 +31,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setSymbolPlacement(placement: Expression<SymbolPlacement>)
 
-  fun setSymbolSpacing(spacing: Expression<Number>)
+  fun setSymbolSpacing(spacing: Expression<Dp>)
 
   fun setSymbolAvoidEdges(avoidEdges: Expression<Boolean>)
 
@@ -56,11 +59,11 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconRotate(rotate: Expression<Number>)
 
-  fun setIconPadding(padding: Expression<Number>)
+  fun setIconPadding(padding: Expression<Dp>)
 
   fun setIconKeepUpright(keepUpright: Expression<Boolean>)
 
-  fun setIconOffset(offset: Expression<Offset>)
+  fun setIconOffset(offset: Expression<DpOffset>)
 
   fun setIconAnchor(anchor: Expression<SymbolAnchor>)
 
@@ -72,11 +75,11 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconHaloColor(haloColor: Expression<Color>)
 
-  fun setIconHaloWidth(haloWidth: Expression<Number>)
+  fun setIconHaloWidth(haloWidth: Expression<Dp>)
 
-  fun setIconHaloBlur(haloBlur: Expression<Number>)
+  fun setIconHaloBlur(haloBlur: Expression<Dp>)
 
-  fun setIconTranslate(translate: Expression<Offset>)
+  fun setIconTranslate(translate: Expression<DpOffset>)
 
   fun setIconTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
@@ -88,7 +91,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextFont(font: Expression<List<String>>)
 
-  fun setTextSize(size: Expression<Number>)
+  fun setTextSize(size: Expression<Dp>)
 
   fun setTextMaxWidth(maxWidth: Expression<Number>)
 
@@ -102,9 +105,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextVariableAnchor(variableAnchor: Expression<List<SymbolAnchor>>)
 
-  fun setTextVariableAnchorOffset(
-    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>
-  )
+  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>)
 
   fun setTextAnchor(anchor: Expression<SymbolAnchor>)
 
@@ -114,7 +115,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextRotate(rotate: Expression<Number>)
 
-  fun setTextPadding(padding: Expression<Number>)
+  fun setTextPadding(padding: Expression<Dp>)
 
   fun setTextKeepUpright(keepUpright: Expression<Boolean>)
 
@@ -136,11 +137,11 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextHaloColor(haloColor: Expression<Color>)
 
-  fun setTextHaloWidth(haloWidth: Expression<Number>)
+  fun setTextHaloWidth(haloWidth: Expression<Dp>)
 
-  fun setTextHaloBlur(haloBlur: Expression<Number>)
+  fun setTextHaloBlur(haloBlur: Expression<Dp>)
 
-  fun setTextTranslate(translate: Expression<Offset>)
+  fun setTextTranslate(translate: Expression<DpOffset>)
 
   fun setTextTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 }

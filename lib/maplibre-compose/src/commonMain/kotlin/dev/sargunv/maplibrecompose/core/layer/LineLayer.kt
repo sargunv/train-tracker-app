@@ -2,6 +2,8 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
@@ -29,17 +31,17 @@ internal expect class LineLayer(id: String, source: Source) : FeatureLayer {
 
   fun setLineColor(color: Expression<Color>)
 
-  fun setLineTranslate(translate: Expression<Offset>)
+  fun setLineTranslate(translate: Expression<DpOffset>)
 
   fun setLineTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
-  fun setLineWidth(width: Expression<Number>)
+  fun setLineWidth(width: Expression<Dp>)
 
-  fun setLineGapWidth(gapWidth: Expression<Number>)
+  fun setLineGapWidth(gapWidth: Expression<Dp>)
 
-  fun setLineOffset(offset: Expression<Number>)
+  fun setLineOffset(offset: Expression<Dp>)
 
-  fun setLineBlur(blur: Expression<Number>)
+  fun setLineBlur(blur: Expression<Dp>)
 
   fun setLineDasharray(dasharray: Expression<List<Number>>)
 

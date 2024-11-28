@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import cocoapods.MapLibre.MLNHeatmapStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -23,7 +24,7 @@ internal actual class HeatmapLayer actual constructor(id: String, source: Source
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setHeatmapRadius(radius: Expression<Number>) {
+  actual fun setHeatmapRadius(radius: Expression<Dp>) {
     impl.heatmapRadius = radius.toNSExpression()
   }
 

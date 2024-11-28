@@ -22,8 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.CameraState
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
@@ -64,12 +64,12 @@ private fun animateTestPosition(start: Position, end: Position): State<Position>
     end,
     typeConverter = remember { PositionVectorConverter(origin = START_POINT) },
     animationSpec =
-      remember {
-        infiniteRepeatable(
-          animation = tween(durationMillis = 30_000),
-          repeatMode = RepeatMode.Reverse,
-        )
-      },
+    remember {
+      infiniteRepeatable(
+        animation = tween(durationMillis = 30_000),
+        repeatMode = RepeatMode.Reverse,
+      )
+    },
   )
 }
 
@@ -96,19 +96,19 @@ private fun LocationPuck(locationSource: Source) {
   CircleLayer(
     id = "target-shadow",
     source = locationSource,
-    radius = const(13f),
+    radius = const(13.dp),
     color = const(Color.Black),
     blur = const(1f),
-    translate = const(Offset(0f, 1f)),
+    translate = const(DpOffset(0.dp, 1.dp)),
   )
 
   CircleLayer(
     id = "target-circle",
     source = locationSource,
-    radius = const(7f),
+    radius = const(7.dp),
     color = const(MaterialTheme.colorScheme.primary),
     strokeColor = const(Color.White),
-    strokeWidth = const(3f),
+    strokeWidth = const(3.dp),
   )
 }
 

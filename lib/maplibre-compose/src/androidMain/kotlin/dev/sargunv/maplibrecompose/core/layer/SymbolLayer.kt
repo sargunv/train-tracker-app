@@ -1,8 +1,11 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
@@ -39,7 +42,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.symbolPlacement(placement.toMLNExpression()))
   }
 
-  actual fun setSymbolSpacing(spacing: Expression<Number>) {
+  actual fun setSymbolSpacing(spacing: Expression<Dp>) {
     impl.setProperties(PropertyFactory.symbolSpacing(spacing.toMLNExpression()))
   }
 
@@ -96,7 +99,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconRotate(rotate.toMLNExpression()))
   }
 
-  actual fun setIconPadding(padding: Expression<Number>) {
+  actual fun setIconPadding(padding: Expression<Dp>) {
     impl.setProperties(PropertyFactory.iconPadding(padding.toMLNExpression()))
   }
 
@@ -104,7 +107,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconKeepUpright(keepUpright.toMLNExpression()))
   }
 
-  actual fun setIconOffset(offset: Expression<Offset>) {
+  actual fun setIconOffset(offset: Expression<DpOffset>) {
     impl.setProperties(PropertyFactory.iconOffset(offset.toMLNExpression()))
   }
 
@@ -128,15 +131,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconHaloColor(haloColor.toMLNExpression()))
   }
 
-  actual fun setIconHaloWidth(haloWidth: Expression<Number>) {
+  actual fun setIconHaloWidth(haloWidth: Expression<Dp>) {
     impl.setProperties(PropertyFactory.iconHaloWidth(haloWidth.toMLNExpression()))
   }
 
-  actual fun setIconHaloBlur(haloBlur: Expression<Number>) {
+  actual fun setIconHaloBlur(haloBlur: Expression<Dp>) {
     impl.setProperties(PropertyFactory.iconHaloBlur(haloBlur.toMLNExpression()))
   }
 
-  actual fun setIconTranslate(translate: Expression<Offset>) {
+  actual fun setIconTranslate(translate: Expression<DpOffset>) {
     impl.setProperties(PropertyFactory.iconTranslate(translate.toMLNExpression()))
   }
 
@@ -160,7 +163,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textFont(font.toMLNExpression()))
   }
 
-  actual fun setTextSize(size: Expression<Number>) {
+  actual fun setTextSize(size: Expression<Dp>) {
     impl.setProperties(PropertyFactory.textSize(size.toMLNExpression()))
   }
 
@@ -212,7 +215,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textRotate(rotate.toMLNExpression()))
   }
 
-  actual fun setTextPadding(padding: Expression<Number>) {
+  actual fun setTextPadding(padding: Expression<Dp>) {
     impl.setProperties(PropertyFactory.textPadding(padding.toMLNExpression()))
   }
 
@@ -257,15 +260,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textHaloColor(haloColor.toMLNExpression()))
   }
 
-  actual fun setTextHaloWidth(haloWidth: Expression<Number>) {
+  actual fun setTextHaloWidth(haloWidth: Expression<Dp>) {
     impl.setProperties(PropertyFactory.textHaloWidth(haloWidth.toMLNExpression()))
   }
 
-  actual fun setTextHaloBlur(haloBlur: Expression<Number>) {
+  actual fun setTextHaloBlur(haloBlur: Expression<Dp>) {
     impl.setProperties(PropertyFactory.textHaloBlur(haloBlur.toMLNExpression()))
   }
 
-  actual fun setTextTranslate(translate: Expression<Offset>) {
+  actual fun setTextTranslate(translate: Expression<DpOffset>) {
     impl.setProperties(PropertyFactory.textTranslate(translate.toMLNExpression()))
   }
 
