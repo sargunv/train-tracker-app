@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.core
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
@@ -64,6 +65,7 @@ internal class IosMap(
   private var mapView: MLNMapView,
   internal var size: CValue<CGSize>,
   internal var layoutDir: LayoutDirection,
+  internal var density: Density,
   internal var insetPadding: PaddingValues,
   internal var callbacks: MaplibreMap.Callbacks,
   internal var logger: Logger?,
@@ -88,12 +90,12 @@ internal class IosMap(
     addGestures(
       Gesture(UITapGestureRecognizer()) {
         if (state != UIGestureRecognizerStateEnded) return@Gesture
-        val point = locationInView(this@IosMap.mapView).toOffset()
+        val point = locationInView(this@IosMap.mapView).toOffset(density)
         callbacks.onClick(this@IosMap, positionFromScreenLocation(point), point)
       },
       Gesture(UILongPressGestureRecognizer()) {
         if (state != UIGestureRecognizerStateBegan) return@Gesture
-        val point = locationInView(this@IosMap.mapView).toOffset()
+        val point = locationInView(this@IosMap.mapView).toOffset(density)
         callbacks.onLongClick(this@IosMap, positionFromScreenLocation(point), point)
       },
     )
@@ -185,7 +187,7 @@ internal class IosMap(
       MLNOrnamentPositionTopLeft ->
         CGPointMake(
           (uiPadding.calculateLeftPadding(layoutDir).value -
-              insetPadding.calculateLeftPadding(layoutDir).value)
+            insetPadding.calculateLeftPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateTopPadding().value - insetPadding.calculateTopPadding().value)
@@ -196,7 +198,7 @@ internal class IosMap(
       MLNOrnamentPositionTopRight ->
         CGPointMake(
           (uiPadding.calculateRightPadding(layoutDir).value -
-              insetPadding.calculateRightPadding(layoutDir).value)
+            insetPadding.calculateRightPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateTopPadding().value - insetPadding.calculateTopPadding().value)
@@ -207,7 +209,7 @@ internal class IosMap(
       MLNOrnamentPositionBottomLeft ->
         CGPointMake(
           (uiPadding.calculateLeftPadding(layoutDir).value -
-              insetPadding.calculateLeftPadding(layoutDir).value)
+            insetPadding.calculateLeftPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateBottomPadding().value - insetPadding.calculateBottomPadding().value)
@@ -218,7 +220,7 @@ internal class IosMap(
       MLNOrnamentPositionBottomRight ->
         CGPointMake(
           (uiPadding.calculateRightPadding(layoutDir).value -
-              insetPadding.calculateRightPadding(layoutDir).value)
+            insetPadding.calculateRightPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateBottomPadding().value - insetPadding.calculateBottomPadding().value)
@@ -319,20 +321,20 @@ internal class IosMap(
     }
 
   override fun positionFromScreenLocation(offset: Offset): Position =
-    mapView.convertPoint(point = offset.toCGPoint(), toCoordinateFromView = null).toPosition()
+    mapView.convertPoint(point = offset.toCGPoint(density), toCoordinateFromView = null).toPosition()
 
   override fun screenLocationFromPosition(position: Position): Offset =
-    mapView.convertCoordinate(position.toCLLocationCoordinate2D(), toPointToView = null).toOffset()
+    mapView.convertCoordinate(position.toCLLocationCoordinate2D(), toPointToView = null).toOffset(density)
 
   override fun queryRenderedFeatures(offset: Offset): List<Feature> {
-    return mapView.visibleFeaturesAtPoint(point = offset.toCGPoint()).map {
+    return mapView.visibleFeaturesAtPoint(point = offset.toCGPoint(density)).map {
       (it as MLNFeatureProtocol).toFeature()
     }
   }
 
   override fun queryRenderedFeatures(offset: Offset, layerIds: Set<String>): List<Feature> {
     return mapView
-      .visibleFeaturesAtPoint(point = offset.toCGPoint(), inStyleLayersWithIdentifiers = layerIds)
+      .visibleFeaturesAtPoint(point = offset.toCGPoint(density), inStyleLayersWithIdentifiers = layerIds)
       .map { (it as MLNFeatureProtocol).toFeature() }
   }
 
@@ -343,7 +345,7 @@ internal class IosMap(
   ): List<Feature> {
     return mapView
       .visibleFeaturesAtPoint(
-        point = offset.toCGPoint(),
+        point = offset.toCGPoint(density),
         inStyleLayersWithIdentifiers = layerIds,
         predicate = predicate.toNSPredicate(),
       )
@@ -351,14 +353,14 @@ internal class IosMap(
   }
 
   override fun queryRenderedFeatures(rect: Rect): List<Feature> {
-    return mapView.visibleFeaturesInRect(rect = rect.toCGRect()).map {
+    return mapView.visibleFeaturesInRect(rect = rect.toCGRect(density)).map {
       (it as MLNFeatureProtocol).toFeature()
     }
   }
 
   override fun queryRenderedFeatures(rect: Rect, layerIds: Set<String>): List<Feature> {
     return mapView
-      .visibleFeaturesInRect(rect = rect.toCGRect(), inStyleLayersWithIdentifiers = layerIds)
+      .visibleFeaturesInRect(rect = rect.toCGRect(density), inStyleLayersWithIdentifiers = layerIds)
       .map { (it as MLNFeatureProtocol).toFeature() }
   }
 
@@ -369,7 +371,7 @@ internal class IosMap(
   ): List<Feature> {
     return mapView
       .visibleFeaturesInRect(
-        rect = rect.toCGRect(),
+        rect = rect.toCGRect(density),
         inStyleLayersWithIdentifiers = layerIds,
         predicate = predicate.toNSPredicate(),
       )

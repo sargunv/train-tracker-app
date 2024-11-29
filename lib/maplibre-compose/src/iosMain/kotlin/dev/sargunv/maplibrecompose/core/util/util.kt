@@ -4,10 +4,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.*
 import cocoapods.MapLibre.MLNFeatureProtocol
 import cocoapods.MapLibre.MLNOrnamentPosition
 import cocoapods.MapLibre.MLNOrnamentPositionBottomLeft
@@ -72,28 +69,35 @@ internal fun JsonElement.Companion.convert(any: Any?): JsonElement {
   }
 }
 
-internal fun CValue<CGPoint>.toOffset(): Offset = useContents {
-  Offset(x = x.toFloat(), y = y.toFloat())
+internal fun CValue<CGPoint>.toOffset(density: Density): Offset = useContents {
+  Offset(x = x.toFloat(), y = y.toFloat()) * density.density
 }
 
-internal fun Offset.toCGPoint(): CValue<CGPoint> = CGPointMake(x = x.toDouble(), y = y.toDouble())
+internal fun Offset.toCGPoint(density: Density): CValue<CGPoint> =
+  with(this / density.density) {
+    CGPointMake(x = x.toDouble(), y = y.toDouble())
+  }
 
-internal fun CValue<CGRect>.toRect(): Rect = useContents {
-  Rect(
-    left = origin.x.toFloat(),
-    top = origin.y.toFloat(),
-    right = origin.x.toFloat() + size.width.toFloat(),
-    bottom = origin.y.toFloat() + size.height.toFloat(),
-  )
+internal fun CValue<CGRect>.toRect(density: Density): Rect = with(density) {
+  useContents {
+    Rect(
+      left = origin.x.dp.toPx(),
+      top = origin.y.dp.toPx(),
+      right = (origin.x + size.width).dp.toPx(),
+      bottom = (origin.y + size.height).dp.toPx(),
+    )
+  }
 }
 
-internal fun Rect.toCGRect(): CValue<CGRect> =
-  CGRectMake(
-    x = left.toDouble(),
-    y = top.toDouble(),
-    width = (right - left).toDouble(),
-    height = (bottom - top).toDouble(),
-  )
+internal fun Rect.toCGRect(density: Density): CValue<CGRect> =
+  with(density) {
+    CGRectMake(
+      x = left.toDp().value.toDouble(),
+      y = top.toDp().value.toDouble(),
+      width = (right - left).toDp().value.toDouble(),
+      height = (bottom - top).toDp().value.toDouble(),
+    )
+  }
 
 internal fun CValue<CLLocationCoordinate2D>.toPosition(): Position = useContents {
   Position(longitude = longitude, latitude = latitude)

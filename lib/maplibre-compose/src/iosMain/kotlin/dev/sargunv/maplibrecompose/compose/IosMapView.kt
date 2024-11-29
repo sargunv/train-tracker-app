@@ -12,6 +12,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.viewinterop.UIKitInteropInteractionMode
 import androidx.compose.ui.viewinterop.UIKitInteropProperties
@@ -55,6 +56,7 @@ internal fun IosMapView(
 ) {
   MeasuredBox(modifier = modifier.fillMaxSize()) { x, y, width, height ->
     val layoutDir = LocalLayoutDirection.current
+    val density = LocalDensity.current
     val insetPadding = WindowInsets.safeDrawing.asPaddingValues()
 
     val currentOnReset by rememberUpdatedState(onReset)
@@ -66,21 +68,22 @@ internal fun IosMapView(
         UIKitInteropProperties(interactionMode = UIKitInteropInteractionMode.NonCooperative),
       factory = {
         MLNMapView(
-            frame =
-              CGRectMake(
-                x = x.value.toDouble(),
-                y = y.value.toDouble(),
-                width = width.value.toDouble(),
-                height = height.value.toDouble(),
-              ),
-            styleURL = NSURL(string = styleUrl),
-          )
+          frame =
+            CGRectMake(
+              x = x.value.toDouble(),
+              y = y.value.toDouble(),
+              width = width.value.toDouble(),
+              height = height.value.toDouble(),
+            ),
+          styleURL = NSURL(string = styleUrl),
+        )
           .also { mapView ->
             currentMap =
               IosMap(
                 mapView = mapView,
                 size = CGSizeMake(width.value.toDouble(), height.value.toDouble()),
                 layoutDir = layoutDir,
+                density = density,
                 insetPadding = insetPadding,
                 callbacks = callbacks,
                 logger = logger,
@@ -91,6 +94,7 @@ internal fun IosMapView(
         val map = currentMap ?: return@UIKitView
         map.size = CGSizeMake(width.value.toDouble(), height.value.toDouble())
         map.layoutDir = layoutDir
+        map.density = density
         map.insetPadding = insetPadding
         map.callbacks = callbacks
         map.styleUrl = styleUrl
