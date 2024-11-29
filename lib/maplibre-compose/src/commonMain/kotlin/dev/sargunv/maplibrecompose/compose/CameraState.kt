@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.DpRect
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.time.Duration
@@ -104,5 +105,11 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
     predicate: Expression<Boolean>,
   ): List<Feature> {
     return map?.queryRenderedFeatures(rect, layerIds, predicate) ?: emptyList()
+  }
+
+  public fun queryVisibleBoundingBox(): BoundingBox {
+    // TODO at some point, this should be refactored to State, just like the camera position
+    requireIsInitialized()
+    return map!!.visibleBoundingBox
   }
 }

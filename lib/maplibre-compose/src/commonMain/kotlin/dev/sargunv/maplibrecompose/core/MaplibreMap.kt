@@ -6,6 +6,7 @@ import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.time.Duration
@@ -14,6 +15,8 @@ internal interface MaplibreMap {
   var styleUrl: String
   var isDebugEnabled: Boolean
   var cameraPosition: CameraPosition
+
+  val visibleBoundingBox: BoundingBox
 
   fun setMaximumFps(maximumFps: Int)
 

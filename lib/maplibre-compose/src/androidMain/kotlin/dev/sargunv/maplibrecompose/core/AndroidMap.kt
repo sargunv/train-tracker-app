@@ -7,6 +7,7 @@ import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.util.*
 import dev.sargunv.maplibrecompose.core.util.correctedAndroidUri
 import dev.sargunv.maplibrecompose.core.util.toGravity
 import dev.sargunv.maplibrecompose.core.util.toLatLng
@@ -15,6 +16,7 @@ import dev.sargunv.maplibrecompose.core.util.toOffset
 import dev.sargunv.maplibrecompose.core.util.toPointF
 import dev.sargunv.maplibrecompose.core.util.toPosition
 import dev.sargunv.maplibrecompose.core.util.toRectF
+import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.coroutines.resume
@@ -74,6 +76,9 @@ internal class AndroidMap(
     set(value) {
       map.isDebugActive = value
     }
+
+  override val visibleBoundingBox: BoundingBox
+    get() = map.projection.visibleRegion.latLngBounds.toBoundingBox()
 
   override fun setMaximumFps(maximumFps: Int) = mapView.setMaximumFps(maximumFps)
 

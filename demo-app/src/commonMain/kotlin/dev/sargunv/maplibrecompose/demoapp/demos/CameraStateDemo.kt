@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastRoundToInt
+import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
@@ -28,7 +29,14 @@ fun CameraStateDemo() = Column {
   val cameraState =
     rememberCameraState(firstPosition = CameraPosition(target = CHICAGO, zoom = 12.0))
 
-  MaplibreMap(modifier = Modifier.weight(1f), styleUrl = DEFAULT_STYLE, cameraState = cameraState)
+  MaplibreMap(
+    modifier = Modifier.weight(1f),
+    styleUrl = DEFAULT_STYLE,
+    cameraState = cameraState,
+    onMapClick = { _, _ ->
+      println(cameraState.queryVisibleBoundingBox())
+      ClickResult.Pass
+    })
 
   Row(modifier = Modifier.safeDrawingPadding().wrapContentSize(Alignment.Center)) {
     val pos = cameraState.position
