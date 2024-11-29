@@ -74,19 +74,19 @@ fun CameraFollowDemo() = Column {
     CircleLayer(
       id = "target-shadow",
       source = targetSource,
-      radius = const(13.0),
+      radius = const(13),
       color = const(Color.Black),
-      blur = const(1.0),
-      translate = point(0.0, 1.0),
+      blur = const(1),
+      translate = point(0, 1),
     )
 
     CircleLayer(
       id = "target-circle",
       source = targetSource,
-      radius = const(7.0),
+      radius = const(7),
       color = const(MaterialTheme.colorScheme.primary),
       strokeColor = const(Color.White),
-      strokeWidth = const(3.0),
+      strokeWidth = const(3),
     )
   }
 

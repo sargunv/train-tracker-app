@@ -66,7 +66,7 @@ public inline fun FillLayer(
   sortKey: Expression<Number> = nil(),
   translate: Expression<Point> = point(0.0, 0.0),
   translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
-  opacity: Expression<Number> = const(1.0),
+  opacity: Expression<Number> = const(1),
   color: Expression<Color> = const(Color.Black),
   pattern: Expression<TResolvedImage> = nil(),
   antialias: Expression<Boolean> = const(true),

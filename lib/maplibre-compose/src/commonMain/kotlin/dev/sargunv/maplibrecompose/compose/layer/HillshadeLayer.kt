@@ -46,7 +46,7 @@ public inline fun HillshadeLayer(
   accentColor: Expression<Color> = const(Color.Black),
   illuminationDirection: Expression<Number> = const(355),
   illuminationAnchor: Expression<IlluminationAnchor> = const(IlluminationAnchor.Viewport),
-  exaggeration: Expression<Number> = const(0.5),
+  exaggeration: Expression<Number> = const(0.5f),
 ) {
   composeKey(id) {
     LayerNode(

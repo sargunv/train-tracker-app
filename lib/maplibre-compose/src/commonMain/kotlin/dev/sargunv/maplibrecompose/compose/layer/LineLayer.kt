@@ -99,7 +99,7 @@ public inline fun LineLayer(
   cap: Expression<LineCap> = const(LineCap.Butt),
   join: Expression<LineJoin> = const(LineJoin.Miter),
   miterLimit: Expression<Number> = const(2),
-  roundLimit: Expression<Number> = const(1.05),
+  roundLimit: Expression<Number> = const(1.05f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

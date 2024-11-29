@@ -352,7 +352,7 @@ public inline fun SymbolLayer(
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
   placement: Expression<SymbolPlacement> = const(SymbolPlacement.Point),
-  spacing: Expression<Number> = const(250.0),
+  spacing: Expression<Number> = const(250),
   avoidEdges: Expression<Boolean> = const(false),
   zOrder: Expression<SymbolZOrder> = const(SymbolZOrder.Auto),
 
@@ -360,27 +360,27 @@ public inline fun SymbolLayer(
   iconImage: Expression<TResolvedImage> = nil(),
 
   // icon colors
-  iconOpacity: Expression<Number> = const(1.0),
+  iconOpacity: Expression<Number> = const(1),
   iconColor: Expression<Color> = const(Color.Black),
   iconHaloColor: Expression<Color> = const(Color.Transparent),
-  iconHaloWidth: Expression<Number> = const(0.0),
-  iconHaloBlur: Expression<Number> = const(0.0),
+  iconHaloWidth: Expression<Number> = const(0),
+  iconHaloBlur: Expression<Number> = const(0),
 
   // icon layout
-  iconSize: Expression<Number> = const(1.0),
+  iconSize: Expression<Number> = const(1),
   iconRotationAlignment: Expression<IconRotationAlignment> = const(IconRotationAlignment.Auto),
   iconPitchAlignment: Expression<IconPitchAlignment> = const(IconPitchAlignment.Auto),
   iconTextFit: Expression<IconTextFit> = const(IconTextFit.None),
   iconTextFitPadding: Expression<Insets> = insets(0, 0, 0, 0),
   iconKeepUpright: Expression<Boolean> = const(false),
-  iconRotate: Expression<Number> = const(0.0),
+  iconRotate: Expression<Number> = const(0),
 
   // icon anchoring
   iconAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
   iconOffset: Expression<Point> = point(0, 0),
 
   // icon collision
-  iconPadding: Expression<Number> = const(2.0),
+  iconPadding: Expression<Number> = const(2),
   iconAllowOverlap: Expression<Boolean> = const(false),
   iconOverlap: Expression<String> = nil(),
   iconIgnorePlacement: Expression<Boolean> = const(false),
@@ -394,39 +394,39 @@ public inline fun SymbolLayer(
   textField: Expression<TFormatted> = nil(),
 
   // text glyph colors
-  textOpacity: Expression<Number> = const(1.0),
+  textOpacity: Expression<Number> = const(1),
   textColor: Expression<Color> = const(Color.Black),
   textHaloColor: Expression<Color> = const(Color.Transparent),
-  textHaloWidth: Expression<Number> = const(0.0),
-  textHaloBlur: Expression<Number> = const(0.0),
+  textHaloWidth: Expression<Number> = const(0),
+  textHaloBlur: Expression<Number> = const(0),
 
   // text glyph properties
   textFont: Expression<List<String>> =
     literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
-  textSize: Expression<Number> = const(16.0),
+  textSize: Expression<Number> = const(16),
   textTransform: Expression<TextTransform> = const(TextTransform.None),
-  textLetterSpacing: Expression<Number> = const(0.0),
+  textLetterSpacing: Expression<Number> = const(0),
   textRotationAlignment: Expression<TextRotationAlignment> = const(TextRotationAlignment.Auto),
   textPitchAlignment: Expression<TextPitchAlignment> = const(TextPitchAlignment.Auto),
-  textMaxAngle: Expression<Number> = const(45.0),
+  textMaxAngle: Expression<Number> = const(45),
 
   // text paragraph layout
-  textMaxWidth: Expression<Number> = const(10.0),
-  textLineHeight: Expression<Number> = const(1.2),
+  textMaxWidth: Expression<Number> = const(10),
+  textLineHeight: Expression<Number> = const(1.2f),
   textJustify: Expression<TextJustify> = const(TextJustify.Center),
   textWritingMode: Expression<List<TextWritingMode>> = nil(),
   textKeepUpright: Expression<Boolean> = const(true),
-  textRotate: Expression<Number> = const(0.0),
+  textRotate: Expression<Number> = const(0),
 
   // text anchoring
   textAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
   textOffset: Expression<Point> = point(0, 0),
   textVariableAnchor: Expression<List<SymbolAnchor>> = nil(),
-  textRadialOffset: Expression<Number> = const(0.0),
+  textRadialOffset: Expression<Number> = const(0),
   textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>> = nil(),
 
   // text collision
-  textPadding: Expression<Number> = const(2.0),
+  textPadding: Expression<Number> = const(2),
   textAllowOverlap: Expression<Boolean> = const(false),
   textOverlap: Expression<String> = nil(),
   textIgnorePlacement: Expression<Boolean> = const(false),

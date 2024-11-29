@@ -12,9 +12,12 @@ public interface ExpressionScope {
 
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
-  public fun const(number: Number): Expression<Number> = Expression.ofNumber(number)
+  public fun const(number: Int): Expression<Number> = Expression.ofNumber(number)
 
-  public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
+  public fun const(number: Float): Expression<Number> = Expression.ofNumber(number)
+
+  public fun const(bool: Boolean): Expression<Boolean> =
+    if (bool) Expression.ofTrue else Expression.ofFalse
 
   public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
     Expression.ofLayerPropertyEnum(value)
@@ -439,17 +442,19 @@ public interface ExpressionScope {
     MatchBranch(const(this), output)
 
   public infix fun <Output> Number.then(output: Expression<Output>): MatchBranch<Number, Output> =
-    MatchBranch(const(this), output)
+    MatchBranch(const(this.toFloat()), output)
 
   @JvmName("stringsThen")
   public infix fun <Output> List<String>.then(
     output: Expression<Output>
-  ): MatchBranch<String, Output> = MatchBranch(Expression.ofList(this.map(::const)), output)
+  ): MatchBranch<String, Output> =
+    MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
 
   @JvmName("numbersThen")
   public infix fun <Output> List<Number>.then(
     output: Expression<Output>
-  ): MatchBranch<Number, Output> = MatchBranch(Expression.ofList(this.map(::const)), output)
+  ): MatchBranch<Number, Output> =
+    MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
 
   /**
    * Evaluates each expression in turn until the first non-null value is obtained, and returns that
@@ -558,9 +563,9 @@ public interface ExpressionScope {
       input,
       fallback,
       *stops
-        .sortedBy { it.first.toDouble() }
+        .sortedBy { it.first.toFloat() }
         .foldToArgs {
-          add(const(it.first))
+          add(const(it.first.toFloat()))
           add(it.second)
         },
     )
@@ -578,7 +583,7 @@ public interface ExpressionScope {
       *stops
         .sortedBy { it.first.toDouble() }
         .foldToArgs {
-          add(const(it.first))
+          add(const(it.first.toFloat()))
           add(it.second)
         },
     )

@@ -101,10 +101,10 @@ fun ClusteredPointsDemo() = Column {
       id = "unclustered-bikes-shadow",
       source = bikeSource,
       filter = !has(const("point_count")),
-      radius = const(13.0),
+      radius = const(13),
       color = const(Color.Black),
-      blur = const(1.0),
-      translate = point(0.0, 1.0),
+      blur = const(1),
+      translate = point(0, 1),
     )
 
     CircleLayer(

@@ -9,13 +9,18 @@ import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 @Immutable
 public data class Expression<out T> private constructor(internal val value: Any?) {
   public companion object : ExpressionScope {
+    // instantiate some commonly used values so we're not allocating them over and over
+    private val smallInts = Array<Expression<Number>>(256) { Expression(it) }
+    internal val ofNull: Expression<Nothing?> = Expression(null)
+    internal val ofFalse: Expression<Boolean> = Expression(false)
+    internal val ofTrue: Expression<Boolean> = Expression(true)
+
     internal fun ofString(string: String): Expression<String> = Expression(string)
 
-    internal fun ofNumber(number: Number): Expression<Number> = Expression(number)
+    internal fun ofNumber(number: Int): Expression<Number> =
+      if (number < smallInts.size) smallInts[number] else Expression(number)
 
-    internal fun ofBoolean(bool: Boolean): Expression<Boolean> = Expression(bool)
-
-    internal val ofNull: Expression<Nothing?> = Expression(null)
+    internal fun ofNumber(number: Float): Expression<Number> = Expression(number)
 
     internal fun ofColor(color: Color): Expression<Color> = Expression(color)
 
