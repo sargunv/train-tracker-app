@@ -36,7 +36,8 @@ fun CameraStateDemo() = Column {
     onMapClick = { _, _ ->
       println(cameraState.queryVisibleBoundingBox())
       ClickResult.Pass
-    })
+    },
+  )
 
   Row(modifier = Modifier.safeDrawingPadding().wrapContentSize(Alignment.Center)) {
     val pos = cameraState.position

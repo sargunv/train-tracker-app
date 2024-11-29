@@ -25,7 +25,6 @@ import platform.CoreGraphics.CGPoint
 import platform.CoreGraphics.CGPointMake
 import platform.CoreGraphics.CGRect
 import platform.CoreGraphics.CGRectMake
-import platform.CoreGraphics.CGSizeMake
 import platform.CoreGraphics.CGVectorMake
 import platform.CoreLocation.CLLocationCoordinate2D
 import platform.CoreLocation.CLLocationCoordinate2DMake
@@ -82,9 +81,7 @@ internal fun DpRect.toCGRect(): CValue<CGRect> =
     height = (bottom - top).value.toDouble(),
   )
 
-internal fun CValue<CLLocationCoordinate2D>.toPosition(): Position = useContents {
-  toPosition()
-}
+internal fun CValue<CLLocationCoordinate2D>.toPosition(): Position = useContents { toPosition() }
 
 internal fun CLLocationCoordinate2D.toPosition(): Position =
   Position(longitude = longitude, latitude = latitude)

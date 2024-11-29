@@ -188,7 +188,7 @@ internal class IosMap(
       MLNOrnamentPositionTopLeft ->
         CGPointMake(
           (uiPadding.calculateLeftPadding(layoutDir).value -
-            insetPadding.calculateLeftPadding(layoutDir).value)
+              insetPadding.calculateLeftPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateTopPadding().value - insetPadding.calculateTopPadding().value)
@@ -199,7 +199,7 @@ internal class IosMap(
       MLNOrnamentPositionTopRight ->
         CGPointMake(
           (uiPadding.calculateRightPadding(layoutDir).value -
-            insetPadding.calculateRightPadding(layoutDir).value)
+              insetPadding.calculateRightPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateTopPadding().value - insetPadding.calculateTopPadding().value)
@@ -210,7 +210,7 @@ internal class IosMap(
       MLNOrnamentPositionBottomLeft ->
         CGPointMake(
           (uiPadding.calculateLeftPadding(layoutDir).value -
-            insetPadding.calculateLeftPadding(layoutDir).value)
+              insetPadding.calculateLeftPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateBottomPadding().value - insetPadding.calculateBottomPadding().value)
@@ -221,7 +221,7 @@ internal class IosMap(
       MLNOrnamentPositionBottomRight ->
         CGPointMake(
           (uiPadding.calculateRightPadding(layoutDir).value -
-            insetPadding.calculateRightPadding(layoutDir).value)
+              insetPadding.calculateRightPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateBottomPadding().value - insetPadding.calculateBottomPadding().value)
@@ -382,8 +382,6 @@ internal class IosMap(
   }
 
   init {
-    mapView.visibleCoordinateBounds.useContents {
-      this.ne
-    }
+    mapView.visibleCoordinateBounds.useContents { this.ne }
   }
 }
