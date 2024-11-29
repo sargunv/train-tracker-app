@@ -20,7 +20,7 @@ public interface ExpressionScope {
     Expression.ofLayerPropertyEnum(value)
 
   @Suppress("UNCHECKED_CAST")
-  public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
+  public fun <T> nil(): Expression<T> = Expression.ofNull as Expression<T>
 
   public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
 

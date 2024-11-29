@@ -15,7 +15,7 @@ public data class Expression<out T> private constructor(internal val value: Any?
 
     internal fun ofBoolean(bool: Boolean): Expression<Boolean> = Expression(bool)
 
-    internal fun ofNull(): Expression<Nothing?> = Expression(null)
+    internal val ofNull: Expression<Nothing?> = Expression(null)
 
     internal fun ofColor(color: Color): Expression<Color> = Expression(color)
 
