@@ -187,7 +187,7 @@ internal class IosMap(
       MLNOrnamentPositionTopLeft ->
         CGPointMake(
           (uiPadding.calculateLeftPadding(layoutDir).value -
-            insetPadding.calculateLeftPadding(layoutDir).value)
+              insetPadding.calculateLeftPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateTopPadding().value - insetPadding.calculateTopPadding().value)
@@ -198,7 +198,7 @@ internal class IosMap(
       MLNOrnamentPositionTopRight ->
         CGPointMake(
           (uiPadding.calculateRightPadding(layoutDir).value -
-            insetPadding.calculateRightPadding(layoutDir).value)
+              insetPadding.calculateRightPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateTopPadding().value - insetPadding.calculateTopPadding().value)
@@ -209,7 +209,7 @@ internal class IosMap(
       MLNOrnamentPositionBottomLeft ->
         CGPointMake(
           (uiPadding.calculateLeftPadding(layoutDir).value -
-            insetPadding.calculateLeftPadding(layoutDir).value)
+              insetPadding.calculateLeftPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateBottomPadding().value - insetPadding.calculateBottomPadding().value)
@@ -220,7 +220,7 @@ internal class IosMap(
       MLNOrnamentPositionBottomRight ->
         CGPointMake(
           (uiPadding.calculateRightPadding(layoutDir).value -
-            insetPadding.calculateRightPadding(layoutDir).value)
+              insetPadding.calculateRightPadding(layoutDir).value)
             .toDouble()
             .coerceAtLeast(0.0) + 8.0,
           (uiPadding.calculateBottomPadding().value - insetPadding.calculateBottomPadding().value)
@@ -321,10 +321,14 @@ internal class IosMap(
     }
 
   override fun positionFromScreenLocation(offset: Offset): Position =
-    mapView.convertPoint(point = offset.toCGPoint(density), toCoordinateFromView = null).toPosition()
+    mapView
+      .convertPoint(point = offset.toCGPoint(density), toCoordinateFromView = null)
+      .toPosition()
 
   override fun screenLocationFromPosition(position: Position): Offset =
-    mapView.convertCoordinate(position.toCLLocationCoordinate2D(), toPointToView = null).toOffset(density)
+    mapView
+      .convertCoordinate(position.toCLLocationCoordinate2D(), toPointToView = null)
+      .toOffset(density)
 
   override fun queryRenderedFeatures(offset: Offset): List<Feature> {
     return mapView.visibleFeaturesAtPoint(point = offset.toCGPoint(density)).map {
@@ -334,7 +338,10 @@ internal class IosMap(
 
   override fun queryRenderedFeatures(offset: Offset, layerIds: Set<String>): List<Feature> {
     return mapView
-      .visibleFeaturesAtPoint(point = offset.toCGPoint(density), inStyleLayersWithIdentifiers = layerIds)
+      .visibleFeaturesAtPoint(
+        point = offset.toCGPoint(density),
+        inStyleLayersWithIdentifiers = layerIds,
+      )
       .map { (it as MLNFeatureProtocol).toFeature() }
   }
 

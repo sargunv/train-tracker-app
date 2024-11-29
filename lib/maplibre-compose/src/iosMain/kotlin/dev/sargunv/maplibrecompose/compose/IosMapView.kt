@@ -68,15 +68,15 @@ internal fun IosMapView(
         UIKitInteropProperties(interactionMode = UIKitInteropInteractionMode.NonCooperative),
       factory = {
         MLNMapView(
-          frame =
-            CGRectMake(
-              x = x.value.toDouble(),
-              y = y.value.toDouble(),
-              width = width.value.toDouble(),
-              height = height.value.toDouble(),
-            ),
-          styleURL = NSURL(string = styleUrl),
-        )
+            frame =
+              CGRectMake(
+                x = x.value.toDouble(),
+                y = y.value.toDouble(),
+                width = width.value.toDouble(),
+                height = height.value.toDouble(),
+              ),
+            styleURL = NSURL(string = styleUrl),
+          )
           .also { mapView ->
             currentMap =
               IosMap(

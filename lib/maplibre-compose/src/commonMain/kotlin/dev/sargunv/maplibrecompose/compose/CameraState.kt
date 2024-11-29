@@ -43,7 +43,8 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
       positionState.value = value
     }
 
-  public val isInitialized: Boolean get() = map != null
+  public val isInitialized: Boolean
+    get() = map != null
 
   public suspend fun awaitInitialized() {
     map ?: mapAttachSignal.receive()
@@ -58,7 +59,9 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   }
 
   private fun requireIsInitialized() {
-    require(isInitialized) { "Map requested before it was initialized; try calling awaitInitialization() first" }
+    require(isInitialized) {
+      "Map requested before it was initialized; try calling awaitInitialization() first"
+    }
   }
 
   public fun screenLocationFromPosition(position: Position): Offset {

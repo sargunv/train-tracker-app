@@ -1,6 +1,5 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
@@ -11,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextOverflow
 import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
@@ -39,7 +37,7 @@ fun StyleSwitcherDemo() = Column {
       val gotOffset = cameraState.screenLocationFromPosition(pos)
       println("Calculated position $gotPos, $gotOffset")
       ClickResult.Pass
-    }
+    },
   )
 
   SecondaryScrollableTabRow(selectedTabIndex = selectedIndex) {

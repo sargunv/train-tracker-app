@@ -74,20 +74,19 @@ internal fun CValue<CGPoint>.toOffset(density: Density): Offset = useContents {
 }
 
 internal fun Offset.toCGPoint(density: Density): CValue<CGPoint> =
-  with(this / density.density) {
-    CGPointMake(x = x.toDouble(), y = y.toDouble())
-  }
+  with(this / density.density) { CGPointMake(x = x.toDouble(), y = y.toDouble()) }
 
-internal fun CValue<CGRect>.toRect(density: Density): Rect = with(density) {
-  useContents {
-    Rect(
-      left = origin.x.dp.toPx(),
-      top = origin.y.dp.toPx(),
-      right = (origin.x + size.width).dp.toPx(),
-      bottom = (origin.y + size.height).dp.toPx(),
-    )
+internal fun CValue<CGRect>.toRect(density: Density): Rect =
+  with(density) {
+    useContents {
+      Rect(
+        left = origin.x.dp.toPx(),
+        top = origin.y.dp.toPx(),
+        right = (origin.x + size.width).dp.toPx(),
+        bottom = (origin.y + size.height).dp.toPx(),
+      )
+    }
   }
-}
 
 internal fun Rect.toCGRect(density: Density): CValue<CGRect> =
   with(density) {
