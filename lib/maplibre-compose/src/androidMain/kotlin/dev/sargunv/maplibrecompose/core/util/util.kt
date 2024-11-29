@@ -4,12 +4,9 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.view.Gravity
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.*
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonNull
@@ -35,13 +32,19 @@ internal fun String.correctedAndroidUri(): URI {
   }
 }
 
-internal fun Offset.toPointF(): PointF = PointF(x, y)
+internal fun DpOffset.toPointF(density: Density): PointF =
+  with(density) { PointF(x.toPx(), y.toPx()) }
 
-internal fun PointF.toOffset(): Offset = Offset(x = x, y = y)
+internal fun PointF.toOffset(density: Density): DpOffset =
+  with(density) { DpOffset(x = x.toDp(), y = y.toDp()) }
 
-internal fun Rect.toRectF(): RectF = RectF(left, top, right, bottom)
+internal fun DpRect.toRectF(density: Density): RectF =
+  with(density) { RectF(left.toPx(), top.toPx(), right.toPx(), bottom.toPx()) }
 
-internal fun RectF.toRect(): Rect = Rect(left = left, top = top, right = right, bottom = bottom)
+internal fun RectF.toRect(density: Density): DpRect =
+  with(density) {
+    DpRect(left = left.toDp(), top = top.toDp(), right = right.toDp(), bottom = bottom.toDp())
+  }
 
 internal fun LatLng.toPosition(): Position = Position(longitude = longitude, latitude = latitude)
 

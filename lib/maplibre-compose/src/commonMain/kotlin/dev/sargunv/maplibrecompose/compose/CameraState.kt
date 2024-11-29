@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -64,42 +64,42 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
     }
   }
 
-  public fun screenLocationFromPosition(position: Position): Offset {
+  public fun screenLocationFromPosition(position: Position): DpOffset {
     requireIsInitialized()
     return map!!.screenLocationFromPosition(position)
   }
 
-  public fun positionFromScreenLocation(offset: Offset): Position {
+  public fun positionFromScreenLocation(offset: DpOffset): Position {
     requireIsInitialized()
     return map!!.positionFromScreenLocation(offset)
   }
 
-  public fun queryRenderedFeatures(offset: Offset): List<Feature> {
+  public fun queryRenderedFeatures(offset: DpOffset): List<Feature> {
     return map?.queryRenderedFeatures(offset) ?: emptyList()
   }
 
-  public fun queryRenderedFeatures(offset: Offset, layerIds: Set<String>): List<Feature> {
+  public fun queryRenderedFeatures(offset: DpOffset, layerIds: Set<String>): List<Feature> {
     return map?.queryRenderedFeatures(offset, layerIds) ?: emptyList()
   }
 
   public fun queryRenderedFeatures(
-    offset: Offset,
+    offset: DpOffset,
     layerIds: Set<String>,
     predicate: Expression<Boolean>,
   ): List<Feature> {
     return map?.queryRenderedFeatures(offset, layerIds, predicate) ?: emptyList()
   }
 
-  public fun queryRenderedFeatures(rect: Rect): List<Feature> {
+  public fun queryRenderedFeatures(rect: DpRect): List<Feature> {
     return map?.queryRenderedFeatures(rect) ?: emptyList()
   }
 
-  public fun queryRenderedFeatures(rect: Rect, layerIds: Set<String>): List<Feature> {
+  public fun queryRenderedFeatures(rect: DpRect, layerIds: Set<String>): List<Feature> {
     return map?.queryRenderedFeatures(rect, layerIds) ?: emptyList()
   }
 
   public fun queryRenderedFeatures(
-    rect: Rect,
+    rect: DpRect,
     layerIds: Set<String>,
     predicate: Expression<Boolean>,
   ): List<Feature> {

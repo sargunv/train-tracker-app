@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
@@ -31,13 +30,6 @@ fun StyleSwitcherDemo() = Column {
     modifier = Modifier.weight(1f),
     styleUrl = styles[selectedIndex].second,
     cameraState = cameraState,
-    onMapClick = { pos, offset ->
-      println("Clicked at $pos, $offset")
-      val gotPos = cameraState.positionFromScreenLocation(offset)
-      val gotOffset = cameraState.screenLocationFromPosition(pos)
-      println("Calculated position $gotPos, $gotOffset")
-      ClickResult.Pass
-    },
   )
 
   SecondaryScrollableTabRow(selectedTabIndex = selectedIndex) {

@@ -1,8 +1,6 @@
 package dev.sargunv.maplibrecompose.core.util
 
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.*
 import cocoapods.MapLibre.MLNFeatureProtocol
@@ -69,34 +67,27 @@ internal fun JsonElement.Companion.convert(any: Any?): JsonElement {
   }
 }
 
-internal fun CValue<CGPoint>.toOffset(density: Density): Offset = useContents {
-  Offset(x = x.toFloat(), y = y.toFloat()) * density.density
+internal fun CValue<CGPoint>.toDpOffset(): DpOffset = useContents { DpOffset(x = x.dp, y = y.dp) }
+
+internal fun DpOffset.toCGPoint(): CValue<CGPoint> =
+  CGPointMake(x = x.value.toDouble(), y = y.value.toDouble())
+
+internal fun CValue<CGRect>.toDpRect(): DpRect = useContents {
+  DpRect(
+    left = origin.x.dp,
+    top = origin.y.dp,
+    right = (origin.x + size.width).dp,
+    bottom = (origin.y + size.height).dp,
+  )
 }
 
-internal fun Offset.toCGPoint(density: Density): CValue<CGPoint> =
-  with(this / density.density) { CGPointMake(x = x.toDouble(), y = y.toDouble()) }
-
-internal fun CValue<CGRect>.toRect(density: Density): Rect =
-  with(density) {
-    useContents {
-      Rect(
-        left = origin.x.dp.toPx(),
-        top = origin.y.dp.toPx(),
-        right = (origin.x + size.width).dp.toPx(),
-        bottom = (origin.y + size.height).dp.toPx(),
-      )
-    }
-  }
-
-internal fun Rect.toCGRect(density: Density): CValue<CGRect> =
-  with(density) {
-    CGRectMake(
-      x = left.toDp().value.toDouble(),
-      y = top.toDp().value.toDouble(),
-      width = (right - left).toDp().value.toDouble(),
-      height = (bottom - top).toDp().value.toDouble(),
-    )
-  }
+internal fun DpRect.toCGRect(): CValue<CGRect> =
+  CGRectMake(
+    x = left.value.toDouble(),
+    y = top.value.toDouble(),
+    width = (right - left).value.toDouble(),
+    height = (bottom - top).value.toDouble(),
+  )
 
 internal fun CValue<CLLocationCoordinate2D>.toPosition(): Position = useContents {
   Position(longitude = longitude, latitude = latitude)

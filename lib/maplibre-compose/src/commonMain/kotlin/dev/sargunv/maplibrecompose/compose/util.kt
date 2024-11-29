@@ -1,6 +1,6 @@
 package dev.sargunv.maplibrecompose.compose
 
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.DpOffset
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
 
@@ -10,7 +10,7 @@ import io.github.dellisd.spatialk.geojson.Position
  * @return [ClickResult.Consume] if this click should be consumed and not passed down to layers or
  *   [ClickResult.Pass] if it should be passed down.
  */
-public typealias MapClickHandler = (Position, Offset) -> ClickResult
+public typealias MapClickHandler = (Position, DpOffset) -> ClickResult
 
 /**
  * A callback for when a feature is clicked.
