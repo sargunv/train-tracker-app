@@ -16,14 +16,13 @@ public interface ExpressionScope {
 
   public fun const(number: Float): Expression<Number> = Expression.ofNumber(number)
 
-  public fun const(bool: Boolean): Expression<Boolean> =
-    if (bool) Expression.ofTrue else Expression.ofFalse
+  public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
 
   public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
     Expression.ofLayerPropertyEnum(value)
 
   @Suppress("UNCHECKED_CAST")
-  public fun <T> nil(): Expression<T> = Expression.ofNull as Expression<T>
+  public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
 
   public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
 
