@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.core.expression
 
 import androidx.compose.ui.graphics.Color
-import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 import kotlin.jvm.JvmName
 
 @Suppress("INAPPLICABLE_JVM_NAME")

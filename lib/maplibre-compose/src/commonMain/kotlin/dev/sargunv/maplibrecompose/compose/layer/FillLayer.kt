@@ -10,8 +10,8 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
+import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.FillLayer
-import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**

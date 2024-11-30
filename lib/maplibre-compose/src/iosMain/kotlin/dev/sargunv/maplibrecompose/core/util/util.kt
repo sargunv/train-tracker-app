@@ -20,8 +20,8 @@ import cocoapods.MapLibre.expressionWithMLNJSONObject
 import cocoapods.MapLibre.predicateWithMLNJSONObject
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
+import dev.sargunv.maplibrecompose.core.expression.LayerPropertyEnum
 import dev.sargunv.maplibrecompose.core.expression.Point
-import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.GeoJson

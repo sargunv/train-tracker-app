@@ -18,8 +18,8 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
+import dev.sargunv.maplibrecompose.core.expression.LayerPropertyEnum
 import dev.sargunv.maplibrecompose.core.expression.Point
-import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Position
 import java.net.URI

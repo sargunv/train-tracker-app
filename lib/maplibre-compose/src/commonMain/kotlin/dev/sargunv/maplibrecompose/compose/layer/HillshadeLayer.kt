@@ -5,8 +5,8 @@ import androidx.compose.runtime.key as composeKey
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
+import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.layer.HillshadeLayer
-import dev.sargunv.maplibrecompose.core.layer.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**

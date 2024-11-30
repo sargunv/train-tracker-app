@@ -2,7 +2,6 @@ package dev.sargunv.maplibrecompose.core.expression
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
-import dev.sargunv.maplibrecompose.core.layer.LayerPropertyEnum
 
 // would make this an inline value class, but we lose varargs
 // https://youtrack.jetbrains.com/issue/KT-33565/Allow-vararg-parameter-of-inline-class-type
@@ -41,8 +40,9 @@ public data class Expression<out T> private constructor(internal val value: Any?
 
     internal fun ofPoint(point: Point): Expression<Point> = Expression(point)
 
-    internal fun <T : LayerPropertyEnum> ofLayerPropertyEnum(value: T): Expression<T> =
-      Expression(value)
+    @Suppress("UNCHECKED_CAST")
+    internal fun <T : LayerPropertyEnum> ofLayerPropertyEnum(enum: T): Expression<T> =
+      enum.expr as Expression<T>
 
     internal fun ofInsets(insets: Insets): Expression<Insets> = Expression(insets)
 

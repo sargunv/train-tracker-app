@@ -10,23 +10,23 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.insets
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.literal
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
+import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
+import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
+import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.Point
+import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
+import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
+import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
 import dev.sargunv.maplibrecompose.core.expression.TFormatted
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
-import dev.sargunv.maplibrecompose.core.layer.IconPitchAlignment
-import dev.sargunv.maplibrecompose.core.layer.IconRotationAlignment
-import dev.sargunv.maplibrecompose.core.layer.IconTextFit
-import dev.sargunv.maplibrecompose.core.layer.SymbolAnchor
+import dev.sargunv.maplibrecompose.core.expression.TextJustify
+import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
+import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
+import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
+import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.SymbolLayer
-import dev.sargunv.maplibrecompose.core.layer.SymbolPlacement
-import dev.sargunv.maplibrecompose.core.layer.SymbolZOrder
-import dev.sargunv.maplibrecompose.core.layer.TextJustify
-import dev.sargunv.maplibrecompose.core.layer.TextPitchAlignment
-import dev.sargunv.maplibrecompose.core.layer.TextRotationAlignment
-import dev.sargunv.maplibrecompose.core.layer.TextTransform
-import dev.sargunv.maplibrecompose.core.layer.TextWritingMode
-import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**

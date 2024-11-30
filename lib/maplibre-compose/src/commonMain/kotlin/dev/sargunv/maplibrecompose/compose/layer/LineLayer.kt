@@ -8,12 +8,12 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
+import dev.sargunv.maplibrecompose.core.expression.LineCap
+import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
-import dev.sargunv.maplibrecompose.core.layer.LineCap
-import dev.sargunv.maplibrecompose.core.layer.LineJoin
+import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
-import dev.sargunv.maplibrecompose.core.layer.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 /**

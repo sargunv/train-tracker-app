@@ -2,6 +2,7 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
 @PublishedApi
