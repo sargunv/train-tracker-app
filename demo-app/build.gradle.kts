@@ -2,6 +2,7 @@
 
 import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
@@ -114,6 +115,11 @@ kotlin {
 }
 
 compose.resources { packageOfResClass = "dev.sargunv.maplibrecompose.demoapp.generated" }
+
+composeCompiler {
+  reportsDestination = layout.buildDirectory.dir("compose/reports")
+  featureFlags = setOf(ComposeFeatureFlag.StrongSkipping)
+}
 
 spotless {
   kotlinGradle { ktfmt().googleStyle() }

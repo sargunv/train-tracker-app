@@ -2,6 +2,7 @@
 
 import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
@@ -121,6 +122,11 @@ kotlin {
       implementation(libs.compose.ui.test.manifest)
     }
   }
+}
+
+composeCompiler {
+  reportsDestination = layout.buildDirectory.dir("compose/reports")
+  featureFlags = setOf(ComposeFeatureFlag.StrongSkipping)
 }
 
 spotless {
