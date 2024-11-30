@@ -15,7 +15,9 @@ import dev.sargunv.maplibrecompose.core.Style
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.ExpressionScope
+import dev.sargunv.maplibrecompose.core.util.PlatformUtils
 import io.github.dellisd.spatialk.geojson.Position
+import kotlin.math.roundToInt
 
 @Composable
 public fun MaplibreMap(
@@ -27,7 +29,7 @@ public fun MaplibreMap(
   onMapClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   onMapLongClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   isDebugEnabled: Boolean = false,
-  maximumFps: Int = 120, // TODO detect device native frame rate
+  maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   debugLogger: Logger? = remember { Logger.withTag("maplibre-compose") },
   content: @Composable ExpressionScope.() -> Unit = {},
 ) {
