@@ -22,7 +22,8 @@ public data class Expression<out T> private constructor(internal val value: Any?
     internal fun ofString(string: String): Expression<String> = Expression(string)
 
     internal fun ofNumber(number: Int): Expression<Number> =
-      if (number < constSmallInts.size) constSmallInts[number] else Expression(number)
+      if (number < constSmallInts.size && number >= 0) constSmallInts[number]
+      else Expression(number)
 
     internal fun ofNumber(number: Float): Expression<Number> = Expression(number)
 

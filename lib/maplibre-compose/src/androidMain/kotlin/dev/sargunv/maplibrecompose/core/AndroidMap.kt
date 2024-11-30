@@ -1,14 +1,19 @@
 package dev.sargunv.maplibrecompose.core
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.coerceAtLeast
+import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.data.GestureSettings
 import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.util.*
 import dev.sargunv.maplibrecompose.core.util.correctedAndroidUri
+import dev.sargunv.maplibrecompose.core.util.toBoundingBox
 import dev.sargunv.maplibrecompose.core.util.toGravity
 import dev.sargunv.maplibrecompose.core.util.toLatLng
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -25,6 +30,7 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import org.maplibre.android.camera.CameraPosition as MLNCameraPosition
 import org.maplibre.android.camera.CameraUpdateFactory
+import org.maplibre.android.log.Logger as MLNLogger
 import org.maplibre.android.maps.MapLibreMap as MLNMap
 import org.maplibre.android.maps.MapLibreMap
 import org.maplibre.android.maps.MapView
@@ -36,9 +42,17 @@ internal class AndroidMap(
   internal var layoutDir: LayoutDirection,
   internal var density: Density,
   internal var callbacks: MaplibreMap.Callbacks,
-  internal var logger: Logger?,
+  logger: Logger?,
   styleUrl: String,
 ) : MaplibreMap {
+
+  internal var logger: Logger? = logger
+    set(value) {
+      if (value != field) {
+        MLNLogger.setLoggerDefinition(KermitLoggerDefinition(value))
+        field = value
+      }
+    }
 
   override var styleUrl: String = ""
     set(value) {

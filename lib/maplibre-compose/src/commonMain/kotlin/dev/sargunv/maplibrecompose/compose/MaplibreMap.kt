@@ -30,11 +30,11 @@ public fun MaplibreMap(
   onMapLongClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
-  debugLogger: Logger? = remember { Logger.withTag("maplibre-compose") },
+  logger: Logger? = remember { Logger.withTag("maplibre-compose") },
   content: @Composable ExpressionScope.() -> Unit = {},
 ) {
   var rememberedStyle by remember { mutableStateOf<Style?>(null) }
-  val styleComposition by rememberStyleComposition(rememberedStyle, debugLogger, content)
+  val styleComposition by rememberStyleComposition(rememberedStyle, logger, content)
 
   val callbacks =
     remember(cameraState, styleComposition) {
@@ -89,7 +89,7 @@ public fun MaplibreMap(
       cameraState.map = null
       rememberedStyle = null
     },
-    logger = debugLogger,
+    logger = logger,
     callbacks = callbacks,
   )
 }
