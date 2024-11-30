@@ -1,0 +1,54 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DemoApp(
+  unstable navController: NavHostController? = @dynamic rememberNavController(
+  $composer   =   $composer  , 
+  $changed   =   0
+)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DemoListItem(
+  stable title: String
+  stable description: String
+  stable onClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [_]]") fun DemoScaffold(
+  stable title: String
+  stable navigateUp: Function0<Unit>?
+  stable alpha: Float = @static 0.7f
+  stable content: Function3<PaddingValues, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun SimpleDemoScaffold(
+  stable title: String
+  stable navigateUp: Function0<Unit>?
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AnimatedLayerDemo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CameraFollowDemo()
+fun animateTestPosition(
+  unstable start: Position
+  unstable end: Position
+): State<Position>
+fun rememberAnimatedFollowCamera(
+  unstable target: Position
+  stable zoom: Float
+): CameraState
+restartable skippable fun LocationPuck(
+  locationSource: Source
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FollowControls(
+  stable currentZoom: Int
+  stable onZoomChange: Function1<Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CameraStateDemo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Cell(
+  stable title: String
+  stable value: String
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ClusteredPointsDemo()
+fun rememberGbfsFeatureState(
+  stable gbfsFilePath: String
+): State<FeatureCollection>
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EdgeToEdgeDemo(
+  stable innerPadding: PaddingValues
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FrameRateDemo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StyleSwitcherDemo()

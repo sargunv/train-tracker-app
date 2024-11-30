@@ -123,6 +123,8 @@ kotlin {
   }
 }
 
+composeCompiler { reportsDestination = rootDir.resolve("reports/compose") }
+
 spotless {
   kotlinGradle { ktfmt().googleStyle() }
   kotlin {

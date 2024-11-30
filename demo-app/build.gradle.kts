@@ -115,6 +115,8 @@ kotlin {
 
 compose.resources { packageOfResClass = "dev.sargunv.maplibrecompose.demoapp.generated" }
 
+composeCompiler { reportsDestination = rootDir.resolve("reports/compose") }
+
 spotless {
   kotlinGradle { ktfmt().googleStyle() }
   kotlin {

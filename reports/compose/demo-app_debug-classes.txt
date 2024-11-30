@@ -1,0 +1,51 @@
+stable class MainActivity {
+  <runtime stability> = Stable
+}
+stable class drawable {
+  <runtime stability> = Stable
+}
+stable class string {
+  <runtime stability> = Stable
+}
+stable class array {
+  <runtime stability> = Stable
+}
+stable class plurals {
+  <runtime stability> = Stable
+}
+stable class font {
+  <runtime stability> = Stable
+}
+stable class Res {
+  <runtime stability> = Stable
+}
+stable class StartRoute {
+  <runtime stability> = Stable
+}
+stable class EdgeToEdgeRoute {
+  <runtime stability> = Stable
+}
+stable class StyleSwitcherRoute {
+  <runtime stability> = Stable
+}
+stable class ClusteredPointsRoute {
+  <runtime stability> = Stable
+}
+stable class AnimatedLayerRoute {
+  <runtime stability> = Stable
+}
+stable class CameraStateRoute {
+  <runtime stability> = Stable
+}
+stable class CameraFollowRoute {
+  <runtime stability> = Stable
+}
+stable class FrameRateRoute {
+  <runtime stability> = Stable
+}
+unstable class PositionVectorConverter {
+  unstable val origin: Position
+  stable val convertFromVector: Function1<AnimationVector2D, Position>
+  stable val convertToVector: Function1<Position, AnimationVector2D>
+  <runtime stability> = Unstable
+}

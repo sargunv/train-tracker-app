@@ -1,0 +1,217 @@
+unstable class AndroidMap {
+  unstable val mapView: MapView
+  unstable val map: MapLibreMap
+  stable var layoutDir: LayoutDirection
+  stable var density: Density
+  runtime var callbacks: Callbacks
+  unstable var logger: Logger?
+  stable var styleUrl: String
+  <runtime stability> = Unstable
+}
+unstable class AndroidStyle {
+  unstable var impl: Style
+  <runtime stability> = Unstable
+}
+unstable class MapViewLifecycleObserver {
+  unstable val mapView: MapView
+  <runtime stability> = Unstable
+}
+unstable class BackgroundLayer {
+  unstable val impl: BackgroundLayer
+  <runtime stability> = Unstable
+}
+unstable class CircleLayer {
+  unstable val impl: CircleLayer
+  unstable var sourceLayer$delegate: KMutableProperty0<@[EnhancedNullability] String>
+  <runtime stability> = Unstable
+}
+stable class FeatureLayer {
+  stable val source: Source
+  <runtime stability> = Stable
+}
+unstable class FillExtrusionLayer {
+  unstable val impl: FillExtrusionLayer
+  unstable var sourceLayer$delegate: KMutableProperty0<@[EnhancedNullability] String>
+  <runtime stability> = Unstable
+}
+unstable class FillLayer {
+  unstable val impl: FillLayer
+  unstable var sourceLayer$delegate: KMutableProperty0<@[EnhancedNullability] String>
+  <runtime stability> = Unstable
+}
+unstable class HeatmapLayer {
+  unstable val impl: HeatmapLayer
+  unstable var sourceLayer$delegate: KMutableProperty0<@[EnhancedNullability] String>
+  <runtime stability> = Unstable
+}
+unstable class HillshadeLayer {
+  stable val source: Source
+  unstable val impl: HillshadeLayer
+  <runtime stability> = Unstable
+}
+stable class Layer {
+  <runtime stability> = Stable
+}
+unstable class LineLayer {
+  unstable val impl: LineLayer
+  unstable var sourceLayer$delegate: KMutableProperty0<@[EnhancedNullability] String>
+  <runtime stability> = Unstable
+}
+unstable class RasterLayer {
+  stable val source: Source
+  unstable val impl: RasterLayer
+  <runtime stability> = Unstable
+}
+unstable class SymbolLayer {
+  unstable val impl: SymbolLayer
+  unstable var sourceLayer$delegate: KMutableProperty0<@[EnhancedNullability] String>
+  <runtime stability> = Unstable
+}
+unstable class UnknownLayer {
+  unstable val impl: Layer
+  <runtime stability> = Unstable
+}
+unstable class GeoJsonSource {
+  unstable val impl: GeoJsonSource
+  <runtime stability> = Unstable
+}
+unstable class RasterSource {
+  unstable val impl: RasterSource
+  <runtime stability> = Unstable
+}
+stable class Source {
+  <runtime stability> = Stable
+}
+unstable class UnknownSource {
+  unstable val impl: Source
+  <runtime stability> = Unstable
+}
+unstable class VectorSource {
+  unstable val impl: VectorSource
+  <runtime stability> = Unstable
+}
+unstable class CameraState {
+  runtime var map: MaplibreMap?
+  unstable val mapAttachSignal: Channel<MaplibreMap>
+  stable val positionState: MutableState<CameraPosition>
+  <runtime stability> = Unstable
+}
+unstable class LayerNode {
+  runtime val layer: T
+  stable val anchor: Anchor
+  stable var added: Boolean
+  stable var onClick: Function1<List<Feature>, ClickResult>?
+  stable var onLongClick: Function1<List<Feature>, ClickResult>?
+  <runtime stability> = Unstable
+}
+unstable class MapNode {
+  unstable val children: MutableList<MapNode>
+  <runtime stability> = Unstable
+}
+stable class MapNodeApplier {
+  <runtime stability> = Stable
+}
+unstable class StyleManager {
+  runtime var style: Style
+  unstable var logger: Logger?
+  unstable val baseSources: Map<String, Source>
+  unstable val baseLayers: Map<String, Layer>
+  unstable val sourcesToAdd: MutableList<Source>
+  unstable val userLayers: MutableList<LayerNode<*>>
+  unstable val replacedLayers: MutableMap<Replace, Layer>
+  unstable val replacementCounters: MutableMap<Replace, Int>
+  <runtime stability> = Unstable
+}
+unstable class StyleNode {
+  unstable val styleManager: StyleManager
+  <runtime stability> = Unstable
+}
+stable class Top {
+  <runtime stability> = Stable
+}
+stable class Bottom {
+  <runtime stability> = Stable
+}
+stable class Above {
+  stable val layerId: String
+  <runtime stability> = Stable
+}
+stable class Below {
+  stable val layerId: String
+  <runtime stability> = Stable
+}
+stable class Replace {
+  stable val layerId: String
+  <runtime stability> = Stable
+}
+stable class Null {
+  <runtime stability> = Stable
+}
+stable class CameraPosition {
+  stable val bearing: Double
+  unstable val target: Position
+  stable val tilt: Double
+  stable val zoom: Double
+  stable val padding: PaddingValues
+}
+stable class GestureSettings {
+  stable val isTiltGesturesEnabled: Boolean
+  stable val isZoomGesturesEnabled: Boolean
+  stable val isRotateGesturesEnabled: Boolean
+  stable val isScrollGesturesEnabled: Boolean
+  <runtime stability> = Stable
+}
+stable class OrnamentSettings {
+  stable val padding: PaddingValues
+  stable val isLogoEnabled: Boolean
+  stable val logoAlignment: Alignment
+  stable val isAttributionEnabled: Boolean
+  stable val attributionAlignment: Alignment
+  stable val isCompassEnabled: Boolean
+  stable val compassAlignment: Alignment
+  <runtime stability> = Stable
+}
+stable class Expression {
+  unstable val value: Any?
+}
+stable class FormatStyle {
+  stable val textFont: Expression<String>?
+  stable val textColor: Expression<String>?
+  stable val fontScale: Expression<Number>?
+  <runtime stability> = Stable
+}
+stable class CaseBranch {
+  stable val test: Expression<Boolean>
+  stable val output: Expression<Output>
+  <runtime stability> = Stable
+}
+stable class MatchBranch {
+  stable val label: Expression<*>
+  stable val output: Expression<Output>
+  <runtime stability> = Stable
+}
+stable class Point {
+  unstable val x: Number
+  unstable val y: Number
+}
+stable class Insets {
+  unstable val top: Number
+  unstable val right: Number
+  unstable val bottom: Number
+  unstable val left: Number
+}
+stable class ClusterProperty {
+  stable val operator: String
+  stable val mapper: Expression<*>
+  <runtime stability> = Stable
+}
+stable class GeoJsonOptions {
+  stable val maxZoom: Int
+  stable val buffer: Int
+  stable val tolerance: Float
+  stable val cluster: Boolean
+  stable val clusterRadius: Int
+  stable val clusterMaxZoom: Int
+  unstable val clusterProperties: Map<String, ClusterProperty>
+  stable val lineMetrics: Boolean
+}

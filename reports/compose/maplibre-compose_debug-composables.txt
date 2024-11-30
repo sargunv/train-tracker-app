@@ -1,0 +1,330 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ComposableMapView(
+  stable modifier: Modifier
+  stable styleUrl: String
+  stable update: Function1<@[ParameterName(name = 'map')] MaplibreMap, Unit>
+  stable onReset: Function0<Unit>
+  unstable logger: Logger?
+  callbacks: Callbacks
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AndroidMapView(
+  stable modifier: Modifier
+  stable styleUrl: String
+  stable update: Function1<@[ParameterName(name = 'map')] MaplibreMap, Unit>
+  stable onReset: Function0<Unit>
+  unstable logger: Logger?
+  callbacks: Callbacks
+)
+restartable skippable fun MapViewLifecycleEffect(
+  unstable mapView: MapView?
+)
+fun rememberCameraState(
+  stable firstPosition: CameraPosition? = @static CameraPosition()
+): CameraState
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun MaplibreMap(
+  stable modifier: Modifier? = @static Companion
+  stable styleUrl: String? = @static "https://demotiles.maplibre.org/style.json"
+  stable gestureSettings: GestureSettings? = @dynamic GestureSettings()
+  stable ornamentSettings: OrnamentSettings? = @dynamic OrnamentSettings()
+  unstable cameraState: CameraState? = @dynamic rememberCameraState(null, $composer, 0, 0b0001)
+  stable onMapClick: Function2<Position, DpOffset, ClickResult>? = @static $composer.startReplaceGroup(1356429947)
+sourceInformation($composer, "CC(remember):MaplibreMap.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     <unused var>  :   Position  ,   <unused var>  :   DpOffset   ->
+    ClickResult    .    Pass
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp0_group@dev.sargunv.maplibrecompose.compose.MaplibreMap
+  stable onMapLongClick: Function2<Position, DpOffset, ClickResult>? = @static $composer.startReplaceGroup(1356432059)
+sourceInformation($composer, "CC(remember):MaplibreMap.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {     <unused var>  :   Position  ,   <unused var>  :   DpOffset   ->
+    ClickResult    .    Pass
+  }
+
+}
+
+$composer.endReplaceGroup()
+tmp1_group@dev.sargunv.maplibrecompose.compose.MaplibreMap
+  stable isDebugEnabled: Boolean = @static false
+  stable maximumFps: Int = @static 120
+  unstable debugLogger: Logger? = @dynamic $composer.startReplaceGroup(1356437038)
+sourceInformation($composer, "CC(remember):MaplibreMap.kt#9igjgp")
+val tmp2_group = $composer.cache(false) {
+  Companion  .  withTag  (  "maplibre-compose"  )
+}
+
+$composer.endReplaceGroup()
+tmp2_group@dev.sargunv.maplibrecompose.compose.MaplibreMap
+  stable content: @[ExtensionFunctionType] Function3<ExpressionScope, Composer, Int, Unit>? = @static ComposableSingletons$MaplibreMapKt.lambda-1
+)
+scheme("[0, [0]]") fun rememberStyleComposition(
+  maybeStyle: Style?
+  unstable logger: Logger?
+  stable content: @[ExtensionFunctionType] Function3<ExpressionScope, Composer, Int, Unit>
+): State<StyleNode?>
+restartable skippable scheme("[0, [0]]") fun AnchorTop(
+  stable block: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[0, [0]]") fun AnchorBottom(
+  stable block: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[0, [0]]") fun AnchorAbove(
+  stable layerId: String
+  stable block: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[0, [0]]") fun AnchorBelow(
+  stable layerId: String
+  stable block: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[0, [0]]") fun AnchorReplace(
+  stable layerId: String
+  stable block: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[0, [0]]") fun AnchorAt(
+  stable anchor: Anchor
+  stable block: Function2<Composer, Int, Unit>
+)
+inline fun BackgroundLayer(
+  stable id: String
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable visible: Boolean = @static true
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable color: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable pattern: Expression<TResolvedImage>? = @dynamic Companion.nil()
+)
+inline fun CircleLayer(
+  stable id: String
+  stable source: Source
+  stable sourceLayer: String? = @static ""
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable filter: Expression<Boolean>? = @dynamic Companion.nil()
+  stable visible: Boolean = @static true
+  stable sortKey: Expression<Number>? = @dynamic Companion.nil()
+  stable translate: Expression<Point>? = @dynamic Companion.point(0, 0)
+  stable translateAnchor: Expression<TranslateAnchor>? = @dynamic Companion.const(TranslateAnchor.Map)
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable color: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable blur: Expression<Number>? = @dynamic Companion.const(0)
+  stable radius: Expression<Number>? = @dynamic Companion.const(5)
+  stable strokeOpacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable strokeColor: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable strokeWidth: Expression<Number>? = @dynamic Companion.const(0)
+  stable pitchScale: Expression<CirclePitchScale>? = @dynamic Companion.const(CirclePitchScale.Map)
+  stable pitchAlignment: Expression<CirclePitchAlignment>? = @dynamic Companion.const(CirclePitchAlignment.Viewport)
+  stable onClick: Function1<List<Feature>, ClickResult>? = @static null
+  stable onLongClick: Function1<List<Feature>, ClickResult>? = @static null
+)
+inline fun FillExtrusionLayer(
+  stable id: String
+  stable source: Source
+  stable sourceLayer: String? = @static ""
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable filter: Expression<Boolean>? = @dynamic Companion.nil()
+  stable visible: Boolean = @static true
+  stable translate: Expression<Point>? = @dynamic Companion.point(0.0, 0.0)
+  stable translateAnchor: Expression<TranslateAnchor>? = @dynamic Companion.const(TranslateAnchor.Map)
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable color: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable pattern: Expression<TResolvedImage>? = @dynamic Companion.nil()
+  stable height: Expression<Number>? = @dynamic Companion.const(0)
+  stable base: Expression<Number>? = @dynamic Companion.const(0)
+  stable verticalGradient: Expression<Boolean>? = @dynamic Companion.const(true)
+  stable onClick: Function1<List<Feature>, ClickResult>? = @static null
+  stable onLongClick: Function1<List<Feature>, ClickResult>? = @static null
+)
+inline fun FillLayer(
+  stable id: String
+  stable source: Source
+  stable sourceLayer: String? = @static ""
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable filter: Expression<Boolean>? = @dynamic Companion.nil()
+  stable visible: Boolean = @static true
+  stable sortKey: Expression<Number>? = @dynamic Companion.nil()
+  stable translate: Expression<Point>? = @dynamic Companion.point(0.0, 0.0)
+  stable translateAnchor: Expression<TranslateAnchor>? = @dynamic Companion.const(TranslateAnchor.Map)
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable color: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable pattern: Expression<TResolvedImage>? = @dynamic Companion.nil()
+  stable antialias: Expression<Boolean>? = @dynamic Companion.const(true)
+  stable outlineColor: Expression<Color>? = @dynamic color
+  stable onClick: Function1<List<Feature>, ClickResult>? = @static null
+  stable onLongClick: Function1<List<Feature>, ClickResult>? = @static null
+)
+inline fun HeatmapLayer(
+  stable id: String
+  stable source: Source
+  stable sourceLayer: String? = @static ""
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable filter: Expression<Boolean>? = @dynamic Companion.nil()
+  stable visible: Boolean = @static true
+  stable color: Expression<Color>? = @dynamic Companion.interpolate(Companion.linear(), Companion.heatmapDensity(), 0 to Companion.const(Companion.Transparent), 0.1 to Companion.const(Color(4282477025L)), 0.3 to Companion.const(Color(4278255615L)), 0.5 to Companion.const(Color(4278255360L)), 0.7 to Companion.const(Color(4294967040L)), 1 to Companion.const(Color(4294901760L)))
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable radius: Expression<Number>? = @dynamic Companion.const(30)
+  stable weight: Expression<Number>? = @dynamic Companion.const(1)
+  stable intensity: Expression<Number>? = @dynamic Companion.const(1)
+  stable onClick: Function1<List<Feature>, ClickResult>? = @static null
+  stable onLongClick: Function1<List<Feature>, ClickResult>? = @static null
+)
+inline fun HillshadeLayer(
+  stable id: String
+  stable source: Source
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable visible: Boolean = @static true
+  stable shadowColor: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable highlightColor: Expression<Color>? = @dynamic Companion.const(Companion.White)
+  stable accentColor: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable illuminationDirection: Expression<Number>? = @dynamic Companion.const(355)
+  stable illuminationAnchor: Expression<IlluminationAnchor>? = @dynamic Companion.const(IlluminationAnchor.Viewport)
+  stable exaggeration: Expression<Number>? = @dynamic Companion.const(0.5f)
+)
+restartable skippable fun LayerNode(
+  stable factory: Function0<T>
+  stable update: @[ExtensionFunctionType] Function1<Updater<LayerNode<T>>, Unit>
+  stable onClick: Function1<List<Feature>, ClickResult>?
+  stable onLongClick: Function1<List<Feature>, ClickResult>?
+)
+inline fun LineLayer(
+  stable id: String
+  stable source: Source
+  stable sourceLayer: String? = @static ""
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable filter: Expression<Boolean>? = @dynamic Companion.nil()
+  stable visible: Boolean = @static true
+  stable sortKey: Expression<Number>? = @dynamic Companion.nil()
+  stable translate: Expression<Point>? = @dynamic Companion.point(0, 0)
+  stable translateAnchor: Expression<TranslateAnchor>? = @dynamic Companion.const(TranslateAnchor.Map)
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable color: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable dasharray: Expression<List<Number>>? = @dynamic Companion.nil()
+  stable pattern: Expression<TResolvedImage>? = @dynamic Companion.nil()
+  stable gradient: Expression<Color>? = @dynamic Companion.nil()
+  stable blur: Expression<Number>? = @dynamic Companion.const(0)
+  stable width: Expression<Number>? = @dynamic Companion.const(1)
+  stable gapWidth: Expression<Number>? = @dynamic Companion.const(0)
+  stable offset: Expression<Number>? = @dynamic Companion.const(0)
+  stable cap: Expression<LineCap>? = @dynamic Companion.const(LineCap.Butt)
+  stable join: Expression<LineJoin>? = @dynamic Companion.const(LineJoin.Miter)
+  stable miterLimit: Expression<Number>? = @dynamic Companion.const(2)
+  stable roundLimit: Expression<Number>? = @dynamic Companion.const(1.05f)
+  stable onClick: Function1<List<Feature>, ClickResult>? = @static null
+  stable onLongClick: Function1<List<Feature>, ClickResult>? = @static null
+)
+inline fun RasterLayer(
+  stable id: String
+  stable source: Source
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable visible: Boolean = @static true
+  stable opacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable hueRotate: Expression<Number>? = @dynamic Companion.const(0)
+  stable brightnessMin: Expression<Number>? = @dynamic Companion.const(0)
+  stable brightnessMax: Expression<Number>? = @dynamic Companion.const(1)
+  stable saturation: Expression<Number>? = @dynamic Companion.const(0)
+  stable contrast: Expression<Number>? = @dynamic Companion.const(0)
+  stable resampling: Expression<RasterResampling>? = @dynamic Companion.const(RasterResampling.Linear)
+  stable fadeDuration: Expression<Number>? = @dynamic Companion.const(300)
+)
+inline fun SymbolLayer(
+  stable id: String
+  stable source: Source
+  stable sourceLayer: String? = @static ""
+  stable minZoom: Float = @static 0.0f
+  stable maxZoom: Float = @static 24.0f
+  stable filter: Expression<Boolean>? = @dynamic Companion.nil()
+  stable visible: Boolean = @static true
+  stable sortKey: Expression<Number>? = @dynamic Companion.nil()
+  stable placement: Expression<SymbolPlacement>? = @dynamic Companion.const(SymbolPlacement.Point)
+  stable spacing: Expression<Number>? = @dynamic Companion.const(250)
+  stable avoidEdges: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable zOrder: Expression<SymbolZOrder>? = @dynamic Companion.const(SymbolZOrder.Auto)
+  stable iconImage: Expression<TResolvedImage>? = @dynamic Companion.nil()
+  stable iconOpacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable iconColor: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable iconHaloColor: Expression<Color>? = @dynamic Companion.const(Companion.Transparent)
+  stable iconHaloWidth: Expression<Number>? = @dynamic Companion.const(0)
+  stable iconHaloBlur: Expression<Number>? = @dynamic Companion.const(0)
+  stable iconSize: Expression<Number>? = @dynamic Companion.const(1)
+  stable iconRotationAlignment: Expression<IconRotationAlignment>? = @dynamic Companion.const(IconRotationAlignment.Auto)
+  stable iconPitchAlignment: Expression<IconPitchAlignment>? = @dynamic Companion.const(IconPitchAlignment.Auto)
+  stable iconTextFit: Expression<IconTextFit>? = @dynamic Companion.const(IconTextFit.None)
+  stable iconTextFitPadding: Expression<Insets>? = @dynamic Companion.insets(0, 0, 0, 0)
+  stable iconKeepUpright: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable iconRotate: Expression<Number>? = @dynamic Companion.const(0)
+  stable iconAnchor: Expression<SymbolAnchor>? = @dynamic Companion.const(SymbolAnchor.Center)
+  stable iconOffset: Expression<Point>? = @dynamic Companion.point(0, 0)
+  stable iconPadding: Expression<Number>? = @dynamic Companion.const(2)
+  stable iconAllowOverlap: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable iconOverlap: Expression<String>? = @dynamic Companion.nil()
+  stable iconIgnorePlacement: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable iconOptional: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable iconTranslate: Expression<Point>? = @dynamic Companion.point(0, 0)
+  stable iconTranslateAnchor: Expression<TranslateAnchor>? = @dynamic Companion.const(TranslateAnchor.Map)
+  stable textField: Expression<TFormatted>? = @dynamic Companion.nil()
+  stable textOpacity: Expression<Number>? = @dynamic Companion.const(1)
+  stable textColor: Expression<Color>? = @dynamic Companion.const(Companion.Black)
+  stable textHaloColor: Expression<Color>? = @dynamic Companion.const(Companion.Transparent)
+  stable textHaloWidth: Expression<Number>? = @dynamic Companion.const(0)
+  stable textHaloBlur: Expression<Number>? = @dynamic Companion.const(0)
+  stable textFont: Expression<List<String>>? = @dynamic Companion.literal(listOf(Companion.const("Open Sans Regular"), Companion.const("Arial Unicode MS Regular")))
+  stable textSize: Expression<Number>? = @dynamic Companion.const(16)
+  stable textTransform: Expression<TextTransform>? = @dynamic Companion.const(TextTransform.None)
+  stable textLetterSpacing: Expression<Number>? = @dynamic Companion.const(0)
+  stable textRotationAlignment: Expression<TextRotationAlignment>? = @dynamic Companion.const(TextRotationAlignment.Auto)
+  stable textPitchAlignment: Expression<TextPitchAlignment>? = @dynamic Companion.const(TextPitchAlignment.Auto)
+  stable textMaxAngle: Expression<Number>? = @dynamic Companion.const(45)
+  stable textMaxWidth: Expression<Number>? = @dynamic Companion.const(10)
+  stable textLineHeight: Expression<Number>? = @dynamic Companion.const(1.2f)
+  stable textJustify: Expression<TextJustify>? = @dynamic Companion.const(TextJustify.Center)
+  stable textWritingMode: Expression<List<TextWritingMode>>? = @dynamic Companion.nil()
+  stable textKeepUpright: Expression<Boolean>? = @dynamic Companion.const(true)
+  stable textRotate: Expression<Number>? = @dynamic Companion.const(0)
+  stable textAnchor: Expression<SymbolAnchor>? = @dynamic Companion.const(SymbolAnchor.Center)
+  stable textOffset: Expression<Point>? = @dynamic Companion.point(0, 0)
+  stable textVariableAnchor: Expression<List<SymbolAnchor>>? = @dynamic Companion.nil()
+  stable textRadialOffset: Expression<Number>? = @dynamic Companion.const(0)
+  stable textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>? = @dynamic Companion.nil()
+  stable textPadding: Expression<Number>? = @dynamic Companion.const(2)
+  stable textAllowOverlap: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable textOverlap: Expression<String>? = @dynamic Companion.nil()
+  stable textIgnorePlacement: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable textOptional: Expression<Boolean>? = @dynamic Companion.const(false)
+  stable textTranslate: Expression<Point>? = @dynamic Companion.point(0, 0)
+  stable textTranslateAnchor: Expression<TranslateAnchor>? = @dynamic Companion.const(TranslateAnchor.Map)
+  stable onClick: Function1<List<Feature>, ClickResult>? = @static null
+  stable onLongClick: Function1<List<Feature>, ClickResult>? = @static null
+)
+fun getBaseSource(
+  stable id: String
+): Source
+inline fun rememberGeoJsonSource(
+  stable id: String
+  stable dataUrl: String
+  stable options: GeoJsonOptions? = @static GeoJsonOptions()
+): Source
+inline fun rememberGeoJsonSource(
+  stable id: String
+  unstable data: GeoJson
+  stable options: GeoJsonOptions? = @static GeoJsonOptions()
+): Source
+inline fun rememberRasterSource(
+  stable id: String
+  stable configUrl: String
+): Source
+fun rememberUserSource(
+  stable factory: Function0<T>
+  stable update: @[ExtensionFunctionType] Function1<T, Unit>
+): Source
+inline fun rememberVectorSource(
+  stable id: String
+  stable configUrl: String
+): Source
