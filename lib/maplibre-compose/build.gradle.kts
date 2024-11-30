@@ -95,16 +95,16 @@ kotlin {
     }
 
     commonMain.dependencies {
-      implementation(compose.runtime)
-      implementation(compose.foundation)
+      api(compose.runtime)
+      api(compose.foundation)
       api(libs.kermit)
       api(compose.ui)
       api(libs.spatialk.geojson)
     }
 
     androidMain.dependencies {
-      implementation(libs.maplibre.android)
-      implementation(libs.maplibre.android.plugin.annotation)
+      api(libs.maplibre.android)
+      api(libs.maplibre.android.plugin.annotation)
     }
 
     commonTest.dependencies {
