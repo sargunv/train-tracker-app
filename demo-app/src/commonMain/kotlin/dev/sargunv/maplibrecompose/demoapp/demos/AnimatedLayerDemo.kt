@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
-import dev.sargunv.maplibrecompose.compose.layer.AnchorBelow
+import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.compose.layer.LineLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
@@ -50,7 +50,7 @@ fun AnimatedLayerDemo() = Column {
           ),
       )
 
-    AnchorBelow("waterway_line_label") {
+    Anchor.Below("waterway_line_label") {
       LineLayer(
         id = "amtrak-routes",
         source = routeSource,
