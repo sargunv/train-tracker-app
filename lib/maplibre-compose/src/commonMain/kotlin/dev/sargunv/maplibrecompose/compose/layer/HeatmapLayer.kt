@@ -1,16 +1,15 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
+import dev.sargunv.maplibrecompose.core.expression.Defaults
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.heatmapDensity
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.interpolate
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.linear
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.layer.HeatmapLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -52,17 +51,7 @@ public inline fun HeatmapLayer(
   maxZoom: Float = 24.0f,
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
-  color: Expression<Color> =
-    interpolate(
-      linear(),
-      heatmapDensity(),
-      0 to const(Color.Transparent),
-      0.1 to const(Color(0xFF4169E1)), // royal blue
-      0.3 to const(Color(0xFF00FFFF)), // cyan
-      0.5 to const(Color(0xFF00FF00)), // lime
-      0.7 to const(Color(0xFFFFFF00)), // yellow
-      1 to const(Color(0xFFFF0000)), // red
-    ),
+  color: Expression<Color> = Defaults.HeatmapColors,
   opacity: Expression<Number> = const(1f),
   radius: Expression<Dp> = const(30.dp),
   weight: Expression<Number> = const(1f),
@@ -70,7 +59,7 @@ public inline fun HeatmapLayer(
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { HeatmapLayer(id = id, source = source) },
       update = {

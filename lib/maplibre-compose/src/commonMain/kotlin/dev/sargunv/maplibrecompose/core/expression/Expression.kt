@@ -13,7 +13,8 @@ import androidx.compose.ui.unit.DpOffset
 public data class Expression<out T> private constructor(internal val value: Any?) {
   public companion object : ExpressionScope {
     // instantiate some commonly used values so we're not allocating them over and over
-    private val constSmallInts = Array<Expression<Number>>(256) { Expression(it) }
+    private val constSmallInts = Array<Expression<Number>>(512) { Expression(it) }
+    private val constSmallFloats = Array<Expression<Number>>(512) { Expression(it.toFloat() / 20f) }
     private val constBlack: Expression<Color> = Expression(Color.Black)
     private val constWhite: Expression<Color> = Expression(Color.White)
     private val constTransparent: Expression<Color> = Expression(Color.Transparent)
@@ -31,7 +32,11 @@ public data class Expression<out T> private constructor(internal val value: Any?
       this >= 0 && this < constSmallInts.size && this.toInt().toFloat() == this
 
     internal fun ofFloat(float: Float): Expression<Number> {
-      return if (float.isSmallInt()) constSmallInts[float.toInt()] else Expression(float)
+      return when {
+        float.isSmallInt() -> constSmallInts[float.toInt()]
+        (float * 20f).isSmallInt() -> constSmallFloats[(float * 20f).toInt()]
+        else -> Expression(float)
+      }
     }
 
     @Suppress("UNCHECKED_CAST")

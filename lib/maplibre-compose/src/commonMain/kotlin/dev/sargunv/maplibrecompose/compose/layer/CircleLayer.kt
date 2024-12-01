@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
@@ -77,7 +77,7 @@ public inline fun CircleLayer(
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { CircleLayer(id = id, source = source) },
       update = {

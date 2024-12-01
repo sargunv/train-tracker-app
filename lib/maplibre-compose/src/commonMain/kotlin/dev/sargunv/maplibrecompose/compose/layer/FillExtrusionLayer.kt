@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
@@ -74,7 +74,7 @@ public inline fun FillExtrusionLayer(
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { FillExtrusionLayer(id = id, source = source) },
       update = {

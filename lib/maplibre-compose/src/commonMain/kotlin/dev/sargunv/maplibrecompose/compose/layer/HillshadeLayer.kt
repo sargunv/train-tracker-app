@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
@@ -48,7 +48,7 @@ public inline fun HillshadeLayer(
   illuminationAnchor: Expression<IlluminationAnchor> = const(IlluminationAnchor.Viewport),
   exaggeration: Expression<Number> = const(0.5f),
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { HillshadeLayer(id = id, source = source) },
       update = {

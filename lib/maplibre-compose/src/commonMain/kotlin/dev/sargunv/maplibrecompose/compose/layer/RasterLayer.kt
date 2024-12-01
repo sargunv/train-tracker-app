@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
@@ -49,7 +49,7 @@ public inline fun RasterLayer(
   resampling: Expression<RasterResampling> = const(RasterResampling.Linear),
   fadeDuration: Expression<Number> = const(300f),
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { RasterLayer(id = id, source = source) },
       update = {

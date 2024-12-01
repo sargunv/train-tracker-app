@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
@@ -38,7 +38,7 @@ public inline fun BackgroundLayer(
   color: Expression<Color> = const(Color.Black),
   pattern: Expression<TResolvedImage> = nil(),
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { BackgroundLayer(id = id) },
       update = {

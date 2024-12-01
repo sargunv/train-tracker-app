@@ -2,16 +2,16 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key as composeKey
+import androidx.compose.runtime.key
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
+import dev.sargunv.maplibrecompose.core.expression.Defaults
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.literal
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
@@ -403,8 +403,7 @@ public inline fun SymbolLayer(
   textHaloBlur: Expression<Dp> = const(0.dp),
 
   // text glyph properties
-  textFont: Expression<List<String>> =
-    literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
+  textFont: Expression<List<String>> = Defaults.FontNames,
   textSize: Expression<Dp> = const(16.dp),
   textTransform: Expression<TextTransform> = const(TextTransform.None),
   textLetterSpacing: Expression<Number> = const(0f),
@@ -440,7 +439,7 @@ public inline fun SymbolLayer(
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {
-  composeKey(id) {
+  key(id) {
     LayerNode(
       factory = { SymbolLayer(id = id, source = source) },
       update = {
