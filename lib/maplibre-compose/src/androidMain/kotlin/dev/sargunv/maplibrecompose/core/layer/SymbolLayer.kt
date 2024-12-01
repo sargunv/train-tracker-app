@@ -1,11 +1,10 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.DpRect
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment

@@ -7,7 +7,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -374,7 +373,7 @@ public inline fun SymbolLayer(
   iconRotationAlignment: Expression<IconRotationAlignment> = const(IconRotationAlignment.Auto),
   iconPitchAlignment: Expression<IconPitchAlignment> = const(IconPitchAlignment.Auto),
   iconTextFit: Expression<IconTextFit> = const(IconTextFit.None),
-  iconTextFitPadding: Expression<DpRect> = const(DpRect(0.dp, 0.dp, 0.dp, 0.dp)),
+  iconTextFitPadding: Expression<PaddingValues.Absolute> = const(ZeroPadding),
   iconKeepUpright: Expression<Boolean> = const(false),
   iconRotate: Expression<Number> = const(0f),
 

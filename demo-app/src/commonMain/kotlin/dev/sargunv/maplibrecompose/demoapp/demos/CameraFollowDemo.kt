@@ -64,12 +64,12 @@ private fun animateTestPosition(start: Position, end: Position): State<Position>
     end,
     typeConverter = remember { PositionVectorConverter(origin = START_POINT) },
     animationSpec =
-    remember {
-      infiniteRepeatable(
-        animation = tween(durationMillis = 30_000),
-        repeatMode = RepeatMode.Reverse,
-      )
-    },
+      remember {
+        infiniteRepeatable(
+          animation = tween(durationMillis = 30_000),
+          repeatMode = RepeatMode.Reverse,
+        )
+      },
   )
 }
 

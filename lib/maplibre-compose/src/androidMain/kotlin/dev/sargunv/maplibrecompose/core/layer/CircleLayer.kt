@@ -9,9 +9,9 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
-import org.maplibre.android.style.layers.PropertyFactory
 import org.maplibre.android.style.expressions.Expression as MLNExpression
 import org.maplibre.android.style.layers.CircleLayer as MLNCircleLayer
+import org.maplibre.android.style.layers.PropertyFactory
 
 @PublishedApi
 internal actual class CircleLayer actual constructor(id: String, source: Source) :

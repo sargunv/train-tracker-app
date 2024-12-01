@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -106,7 +105,7 @@ fun ClusteredPointsDemo() = Column {
       filter = !has(const("point_count")),
       radius = const(13.dp),
       color = const(Color.Black),
-      blur = const(1.0),
+      blur = const(1f),
       translate = const(DpOffset(0.dp, 1.dp)),
     )
 

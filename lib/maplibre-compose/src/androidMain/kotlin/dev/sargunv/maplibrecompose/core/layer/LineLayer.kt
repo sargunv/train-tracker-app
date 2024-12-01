@@ -10,9 +10,9 @@ import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
-import org.maplibre.android.style.layers.PropertyFactory
 import org.maplibre.android.style.expressions.Expression as MLNExpression
 import org.maplibre.android.style.layers.LineLayer as MLNLineLayer
+import org.maplibre.android.style.layers.PropertyFactory
 
 @PublishedApi
 internal actual class LineLayer actual constructor(id: String, source: Source) :

@@ -5,6 +5,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import io.github.dellisd.spatialk.geojson.Geometry
 import kotlin.jvm.JvmName
 
 @Suppress("INAPPLICABLE_JVM_NAME")
@@ -388,7 +389,7 @@ public interface ExpressionScope {
   )
 
   public infix fun <Output> Expression<Boolean>.then(
-    output: Expression<Output>,
+    output: Expression<Output>
   ): CaseBranch<Output> = CaseBranch(this, output)
 
   /**
@@ -456,13 +457,12 @@ public interface ExpressionScope {
 
   @JvmName("stringsThen")
   public infix fun <Output> List<String>.then(
-    output: Expression<Output>,
-  ): MatchBranch<String, Output> =
-    MatchBranch(Expression.ofList(this.map { const(it) }), output)
+    output: Expression<Output>
+  ): MatchBranch<String, Output> = MatchBranch(Expression.ofList(this.map { const(it) }), output)
 
   @JvmName("numbersThen")
   public infix fun <Output> List<Number>.then(
-    output: Expression<Output>,
+    output: Expression<Output>
   ): MatchBranch<Number, Output> =
     MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
 
