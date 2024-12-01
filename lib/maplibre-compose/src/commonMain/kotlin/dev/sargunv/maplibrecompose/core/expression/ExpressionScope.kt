@@ -11,9 +11,9 @@ public interface ExpressionScope {
 
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
-  public fun const(number: Int): Expression<Number> = Expression.ofNumber(number)
+  public fun const(number: Int): Expression<Number> = Expression.ofInt(number)
 
-  public fun const(number: Float): Expression<Number> = Expression.ofNumber(number)
+  public fun const(number: Float): Expression<Number> = Expression.ofFloat(number)
 
   public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
 
