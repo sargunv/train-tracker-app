@@ -15,11 +15,16 @@ public interface ExpressionScope {
 
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
+  public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
+    Expression.ofLayerPropertyEnum(value)
+
   public fun const(float: Float): Expression<Number> = Expression.ofFloat(float)
 
   public fun const(dp: Dp): Expression<Dp> = Expression.ofDp(dp)
 
   public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
+
+  public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
 
   // corresponds to "point" in the style spec
   public fun const(offset: Offset): Expression<Offset> = Expression.ofOffset(offset)
@@ -31,17 +36,16 @@ public interface ExpressionScope {
   public fun const(padding: PaddingValues.Absolute): Expression<PaddingValues.Absolute> =
     Expression.ofPadding(padding)
 
-  public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
-    Expression.ofLayerPropertyEnum(value)
+  @Suppress("UNCHECKED_CAST")
+  public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
 
   @Suppress("UNCHECKED_CAST")
   public val Expression<Number>.dp: Expression<Dp>
     get() = this as Expression<Dp>
 
   @Suppress("UNCHECKED_CAST")
-  public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
-
-  public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
+  public val Expression<Dp>.value: Expression<Number>
+    get() = this as Expression<Number>
 
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 
@@ -492,6 +496,10 @@ public interface ExpressionScope {
   public infix fun Expression<Number>.gt(other: Expression<Number>): Expression<Boolean> =
     callFn(">", this, other)
 
+  @JvmName("gtDp")
+  public infix fun Expression<Dp>.gt(other: Expression<Dp>): Expression<Boolean> =
+    callFn(">", this, other)
+
   @JvmName("gtString")
   public infix fun Expression<String>.gt(other: Expression<String>): Expression<Boolean> =
     callFn(">", this, other)
@@ -504,6 +512,10 @@ public interface ExpressionScope {
 
   @JvmName("ltNumber")
   public infix fun Expression<Number>.lt(other: Expression<Number>): Expression<Boolean> =
+    callFn("<", this, other)
+
+  @JvmName("ltDp")
+  public infix fun Expression<Dp>.lt(other: Expression<Dp>): Expression<Boolean> =
     callFn("<", this, other)
 
   @JvmName("ltString")
@@ -520,6 +532,10 @@ public interface ExpressionScope {
   public infix fun Expression<Number>.gte(other: Expression<Number>): Expression<Boolean> =
     callFn(">=", this, other)
 
+  @JvmName("gteDp")
+  public infix fun Expression<Dp>.gte(other: Expression<Dp>): Expression<Boolean> =
+    callFn(">=", this, other)
+
   @JvmName("gteString")
   public infix fun Expression<String>.gte(other: Expression<String>): Expression<Boolean> =
     callFn(">=", this, other)
@@ -532,6 +548,10 @@ public interface ExpressionScope {
 
   @JvmName("lteNumber")
   public infix fun Expression<Number>.lte(other: Expression<Number>): Expression<Boolean> =
+    callFn("<=", this, other)
+
+  @JvmName("lteDp")
+  public infix fun Expression<Dp>.lte(other: Expression<Dp>): Expression<Boolean> =
     callFn("<=", this, other)
 
   @JvmName("lteString")
@@ -595,47 +615,11 @@ public interface ExpressionScope {
         },
     )
 
-  @JvmName("interpolateNumber")
-  public fun interpolate(
+  public fun <Output> interpolate(
     type: Expression<TInterpolationType>,
     input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<Number>>,
-  ): Expression<Number> = interpolateImpl("interpolate", type, input, *stops)
-
-  @JvmName("interpolateColor")
-  public fun interpolate(
-    type: Expression<TInterpolationType>,
-    input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<Color>>,
-  ): Expression<Color> = interpolateImpl("interpolate", type, input, *stops)
-
-  @JvmName("interpolateOffset")
-  public fun interpolate(
-    type: Expression<TInterpolationType>,
-    input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<Offset>>,
-  ): Expression<Offset> = interpolateImpl("interpolate", type, input, *stops)
-
-  @JvmName("interpolateDpOffset")
-  public fun interpolate(
-    type: Expression<TInterpolationType>,
-    input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<DpOffset>>,
-  ): Expression<DpOffset> = interpolateImpl("interpolate", type, input, *stops)
-
-  @JvmName("interpolatePadding")
-  public fun interpolate(
-    type: Expression<TInterpolationType>,
-    input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<PaddingValues.Absolute>>,
-  ): Expression<PaddingValues.Absolute> = interpolateImpl("interpolate", type, input, *stops)
-
-  @JvmName("interpolateNumbers")
-  public fun interpolate(
-    type: Expression<TInterpolationType>,
-    input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<List<Number>>>,
-  ): Expression<List<Number>> = interpolateImpl("interpolate", type, input, *stops)
+    vararg stops: Pair<Number, Expression<Output>>,
+  ): Expression<Output> = interpolateImpl("interpolate", type, input, *stops)
 
   public fun interpolateHcl(
     type: Expression<TInterpolationType>,
@@ -671,24 +655,50 @@ public interface ExpressionScope {
 
   public fun sum(vararg numbers: Expression<Number>): Expression<Number> = callFn("+", *numbers)
 
+  @JvmName("sumDp")
+  public fun sum(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("+", *numbers)
+
   public fun product(vararg numbers: Expression<Number>): Expression<Number> = callFn("*", *numbers)
+
+  @JvmName("productDp")
+  public fun product(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("*", *numbers)
 
   public operator fun Expression<Number>.plus(other: Expression<Number>): Expression<Number> =
     sum(this, other)
 
+  @JvmName("plusDp")
+  public operator fun Expression<Dp>.plus(other: Expression<Dp>): Expression<Dp> = sum(this, other)
+
   public operator fun Expression<Number>.times(other: Expression<Number>): Expression<Number> =
+    product(this, other)
+
+  @JvmName("timesDp")
+  public operator fun Expression<Dp>.times(other: Expression<Dp>): Expression<Dp> =
     product(this, other)
 
   public operator fun Expression<Number>.minus(other: Expression<Number>): Expression<Number> =
     callFn("-", this, other)
 
+  @JvmName("minusDp")
+  public operator fun Expression<Dp>.minus(other: Expression<Dp>): Expression<Dp> =
+    callFn("-", this, other)
+
   public operator fun Expression<Number>.unaryMinus(): Expression<Number> = callFn("-", this)
+
+  @JvmName("unaryMinusDp")
+  public operator fun Expression<Dp>.unaryMinus(): Expression<Dp> = callFn("-", this)
 
   public operator fun Expression<Number>.div(b: Expression<Number>): Expression<Number> =
     callFn("/", this, b)
 
+  @JvmName("divDp")
+  public operator fun Expression<Dp>.div(b: Expression<Dp>): Expression<Dp> = callFn("/", this, b)
+
   public operator fun Expression<Number>.rem(b: Expression<Number>): Expression<Number> =
     callFn("%", this, b)
+
+  @JvmName("remDp")
+  public operator fun Expression<Dp>.rem(b: Expression<Dp>): Expression<Dp> = callFn("%", this, b)
 
   public fun Expression<Number>.pow(exponent: Expression<Number>): Expression<Number> =
     callFn("^", this, exponent)
@@ -715,15 +725,31 @@ public interface ExpressionScope {
 
   public fun min(vararg numbers: Expression<Number>): Expression<Number> = callFn("min", *numbers)
 
+  @JvmName("minDp")
+  public fun min(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("min", *numbers)
+
   public fun max(vararg numbers: Expression<Number>): Expression<Number> = callFn("max", *numbers)
+
+  @JvmName("maxDp")
+  public fun max(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("max", *numbers)
 
   public fun round(value: Expression<Number>): Expression<Number> = callFn("round", value)
 
+  @JvmName("roundDp")
+  public fun round(value: Expression<Dp>): Expression<Dp> = callFn("round", value)
+
   public fun abs(value: Expression<Number>): Expression<Number> = callFn("abs", value)
+
+  @JvmName("absDp") public fun abs(value: Expression<Dp>): Expression<Dp> = callFn("abs", value)
 
   public fun ceil(value: Expression<Number>): Expression<Number> = callFn("ceil", value)
 
+  @JvmName("ceilDp") public fun ceil(value: Expression<Dp>): Expression<Dp> = callFn("ceil", value)
+
   public fun floor(value: Expression<Number>): Expression<Number> = callFn("floor", value)
+
+  @JvmName("floorDp")
+  public fun floor(value: Expression<Dp>): Expression<Dp> = callFn("floor", value)
 
   public fun distance(value: Expression<Geometry>): Expression<Number> = callFn("distance", value)
 
