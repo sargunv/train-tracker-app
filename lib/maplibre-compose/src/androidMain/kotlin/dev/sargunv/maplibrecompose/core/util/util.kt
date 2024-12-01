@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.core.util
 import android.graphics.PointF
 import android.graphics.RectF
 import android.view.Gravity
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -18,7 +19,6 @@ import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Insets
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Position
 import java.net.URI
@@ -78,15 +78,15 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
         )
       }
 
-    is Insets ->
+    is PaddingValues.Absolute ->
       JsonArray().apply {
         add("literal")
         add(
           JsonArray().apply {
-            add(value.top)
-            add(value.right)
-            add(value.bottom)
-            add(value.left)
+            add(value.calculateTopPadding().value)
+            add(value.calculateRightPadding(LayoutDirection.Ltr).value)
+            add(value.calculateBottomPadding().value)
+            add(value.calculateLeftPadding(LayoutDirection.Ltr).value)
           }
         )
       }

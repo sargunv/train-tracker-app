@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.core.util
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,6 @@ import cocoapods.MapLibre.MLNShape
 import cocoapods.MapLibre.expressionWithMLNJSONObject
 import cocoapods.MapLibre.predicateWithMLNJSONObject
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Insets
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.GeoJson
@@ -140,13 +140,13 @@ private fun normalizeJsonLike(value: Any?): Any? =
         alpha = value.alpha.toDouble(),
       )
 
-    is Insets ->
+    is PaddingValues.Absolute ->
       NSValue.valueWithUIEdgeInsets(
         UIEdgeInsetsMake(
-          top = value.top.toDouble(),
-          left = value.left.toDouble(),
-          bottom = value.bottom.toDouble(),
-          right = value.right.toDouble(),
+          top = value.calculateTopPadding().value.toDouble(),
+          left = value.calculateLeftPadding(LayoutDirection.Ltr).value.toDouble(),
+          bottom = value.calculateBottomPadding().value.toDouble(),
+          right = value.calculateRightPadding(LayoutDirection.Ltr).value.toDouble(),
         )
       )
 

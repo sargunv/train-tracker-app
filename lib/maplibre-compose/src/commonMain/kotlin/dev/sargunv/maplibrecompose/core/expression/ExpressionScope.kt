@@ -1,7 +1,9 @@
 package dev.sargunv.maplibrecompose.core.expression
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import io.github.dellisd.spatialk.geojson.Geometry
 import kotlin.jvm.JvmName
 
 @Suppress("INAPPLICABLE_JVM_NAME")
@@ -18,6 +20,10 @@ public interface ExpressionScope {
   // corresponds to "point" in the style spec
   public fun const(offset: Offset): Expression<Offset> = Expression.ofOffset(offset)
 
+  // corresponds to "padding" in the style spec
+  public fun const(padding: PaddingValues.Absolute): Expression<PaddingValues.Absolute> =
+    Expression.ofPadding(padding)
+
   public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
     Expression.ofLayerPropertyEnum(value)
 
@@ -25,11 +31,6 @@ public interface ExpressionScope {
   public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
 
   public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
-
-  public fun insets(top: Float, right: Float, bottom: Float, left: Float): Expression<Insets> =
-    Expression.ofInsets(Insets(top, right, bottom, left))
-
-  public fun insets(insets: Insets): Expression<Insets> = Expression.ofInsets(insets)
 
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 
@@ -543,7 +544,7 @@ public interface ExpressionScope {
   @JvmName("notOperator")
   public operator fun Expression<Boolean>.not(): Expression<Boolean> = not(this)
 
-  public fun within(geometry: Expression<TGeometry>): Expression<Boolean> =
+  public fun within(geometry: Expression<Geometry>): Expression<Boolean> =
     callFn("within", geometry)
 
   // ramps, scales, curves
@@ -699,7 +700,7 @@ public interface ExpressionScope {
 
   public fun floor(value: Expression<Number>): Expression<Number> = callFn("floor", value)
 
-  public fun distance(value: Expression<TGeometry>): Expression<Number> = callFn("distance", value)
+  public fun distance(value: Expression<Geometry>): Expression<Number> = callFn("distance", value)
 
   // color
 

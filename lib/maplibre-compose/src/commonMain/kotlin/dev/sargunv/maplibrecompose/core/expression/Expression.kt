@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.core.expression
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -18,6 +19,7 @@ public data class Expression<out T> private constructor(internal val value: Any?
     private val constTrue: Expression<Boolean> = Expression(true)
     private val constNull: Expression<Nothing?> = Expression(null)
     private val constZeroOffset: Expression<Offset> = Expression(Offset.Zero)
+    private val constZeroPadding: Expression<PaddingValues.Absolute> = Expression(ZeroPadding)
 
     // TODO for values not covered by the above, try an LRU cache
 
@@ -49,7 +51,8 @@ public data class Expression<out T> private constructor(internal val value: Any?
     internal fun <T : LayerPropertyEnum> ofLayerPropertyEnum(enum: T): Expression<T> =
       enum.expr as Expression<T>
 
-    internal fun ofInsets(insets: Insets): Expression<Insets> = Expression(insets)
+    internal fun ofPadding(padding: PaddingValues.Absolute): Expression<PaddingValues.Absolute> =
+      if (padding == ZeroPadding) constZeroPadding else Expression(padding)
 
     // return Expression<*> because without ["literal" ... ] MapLibre may not treat it as a list
     internal fun ofList(list: List<Expression<*>>): Expression<*> =

@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.expression
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.unit.dp
 
 // token types for expression type safety; these should never be instantiated
 
@@ -12,7 +13,4 @@ public sealed interface TCollator
 
 public sealed interface TInterpolationType
 
-public sealed interface TGeometry // TODO create a real type and Expression constructor
-
-@Immutable
-public data class Insets(val top: Number, val right: Number, val bottom: Number, val left: Number)
+public val ZeroPadding: PaddingValues.Absolute = PaddingValues.Absolute(0.dp)

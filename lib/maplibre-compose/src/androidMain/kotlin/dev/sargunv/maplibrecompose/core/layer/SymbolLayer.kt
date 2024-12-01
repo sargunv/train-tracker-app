@@ -1,12 +1,12 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
-import dev.sargunv.maplibrecompose.core.expression.Insets
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -84,7 +84,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconTextFit(textFit.toMLNExpression()))
   }
 
-  actual fun setIconTextFitPadding(textFitPadding: Expression<Insets>) {
+  actual fun setIconTextFitPadding(textFitPadding: Expression<PaddingValues.Absolute>) {
     impl.setProperties(PropertyFactory.iconTextFitPadding(textFitPadding.toMLNExpression()))
   }
 
