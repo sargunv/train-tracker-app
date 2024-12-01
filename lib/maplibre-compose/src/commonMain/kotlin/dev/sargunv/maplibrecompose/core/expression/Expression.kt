@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 
 // would make this an inline value class, but we lose varargs
 // https://youtrack.jetbrains.com/issue/KT-33565/Allow-vararg-parameter-of-inline-class-type
@@ -32,6 +34,9 @@ public data class Expression<out T> private constructor(internal val value: Any?
       return if (float.isSmallInt()) constSmallInts[float.toInt()] else Expression(float)
     }
 
+    @Suppress("UNCHECKED_CAST")
+    internal fun ofDp(dp: Dp): Expression<Dp> = ofFloat(dp.value) as Expression<Dp>
+
     internal fun ofColor(color: Color): Expression<Color> =
       when (color) {
         Color.Transparent -> constTransparent
@@ -46,6 +51,12 @@ public data class Expression<out T> private constructor(internal val value: Any?
 
     internal fun ofOffset(offset: Offset): Expression<Offset> =
       if (offset == Offset.Zero) constZeroOffset else Expression(offset)
+
+    @Suppress("UNCHECKED_CAST")
+    internal fun ofDpOffset(dpOffset: DpOffset): Expression<DpOffset> =
+      (if (dpOffset == DpOffset.Zero) constZeroOffset
+      else Expression(Offset(dpOffset.x.value, dpOffset.y.value)))
+        as Expression<DpOffset>
 
     @Suppress("UNCHECKED_CAST")
     internal fun <T : LayerPropertyEnum> ofLayerPropertyEnum(enum: T): Expression<T> =

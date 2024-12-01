@@ -3,6 +3,8 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import io.github.dellisd.spatialk.geojson.Geometry
 import kotlin.jvm.JvmName
 
@@ -15,10 +17,15 @@ public interface ExpressionScope {
 
   public fun const(float: Float): Expression<Number> = Expression.ofFloat(float)
 
+  public fun const(dp: Dp): Expression<Dp> = Expression.ofDp(dp)
+
   public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
 
   // corresponds to "point" in the style spec
   public fun const(offset: Offset): Expression<Offset> = Expression.ofOffset(offset)
+
+  // corresponds to "point" in the style spec
+  public fun const(dpOffset: DpOffset): Expression<DpOffset> = Expression.ofDpOffset(dpOffset)
 
   // corresponds to "padding" in the style spec
   public fun const(padding: PaddingValues.Absolute): Expression<PaddingValues.Absolute> =
