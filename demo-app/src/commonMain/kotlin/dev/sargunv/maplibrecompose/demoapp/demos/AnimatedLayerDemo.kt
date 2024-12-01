@@ -54,7 +54,7 @@ fun AnimatedLayerDemo() = Column {
         id = "amtrak-routes",
         source = routeSource,
         color = const(animatedColor),
-        width = const(4),
+        width = const(4f),
       )
     }
   }

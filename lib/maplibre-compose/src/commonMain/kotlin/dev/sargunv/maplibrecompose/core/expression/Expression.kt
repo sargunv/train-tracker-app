@@ -21,13 +21,11 @@ public data class Expression<out T> private constructor(internal val value: Any?
 
     internal fun ofString(string: String): Expression<String> = Expression(string)
 
-    internal fun ofInt(int: Int): Expression<Number> =
-      if (int >= 0 && int < constSmallInts.size) constSmallInts[int] else Expression(int)
+    private fun Float.isSmallInt(): Boolean =
+      this >= 0 && this < constSmallInts.size && this.toInt().toFloat() == this
 
     internal fun ofFloat(float: Float): Expression<Number> {
-      return if (float >= 0 && float < constSmallInts.size && float.toInt().toFloat() == float)
-        ofInt(float.toInt())
-      else Expression(float)
+      return if (float.isSmallInt()) constSmallInts[float.toInt()] else Expression(float)
     }
 
     internal fun ofColor(color: Color): Expression<Color> =

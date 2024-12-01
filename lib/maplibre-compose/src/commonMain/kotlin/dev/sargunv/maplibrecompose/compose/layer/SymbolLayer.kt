@@ -352,7 +352,7 @@ public inline fun SymbolLayer(
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
   placement: Expression<SymbolPlacement> = const(SymbolPlacement.Point),
-  spacing: Expression<Number> = const(250),
+  spacing: Expression<Number> = const(250f),
   avoidEdges: Expression<Boolean> = const(false),
   zOrder: Expression<SymbolZOrder> = const(SymbolZOrder.Auto),
 
@@ -360,80 +360,80 @@ public inline fun SymbolLayer(
   iconImage: Expression<TResolvedImage> = nil(),
 
   // icon colors
-  iconOpacity: Expression<Number> = const(1),
+  iconOpacity: Expression<Number> = const(1f),
   iconColor: Expression<Color> = const(Color.Black),
   iconHaloColor: Expression<Color> = const(Color.Transparent),
-  iconHaloWidth: Expression<Number> = const(0),
-  iconHaloBlur: Expression<Number> = const(0),
+  iconHaloWidth: Expression<Number> = const(0f),
+  iconHaloBlur: Expression<Number> = const(0f),
 
   // icon layout
-  iconSize: Expression<Number> = const(1),
+  iconSize: Expression<Number> = const(1f),
   iconRotationAlignment: Expression<IconRotationAlignment> = const(IconRotationAlignment.Auto),
   iconPitchAlignment: Expression<IconPitchAlignment> = const(IconPitchAlignment.Auto),
   iconTextFit: Expression<IconTextFit> = const(IconTextFit.None),
-  iconTextFitPadding: Expression<Insets> = insets(0, 0, 0, 0),
+  iconTextFitPadding: Expression<Insets> = insets(0f, 0f, 0f, 0f),
   iconKeepUpright: Expression<Boolean> = const(false),
-  iconRotate: Expression<Number> = const(0),
+  iconRotate: Expression<Number> = const(0f),
 
   // icon anchoring
   iconAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
-  iconOffset: Expression<Point> = point(0, 0),
+  iconOffset: Expression<Point> = point(0f, 0f),
 
   // icon collision
-  iconPadding: Expression<Number> = const(2),
+  iconPadding: Expression<Number> = const(2f),
   iconAllowOverlap: Expression<Boolean> = const(false),
   iconOverlap: Expression<String> = nil(),
   iconIgnorePlacement: Expression<Boolean> = const(false),
   iconOptional: Expression<Boolean> = const(false),
 
   // icon translate
-  iconTranslate: Expression<Point> = point(0, 0),
+  iconTranslate: Expression<Point> = point(0f, 0f),
   iconTranslateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
 
   // text content
   textField: Expression<TFormatted> = nil(),
 
   // text glyph colors
-  textOpacity: Expression<Number> = const(1),
+  textOpacity: Expression<Number> = const(1f),
   textColor: Expression<Color> = const(Color.Black),
   textHaloColor: Expression<Color> = const(Color.Transparent),
-  textHaloWidth: Expression<Number> = const(0),
-  textHaloBlur: Expression<Number> = const(0),
+  textHaloWidth: Expression<Number> = const(0f),
+  textHaloBlur: Expression<Number> = const(0f),
 
   // text glyph properties
   textFont: Expression<List<String>> =
     literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular"))),
-  textSize: Expression<Number> = const(16),
+  textSize: Expression<Number> = const(16f),
   textTransform: Expression<TextTransform> = const(TextTransform.None),
-  textLetterSpacing: Expression<Number> = const(0),
+  textLetterSpacing: Expression<Number> = const(0f),
   textRotationAlignment: Expression<TextRotationAlignment> = const(TextRotationAlignment.Auto),
   textPitchAlignment: Expression<TextPitchAlignment> = const(TextPitchAlignment.Auto),
-  textMaxAngle: Expression<Number> = const(45),
+  textMaxAngle: Expression<Number> = const(45f),
 
   // text paragraph layout
-  textMaxWidth: Expression<Number> = const(10),
+  textMaxWidth: Expression<Number> = const(10f),
   textLineHeight: Expression<Number> = const(1.2f),
   textJustify: Expression<TextJustify> = const(TextJustify.Center),
   textWritingMode: Expression<List<TextWritingMode>> = nil(),
   textKeepUpright: Expression<Boolean> = const(true),
-  textRotate: Expression<Number> = const(0),
+  textRotate: Expression<Number> = const(0f),
 
   // text anchoring
   textAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
-  textOffset: Expression<Point> = point(0, 0),
+  textOffset: Expression<Point> = point(0f, 0f),
   textVariableAnchor: Expression<List<SymbolAnchor>> = nil(),
-  textRadialOffset: Expression<Number> = const(0),
+  textRadialOffset: Expression<Number> = const(0f),
   textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>> = nil(),
 
   // text collision
-  textPadding: Expression<Number> = const(2),
+  textPadding: Expression<Number> = const(2f),
   textAllowOverlap: Expression<Boolean> = const(false),
   textOverlap: Expression<String> = nil(),
   textIgnorePlacement: Expression<Boolean> = const(false),
   textOptional: Expression<Boolean> = const(false),
 
   // text translate
-  textTranslate: Expression<Point> = point(0, 0),
+  textTranslate: Expression<Point> = point(0f, 0f),
   textTranslateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,

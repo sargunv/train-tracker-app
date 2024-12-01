@@ -66,12 +66,12 @@ fun ClusteredPointsDemo() = Column {
       radius =
         step(
           input = get(const("point_count")),
-          fallback = const(15),
-          25 to const(20),
-          100 to const(30),
-          500 to const(40),
-          1000 to const(50),
-          5000 to const(60),
+          fallback = const(15f),
+          25 to const(20f),
+          100 to const(30f),
+          500 to const(40f),
+          1000 to const(50f),
+          5000 to const(60f),
         ),
       onClick = { features ->
         features.firstOrNull()?.geometry?.let {
@@ -101,10 +101,10 @@ fun ClusteredPointsDemo() = Column {
       id = "unclustered-bikes-shadow",
       source = bikeSource,
       filter = !has(const("point_count")),
-      radius = const(13),
+      radius = const(13f),
       color = const(Color.Black),
-      blur = const(1),
-      translate = point(0, 1),
+      blur = const(1f),
+      translate = point(0f, 1f),
     )
 
     CircleLayer(
@@ -112,8 +112,8 @@ fun ClusteredPointsDemo() = Column {
       source = bikeSource,
       filter = !has(const("point_count")),
       color = const(LIME_GREEN),
-      radius = const(7),
-      strokeWidth = const(3),
+      radius = const(7f),
+      strokeWidth = const(3f),
       strokeColor = const(Color.White),
     )
   }

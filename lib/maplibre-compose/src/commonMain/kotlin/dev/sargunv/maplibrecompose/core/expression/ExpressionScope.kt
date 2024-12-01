@@ -11,8 +11,6 @@ public interface ExpressionScope {
 
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
-  public fun const(number: Int): Expression<Number> = Expression.ofInt(number)
-
   public fun const(number: Float): Expression<Number> = Expression.ofFloat(number)
 
   public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
@@ -25,11 +23,11 @@ public interface ExpressionScope {
 
   public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
 
-  public fun point(x: Number, y: Number): Expression<Point> = Expression.ofPoint(Point(x, y))
+  public fun point(x: Float, y: Float): Expression<Point> = Expression.ofPoint(Point(x, y))
 
   public fun point(point: Point): Expression<Point> = Expression.ofPoint(point)
 
-  public fun insets(top: Number, right: Number, bottom: Number, left: Number): Expression<Insets> =
+  public fun insets(top: Float, right: Float, bottom: Float, left: Float): Expression<Insets> =
     Expression.ofInsets(Insets(top, right, bottom, left))
 
   public fun insets(insets: Insets): Expression<Insets> = Expression.ofInsets(insets)

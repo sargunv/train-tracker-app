@@ -61,10 +61,10 @@ public inline fun HeatmapLayer(
       0.7 to const(Color(0xFFFFFF00)), // yellow
       1 to const(Color(0xFFFF0000)), // red
     ),
-  opacity: Expression<Number> = const(1),
-  radius: Expression<Number> = const(30),
-  weight: Expression<Number> = const(1),
-  intensity: Expression<Number> = const(1),
+  opacity: Expression<Number> = const(1f),
+  radius: Expression<Number> = const(30f),
+  weight: Expression<Number> = const(1f),
+  intensity: Expression<Number> = const(1f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

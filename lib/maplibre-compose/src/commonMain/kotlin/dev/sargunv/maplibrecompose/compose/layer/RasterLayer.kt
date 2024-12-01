@@ -40,14 +40,14 @@ public inline fun RasterLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: Expression<Number> = const(1),
-  hueRotate: Expression<Number> = const(0),
-  brightnessMin: Expression<Number> = const(0),
-  brightnessMax: Expression<Number> = const(1),
-  saturation: Expression<Number> = const(0),
-  contrast: Expression<Number> = const(0),
+  opacity: Expression<Number> = const(1f),
+  hueRotate: Expression<Number> = const(0f),
+  brightnessMin: Expression<Number> = const(0f),
+  brightnessMax: Expression<Number> = const(1f),
+  saturation: Expression<Number> = const(0f),
+  contrast: Expression<Number> = const(0f),
   resampling: Expression<RasterResampling> = const(RasterResampling.Linear),
-  fadeDuration: Expression<Number> = const(300),
+  fadeDuration: Expression<Number> = const(300f),
 ) {
   composeKey(id) {
     LayerNode(

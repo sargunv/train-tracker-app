@@ -96,19 +96,19 @@ private fun LocationPuck(locationSource: Source) {
   CircleLayer(
     id = "target-shadow",
     source = locationSource,
-    radius = const(13),
+    radius = const(13f),
     color = const(Color.Black),
-    blur = const(1),
-    translate = point(0, 1),
+    blur = const(1f),
+    translate = point(0f, 1f),
   )
 
   CircleLayer(
     id = "target-circle",
     source = locationSource,
-    radius = const(7),
+    radius = const(7f),
     color = const(MaterialTheme.colorScheme.primary),
     strokeColor = const(Color.White),
-    strokeWidth = const(3),
+    strokeWidth = const(3f),
   )
 }
 
