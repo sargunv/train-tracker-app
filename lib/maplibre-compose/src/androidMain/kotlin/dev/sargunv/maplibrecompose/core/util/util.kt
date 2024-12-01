@@ -4,6 +4,7 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.view.Gravity
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Density
@@ -18,7 +19,6 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
-import dev.sargunv.maplibrecompose.core.expression.Point
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Position
 import java.net.URI
@@ -44,11 +44,6 @@ internal fun PointF.toOffset(density: Density): DpOffset =
 internal fun DpRect.toRectF(density: Density): RectF =
   with(density) { RectF(left.toPx(), top.toPx(), right.toPx(), bottom.toPx()) }
 
-internal fun RectF.toRect(density: Density): DpRect =
-  with(density) {
-    DpRect(left = left.toDp(), top = top.toDp(), right = right.toDp(), bottom = bottom.toDp())
-  }
-
 internal fun LatLng.toPosition(): Position = Position(longitude = longitude, latitude = latitude)
 
 internal fun Position.toLatLng(): LatLng = LatLng(latitude = latitude, longitude = longitude)
@@ -72,7 +67,7 @@ private fun normalizeJsonLike(value: Any?): JsonElement =
     is Map<*, *> ->
       JsonObject().apply { value.forEach { add(it.key as String, normalizeJsonLike(it.value)) } }
 
-    is Point ->
+    is Offset ->
       JsonArray().apply {
         add("literal")
         add(

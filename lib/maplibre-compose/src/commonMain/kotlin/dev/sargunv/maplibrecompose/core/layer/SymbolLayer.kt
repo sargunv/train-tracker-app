@@ -1,12 +1,12 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.Insets
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -60,7 +60,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconKeepUpright(keepUpright: Expression<Boolean>)
 
-  fun setIconOffset(offset: Expression<Point>)
+  fun setIconOffset(offset: Expression<Offset>)
 
   fun setIconAnchor(anchor: Expression<SymbolAnchor>)
 
@@ -76,7 +76,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconHaloBlur(haloBlur: Expression<Number>)
 
-  fun setIconTranslate(translate: Expression<Point>)
+  fun setIconTranslate(translate: Expression<Offset>)
 
   fun setIconTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 
@@ -102,7 +102,9 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextVariableAnchor(variableAnchor: Expression<List<SymbolAnchor>>)
 
-  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>)
+  fun setTextVariableAnchorOffset(
+    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>
+  )
 
   fun setTextAnchor(anchor: Expression<SymbolAnchor>)
 
@@ -118,7 +120,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextTransform(transform: Expression<TextTransform>)
 
-  fun setTextOffset(offset: Expression<Point>)
+  fun setTextOffset(offset: Expression<Offset>)
 
   fun setTextAllowOverlap(allowOverlap: Expression<Boolean>)
 
@@ -138,7 +140,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextHaloBlur(haloBlur: Expression<Number>)
 
-  fun setTextTranslate(translate: Expression<Point>)
+  fun setTextTranslate(translate: Expression<Offset>)
 
   fun setTextTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 }

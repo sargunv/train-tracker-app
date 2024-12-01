@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.CameraState
@@ -31,7 +32,6 @@ import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.PositionVectorConverter
@@ -99,7 +99,7 @@ private fun LocationPuck(locationSource: Source) {
     radius = const(13f),
     color = const(Color.Black),
     blur = const(1f),
-    translate = point(0f, 1f),
+    translate = const(Offset(0f, 1f)),
   )
 
   CircleLayer(

@@ -1,11 +1,11 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNLineStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -56,7 +56,7 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.lineColor = color.toNSExpression()
   }
 
-  actual fun setLineTranslate(translate: Expression<Point>) {
+  actual fun setLineTranslate(translate: Expression<Offset>) {
     impl.lineTranslation = translate.toNSExpression()
   }
 

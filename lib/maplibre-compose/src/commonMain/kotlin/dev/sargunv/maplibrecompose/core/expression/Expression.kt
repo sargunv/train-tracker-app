@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.expression
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 
 // would make this an inline value class, but we lose varargs
@@ -16,6 +17,7 @@ public data class Expression<out T> private constructor(internal val value: Any?
     private val constFalse: Expression<Boolean> = Expression(false)
     private val constTrue: Expression<Boolean> = Expression(true)
     private val constNull: Expression<Nothing?> = Expression(null)
+    private val constZeroOffset: Expression<Offset> = Expression(Offset.Zero)
 
     // TODO for values not covered by the above, try an LRU cache
 
@@ -40,7 +42,8 @@ public data class Expression<out T> private constructor(internal val value: Any?
 
     internal fun ofNull(): Expression<Nothing?> = constNull
 
-    internal fun ofPoint(point: Point): Expression<Point> = Expression(point)
+    internal fun ofOffset(offset: Offset): Expression<Offset> =
+      if (offset == Offset.Zero) constZeroOffset else Expression(offset)
 
     @Suppress("UNCHECKED_CAST")
     internal fun <T : LayerPropertyEnum> ofLayerPropertyEnum(enum: T): Expression<T> =

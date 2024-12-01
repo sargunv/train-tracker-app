@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNSymbolStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -7,7 +8,6 @@ import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.Insets
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -109,7 +109,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.keepsIconUpright = keepUpright.toNSExpression()
   }
 
-  actual fun setIconOffset(offset: Expression<Point>) {
+  actual fun setIconOffset(offset: Expression<Offset>) {
     impl.iconOffset = offset.toNSExpression()
   }
 
@@ -141,7 +141,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconHaloBlur = haloBlur.toNSExpression()
   }
 
-  actual fun setIconTranslate(translate: Expression<Point>) {
+  actual fun setIconTranslate(translate: Expression<Offset>) {
     impl.iconTranslation = translate.toNSExpression()
   }
 
@@ -194,7 +194,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
   }
 
   actual fun setTextVariableAnchorOffset(
-    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>
+    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>
   ) {
     impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
   }
@@ -227,7 +227,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textTransform = transform.toNSExpression()
   }
 
-  actual fun setTextOffset(offset: Expression<Point>) {
+  actual fun setTextOffset(offset: Expression<Offset>) {
     impl.textOffset = offset.toNSExpression()
   }
 
@@ -268,7 +268,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textHaloBlur = haloBlur.toNSExpression()
   }
 
-  actual fun setTextTranslate(translate: Expression<Point>) {
+  actual fun setTextTranslate(translate: Expression<Offset>) {
     impl.textTranslation = translate.toNSExpression()
   }
 

@@ -2,15 +2,14 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
@@ -85,7 +84,7 @@ public inline fun LineLayer(
   filter: Expression<Boolean> = nil(),
   visible: Boolean = true,
   sortKey: Expression<Number> = nil(),
-  translate: Expression<Point> = point(0f, 0f),
+  translate: Expression<Offset> = const(Offset.Zero),
   translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   opacity: Expression<Number> = const(1f),
   color: Expression<Color> = const(Color.Black),

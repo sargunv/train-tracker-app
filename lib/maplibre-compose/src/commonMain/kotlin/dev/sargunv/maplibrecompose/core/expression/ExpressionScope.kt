@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.core.expression
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import kotlin.jvm.JvmName
 
@@ -7,13 +8,15 @@ import kotlin.jvm.JvmName
 public interface ExpressionScope {
 
   // basic types: https://maplibre.org/maplibre-style-spec/types/
-  // minus point and padding, which don't seem to be used in expressions
 
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
-  public fun const(number: Float): Expression<Number> = Expression.ofFloat(number)
+  public fun const(float: Float): Expression<Number> = Expression.ofFloat(float)
 
   public fun const(bool: Boolean): Expression<Boolean> = Expression.ofBoolean(bool)
+
+  // corresponds to "point" in the style spec
+  public fun const(offset: Offset): Expression<Offset> = Expression.ofOffset(offset)
 
   public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
     Expression.ofLayerPropertyEnum(value)
@@ -22,10 +25,6 @@ public interface ExpressionScope {
   public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
 
   public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
-
-  public fun point(x: Float, y: Float): Expression<Point> = Expression.ofPoint(Point(x, y))
-
-  public fun point(point: Point): Expression<Point> = Expression.ofPoint(point)
 
   public fun insets(top: Float, right: Float, bottom: Float, left: Float): Expression<Insets> =
     Expression.ofInsets(Insets(top, right, bottom, left))
@@ -161,11 +160,11 @@ public interface ExpressionScope {
   )
 
   /**
-   * Returns an image type for use in icon-image, *-pattern entries and as a section in the
-   * [unformatted] expression. If set, the image argument will check that the requested image exists
-   * in the style and will return either the resolved image name or null, depending on whether or
-   * not the image is currently in the style. This validation process is synchronous and requires
-   * the image to have been added to the style before requesting it in the image argument.
+   * Returns an image type for use in icon-image, *-pattern entries and as a section in the [format]
+   * expression. If set, the image argument will check that the requested image exists in the style
+   * and will return either the resolved image name or null, depending on whether or not the image
+   * is currently in the style. This validation process is synchronous and requires the image to
+   * have been added to the style before requesting it in the image argument.
    */
   public fun image(value: Expression<String>): Expression<TResolvedImage> = callFn("image", value)
 
@@ -602,8 +601,8 @@ public interface ExpressionScope {
   public fun interpolate(
     type: Expression<TInterpolationType>,
     input: Expression<Number>,
-    vararg stops: Pair<Number, Expression<Point>>,
-  ): Expression<Point> = interpolateImpl("interpolate", type, input, *stops)
+    vararg stops: Pair<Number, Expression<Offset>>,
+  ): Expression<Offset> = interpolateImpl("interpolate", type, input, *stops)
 
   @JvmName("interpolateNumbers")
   public fun interpolate(

@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
@@ -104,7 +105,7 @@ fun ClusteredPointsDemo() = Column {
       radius = const(13f),
       color = const(Color.Black),
       blur = const(1f),
-      translate = point(0f, 1f),
+      translate = const(Offset(0f, 1f)),
     )
 
     CircleLayer(

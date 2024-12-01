@@ -2,6 +2,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key as composeKey
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -9,12 +10,10 @@ import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.insets
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.literal
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.point
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.Insets
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -377,7 +376,7 @@ public inline fun SymbolLayer(
 
   // icon anchoring
   iconAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
-  iconOffset: Expression<Point> = point(0f, 0f),
+  iconOffset: Expression<Offset> = const(Offset.Zero),
 
   // icon collision
   iconPadding: Expression<Number> = const(2f),
@@ -387,7 +386,7 @@ public inline fun SymbolLayer(
   iconOptional: Expression<Boolean> = const(false),
 
   // icon translate
-  iconTranslate: Expression<Point> = point(0f, 0f),
+  iconTranslate: Expression<Offset> = const(Offset.Zero),
   iconTranslateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
 
   // text content
@@ -420,10 +419,10 @@ public inline fun SymbolLayer(
 
   // text anchoring
   textAnchor: Expression<SymbolAnchor> = const(SymbolAnchor.Center),
-  textOffset: Expression<Point> = point(0f, 0f),
+  textOffset: Expression<Offset> = const(Offset.Zero),
   textVariableAnchor: Expression<List<SymbolAnchor>> = nil(),
   textRadialOffset: Expression<Number> = const(0f),
-  textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>> = nil(),
+  textVariableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>> = nil(),
 
   // text collision
   textPadding: Expression<Number> = const(2f),
@@ -433,7 +432,7 @@ public inline fun SymbolLayer(
   textOptional: Expression<Boolean> = const(false),
 
   // text translate
-  textTranslate: Expression<Point> = point(0f, 0f),
+  textTranslate: Expression<Offset> = const(Offset.Zero),
   textTranslateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,

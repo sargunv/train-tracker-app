@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.util
 
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
@@ -20,7 +21,6 @@ import cocoapods.MapLibre.expressionWithMLNJSONObject
 import cocoapods.MapLibre.predicateWithMLNJSONObject
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Insets
-import dev.sargunv.maplibrecompose.core.expression.Point
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.GeoJson
@@ -131,7 +131,7 @@ private fun normalizeJsonLike(value: Any?): Any? =
     is String -> value
     is List<*> -> value.map(::normalizeJsonLike)
     is Map<*, *> -> value.mapValues { normalizeJsonLike(it.value) }
-    is Point -> NSValue.valueWithCGVector(CGVectorMake(value.x.toDouble(), value.y.toDouble()))
+    is Offset -> NSValue.valueWithCGVector(CGVectorMake(value.x.toDouble(), value.y.toDouble()))
     is Color ->
       UIColor.colorWithRed(
         red = value.red.toDouble(),

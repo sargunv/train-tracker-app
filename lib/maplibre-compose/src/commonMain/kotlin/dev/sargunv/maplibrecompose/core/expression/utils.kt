@@ -14,7 +14,5 @@ public sealed interface TInterpolationType
 
 public sealed interface TGeometry // TODO create a real type and Expression constructor
 
-@Immutable public data class Point(val x: Number, val y: Number)
-
 @Immutable
 public data class Insets(val top: Number, val right: Number, val bottom: Number, val left: Number)

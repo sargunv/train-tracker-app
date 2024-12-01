@@ -1,10 +1,10 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -24,7 +24,7 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   fun setCircleOpacity(opacity: Expression<Number>)
 
-  fun setCircleTranslate(translate: Expression<Point>)
+  fun setCircleTranslate(translate: Expression<Offset>)
 
   fun setCircleTranslateAnchor(translateAnchor: Expression<TranslateAnchor>)
 

@@ -1,12 +1,12 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.Insets
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -104,7 +104,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconKeepUpright(keepUpright.toMLNExpression()))
   }
 
-  actual fun setIconOffset(offset: Expression<Point>) {
+  actual fun setIconOffset(offset: Expression<Offset>) {
     impl.setProperties(PropertyFactory.iconOffset(offset.toMLNExpression()))
   }
 
@@ -136,7 +136,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconHaloBlur(haloBlur.toMLNExpression()))
   }
 
-  actual fun setIconTranslate(translate: Expression<Point>) {
+  actual fun setIconTranslate(translate: Expression<Offset>) {
     impl.setProperties(PropertyFactory.iconTranslate(translate.toMLNExpression()))
   }
 
@@ -189,7 +189,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
   }
 
   actual fun setTextVariableAnchorOffset(
-    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Point>>>
+    variableAnchorOffset: Expression<List<Pair<SymbolAnchor, Offset>>>
   ) {
     impl.setProperties(
       PropertyFactory.textVariableAnchorOffset(variableAnchorOffset.toMLNExpression())
@@ -224,7 +224,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textTransform(transform.toMLNExpression()))
   }
 
-  actual fun setTextOffset(offset: Expression<Point>) {
+  actual fun setTextOffset(offset: Expression<Offset>) {
     impl.setProperties(PropertyFactory.textOffset(offset.toMLNExpression()))
   }
 
@@ -265,7 +265,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textHaloBlur(haloBlur.toMLNExpression()))
   }
 
-  actual fun setTextTranslate(translate: Expression<Point>) {
+  actual fun setTextTranslate(translate: Expression<Offset>) {
     impl.setProperties(PropertyFactory.textTranslate(translate.toMLNExpression()))
   }
 

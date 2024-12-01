@@ -1,9 +1,9 @@
 package dev.sargunv.maplibrecompose.core.layer
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNFillStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Point
 import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -46,7 +46,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.fillOutlineColor = outlineColor.toNSExpression()
   }
 
-  actual fun setFillTranslate(translate: Expression<Point>) {
+  actual fun setFillTranslate(translate: Expression<Offset>) {
     impl.fillTranslation = translate.toNSExpression()
   }
 
