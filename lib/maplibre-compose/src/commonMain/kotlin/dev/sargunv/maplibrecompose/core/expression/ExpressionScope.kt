@@ -35,6 +35,10 @@ public interface ExpressionScope {
     Expression.ofLayerPropertyEnum(value)
 
   @Suppress("UNCHECKED_CAST")
+  public val Expression<Number>.dp: Expression<Dp>
+    get() = this as Expression<Dp>
+
+  @Suppress("UNCHECKED_CAST")
   public fun <T> nil(): Expression<T> = Expression.ofNull() as Expression<T>
 
   public fun const(color: Color): Expression<Color> = Expression.ofColor(color)
@@ -605,12 +609,26 @@ public interface ExpressionScope {
     vararg stops: Pair<Number, Expression<Color>>,
   ): Expression<Color> = interpolateImpl("interpolate", type, input, *stops)
 
-  @JvmName("interpolatePoint")
+  @JvmName("interpolateOffset")
   public fun interpolate(
     type: Expression<TInterpolationType>,
     input: Expression<Number>,
     vararg stops: Pair<Number, Expression<Offset>>,
   ): Expression<Offset> = interpolateImpl("interpolate", type, input, *stops)
+
+  @JvmName("interpolateDpOffset")
+  public fun interpolate(
+    type: Expression<TInterpolationType>,
+    input: Expression<Number>,
+    vararg stops: Pair<Number, Expression<DpOffset>>,
+  ): Expression<DpOffset> = interpolateImpl("interpolate", type, input, *stops)
+
+  @JvmName("interpolatePadding")
+  public fun interpolate(
+    type: Expression<TInterpolationType>,
+    input: Expression<Number>,
+    vararg stops: Pair<Number, Expression<PaddingValues.Absolute>>,
+  ): Expression<PaddingValues.Absolute> = interpolateImpl("interpolate", type, input, *stops)
 
   @JvmName("interpolateNumbers")
   public fun interpolate(
