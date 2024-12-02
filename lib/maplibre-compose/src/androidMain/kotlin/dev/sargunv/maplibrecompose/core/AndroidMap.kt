@@ -177,6 +177,11 @@ internal class AndroidMap(
     map.uiSettings.isScrollGesturesEnabled = value.isScrollGesturesEnabled
     map.uiSettings.isTiltGesturesEnabled = value.isTiltGesturesEnabled
     map.uiSettings.isZoomGesturesEnabled = value.isZoomGesturesEnabled
+    // on iOS, there is no setting for enabling quick zoom (=double-tap, hold and move up or down)
+    // and zoom in by a double tap separately, so isZoomGesturesEnabled turns on or off ALL zoom
+    // gestures
+    map.uiSettings.isQuickZoomGesturesEnabled = value.isZoomGesturesEnabled
+    map.uiSettings.isDoubleTapGesturesEnabled = value.isZoomGesturesEnabled
   }
 
   override fun setOrnamentSettings(value: OrnamentSettings) {

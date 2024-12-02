@@ -24,8 +24,8 @@ import kotlin.math.roundToInt
 public fun MaplibreMap(
   modifier: Modifier = Modifier,
   styleUrl: String = "https://demotiles.maplibre.org/style.json",
-  gestureSettings: GestureSettings = GestureSettings(),
-  ornamentSettings: OrnamentSettings = OrnamentSettings(),
+  gestureSettings: GestureSettings = GestureSettings.AllEnabled,
+  ornamentSettings: OrnamentSettings = OrnamentSettings.AllEnabled,
   cameraState: CameraState = rememberCameraState(),
   onMapClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   onMapLongClick: MapClickHandler = { _, _ -> ClickResult.Pass },

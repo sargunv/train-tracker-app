@@ -1,5 +1,8 @@
 package dev.sargunv.maplibrecompose.core
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 public enum class CameraMoveReason {
   /** The camera hasn't moved yet. */
   NONE,
