@@ -2,8 +2,14 @@ package dev.sargunv.maplibrecompose.demoapp
 
 import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.TwoWayConverter
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.util.fastRoundToInt
 import dev.sargunv.maplibrecompose.demoapp.generated.Res
 import io.github.dellisd.spatialk.geojson.Position
+import kotlin.math.pow
+import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 private val REMOTE_STYLE_URLS =
@@ -39,4 +45,25 @@ class PositionVectorConverter(private val origin: Position) :
     val dLat = pos.latitude - origin.latitude
     AnimationVector2D(dLon.toFloat(), dLat.toFloat())
   }
+}
+
+internal fun Double.format(decimals: Int): String {
+  val factor = 10.0.pow(decimals)
+  return ((this * factor).fastRoundToInt() / factor).toString()
+}
+
+internal class FrameRateState(private val spinner: String = "◐◓◑◒") {
+  private var rollingAverage by mutableStateOf(0.0)
+  private var spinnerIndex by mutableStateOf(0)
+
+  fun recordFps(fps: Double) {
+    rollingAverage = (rollingAverage * 0.9) + (fps * 0.1)
+    spinnerIndex = (spinnerIndex + 1) % spinner.length
+  }
+
+  val spinChar: Char
+    get() = spinner[spinnerIndex]
+
+  val avgFps: Int
+    get() = rollingAverage.roundToInt()
 }

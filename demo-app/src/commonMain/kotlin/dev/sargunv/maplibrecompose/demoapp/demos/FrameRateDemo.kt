@@ -15,14 +15,21 @@ import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.core.util.PlatformUtils
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
+import dev.sargunv.maplibrecompose.demoapp.FrameRateState
 import kotlin.math.roundToInt
 
 @Composable
 fun FrameRateDemo() = Column {
   val systemRefreshRate = PlatformUtils.getSystemRefreshRate().roundToInt()
   var maximumFps by remember { mutableStateOf(systemRefreshRate) }
+  val fpsState = remember { FrameRateState() }
 
-  MaplibreMap(modifier = Modifier.weight(1f), styleUrl = DEFAULT_STYLE, maximumFps = maximumFps)
+  MaplibreMap(
+    modifier = Modifier.weight(1f),
+    styleUrl = DEFAULT_STYLE,
+    maximumFps = maximumFps,
+    onFpsChanged = fpsState::recordFps,
+  )
 
   Column(modifier = Modifier.padding(16.dp)) {
     Slider(
@@ -30,6 +37,9 @@ fun FrameRateDemo() = Column {
       onValueChange = { maximumFps = it.roundToInt() },
       valueRange = 15f..systemRefreshRate.toFloat(),
     )
-    Text("$maximumFps", style = MaterialTheme.typography.labelMedium)
+    Text(
+      "Target: $maximumFps ${fpsState.spinChar} Actual: ${fpsState.avgFps}",
+      style = MaterialTheme.typography.labelMedium,
+    )
   }
 }

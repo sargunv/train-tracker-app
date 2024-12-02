@@ -13,14 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.fastRoundToInt
 import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
+import dev.sargunv.maplibrecompose.demoapp.format
 import io.github.dellisd.spatialk.geojson.Position
-import kotlin.math.pow
 
 private val CHICAGO = Position(latitude = 41.878, longitude = -87.626)
 
@@ -65,9 +64,4 @@ private fun Cell(title: String, value: String, modifier: Modifier = Modifier) {
       style = MaterialTheme.typography.bodySmall,
     )
   }
-}
-
-private fun Double.format(decimals: Int): String {
-  val factor = 10.0.pow(decimals)
-  return ((this * factor).fastRoundToInt() / factor).toString()
 }

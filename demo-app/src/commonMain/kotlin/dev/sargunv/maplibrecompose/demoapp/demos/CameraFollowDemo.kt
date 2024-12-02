@@ -34,6 +34,7 @@ import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
+import dev.sargunv.maplibrecompose.demoapp.FrameRateState
 import dev.sargunv.maplibrecompose.demoapp.PositionVectorConverter
 import io.github.dellisd.spatialk.geojson.Point
 import io.github.dellisd.spatialk.geojson.Position
@@ -48,12 +49,22 @@ fun CameraFollowDemo() = Column {
   val animatedPosition by animateTestPosition(START_POINT, END_POINT)
   var zoom by remember { mutableStateOf((MIN_ZOOM + MAX_ZOOM) / 2) }
   val camera = rememberAnimatedFollowCamera(target = animatedPosition, zoom = zoom.toFloat())
+  val fpsState = remember { FrameRateState() }
 
-  MaplibreMap(modifier = Modifier.weight(1f), styleUrl = DEFAULT_STYLE, cameraState = camera) {
+  MaplibreMap(
+    modifier = Modifier.weight(1f),
+    styleUrl = DEFAULT_STYLE,
+    cameraState = camera,
+    onFpsChanged = fpsState::recordFps,
+  ) {
     LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
   }
 
-  FollowControls(currentZoom = zoom, onZoomChange = { zoom = it })
+  FollowControls(
+    currentZoom = zoom,
+    onZoomChange = { zoom = it },
+    text = "FPS: ${fpsState.spinChar} ${fpsState.avgFps}",
+  )
 }
 
 @Composable
@@ -113,7 +124,7 @@ private fun LocationPuck(locationSource: Source) {
 }
 
 @Composable
-private fun FollowControls(currentZoom: Int, onZoomChange: (Int) -> Unit) {
+private fun FollowControls(currentZoom: Int, onZoomChange: (Int) -> Unit, text: String) {
   Row(
     modifier = Modifier.padding(16.dp).fillMaxWidth(),
     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -124,6 +135,7 @@ private fun FollowControls(currentZoom: Int, onZoomChange: (Int) -> Unit) {
     ) {
       Text("Zoom out")
     }
+    Text(text = text)
     Button(
       enabled = currentZoom < MAX_ZOOM,
       onClick = { onZoomChange((currentZoom + 1).coerceAtMost(MAX_ZOOM)) },
