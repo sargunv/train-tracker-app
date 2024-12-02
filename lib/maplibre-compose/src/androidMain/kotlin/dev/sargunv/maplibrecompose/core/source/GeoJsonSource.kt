@@ -20,6 +20,7 @@ public actual class GeoJsonSource : Source {
 
   private fun buildOptionMap(options: GeoJsonOptions) =
     MLNGeoJsonOptions().apply {
+      withMinZoom(options.minZoom)
       withMaxZoom(options.maxZoom)
       withBuffer(options.buffer)
       withTolerance(options.tolerance)

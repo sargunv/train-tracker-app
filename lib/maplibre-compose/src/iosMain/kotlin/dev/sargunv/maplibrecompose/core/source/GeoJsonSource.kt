@@ -36,6 +36,7 @@ public actual class GeoJsonSource : Source {
 
   private fun buildOptionMap(options: GeoJsonOptions) =
     buildMap<Any?, Any?> {
+      put(MLNShapeSourceOptionMinimumZoomLevel , NSNumber(options.minZoom))
       put(MLNShapeSourceOptionMaximumZoomLevel, NSNumber(options.maxZoom))
       put(MLNShapeSourceOptionBuffer, NSNumber(options.buffer))
       put(MLNShapeSourceOptionLineDistanceMetrics, NSNumber(options.lineMetrics))

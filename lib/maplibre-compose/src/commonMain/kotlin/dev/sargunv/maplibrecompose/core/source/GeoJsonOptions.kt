@@ -5,6 +5,7 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 
 @Immutable
 public data class GeoJsonOptions(
+  val minZoom: Int = 0,
   val maxZoom: Int = 18,
   val buffer: Int = 128,
   val tolerance: Float = 0.375f,
