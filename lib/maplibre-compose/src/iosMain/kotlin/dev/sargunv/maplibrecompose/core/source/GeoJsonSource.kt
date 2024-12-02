@@ -8,6 +8,7 @@ import cocoapods.MapLibre.MLNShapeSourceOptionClustered
 import cocoapods.MapLibre.MLNShapeSourceOptionLineDistanceMetrics
 import cocoapods.MapLibre.MLNShapeSourceOptionMaximumZoomLevel
 import cocoapods.MapLibre.MLNShapeSourceOptionMaximumZoomLevelForClustering
+import cocoapods.MapLibre.MLNShapeSourceOptionMinimumZoomLevel
 import cocoapods.MapLibre.MLNShapeSourceOptionSimplificationTolerance
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
