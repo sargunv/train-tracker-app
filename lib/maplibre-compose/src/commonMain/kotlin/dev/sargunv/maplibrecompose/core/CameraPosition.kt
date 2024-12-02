@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.core
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.dp
 import io.github.dellisd.spatialk.geojson.Position
 
@@ -19,7 +19,7 @@ import io.github.dellisd.spatialk.geojson.Position
  *   example if you want to display a bottom sheet above the lower part of the map, focussing on a
  *   POI in the upper part of the map.
  */
-@Immutable
+@Stable
 public data class CameraPosition(
   public val bearing: Double = 0.0,
   public val target: Position = Position(0.0, 0.0),
