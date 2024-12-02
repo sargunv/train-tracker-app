@@ -16,11 +16,12 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  * @param cluster If the data is a collection of point features, setting this to `true` clusters the
  *   points by radius into groups. Cluster groups become new `Point` features in the source with
  *   additional properties:
- *   * `cluster`: Is `true` if the point is a cluster
- *   * `cluster_id`: A unique id for the cluster to be used in conjunction with the cluster
+ *     * `cluster`: Is `true` if the point is a cluster
+ *     * `cluster_id`: A unique id for the cluster to be used in conjunction with the cluster
  *       inspection methods. (TODO which are not implemented yet on [GeoJsonSource])
- *   * `point_count`: Number of original points grouped into this cluster
- *   * `point_count_abbreviated`: An abbreviated point count
+ *     * `point_count`: Number of original points grouped into this cluster
+ *     * `point_count_abbreviated`: An abbreviated point count
+ *
  * @param clusterRadius Radius of each cluster when clustering points, measured in 1/512ths of a
  *   tile. I.e. a value of 512 indicates a radius equal to the width of a tile.
  * @param clusterMaxZoom Max zoom to cluster points on. Clusters are re-evaluated at integer zoom
@@ -31,9 +32,10 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  *   values are expressions.
  *
  *   TODO examples missing, see https://maplibre.org/maplibre-style-spec/sources/#clusterproperties
+ *
  * @param lineMetrics Whether to calculate line distance metrics. This is required for line layers
  *   that specify line-gradient values.
- * */
+ */
 // not supported yet:
 // @param clusterMinPoints Minimum number of points necessary to form a cluster if clustering is
 //   enabled.
