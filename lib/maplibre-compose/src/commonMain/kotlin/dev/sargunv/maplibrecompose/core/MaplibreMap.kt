@@ -51,7 +51,11 @@ internal interface MaplibreMap {
   interface Callbacks {
     fun onStyleChanged(map: MaplibreMap, style: Style?)
 
-    fun onCameraMove(map: MaplibreMap)
+    fun onCameraMoveStarted(map: MaplibreMap, reason: CameraMoveReason)
+
+    fun onCameraMoved(map: MaplibreMap)
+
+    fun onCameraMoveEnded(map: MaplibreMap)
 
     fun onClick(map: MaplibreMap, latLng: Position, offset: DpOffset)
 

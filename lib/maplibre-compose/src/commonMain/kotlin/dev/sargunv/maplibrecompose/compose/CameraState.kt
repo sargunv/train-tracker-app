@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
+import dev.sargunv.maplibrecompose.core.CameraMoveReason
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -33,6 +34,7 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   private val mapAttachSignal = Channel<MaplibreMap>()
 
   internal val positionState = mutableStateOf(firstPosition)
+  internal val moveReasonState = mutableStateOf(CameraMoveReason.NONE)
 
   // if the map is not yet initialized, we store the value to apply it later
   public var position: CameraPosition
@@ -42,8 +44,8 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
       positionState.value = value
     }
 
-  public val isInitialized: Boolean
-    get() = map != null
+  public val moveReason: CameraMoveReason
+    get() = moveReasonState.value
 
   public suspend fun awaitInitialized() {
     map ?: mapAttachSignal.receive()
@@ -58,7 +60,7 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   }
 
   private fun requireIsInitialized() {
-    require(isInitialized) {
+    require(map != null) {
       "Map requested before it was initialized; try calling awaitInitialization() first"
     }
   }

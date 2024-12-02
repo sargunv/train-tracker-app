@@ -27,9 +27,16 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import org.maplibre.android.camera.CameraPosition as MLNCameraPosition
 import org.maplibre.android.camera.CameraUpdateFactory
+import org.maplibre.android.gestures.MoveGestureDetector
+import org.maplibre.android.gestures.RotateGestureDetector
+import org.maplibre.android.gestures.ShoveGestureDetector
+import org.maplibre.android.gestures.StandardScaleGestureDetector
 import org.maplibre.android.log.Logger as MLNLogger
 import org.maplibre.android.maps.MapLibreMap as MLNMap
 import org.maplibre.android.maps.MapLibreMap
+import org.maplibre.android.maps.MapLibreMap.OnCameraMoveStartedListener
+import org.maplibre.android.maps.MapLibreMap.OnMoveListener
+import org.maplibre.android.maps.MapLibreMap.OnScaleListener
 import org.maplibre.android.maps.MapView
 import org.maplibre.android.maps.Style as MlnStyle
 
@@ -65,7 +72,75 @@ internal class AndroidMap(
     }
 
   init {
-    map.addOnCameraMoveListener { callbacks.onCameraMove(this) }
+    map.addOnCameraMoveStartedListener { reason ->
+      // MapLibre doesn't have docs on these reasons, and even though they're named like Google's:
+      // https://developers.google.com/android/reference/com/google/android/gms/maps/GoogleMap.OnCameraMoveStartedListener#constants
+      // they don't quite work the way the Google ones are documented. In particular,
+      // REASON_DEVELOPER_ANIMATION is never used, and REASON_API_ANIMATION is used when the
+      // animation was from the developer or from the API.
+      callbacks.onCameraMoveStarted(
+        map = this,
+        reason =
+          when (reason) {
+            OnCameraMoveStartedListener.REASON_API_GESTURE -> CameraMoveReason.GESTURE
+            OnCameraMoveStartedListener.REASON_API_ANIMATION -> CameraMoveReason.PROGRAMMATIC
+            else -> {
+              logger?.w { "Unknown camera move reason: $reason" }
+              CameraMoveReason.UNKNOWN
+            }
+          },
+      )
+    }
+    map.addOnCameraMoveListener { callbacks.onCameraMoved(this) }
+    map.addOnCameraIdleListener { callbacks.onCameraMoveEnded(this) }
+
+    // TODO: Support double tap below.
+    // This is a bit of a hack since the OnCameraMoveStartedListener above doesn't always fire when
+    // gestures are simultaneous with animations.
+    map.addOnMoveListener(
+      object : OnMoveListener {
+        override fun onMoveBegin(detector: MoveGestureDetector) {
+          callbacks.onCameraMoveStarted(this@AndroidMap, CameraMoveReason.GESTURE)
+        }
+
+        override fun onMove(detector: MoveGestureDetector) {}
+
+        override fun onMoveEnd(detector: MoveGestureDetector) {}
+      }
+    )
+    map.addOnScaleListener(
+      object : OnScaleListener {
+        override fun onScaleBegin(detector: StandardScaleGestureDetector) {
+          callbacks.onCameraMoveStarted(this@AndroidMap, CameraMoveReason.GESTURE)
+        }
+
+        override fun onScale(detector: StandardScaleGestureDetector) {}
+
+        override fun onScaleEnd(detector: StandardScaleGestureDetector) {}
+      }
+    )
+    map.addOnShoveListener(
+      object : MLNMap.OnShoveListener {
+        override fun onShoveBegin(detector: ShoveGestureDetector) {
+          callbacks.onCameraMoveStarted(this@AndroidMap, CameraMoveReason.GESTURE)
+        }
+
+        override fun onShove(detector: ShoveGestureDetector) {}
+
+        override fun onShoveEnd(detector: ShoveGestureDetector) {}
+      }
+    )
+    map.addOnRotateListener(
+      object : MLNMap.OnRotateListener {
+        override fun onRotateBegin(detector: RotateGestureDetector) {
+          callbacks.onCameraMoveStarted(this@AndroidMap, CameraMoveReason.GESTURE)
+        }
+
+        override fun onRotate(detector: RotateGestureDetector) {}
+
+        override fun onRotateEnd(detector: RotateGestureDetector) {}
+      }
+    )
 
     map.addOnMapClickListener { coords ->
       val pos = coords.toPosition()

@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
 import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -15,7 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.CameraState
@@ -30,14 +30,15 @@ import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.layer.CircleLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
+import dev.sargunv.maplibrecompose.core.CameraMoveReason
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
-import dev.sargunv.maplibrecompose.demoapp.FrameRateState
 import dev.sargunv.maplibrecompose.demoapp.PositionVectorConverter
 import io.github.dellisd.spatialk.geojson.Point
 import io.github.dellisd.spatialk.geojson.Position
+import kotlin.math.roundToInt
 
 private val START_POINT = Position(longitude = -122.4194, latitude = 37.7749)
 private val END_POINT = Position(longitude = -122.3954, latitude = 37.7939)
@@ -47,23 +48,40 @@ private const val MAX_ZOOM = 15
 @Composable
 fun CameraFollowDemo() = Column {
   val animatedPosition by animateTestPosition(START_POINT, END_POINT)
-  var zoom by remember { mutableStateOf((MIN_ZOOM + MAX_ZOOM) / 2) }
-  val camera = rememberAnimatedFollowCamera(target = animatedPosition, zoom = zoom.toFloat())
-  val fpsState = remember { FrameRateState() }
+  var followAtZoom by remember { mutableStateOf((MIN_ZOOM + MAX_ZOOM) / 2) }
+  var isFollowing by remember { mutableStateOf(true) }
+  val camera =
+    rememberAnimatedFollowCamera(
+      targetPos = animatedPosition,
+      targetZoom = followAtZoom.toFloat(),
+      isFollowing = isFollowing,
+    )
 
-  MaplibreMap(
-    modifier = Modifier.weight(1f),
-    styleUrl = DEFAULT_STYLE,
-    cameraState = camera,
-    onFpsChanged = fpsState::recordFps,
-  ) {
+  LaunchedEffect(camera.moveReason) {
+    if (camera.moveReason == CameraMoveReason.GESTURE) {
+      isFollowing = false
+      camera.position = camera.position.copy()
+    }
+  }
+
+  MaplibreMap(modifier = Modifier.weight(1f), styleUrl = DEFAULT_STYLE, cameraState = camera) {
     LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
   }
 
+  Text(
+    text = "Move reason: ${camera.moveReason.name}",
+    textAlign = TextAlign.Center,
+    modifier = Modifier.fillMaxWidth(),
+  )
+
   FollowControls(
-    currentZoom = zoom,
-    onZoomChange = { zoom = it },
-    text = "FPS: ${fpsState.spinChar} ${fpsState.avgFps}",
+    currentZoom = followAtZoom,
+    isFollowing = isFollowing,
+    onZoomChange = { followAtZoom = it },
+    onStartFollowing = {
+      isFollowing = true
+      followAtZoom = camera.position.zoom.roundToInt().coerceIn(MIN_ZOOM, MAX_ZOOM)
+    },
   )
 }
 
@@ -85,18 +103,21 @@ private fun animateTestPosition(start: Position, end: Position): State<Position>
 }
 
 @Composable
-private fun rememberAnimatedFollowCamera(target: Position, zoom: Float): CameraState {
-  val animatedZoom by animateFloatAsState(zoom.toFloat())
-
+private fun rememberAnimatedFollowCamera(
+  targetPos: Position,
+  targetZoom: Float,
+  isFollowing: Boolean,
+): CameraState {
   val cameraState =
     rememberCameraState(
-      firstPosition = CameraPosition(target = target, zoom = animatedZoom.toDouble())
+      firstPosition = CameraPosition(target = targetPos, zoom = targetZoom.toDouble())
     )
 
-  // TODO stop enforcing the camera state when the user pans
-  SideEffect {
-    cameraState.position =
-      cameraState.position.copy(target = target, zoom = animatedZoom.toDouble())
+  LaunchedEffect(isFollowing, targetPos, targetZoom) {
+    if (isFollowing)
+      cameraState.animateTo(
+        cameraState.position.copy(target = targetPos, zoom = targetZoom.toDouble())
+      )
   }
 
   return cameraState
@@ -124,20 +145,25 @@ private fun LocationPuck(locationSource: Source) {
 }
 
 @Composable
-private fun FollowControls(currentZoom: Int, onZoomChange: (Int) -> Unit, text: String) {
+private fun FollowControls(
+  currentZoom: Int,
+  isFollowing: Boolean,
+  onZoomChange: (Int) -> Unit,
+  onStartFollowing: () -> Unit,
+) {
   Row(
     modifier = Modifier.padding(16.dp).fillMaxWidth(),
     horizontalArrangement = Arrangement.SpaceEvenly,
   ) {
     Button(
-      enabled = currentZoom > MIN_ZOOM,
+      enabled = isFollowing && currentZoom > MIN_ZOOM,
       onClick = { onZoomChange((currentZoom - 1).coerceAtLeast(MIN_ZOOM)) },
     ) {
       Text("Zoom out")
     }
-    Text(text = text)
+    Button(enabled = !isFollowing, onClick = onStartFollowing) { Text("Follow") }
     Button(
-      enabled = currentZoom < MAX_ZOOM,
+      enabled = isFollowing && currentZoom < MAX_ZOOM,
       onClick = { onZoomChange((currentZoom + 1).coerceAtMost(MAX_ZOOM)) },
     ) {
       Text("Zoom in")

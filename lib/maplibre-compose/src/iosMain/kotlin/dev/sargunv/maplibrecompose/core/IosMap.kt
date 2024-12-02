@@ -8,6 +8,15 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import cocoapods.MapLibre.MLNAltitudeForZoomLevel
+import cocoapods.MapLibre.MLNCameraChangeReason
+import cocoapods.MapLibre.MLNCameraChangeReasonGestureOneFingerZoom
+import cocoapods.MapLibre.MLNCameraChangeReasonGesturePan
+import cocoapods.MapLibre.MLNCameraChangeReasonGesturePinch
+import cocoapods.MapLibre.MLNCameraChangeReasonGestureRotate
+import cocoapods.MapLibre.MLNCameraChangeReasonGestureTilt
+import cocoapods.MapLibre.MLNCameraChangeReasonGestureZoomIn
+import cocoapods.MapLibre.MLNCameraChangeReasonGestureZoomOut
+import cocoapods.MapLibre.MLNCameraChangeReasonProgrammatic
 import cocoapods.MapLibre.MLNFeatureProtocol
 import cocoapods.MapLibre.MLNLoggingBlockHandler
 import cocoapods.MapLibre.MLNLoggingConfiguration
@@ -54,6 +63,7 @@ import kotlin.time.TimeSource
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ObjCAction
+import kotlinx.cinterop.ObjCSignatureOverride
 import kotlinx.cinterop.useContents
 import platform.CoreGraphics.CGPoint
 import platform.CoreGraphics.CGPointMake
@@ -154,8 +164,45 @@ internal class IosMap(
       map.callbacks.onStyleChanged(map, IosStyle(didFinishLoadingStyle))
     }
 
+    private val anyGesture =
+      (MLNCameraChangeReasonGestureOneFingerZoom or
+        MLNCameraChangeReasonGesturePan or
+        MLNCameraChangeReasonGesturePinch or
+        MLNCameraChangeReasonGestureRotate or
+        MLNCameraChangeReasonGestureTilt or
+        MLNCameraChangeReasonGestureZoomIn or
+        MLNCameraChangeReasonGestureZoomOut)
+
+    @ObjCSignatureOverride
+    override fun mapView(
+      mapView: MLNMapView,
+      regionWillChangeWithReason: MLNCameraChangeReason,
+      animated: Boolean,
+    ) {
+      map.callbacks.onCameraMoveStarted(
+        map,
+        if (regionWillChangeWithReason and anyGesture != 0uL) {
+          CameraMoveReason.GESTURE
+        } else if (regionWillChangeWithReason and MLNCameraChangeReasonProgrammatic != 0uL) {
+          CameraMoveReason.PROGRAMMATIC
+        } else {
+          map.logger?.w { "Unknown camera move reason: $regionWillChangeWithReason" }
+          CameraMoveReason.UNKNOWN
+        },
+      )
+    }
+
     override fun mapViewRegionIsChanging(mapView: MLNMapView) {
-      map.callbacks.onCameraMove(map)
+      map.callbacks.onCameraMoved(map)
+    }
+
+    @ObjCSignatureOverride
+    override fun mapView(
+      mapView: MLNMapView,
+      regionDidChangeWithReason: MLNCameraChangeReason,
+      animated: Boolean,
+    ) {
+      map.callbacks.onCameraMoveEnded(map)
     }
 
     override fun mapViewDidFinishRenderingFrame(mapView: MLNMapView, fullyRendered: Boolean) {
@@ -421,9 +468,5 @@ internal class IosMap(
         predicate = predicate.toNSPredicate(),
       )
       .map { (it as MLNFeatureProtocol).toFeature() }
-  }
-
-  init {
-    mapView.visibleCoordinateBounds.useContents { this.ne }
   }
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.DpOffset
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.compose.engine.LayerNode
 import dev.sargunv.maplibrecompose.compose.engine.rememberStyleComposition
+import dev.sargunv.maplibrecompose.core.CameraMoveReason
 import dev.sargunv.maplibrecompose.core.GestureSettings
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.OrnamentSettings
@@ -44,9 +45,15 @@ public fun MaplibreMap(
           rememberedStyle = style
         }
 
-        override fun onCameraMove(map: MaplibreMap) {
+        override fun onCameraMoveStarted(map: MaplibreMap, reason: CameraMoveReason) {
+          cameraState.moveReasonState.value = reason
+        }
+
+        override fun onCameraMoved(map: MaplibreMap) {
           cameraState.positionState.value = map.cameraPosition
         }
+
+        override fun onCameraMoveEnded(map: MaplibreMap) {}
 
         override fun onClick(map: MaplibreMap, latLng: Position, offset: DpOffset) {
           if (onMapClick(latLng, offset).consumed) return
