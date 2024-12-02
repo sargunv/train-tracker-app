@@ -28,6 +28,7 @@ public fun MaplibreMap(
   cameraState: CameraState = rememberCameraState(),
   onMapClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   onMapLongClick: MapClickHandler = { _, _ -> ClickResult.Pass },
+  onFpsChanged: (Double) -> Unit = {},
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   logger: Logger? = remember { Logger.withTag("maplibre-compose") },
@@ -80,6 +81,7 @@ public fun MaplibreMap(
     styleUrl = styleUrl,
     update = { map ->
       cameraState.map = map
+      map.onFpsChanged = onFpsChanged
       map.isDebugEnabled = isDebugEnabled
       map.setGestureSettings(gestureSettings)
       map.setOrnamentSettings(ornamentSettings)

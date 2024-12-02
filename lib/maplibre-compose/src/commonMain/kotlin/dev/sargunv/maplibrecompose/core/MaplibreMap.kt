@@ -12,6 +12,7 @@ internal interface MaplibreMap {
   var styleUrl: String
   var isDebugEnabled: Boolean
   var cameraPosition: CameraPosition
+  var onFpsChanged: (Double) -> Unit
 
   val visibleBoundingBox: BoundingBox
 

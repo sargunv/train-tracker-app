@@ -50,6 +50,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
+import kotlin.time.TimeSource
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ObjCAction
@@ -133,6 +134,9 @@ internal class IosMap(
 
   private class Delegate(private val map: IosMap) : NSObject(), MLNMapViewDelegateProtocol {
 
+    val timeSource = TimeSource.Monotonic
+    var lastFrameTime = timeSource.markNow()
+
     override fun mapViewWillStartLoadingMap(mapView: MLNMapView) {
       map.logger?.i { "Map will start loading" }
     }
@@ -152,6 +156,13 @@ internal class IosMap(
 
     override fun mapViewRegionIsChanging(mapView: MLNMapView) {
       map.callbacks.onCameraMove(map)
+    }
+
+    override fun mapViewDidFinishRenderingFrame(mapView: MLNMapView, fullyRendered: Boolean) {
+      val time = timeSource.markNow()
+      val duration = time - lastFrameTime
+      lastFrameTime = time
+      map.onFpsChanged(1.0 / duration.toDouble(DurationUnit.SECONDS))
     }
   }
 
@@ -331,6 +342,8 @@ internal class IosMap(
         completionHandler = null,
       )
     }
+
+  override var onFpsChanged: (Double) -> Unit = { _ -> }
 
   private fun PaddingValues.toEdgeInsets(): CValue<UIEdgeInsets> =
     UIEdgeInsetsMake(

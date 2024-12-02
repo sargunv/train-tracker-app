@@ -79,6 +79,8 @@ internal class AndroidMap(
       true
     }
 
+    map.setOnFpsChangedListener { onFpsChanged(it) }
+
     this.styleUrl = styleUrl
   }
 
@@ -87,6 +89,8 @@ internal class AndroidMap(
     set(value) {
       map.isDebugActive = value
     }
+
+  override var onFpsChanged: (Double) -> Unit = { _ -> }
 
   override val visibleBoundingBox: BoundingBox
     get() = map.projection.visibleRegion.latLngBounds.toBoundingBox()
