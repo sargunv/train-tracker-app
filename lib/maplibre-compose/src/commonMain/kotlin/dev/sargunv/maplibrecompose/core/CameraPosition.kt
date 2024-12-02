@@ -1,4 +1,4 @@
-package dev.sargunv.maplibrecompose.core.camera
+package dev.sargunv.maplibrecompose.core
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable

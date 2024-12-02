@@ -33,9 +33,6 @@ import cocoapods.MapLibre.MLNOrnamentPositionTopRight
 import cocoapods.MapLibre.MLNStyle
 import cocoapods.MapLibre.MLNZoomLevelForAltitude
 import cocoapods.MapLibre.allowsTilting
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
-import dev.sargunv.maplibrecompose.core.data.GestureSettings
-import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.util.toBoundingBox
 import dev.sargunv.maplibrecompose.core.util.toCGPoint

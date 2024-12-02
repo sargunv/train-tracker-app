@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
+import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.getAllStyleUrls
 import io.github.dellisd.spatialk.geojson.Position
 

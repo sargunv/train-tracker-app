@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
-import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
+import dev.sargunv.maplibrecompose.core.CameraPosition
+import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import io.github.dellisd.spatialk.geojson.Position
 

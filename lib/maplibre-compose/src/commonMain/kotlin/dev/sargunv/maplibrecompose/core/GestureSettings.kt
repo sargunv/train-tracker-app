@@ -1,4 +1,4 @@
-package dev.sargunv.maplibrecompose.core.data
+package dev.sargunv.maplibrecompose.core
 
 public data class GestureSettings(
   val isTiltGesturesEnabled: Boolean = true,

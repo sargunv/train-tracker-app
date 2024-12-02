@@ -15,7 +15,7 @@ import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.compose.layer.LineLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
+import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.generated.Res
 import io.github.dellisd.spatialk.geojson.Position

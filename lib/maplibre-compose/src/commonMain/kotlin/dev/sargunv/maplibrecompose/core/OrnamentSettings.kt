@@ -1,4 +1,4 @@
-package dev.sargunv.maplibrecompose.core.data
+package dev.sargunv.maplibrecompose.core
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Alignment

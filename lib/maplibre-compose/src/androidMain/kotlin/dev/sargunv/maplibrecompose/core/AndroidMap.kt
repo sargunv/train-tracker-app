@@ -8,9 +8,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
-import dev.sargunv.maplibrecompose.core.data.GestureSettings
-import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.util.correctedAndroidUri
 import dev.sargunv.maplibrecompose.core.util.toBoundingBox

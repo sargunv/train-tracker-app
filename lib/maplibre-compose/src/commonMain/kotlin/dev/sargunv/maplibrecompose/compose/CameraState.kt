@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
+import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.MaplibreMap
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature

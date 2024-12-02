@@ -10,10 +10,10 @@ import androidx.compose.ui.unit.DpOffset
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.compose.engine.LayerNode
 import dev.sargunv.maplibrecompose.compose.engine.rememberStyleComposition
+import dev.sargunv.maplibrecompose.core.GestureSettings
 import dev.sargunv.maplibrecompose.core.MaplibreMap
+import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.Style
-import dev.sargunv.maplibrecompose.core.data.GestureSettings
-import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.ExpressionScope
 import dev.sargunv.maplibrecompose.core.util.PlatformUtils
 import io.github.dellisd.spatialk.geojson.Position

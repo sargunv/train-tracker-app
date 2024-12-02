@@ -2,9 +2,6 @@ package dev.sargunv.maplibrecompose.core
 
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
-import dev.sargunv.maplibrecompose.core.data.GestureSettings
-import dev.sargunv.maplibrecompose.core.data.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature

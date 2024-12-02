@@ -17,7 +17,7 @@ import androidx.compose.ui.util.fastRoundToInt
 import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
-import dev.sargunv.maplibrecompose.core.camera.CameraPosition
+import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.math.pow
