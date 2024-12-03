@@ -269,53 +269,27 @@ internal class AndroidMap(
   override fun screenLocationFromPosition(position: Position): DpOffset =
     map.projection.toScreenLocation(position.toLatLng()).toOffset(density)
 
-  override fun queryRenderedFeatures(offset: DpOffset): List<Feature> {
-    return map.queryRenderedFeatures(offset.toPointF(density)).map { Feature.fromJson(it.toJson()) }
-  }
-
-  override fun queryRenderedFeatures(offset: DpOffset, layerIds: Set<String>): List<Feature> {
-    return map.queryRenderedFeatures(offset.toPointF(density), *layerIds.toTypedArray()).map {
-      Feature.fromJson(it.toJson())
-    }
-  }
-
   override fun queryRenderedFeatures(
     offset: DpOffset,
-    layerIds: Set<String>,
-    predicate: Expression<Boolean>,
-  ): List<Feature> {
-    return map
-      .queryRenderedFeatures(
-        offset.toPointF(density),
-        predicate.toMLNExpression(),
-        *layerIds.toTypedArray(),
-      )
-      .map { Feature.fromJson(it.toJson()) }
-  }
-
-  override fun queryRenderedFeatures(rect: DpRect): List<Feature> {
-    return map.queryRenderedFeatures(rect.toRectF(density)).map { Feature.fromJson(it.toJson()) }
-  }
-
-  override fun queryRenderedFeatures(rect: DpRect, layerIds: Set<String>): List<Feature> {
-    return map.queryRenderedFeatures(rect.toRectF(density), *layerIds.toTypedArray()).map {
-      Feature.fromJson(it.toJson())
-    }
-  }
+    layerIds: Set<String>?,
+    predicate: Expression<Boolean>?,
+  ): List<Feature> =
+    map.queryRenderedFeatures(
+      offset.toPointF(density),
+      predicate?.toMLNExpression(),
+      *layerIds.orEmpty().toTypedArray(),
+    ).map { Feature.fromJson(it.toJson()) }
 
   override fun queryRenderedFeatures(
     rect: DpRect,
-    layerIds: Set<String>,
-    predicate: Expression<Boolean>,
-  ): List<Feature> {
-    return map
-      .queryRenderedFeatures(
-        rect.toRectF(density),
-        predicate.toMLNExpression(),
-        *layerIds.toTypedArray(),
-      )
-      .map { Feature.fromJson(it.toJson()) }
-  }
+    layerIds: Set<String>?,
+    predicate: Expression<Boolean>?,
+  ): List<Feature> =
+    map.queryRenderedFeatures(
+      rect.toRectF(density),
+      predicate?.toMLNExpression(),
+      *layerIds.orEmpty().toTypedArray(),
+    ).map { Feature.fromJson(it.toJson()) }
 }
 
 private fun MLNVisibleRegion.toVisibleRegion() = VisibleRegion(

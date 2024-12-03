@@ -96,69 +96,39 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
 
   /**
    * Returns a list of features that are rendered at the given [offset] from the top-left corner of
-   * the map composable from *any* map layer.
+   * the map composable, optionally limited to layers with the given [layerIds] and filtered by the
+   * given [predicate]. The result is sorted by render order, i.e. the feature in front is first in
+   * the list.
    *
-   * Features rendered in front are first in the result list.
-   */
-  public fun queryRenderedFeatures(offset: DpOffset): List<Feature> {
-    return map?.queryRenderedFeatures(offset) ?: emptyList()
-  }
-
-  /**
-   * Returns a list of features that are rendered at the given [offset] from the top-left corner of
-   * the map composable from any of the map layers with the given [layerIds].
-   *
-   * Features rendered in front are first in the result list.
-   */
-  public fun queryRenderedFeatures(offset: DpOffset, layerIds: Set<String>): List<Feature> {
-    return map?.queryRenderedFeatures(offset, layerIds) ?: emptyList()
-  }
-
-  /**
-   * Returns a list of features that are rendered at the given [offset] from the top-left corner of
-   * the map composable from any of the map layers with the given [layerIds], matching the given
-   * [predicate].
-   *
-   * Features rendered in front are first in the result list.
+   * @param offset position from the top-left corner of the map composable to query for
+   * @param layerIds the ids of the layers to limit the query to. If not specified or `null`,
+   *   features in *any* layer are returned
+   * @param predicate expression that has to evaluate to true for a feature to be included in the
+   *   result
    */
   public fun queryRenderedFeatures(
     offset: DpOffset,
-    layerIds: Set<String>,
-    predicate: Expression<Boolean>,
+    layerIds: Set<String>? = null,
+    predicate: Expression<Boolean>? = null,
   ): List<Feature> {
     return map?.queryRenderedFeatures(offset, layerIds, predicate) ?: emptyList()
   }
 
   /**
-   * Returns a list of features whose rendered geometry intersect with the given [rect] from *any*
-   * map layer.
+   * Returns a list of features whose rendered geometry intersect with the given [rect], optionally
+   * limited to layers with the given [layerIds] and filtered by the given [predicate]. The result
+   * is sorted by render order, i.e. the feature in front is first in the list.
    *
-   * Features rendered in front are first in the result list.
-   */
-  public fun queryRenderedFeatures(rect: DpRect): List<Feature> {
-    return map?.queryRenderedFeatures(rect) ?: emptyList()
-  }
-
-  /**
-   * Returns a list of features whose rendered geometry intersect with the given [rect] from any of
-   * the map layers with the given [layerIds].
-   *
-   * Features rendered in front are first in the result list.
-   */
-  public fun queryRenderedFeatures(rect: DpRect, layerIds: Set<String>): List<Feature> {
-    return map?.queryRenderedFeatures(rect, layerIds) ?: emptyList()
-  }
-
-  /**
-   * Returns a list of features whose rendered geometry intersect with the given [rect] from any of
-   * the map layers with the given [layerIds], matching the given [predicate].
-   *
-   * Features rendered in front are first in the result list.
+   * @param rect rectangle to intersect with rendered geometry
+   * @param layerIds the ids of the layers to limit the query to. If not specified or `null`,
+   *   features in *any* layer are returned
+   * @param predicate expression that has to evaluate to true for a feature to be included in the
+   *   result
    */
   public fun queryRenderedFeatures(
     rect: DpRect,
-    layerIds: Set<String>,
-    predicate: Expression<Boolean>,
+    layerIds: Set<String>? = null,
+    predicate: Expression<Boolean>? = null,
   ): List<Feature> {
     return map?.queryRenderedFeatures(rect, layerIds, predicate) ?: emptyList()
   }
