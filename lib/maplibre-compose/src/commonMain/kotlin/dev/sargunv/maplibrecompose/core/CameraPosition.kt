@@ -19,7 +19,7 @@ import io.github.dellisd.spatialk.geojson.Position
  *   example if you want to display a bottom sheet above the lower part of the map, focussing on a
  *   POI in the upper part of the map.
  */
-@Stable
+@Stable // not @Immutable because of PaddingValues
 public data class CameraPosition(
   public val bearing: Double = 0.0,
   public val target: Position = Position(0.0, 0.0),
