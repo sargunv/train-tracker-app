@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.DpRect
 import dev.sargunv.maplibrecompose.core.CameraMoveReason
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.MaplibreMap
+import dev.sargunv.maplibrecompose.core.VisibleRegion
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
@@ -59,20 +60,19 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
     map.animateCameraPosition(finalPosition, duration)
   }
 
-  private fun requireIsInitialized() {
-    require(map != null) {
+  private fun requireMap(): MaplibreMap {
+    check(map != null) {
       "Map requested before it was initialized; try calling awaitInitialization() first"
     }
+    return map!!
   }
 
   public fun screenLocationFromPosition(position: Position): DpOffset {
-    requireIsInitialized()
-    return map!!.screenLocationFromPosition(position)
+    return requireMap().screenLocationFromPosition(position)
   }
 
   public fun positionFromScreenLocation(offset: DpOffset): Position {
-    requireIsInitialized()
-    return map!!.positionFromScreenLocation(offset)
+    return requireMap().positionFromScreenLocation(offset)
   }
 
   public fun queryRenderedFeatures(offset: DpOffset): List<Feature> {
@@ -109,7 +109,9 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
 
   public fun queryVisibleBoundingBox(): BoundingBox {
     // TODO at some point, this should be refactored to State, just like the camera position
-    requireIsInitialized()
-    return map!!.visibleBoundingBox
+    return requireMap().visibleBoundingBox
+  public fun queryVisibleRegion(): VisibleRegion {
+    // TODO at some point, this should be refactored to State, just like the camera position
+    return requireMap().visibleRegion
   }
 }

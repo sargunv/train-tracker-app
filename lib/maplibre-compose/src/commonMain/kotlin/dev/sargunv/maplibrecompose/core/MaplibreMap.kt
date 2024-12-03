@@ -16,6 +16,8 @@ internal interface MaplibreMap {
 
   val visibleBoundingBox: BoundingBox
 
+  val visibleRegion: VisibleRegion
+
   fun setMaximumFps(maximumFps: Int)
 
   fun setOrnamentSettings(value: OrnamentSettings)

@@ -256,6 +256,14 @@ internal class IosMap(
   override val visibleBoundingBox: BoundingBox
     get() = mapView.visibleCoordinateBounds.toBoundingBox()
 
+  override val visibleRegion: VisibleRegion
+    get() = VisibleRegion(
+      farLeft = convertPoint(CGPointMake(x = 0.0, y = 0.0)),
+      farRight = convertPoint(CGPointMake(x = size.width, y = 0.0)),
+      nearLeft = convertPoint(CGPointMake(x = 0.0, y = size.height)),
+      nearRight = convertPoint(CGPointMake(x = size.width, y = size.height))
+    )
+
   override fun setMaximumFps(maximumFps: Int) {
     mapView.preferredFramesPerSecond = maximumFps.toLong()
   }
@@ -411,7 +419,10 @@ internal class IosMap(
     }
 
   override fun positionFromScreenLocation(offset: DpOffset): Position =
-    mapView.convertPoint(point = offset.toCGPoint(), toCoordinateFromView = null).toPosition()
+    convertPoint(offset.toCGPoint())
+
+  private fun convertPoint(point: CGPoint): Position =
+    mapView.convertPoint(point = point, toCoordinateFromView = null).toPosition()
 
   override fun screenLocationFromPosition(position: Position): DpOffset =
     mapView

@@ -26,6 +26,7 @@ import kotlin.coroutines.suspendCoroutine
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import org.maplibre.android.camera.CameraPosition as MLNCameraPosition
+import org.maplibre.android.geometry.VisibleRegion as MLNVisibleRegion
 import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.gestures.MoveGestureDetector
 import org.maplibre.android.gestures.RotateGestureDetector
@@ -170,6 +171,9 @@ internal class AndroidMap(
   override val visibleBoundingBox: BoundingBox
     get() = map.projection.visibleRegion.latLngBounds.toBoundingBox()
 
+  override val visibleRegion: VisibleRegion
+    get() = map.projection.visibleRegion.toVisibleRegion()
+
   override fun setMaximumFps(maximumFps: Int) = mapView.setMaximumFps(maximumFps)
 
   override fun setGestureSettings(value: GestureSettings) {
@@ -313,3 +317,10 @@ internal class AndroidMap(
       .map { Feature.fromJson(it.toJson()) }
   }
 }
+
+private fun MLNVisibleRegion.toVisibleRegion() = VisibleRegion(
+  farLeft = farLeft!!.toPosition(),
+  farRight = farRight!!.toPosition(),
+  nearLeft = nearLeft!!.toPosition(),
+  nearRight = nearRight!!.toPosition(),
+)
