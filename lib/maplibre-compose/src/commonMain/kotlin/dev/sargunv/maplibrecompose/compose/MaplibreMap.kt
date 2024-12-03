@@ -66,7 +66,7 @@ public fun MaplibreMap(
                 map.queryRenderedFeatures(
                   offset = offset,
                   layerIds = setOf(layerId),
-                  predicate = null
+                  predicate = null,
                 )
               features.isNotEmpty() && handle(features).consumed
             }
@@ -85,7 +85,7 @@ public fun MaplibreMap(
                 map.queryRenderedFeatures(
                   offset = offset,
                   layerIds = setOf(layerId),
-                  predicate = null
+                  predicate = null,
                 )
               features.isNotEmpty() && handle(features).consumed
             }
