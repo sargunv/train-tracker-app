@@ -14,5 +14,5 @@ public data class VisibleRegion(
   /** Position corresponding to the bottom-left corner of the map composable */
   val nearLeft: Position,
   /** Position corresponding to the bottom-right corner of the map composable */
-  val nearRight: Position
+  val nearRight: Position,
 )

@@ -26,8 +26,8 @@ import kotlin.coroutines.suspendCoroutine
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import org.maplibre.android.camera.CameraPosition as MLNCameraPosition
-import org.maplibre.android.geometry.VisibleRegion as MLNVisibleRegion
 import org.maplibre.android.camera.CameraUpdateFactory
+import org.maplibre.android.geometry.VisibleRegion as MLNVisibleRegion
 import org.maplibre.android.gestures.MoveGestureDetector
 import org.maplibre.android.gestures.RotateGestureDetector
 import org.maplibre.android.gestures.ShoveGestureDetector
@@ -274,27 +274,32 @@ internal class AndroidMap(
     layerIds: Set<String>?,
     predicate: Expression<Boolean>?,
   ): List<Feature> =
-    map.queryRenderedFeatures(
-      offset.toPointF(density),
-      predicate?.toMLNExpression(),
-      *layerIds.orEmpty().toTypedArray(),
-    ).map { Feature.fromJson(it.toJson()) }
+    map
+      .queryRenderedFeatures(
+        offset.toPointF(density),
+        predicate?.toMLNExpression(),
+        *layerIds.orEmpty().toTypedArray(),
+      )
+      .map { Feature.fromJson(it.toJson()) }
 
   override fun queryRenderedFeatures(
     rect: DpRect,
     layerIds: Set<String>?,
     predicate: Expression<Boolean>?,
   ): List<Feature> =
-    map.queryRenderedFeatures(
-      rect.toRectF(density),
-      predicate?.toMLNExpression(),
-      *layerIds.orEmpty().toTypedArray(),
-    ).map { Feature.fromJson(it.toJson()) }
+    map
+      .queryRenderedFeatures(
+        rect.toRectF(density),
+        predicate?.toMLNExpression(),
+        *layerIds.orEmpty().toTypedArray(),
+      )
+      .map { Feature.fromJson(it.toJson()) }
 }
 
-private fun MLNVisibleRegion.toVisibleRegion() = VisibleRegion(
-  farLeft = farLeft!!.toPosition(),
-  farRight = farRight!!.toPosition(),
-  nearLeft = nearLeft!!.toPosition(),
-  nearRight = nearRight!!.toPosition(),
-)
+private fun MLNVisibleRegion.toVisibleRegion() =
+  VisibleRegion(
+    farLeft = farLeft!!.toPosition(),
+    farRight = farRight!!.toPosition(),
+    nearLeft = nearLeft!!.toPosition(),
+    nearRight = nearRight!!.toPosition(),
+  )

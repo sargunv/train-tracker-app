@@ -22,9 +22,7 @@ public fun rememberCameraState(firstPosition: CameraPosition = CameraPosition())
   return remember { CameraState(firstPosition) }
 }
 
-/**
- * Use this class to access information about the map in relation to the camera.
- * */
+/** Use this class to access information about the map in relation to the camera. */
 public class CameraState internal constructor(firstPosition: CameraPosition) {
   internal var map: MaplibreMap? = null
     set(map) {
@@ -149,8 +147,8 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
 
   /**
    * Returns the currently visible area, which is a four-sided polygon spanned by the four points
-   * each at one corner of the map composable.
-   * If the camera has tilt (pitch), this polygon is a trapezoid instead of a rectangle.
+   * each at one corner of the map composable. If the camera has tilt (pitch), this polygon is a
+   * trapezoid instead of a rectangle.
    *
    * @throws IllegalStateException if the map is not initialized yet. See [awaitInitialized].
    */

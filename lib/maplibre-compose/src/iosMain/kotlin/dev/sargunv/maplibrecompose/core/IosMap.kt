@@ -257,12 +257,13 @@ internal class IosMap(
     get() = mapView.visibleCoordinateBounds.toBoundingBox()
 
   override val visibleRegion: VisibleRegion
-    get() = VisibleRegion(
-      farLeft = convertPoint(CGPointMake(x = 0.0, y = 0.0)),
-      farRight = convertPoint(CGPointMake(x = size.width, y = 0.0)),
-      nearLeft = convertPoint(CGPointMake(x = 0.0, y = size.height)),
-      nearRight = convertPoint(CGPointMake(x = size.width, y = size.height))
-    )
+    get() =
+      VisibleRegion(
+        farLeft = convertPoint(CGPointMake(x = 0.0, y = 0.0)),
+        farRight = convertPoint(CGPointMake(x = size.width, y = 0.0)),
+        nearLeft = convertPoint(CGPointMake(x = 0.0, y = size.height)),
+        nearRight = convertPoint(CGPointMake(x = size.width, y = size.height)),
+      )
 
   override fun setMaximumFps(maximumFps: Int) {
     mapView.preferredFramesPerSecond = maximumFps.toLong()
@@ -434,11 +435,13 @@ internal class IosMap(
     layerIds: Set<String>?,
     predicate: Expression<Boolean>?,
   ): List<Feature> =
-    mapView.visibleFeaturesAtPoint(
-      point = offset.toCGPoint(),
-      inStyleLayersWithIdentifiers = layerIds,
-      predicate = predicate?.toNSPredicate(),
-    ).map { (it as MLNFeatureProtocol).toFeature() }
+    mapView
+      .visibleFeaturesAtPoint(
+        point = offset.toCGPoint(),
+        inStyleLayersWithIdentifiers = layerIds,
+        predicate = predicate?.toNSPredicate(),
+      )
+      .map { (it as MLNFeatureProtocol).toFeature() }
 
   override fun queryRenderedFeatures(
     rect: DpRect,
@@ -450,5 +453,6 @@ internal class IosMap(
         rect = rect.toCGRect(),
         inStyleLayersWithIdentifiers = layerIds,
         predicate = predicate?.toNSPredicate(),
-      ).map { (it as MLNFeatureProtocol).toFeature() }
+      )
+      .map { (it as MLNFeatureProtocol).toFeature() }
 }
