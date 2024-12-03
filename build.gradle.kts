@@ -12,9 +12,29 @@ plugins {
   alias(libs.plugins.mkdocs)
 }
 
-mkdocs { sourcesDir = "docs" }
+mkdocs {
+  sourcesDir = "docs"
+  strict = true
+  publish {
+    docPath = null // single version site
+  }
+}
 
 dokka { moduleName = "MapLibre Compose API Reference" }
+
+tasks.register("generateDocs") {
+  dependsOn("dokkaGenerate", "mkdocsBuild")
+  doLast {
+    copy {
+      from(layout.buildDirectory.dir("mkdocs"))
+      into(layout.buildDirectory.dir("docs"))
+    }
+    copy {
+      from(layout.buildDirectory.dir("dokka/html"))
+      into(layout.buildDirectory.dir("docs/api"))
+    }
+  }
+}
 
 dependencies { dokka(project(":lib:maplibre-compose:")) }
 

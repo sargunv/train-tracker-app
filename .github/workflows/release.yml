@@ -38,9 +38,9 @@ jobs:
         with:
           fetch-depth: 0
       - uses: "./.github/actions/setup"
-      - run: "./gradlew :dokkaGenerate"
+      - run: "./gradlew generateDocs"
       - uses: "actions/upload-pages-artifact@v3"
         with:
-          path: "build/dokka/html"
+          path: "build/docs"
       - uses: "actions/deploy-pages@v4"
         id: "deploy-pages"
