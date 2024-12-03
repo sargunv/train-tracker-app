@@ -7,7 +7,6 @@ compose = "1.7.1"
 compose-androidx = "1.7.5"
 kotlin = "2.0.21"
 ktor = "3.0.1"
-maplibre-android-plugins = "3.0.2"
 maplibre-ios = "6.8.1"
 
 [libraries]
@@ -20,7 +19,6 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 maplibre-android = { module = "org.maplibre.gl:android-sdk", version = "11.6.1" }
-maplibre-android-plugin-annotation = { module = "org.maplibre.gl:android-plugin-annotation-v9", version.ref = "maplibre-android-plugins" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version = "2.8.0-alpha10" }
 spatialk-geojson = { group = "io.github.dellisd.spatialk", name = "geojson", version = "0.3.0" }
 

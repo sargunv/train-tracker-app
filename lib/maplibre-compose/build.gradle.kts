@@ -102,10 +102,7 @@ kotlin {
       api(libs.spatialk.geojson)
     }
 
-    androidMain.dependencies {
-      api(libs.maplibre.android)
-      api(libs.maplibre.android.plugin.annotation)
-    }
+    androidMain.dependencies { api(libs.maplibre.android) }
 
     commonTest.dependencies {
       implementation(kotlin("test"))
