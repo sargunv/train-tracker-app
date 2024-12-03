@@ -165,8 +165,12 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [iconTranslate] is not set.
  *
- * @param textField Value to use for a text label. If a plain string is provided, it will be treated
- *   as a formatted with default/inherited formatting options.
+ * @param textField Value to use for a text label. Use e.g. `format(const("My label"))` to display
+ *   the plain string "My label".
+ *
+ *   The text can also be formatted, employing different colors, fonts, etc., see
+ *   [format][dev.sargunv.maplibrecompose.core.expression.ExpressionScope.format].
+ *
  * @param textOpacity The opacity at which the text will be drawn.
  *
  *   Ignored if [textField] is not specified.
