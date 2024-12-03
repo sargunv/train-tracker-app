@@ -168,7 +168,7 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
    *
    * Note that the bounding box is always a north-aligned rectangle. I.e. if the map is rotated or
    * tilted, the returned bounding box will always be larger than the actually visible area. See
-   * [queryVisibleArea]
+   * [queryVisibleRegion]
    *
    * @throws IllegalStateException if the map is not initialized yet. See [awaitInitialized].
    */
