@@ -1,3 +1,6 @@
+import fr.brouillard.oss.jgitver.Strategies
+import ru.vyarus.gradle.plugin.mkdocs.task.MkdocsTask
+
 plugins {
   // this is necessary to avoid the plugins to be loaded multiple times
   // in each subproject's classloader
@@ -10,6 +13,12 @@ plugins {
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
   alias(libs.plugins.mkdocs)
+  alias(libs.plugins.jgitver)
+}
+
+jgitver {
+  strategy(Strategies.MAVEN)
+  nonQualifierBranches("main")
 }
 
 mkdocs {
@@ -18,6 +27,16 @@ mkdocs {
   publish {
     docPath = null // single version site
   }
+}
+
+tasks.withType<MkdocsTask>().configureEach {
+  extras.set(
+    mapOf(
+      "version" to project.version.toString(),
+      "base_version" to ext["base_tag"].toString().replace("v", ""),
+      "maplibre_ios_version" to libs.versions.maplibre.ios.get(),
+    )
+  )
 }
 
 dokka { moduleName = "MapLibre Compose API Reference" }
@@ -44,13 +63,13 @@ spotless {
     target("iosApp/iosApp/**/*.swift")
     nativeCmd("swiftFormat", "/usr/bin/env", listOf("swift", "format"))
   }
-  flexmark {
+  format("markdown") {
     target("**/*.md")
-    flexmark()
+    prettier().config(mapOf("proseWrap" to "always"))
   }
   yaml {
     target("**/*.yml", "**/*.yaml")
-    prettier().config(mapOf("quoteProps" to "consistent"))
+    prettier()
   }
 }
 

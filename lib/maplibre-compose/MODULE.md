@@ -13,4 +13,3 @@ Composables and related utilities to add layers to the map.
 # Package dev.sargunv.maplibrecompose.compose.source
 
 Composables and related utilities to add sources to the map.
-

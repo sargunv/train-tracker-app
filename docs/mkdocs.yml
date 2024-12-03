@@ -26,6 +26,7 @@ theme:
     - navigation.indexes
     - toc.follow
     - content.action.edit
+    - content.tabs.link
 
 plugins:
   - search
@@ -68,3 +69,4 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - getting-started.md
