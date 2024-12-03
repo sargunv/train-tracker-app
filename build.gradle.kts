@@ -9,11 +9,8 @@ plugins {
   alias(libs.plugins.kotlin.cocoapods) apply false
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
-  alias(libs.plugins.jgitver)
   alias(libs.plugins.mkdocs)
 }
-
-jgitver { nonQualifierBranches("main") }
 
 mkdocs { sourcesDir = "docs" }
 
