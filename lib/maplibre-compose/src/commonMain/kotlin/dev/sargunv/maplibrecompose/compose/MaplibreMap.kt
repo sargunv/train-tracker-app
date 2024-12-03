@@ -62,11 +62,12 @@ public fun MaplibreMap(
             ?.asReversed()
             ?.mapNotNull { node -> (node as? LayerNode<*>)?.onClick?.let { node.layer.id to it } }
             ?.find { (layerId, handle) ->
-              val features = map.queryRenderedFeatures(
-                offset = offset,
-                layerIds = setOf(layerId),
-                predicate = null
-              )
+              val features =
+                map.queryRenderedFeatures(
+                  offset = offset,
+                  layerIds = setOf(layerId),
+                  predicate = null
+                )
               features.isNotEmpty() && handle(features).consumed
             }
         }
@@ -80,11 +81,12 @@ public fun MaplibreMap(
               (node as? LayerNode<*>)?.onLongClick?.let { node.layer.id to it }
             }
             ?.find { (layerId, handle) ->
-              val features = map.queryRenderedFeatures(
-                offset = offset,
-                layerIds = setOf(layerId),
-                predicate = null
-              )
+              val features =
+                map.queryRenderedFeatures(
+                  offset = offset,
+                  layerIds = setOf(layerId),
+                  predicate = null
+                )
               features.isNotEmpty() && handle(features).consumed
             }
         }
