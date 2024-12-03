@@ -9,9 +9,15 @@ plugins {
   alias(libs.plugins.kotlin.cocoapods) apply false
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
+  alias(libs.plugins.jgitver)
+  alias(libs.plugins.mkdocs)
 }
 
-dokka { moduleName = "MapLibre Compose" }
+jgitver { nonQualifierBranches("main") }
+
+mkdocs { sourcesDir = "docs" }
+
+dokka { moduleName = "MapLibre Compose API Reference" }
 
 dependencies { dokka(project(":lib:maplibre-compose:")) }
 
