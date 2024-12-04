@@ -32,14 +32,14 @@ internal interface MaplibreMap {
 
   fun queryRenderedFeatures(
     offset: DpOffset,
-    layerIds: Set<String>?,
-    predicate: Expression<Boolean>?,
+    layerIds: Set<String>? = null,
+    predicate: Expression<Boolean>? = null,
   ): List<Feature>
 
   fun queryRenderedFeatures(
     rect: DpRect,
-    layerIds: Set<String>?,
-    predicate: Expression<Boolean>?,
+    layerIds: Set<String>? = null,
+    predicate: Expression<Boolean>? = null,
   ): List<Feature>
 
   interface Callbacks {

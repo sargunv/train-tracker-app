@@ -1,5 +1,7 @@
 package dev.sargunv.maplibrecompose.core
 
+import android.graphics.PointF
+import android.graphics.RectF
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpOffset
@@ -40,6 +42,8 @@ import org.maplibre.android.maps.MapLibreMap.OnMoveListener
 import org.maplibre.android.maps.MapLibreMap.OnScaleListener
 import org.maplibre.android.maps.MapView
 import org.maplibre.android.maps.Style as MlnStyle
+import org.maplibre.android.style.expressions.Expression as MLNExpression
+import org.maplibre.geojson.Feature as MLNFeature
 
 internal class AndroidMap(
   private val mapView: MapView,
@@ -273,27 +277,25 @@ internal class AndroidMap(
     offset: DpOffset,
     layerIds: Set<String>?,
     predicate: Expression<Boolean>?,
-  ): List<Feature> =
-    map
-      .queryRenderedFeatures(
-        offset.toPointF(density),
-        predicate?.toMLNExpression(),
-        *layerIds.orEmpty().toTypedArray(),
-      )
+  ): List<Feature> {
+    // Kotlin hack to pass null to a java nullable varargs
+    val query: (PointF, MLNExpression?, Array<String>?) -> List<MLNFeature> =
+      map::queryRenderedFeatures
+    return query(offset.toPointF(density), predicate?.toMLNExpression(), layerIds?.toTypedArray())
       .map { Feature.fromJson(it.toJson()) }
+  }
 
   override fun queryRenderedFeatures(
     rect: DpRect,
     layerIds: Set<String>?,
     predicate: Expression<Boolean>?,
-  ): List<Feature> =
-    map
-      .queryRenderedFeatures(
-        rect.toRectF(density),
-        predicate?.toMLNExpression(),
-        *layerIds.orEmpty().toTypedArray(),
-      )
+  ): List<Feature> {
+    // Kotlin hack to pass null to a java nullable varargs
+    val query: (RectF, MLNExpression?, Array<String>?) -> List<MLNFeature> =
+      map::queryRenderedFeatures
+    return query(rect.toRectF(density), predicate?.toMLNExpression(), layerIds?.toTypedArray())
       .map { Feature.fromJson(it.toJson()) }
+  }
 }
 
 private fun MLNVisibleRegion.toVisibleRegion() =
