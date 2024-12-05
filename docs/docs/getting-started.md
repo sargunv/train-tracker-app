@@ -1,6 +1,10 @@
 # Getting Started
 
-## Installation
+This documentation assumes you already have a Compose Multiplatform project set
+up. If you haven't already, follow [the official JetBrains
+documentation][compose-guide] to set up a project.
+
+## Add the library to your app
 
 This library is published via [Maven Central][maven], and snapshot builds of
 `main` are additionally available on [GitHub Packages][gh-packages].
@@ -52,6 +56,8 @@ commonMain.dependencies {
 }
 ```
 
+## Set up iOS
+
 For iOS, you'll additionally need to add the MapLibre framework to your build.
 The easiest way to do this in Kotlin Multiplatform is with the [CocoaPods Gradle
 plugin][kotlin-cocoapods]:
@@ -62,20 +68,23 @@ cocoapods {
 }
 ```
 
-## Usage
+## Display your first map
 
 In your Composable UI, add a map:
 
 ```kotlin
 @Composable
-fun MyScreen() {
+fun App() {
   MaplibreMap()
 }
 ```
 
-For full usage information, see the [demo app][repo-demo] and
-[API reference](./api/index.html).
+When you run your app, you should see the default [demotiles] map. To learn how
+to get a detailed map with all the features you'd expect, proceed to
+[Styling](./styling.md).
 
+[compose-guide]:
+  https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html
 [maven]: https://central.sonatype.com/namespace/dev.sargunv.maplibre-compose
 [gh-packages]:
   https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry
@@ -83,4 +92,4 @@ For full usage information, see the [demo app][repo-demo] and
   https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package
 [kotlin-cocoapods]: https://kotlinlang.org/docs/native-cocoapods.html
 [repo]: https://github.com/sargunv/maplibre-compose
-[repo-demo]: https://github.com/sargunv/maplibre-compose/tree/main/demo-app
+[demotiles]: https://demotiles.maplibre.org/

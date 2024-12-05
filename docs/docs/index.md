@@ -10,6 +10,7 @@ maps to your Compose UIs on Android and iOS.
 
 - [Getting Started](./getting-started.md)
 - [API Reference](./api/index.html)
+- [Demo App][repo-demo]
 
 ## Status
 
@@ -25,3 +26,4 @@ Desktop and Web are not yet supported.
 [compose]: https://www.jetbrains.com/compose-multiplatform/
 [maplibre]: https://maplibre.org/
 [maplibre-native]: https://github.com/maplibre/maplibre-native
+[repo-demo]: https://github.com/sargunv/maplibre-compose/tree/main/demo-app

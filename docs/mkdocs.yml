@@ -16,6 +16,7 @@ theme:
   palette:
     - media: "(prefers-color-scheme)"
   features:
+    - content.code.copy
     - navigation.instant
     - navigation.instant.prefetch
     - navigation.instant.progress
@@ -24,6 +25,7 @@ theme:
     - navigation.expand
     - navigation.path
     - navigation.indexes
+    # - navigation.sections
     - toc.follow
     - content.action.edit
     - content.tabs.link
@@ -69,4 +71,10 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - supported-features.md
   - getting-started.md
+  - styling.md
+  - controls.md
+  - camera.md
+  - layers.md
+  - sources.md
