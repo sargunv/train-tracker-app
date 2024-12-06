@@ -2,6 +2,7 @@ package dev.sargunv.maplibrecompose.demoapp
 
 import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.TwoWayConverter
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +12,13 @@ import io.github.dellisd.spatialk.geojson.Position
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+
+interface Demo {
+  val name: String
+  val description: String
+
+  @Composable fun Component(navigateUp: () -> Unit)
+}
 
 private val REMOTE_STYLE_URLS =
   listOf(

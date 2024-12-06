@@ -15,31 +15,42 @@ import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.core.util.PlatformUtils
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
+import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.FrameRateState
 import kotlin.math.roundToInt
 
-@Composable
-fun FrameRateDemo() = Column {
-  val systemRefreshRate = PlatformUtils.getSystemRefreshRate().roundToInt()
-  var maximumFps by remember { mutableStateOf(systemRefreshRate) }
-  val fpsState = remember { FrameRateState() }
+object FrameRateDemo : Demo {
+  override val name = "Frame rate"
+  override val description = "Change the frame rate of the map."
 
-  MaplibreMap(
-    modifier = Modifier.weight(1f),
-    styleUrl = DEFAULT_STYLE,
-    maximumFps = maximumFps,
-    onFpsChanged = fpsState::recordFps,
-  )
+  @Composable
+  override fun Component(navigateUp: () -> Unit) {
+    DemoScaffold(this, navigateUp) {
+      Column {
+        val systemRefreshRate = PlatformUtils.getSystemRefreshRate().roundToInt()
+        var maximumFps by remember { mutableStateOf(systemRefreshRate) }
+        val fpsState = remember { FrameRateState() }
 
-  Column(modifier = Modifier.padding(16.dp)) {
-    Slider(
-      value = maximumFps.toFloat(),
-      onValueChange = { maximumFps = it.roundToInt() },
-      valueRange = 15f..systemRefreshRate.toFloat(),
-    )
-    Text(
-      "Target: $maximumFps ${fpsState.spinChar} Actual: ${fpsState.avgFps}",
-      style = MaterialTheme.typography.labelMedium,
-    )
+        MaplibreMap(
+          modifier = Modifier.weight(1f),
+          styleUrl = DEFAULT_STYLE,
+          maximumFps = maximumFps,
+          onFpsChanged = fpsState::recordFps,
+        )
+
+        Column(modifier = Modifier.padding(16.dp)) {
+          Slider(
+            value = maximumFps.toFloat(),
+            onValueChange = { maximumFps = it.roundToInt() },
+            valueRange = 15f..systemRefreshRate.toFloat(),
+          )
+          Text(
+            "Target: $maximumFps ${fpsState.spinChar} Actual: ${fpsState.avgFps}",
+            style = MaterialTheme.typography.labelMedium,
+          )
+        }
+      }
+    }
   }
 }

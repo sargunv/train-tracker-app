@@ -18,33 +18,44 @@ import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
+import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.format
 import io.github.dellisd.spatialk.geojson.Position
 
 private val CHICAGO = Position(latitude = 41.878, longitude = -87.626)
 
-@Composable
-fun CameraStateDemo() = Column {
-  val cameraState =
-    rememberCameraState(firstPosition = CameraPosition(target = CHICAGO, zoom = 12.0))
+object CameraStateDemo : Demo {
+  override val name = "Camera state"
+  override val description = "Read camera position as state."
 
-  MaplibreMap(
-    modifier = Modifier.weight(1f),
-    styleUrl = DEFAULT_STYLE,
-    cameraState = cameraState,
-    onMapClick = { _, _ ->
-      println(cameraState.queryVisibleBoundingBox())
-      ClickResult.Pass
-    },
-  )
+  @Composable
+  override fun Component(navigateUp: () -> Unit) {
+    DemoScaffold(this, navigateUp) {
+      Column {
+        val cameraState =
+          rememberCameraState(firstPosition = CameraPosition(target = CHICAGO, zoom = 12.0))
 
-  Row(modifier = Modifier.safeDrawingPadding().wrapContentSize(Alignment.Center)) {
-    val pos = cameraState.position
-    Cell("Latitude", pos.target.latitude.format(3), Modifier.weight(1.4f))
-    Cell("Longitude", pos.target.longitude.format(3), Modifier.weight(1.4f))
-    Cell("Zoom", pos.zoom.format(2), Modifier.weight(1f))
-    Cell("Bearing", pos.bearing.format(2), Modifier.weight(1f))
-    Cell("Tilt", pos.tilt.format(2), Modifier.weight(1f))
+        MaplibreMap(
+          modifier = Modifier.weight(1f),
+          styleUrl = DEFAULT_STYLE,
+          cameraState = cameraState,
+          onMapClick = { _, _ ->
+            println(cameraState.queryVisibleBoundingBox())
+            ClickResult.Pass
+          },
+        )
+
+        Row(modifier = Modifier.safeDrawingPadding().wrapContentSize(Alignment.Center)) {
+          val pos = cameraState.position
+          Cell("Latitude", pos.target.latitude.format(3), Modifier.weight(1.4f))
+          Cell("Longitude", pos.target.longitude.format(3), Modifier.weight(1.4f))
+          Cell("Zoom", pos.zoom.format(2), Modifier.weight(1f))
+          Cell("Bearing", pos.bearing.format(2), Modifier.weight(1f))
+          Cell("Tilt", pos.tilt.format(2), Modifier.weight(1f))
+        }
+      }
+    }
   }
 }
 

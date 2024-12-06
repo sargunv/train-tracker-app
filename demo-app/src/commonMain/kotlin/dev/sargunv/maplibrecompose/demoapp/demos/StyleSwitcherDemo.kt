@@ -14,31 +14,43 @@ import androidx.compose.ui.text.style.TextOverflow
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.CameraPosition
+import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.getAllStyleUrls
 import io.github.dellisd.spatialk.geojson.Position
 
-val NEW_YORK = Position(latitude = 40.744, longitude = -73.981)
+private val NEW_YORK = Position(latitude = 40.744, longitude = -73.981)
 
-@Composable
-fun StyleSwitcherDemo() = Column {
-  val styles = remember { getAllStyleUrls() }
-  var selectedIndex by remember { mutableStateOf(0) }
+object StyleSwitcherDemo : Demo {
+  override val name = "Style switcher"
+  override val description = "Switch between different map styles at runtime."
 
-  val cameraState = rememberCameraState(CameraPosition(target = NEW_YORK, zoom = 15.0, tilt = 30.0))
+  @Composable
+  override fun Component(navigateUp: () -> Unit) {
+    DemoScaffold(this, navigateUp) {
+      Column {
+        val styles = remember { getAllStyleUrls() }
+        var selectedIndex by remember { mutableStateOf(0) }
 
-  MaplibreMap(
-    modifier = Modifier.weight(1f),
-    styleUrl = styles[selectedIndex].second,
-    cameraState = cameraState,
-  )
+        val cameraState =
+          rememberCameraState(CameraPosition(target = NEW_YORK, zoom = 15.0, tilt = 30.0))
 
-  SecondaryScrollableTabRow(selectedTabIndex = selectedIndex) {
-    styles.forEachIndexed { index, pair ->
-      Tab(
-        selected = selectedIndex == index,
-        onClick = { selectedIndex = index },
-        text = { Text(text = pair.first, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-      )
+        MaplibreMap(
+          modifier = Modifier.weight(1f),
+          styleUrl = styles[selectedIndex].second,
+          cameraState = cameraState,
+        )
+
+        SecondaryScrollableTabRow(selectedTabIndex = selectedIndex) {
+          styles.forEachIndexed { index, pair ->
+            Tab(
+              selected = selectedIndex == index,
+              onClick = { selectedIndex = index },
+              text = { Text(text = pair.first, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+            )
+          }
+        }
+      }
     }
   }
 }

@@ -35,6 +35,8 @@ import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
+import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.PositionVectorConverter
 import io.github.dellisd.spatialk.geojson.Point
 import io.github.dellisd.spatialk.geojson.Position
@@ -45,44 +47,57 @@ private val END_POINT = Position(longitude = -122.3954, latitude = 37.7939)
 private const val MIN_ZOOM = 9
 private const val MAX_ZOOM = 15
 
-@Composable
-fun CameraFollowDemo() = Column {
-  val animatedPosition by animateTestPosition(START_POINT, END_POINT)
-  var followAtZoom by remember { mutableStateOf((MIN_ZOOM + MAX_ZOOM) / 2) }
-  var isFollowing by remember { mutableStateOf(true) }
-  val camera =
-    rememberAnimatedFollowCamera(
-      targetPos = animatedPosition,
-      targetZoom = followAtZoom.toFloat(),
-      isFollowing = isFollowing,
-    )
+object CameraFollowDemo : Demo {
+  override val name = "Camera follow"
+  override val description = "Make the camera follow a point on the map."
 
-  LaunchedEffect(camera.moveReason) {
-    if (camera.moveReason == CameraMoveReason.GESTURE) {
-      isFollowing = false
-      camera.position = camera.position.copy()
+  @Composable
+  override fun Component(navigateUp: () -> Unit) {
+    DemoScaffold(this, navigateUp) {
+      Column {
+        val animatedPosition by animateTestPosition(START_POINT, END_POINT)
+        var followAtZoom by remember { mutableStateOf((MIN_ZOOM + MAX_ZOOM) / 2) }
+        var isFollowing by remember { mutableStateOf(true) }
+        val camera =
+          rememberAnimatedFollowCamera(
+            targetPos = animatedPosition,
+            targetZoom = followAtZoom.toFloat(),
+            isFollowing = isFollowing,
+          )
+
+        LaunchedEffect(camera.moveReason) {
+          if (camera.moveReason == CameraMoveReason.GESTURE) {
+            isFollowing = false
+            camera.position = camera.position.copy()
+          }
+        }
+
+        MaplibreMap(
+          modifier = Modifier.weight(1f),
+          styleUrl = DEFAULT_STYLE,
+          cameraState = camera,
+        ) {
+          LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
+        }
+
+        Text(
+          text = "Move reason: ${camera.moveReason.name}",
+          textAlign = TextAlign.Center,
+          modifier = Modifier.fillMaxWidth(),
+        )
+
+        FollowControls(
+          currentZoom = followAtZoom,
+          isFollowing = isFollowing,
+          onZoomChange = { followAtZoom = it },
+          onStartFollowing = {
+            isFollowing = true
+            followAtZoom = camera.position.zoom.roundToInt().coerceIn(MIN_ZOOM, MAX_ZOOM)
+          },
+        )
+      }
     }
   }
-
-  MaplibreMap(modifier = Modifier.weight(1f), styleUrl = DEFAULT_STYLE, cameraState = camera) {
-    LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
-  }
-
-  Text(
-    text = "Move reason: ${camera.moveReason.name}",
-    textAlign = TextAlign.Center,
-    modifier = Modifier.fillMaxWidth(),
-  )
-
-  FollowControls(
-    currentZoom = followAtZoom,
-    isFollowing = isFollowing,
-    onZoomChange = { followAtZoom = it },
-    onStartFollowing = {
-      isFollowing = true
-      followAtZoom = camera.position.zoom.roundToInt().coerceIn(MIN_ZOOM, MAX_ZOOM)
-    },
-  )
 }
 
 @Composable
