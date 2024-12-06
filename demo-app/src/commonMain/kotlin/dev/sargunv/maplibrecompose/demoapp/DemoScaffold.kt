@@ -48,7 +48,14 @@ fun DemoScaffold(
 }
 
 @Composable
-fun SimpleDemoScaffold(title: String, navigateUp: (() -> Unit)?, content: @Composable () -> Unit) {
+fun SimpleDemoScaffold(demo: Demo, navigateUp: (() -> Unit)?, content: @Composable () -> Unit) {
+  DemoScaffold(demo.name, navigateUp) {
+    Box(modifier = Modifier.padding(it).consumeWindowInsets(it)) { content() }
+  }
+}
+
+@Composable
+fun SimpleScaffold(title: String, navigateUp: (() -> Unit)?, content: @Composable () -> Unit) {
   DemoScaffold(title, navigateUp) {
     Box(modifier = Modifier.padding(it).consumeWindowInsets(it)) { content() }
   }
