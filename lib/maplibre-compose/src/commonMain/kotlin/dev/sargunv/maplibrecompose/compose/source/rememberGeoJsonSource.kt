@@ -11,13 +11,13 @@ import io.github.dellisd.spatialk.geojson.GeoJson
 @Suppress("NOTHING_TO_INLINE")
 public inline fun rememberGeoJsonSource(
   id: String,
-  dataUrl: String,
+  uri: String,
   options: GeoJsonOptions = GeoJsonOptions(),
 ): Source =
   key(id, options) {
     rememberUserSource(
-      factory = { GeoJsonSource(id = id, dataUrl = dataUrl, options = options) },
-      update = { setDataUrl(dataUrl) },
+      factory = { GeoJsonSource(id = id, uri = uri, options = options) },
+      update = { setUri(uri) },
     )
   }
 

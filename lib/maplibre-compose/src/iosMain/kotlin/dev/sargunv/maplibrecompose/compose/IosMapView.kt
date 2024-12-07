@@ -28,7 +28,7 @@ import platform.Foundation.NSURL
 @Composable
 internal actual fun ComposableMapView(
   modifier: Modifier,
-  styleUrl: String,
+  styleUri: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
   logger: Logger?,
@@ -36,7 +36,7 @@ internal actual fun ComposableMapView(
 ) {
   IosMapView(
     modifier = modifier,
-    styleUrl = styleUrl,
+    styleUri = styleUri,
     update = update,
     onReset = onReset,
     logger = logger,
@@ -48,7 +48,7 @@ internal actual fun ComposableMapView(
 @Composable
 internal fun IosMapView(
   modifier: Modifier,
-  styleUrl: String,
+  styleUri: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
   logger: Logger?,
@@ -75,7 +75,7 @@ internal fun IosMapView(
                 width = width.value.toDouble(),
                 height = height.value.toDouble(),
               ),
-            styleURL = NSURL(string = styleUrl),
+            styleURL = NSURL(string = styleUri),
           )
           .also { mapView ->
             currentMap =
@@ -97,7 +97,7 @@ internal fun IosMapView(
         map.density = density
         map.insetPadding = insetPadding
         map.callbacks = callbacks
-        map.styleUrl = styleUrl
+        map.styleUri = styleUri
         map.logger = logger
         update(map)
       },

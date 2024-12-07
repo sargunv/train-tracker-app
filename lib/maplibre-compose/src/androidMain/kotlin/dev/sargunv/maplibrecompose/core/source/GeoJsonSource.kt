@@ -10,8 +10,8 @@ import org.maplibre.android.style.sources.GeoJsonSource as MLNGeoJsonSource
 public actual class GeoJsonSource : Source {
   override val impl: MLNGeoJsonSource
 
-  public actual constructor(id: String, dataUrl: String, options: GeoJsonOptions) {
-    impl = MLNGeoJsonSource(id, dataUrl.correctedAndroidUri(), buildOptionMap(options))
+  public actual constructor(id: String, uri: String, options: GeoJsonOptions) {
+    impl = MLNGeoJsonSource(id, uri.correctedAndroidUri(), buildOptionMap(options))
   }
 
   public actual constructor(id: String, data: GeoJson, options: GeoJsonOptions) {
@@ -37,8 +37,8 @@ public actual class GeoJsonSource : Source {
       }
     }
 
-  public actual fun setDataUrl(url: String) {
-    impl.setUri(url.correctedAndroidUri())
+  public actual fun setUri(uri: String) {
+    impl.setUri(uri.correctedAndroidUri())
   }
 
   public actual fun setData(geoJson: GeoJson) {

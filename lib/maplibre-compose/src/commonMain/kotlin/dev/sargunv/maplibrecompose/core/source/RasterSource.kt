@@ -1,3 +1,3 @@
 package dev.sargunv.maplibrecompose.core.source
 
-public expect class RasterSource(id: String, configUrl: String) : Source
+public expect class RasterSource(id: String, uri: String) : Source

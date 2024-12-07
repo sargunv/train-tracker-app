@@ -56,7 +56,7 @@ object ClusteredPointsDemo : Demo {
 
       val coroutineScope = rememberCoroutineScope()
 
-      MaplibreMap(modifier = Modifier, styleUrl = DEFAULT_STYLE, cameraState = cameraState) {
+      MaplibreMap(modifier = Modifier, styleUri = DEFAULT_STYLE, cameraState = cameraState) {
         val gbfsData by rememberGbfsFeatureState(GBFS_FILE)
 
         val bikeSource =

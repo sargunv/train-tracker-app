@@ -27,7 +27,7 @@ object EdgeToEdgeDemo : Demo {
       content = { padding ->
         MaplibreMap(
           modifier = Modifier.consumeWindowInsets(padding),
-          styleUrl = DEFAULT_STYLE,
+          styleUri = DEFAULT_STYLE,
           cameraState = rememberCameraState(CameraPosition(target = PORTLAND, zoom = 13.0)),
           ornamentSettings = OrnamentSettings(padding = padding),
         )

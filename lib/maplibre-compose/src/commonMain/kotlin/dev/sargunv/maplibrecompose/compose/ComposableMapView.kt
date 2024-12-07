@@ -8,7 +8,7 @@ import dev.sargunv.maplibrecompose.core.MaplibreMap
 @Composable
 internal expect fun ComposableMapView(
   modifier: Modifier,
-  styleUrl: String,
+  styleUri: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
   logger: Logger?,

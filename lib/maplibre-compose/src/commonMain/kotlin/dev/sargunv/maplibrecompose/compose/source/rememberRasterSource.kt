@@ -7,7 +7,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
 
 @Composable
 @Suppress("NOTHING_TO_INLINE")
-public inline fun rememberRasterSource(id: String, configUrl: String): Source =
-  composeKey(id, configUrl) {
-    rememberUserSource(factory = { RasterSource(id = id, configUrl = configUrl) }, update = {})
+public inline fun rememberRasterSource(id: String, uri: String): Source =
+  composeKey(id, uri) {
+    rememberUserSource(factory = { RasterSource(id = id, uri = uri) }, update = {})
   }

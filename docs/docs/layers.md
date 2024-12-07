@@ -3,7 +3,7 @@
 ## Sources and layers
 
 As covered in [Styling the map](styling.md), the data displayed on the map is
-defined by the style, which is provided as a URL to a JSON object. However, this
+defined by the style, which is provided as a URI to a JSON object. However, this
 library provides a way to add additional data to the map at runtime.
 
 A map style primarily consists of sources and layers. Sources contain the data
