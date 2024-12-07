@@ -55,40 +55,40 @@ public fun MaplibreMap(
 
         override fun onCameraMoveEnded(map: MaplibreMap) {}
 
+        private fun layerNodesInOrder(): List<LayerNode<*>> {
+          val layerNodes =
+            (styleComposition?.children?.filterIsInstance<LayerNode<*>>() ?: emptyList())
+              .associateBy { node -> node.layer.id }
+          val layers = styleComposition?.styleManager?.style?.getLayers() ?: emptyList()
+          return layers.asReversed().mapNotNull { layer -> layerNodes[layer.id] }
+        }
+
         override fun onClick(map: MaplibreMap, latLng: Position, offset: DpOffset) {
           if (onMapClick(latLng, offset).consumed) return
-          styleComposition
-            ?.children
-            ?.asReversed()
-            ?.mapNotNull { node -> (node as? LayerNode<*>)?.onClick?.let { node.layer.id to it } }
-            ?.find { (layerId, handle) ->
-              val features =
-                map.queryRenderedFeatures(
-                  offset = offset,
-                  layerIds = setOf(layerId),
-                  predicate = null,
-                )
-              features.isNotEmpty() && handle(features).consumed
-            }
+          layerNodesInOrder().find { node ->
+            val handle = node.onClick ?: return@find false
+            val features =
+              map.queryRenderedFeatures(
+                offset = offset,
+                layerIds = setOf(node.layer.id),
+                predicate = null,
+              )
+            features.isNotEmpty() && handle(features).consumed
+          }
         }
 
         override fun onLongClick(map: MaplibreMap, latLng: Position, offset: DpOffset) {
           if (onMapLongClick(latLng, offset).consumed) return
-          styleComposition
-            ?.children
-            ?.asReversed()
-            ?.mapNotNull { node ->
-              (node as? LayerNode<*>)?.onLongClick?.let { node.layer.id to it }
-            }
-            ?.find { (layerId, handle) ->
-              val features =
-                map.queryRenderedFeatures(
-                  offset = offset,
-                  layerIds = setOf(layerId),
-                  predicate = null,
-                )
-              features.isNotEmpty() && handle(features).consumed
-            }
+          layerNodesInOrder().find { node ->
+            val handle = node.onLongClick ?: return@find false
+            val features =
+              map.queryRenderedFeatures(
+                offset = offset,
+                layerIds = setOf(node.layer.id),
+                predicate = null,
+              )
+            features.isNotEmpty() && handle(features).consumed
+          }
         }
       }
     }
