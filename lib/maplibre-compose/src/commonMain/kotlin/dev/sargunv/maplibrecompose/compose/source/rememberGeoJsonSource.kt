@@ -7,11 +7,11 @@ import dev.sargunv.maplibrecompose.core.source.GeoJsonSource
 import io.github.dellisd.spatialk.geojson.GeoJson
 
 /**
- *  Remember a new [GeoJsonSource] with the given [id] and [options] from the GeoJson data at the
- *  given [dataUrl].
+ * Remember a new [GeoJsonSource] with the given [id] and [options] from the GeoJson data at the
+ * given [dataUrl].
  *
- *  @throws IllegalArgumentException if a layer with the given [id] already exists.
- * */
+ * @throws IllegalArgumentException if a layer with the given [id] already exists.
+ */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun rememberGeoJsonSource(
@@ -27,10 +27,10 @@ public inline fun rememberGeoJsonSource(
   }
 
 /**
- *  Remember a new [GeoJsonSource] with the given [id] and [options] from the given GeoJson [data].
+ * Remember a new [GeoJsonSource] with the given [id] and [options] from the given GeoJson [data].
  *
- *  @throws IllegalArgumentException if a layer with the given [id] already exists.
- * */
+ * @throws IllegalArgumentException if a layer with the given [id] already exists.
+ */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun rememberGeoJsonSource(

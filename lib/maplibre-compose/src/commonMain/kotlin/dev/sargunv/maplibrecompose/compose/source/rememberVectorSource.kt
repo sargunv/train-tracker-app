@@ -5,10 +5,10 @@ import androidx.compose.runtime.key as composeKey
 import dev.sargunv.maplibrecompose.core.source.VectorSource
 
 /**
- *  Remember a new [VectorSource] with the given [id] from the given [configUrl].
+ * Remember a new [VectorSource] with the given [id] from the given [configUrl].
  *
- *  @throws IllegalArgumentException if a layer with the given [id] already exists.
- * */
+ * @throws IllegalArgumentException if a layer with the given [id] already exists.
+ */
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun rememberVectorSource(id: String, configUrl: String): VectorSource =
