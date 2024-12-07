@@ -18,7 +18,7 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  *   additional properties:
  *     * `cluster`: Is `true` if the point is a cluster
  *     * `cluster_id`: A unique id for the cluster to be used in conjunction with the cluster
- *       inspection methods. (TODO which are not implemented yet on [GeoJsonSource])
+ *       inspection methods. (TODO which are not implemented yet on [GeoJsonSource] - #80)
  *     * `point_count`: Number of original points grouped into this cluster
  *     * `point_count_abbreviated`: An abbreviated point count
  *
