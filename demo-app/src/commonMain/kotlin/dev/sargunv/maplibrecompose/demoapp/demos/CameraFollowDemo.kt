@@ -74,7 +74,7 @@ object CameraFollowDemo : Demo {
 
         MaplibreMap(
           modifier = Modifier.weight(1f),
-          styleUrl = DEFAULT_STYLE,
+          styleUri = DEFAULT_STYLE,
           cameraState = camera,
         ) {
           LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))

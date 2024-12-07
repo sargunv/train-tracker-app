@@ -14,12 +14,12 @@ import dev.sargunv.maplibrecompose.core.source.RasterSource
 @Suppress("NOTHING_TO_INLINE")
 public inline fun rememberRasterSource(
   id: String,
-  configUrl: String,
+  uri: String,
   tileSize: Int = DEFAULT_RASTER_TILE_SIZE,
 ): RasterSource =
-  composeKey(id, configUrl, tileSize) {
+  composeKey(id, uri, tileSize) {
     rememberUserSource(
-      factory = { RasterSource(id = id, configUrl = configUrl, tileSize = tileSize) },
+      factory = { RasterSource(id = id, uri = uri, tileSize = tileSize) },
       update = {},
     )
   }

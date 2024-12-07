@@ -52,7 +52,7 @@ internal class AndroidMap(
   internal var density: Density,
   internal var callbacks: MaplibreMap.Callbacks,
   logger: Logger?,
-  styleUrl: String,
+  styleUri: String,
 ) : MaplibreMap {
 
   internal var logger: Logger? = logger
@@ -63,10 +63,10 @@ internal class AndroidMap(
       }
     }
 
-  override var styleUrl: String = ""
+  override var styleUri: String = ""
     set(value) {
       if (field == value) return
-      logger?.i { "Setting style URL" }
+      logger?.i { "Setting style URI" }
       callbacks.onStyleChanged(this, null)
       val builder = MlnStyle.Builder().fromUri(value.correctedAndroidUri().toString())
       map.setStyle(builder) {
@@ -161,7 +161,7 @@ internal class AndroidMap(
 
     map.setOnFpsChangedListener { onFpsChanged(it) }
 
-    this.styleUrl = styleUrl
+    this.styleUri = styleUri
   }
 
   override var isDebugEnabled

@@ -95,10 +95,10 @@ internal class IosMap(
   private val gestures = mutableListOf<Gesture<*>>()
   private val delegate: Delegate
 
-  override var styleUrl: String = ""
+  override var styleUri: String = ""
     set(value) {
       if (field == value) return
-      logger?.i { "Setting style URL" }
+      logger?.i { "Setting style URI" }
       callbacks.onStyleChanged(this, null)
       mapView.setStyleURL(NSURL(string = value))
       field = value

@@ -21,13 +21,9 @@ import platform.Foundation.NSURL
 public actual class GeoJsonSource : Source {
   override val impl: MLNShapeSource
 
-  public actual constructor(id: String, dataUrl: String, options: GeoJsonOptions) {
+  public actual constructor(id: String, uri: String, options: GeoJsonOptions) {
     impl =
-      MLNShapeSource(
-        identifier = id,
-        URL = NSURL(string = dataUrl),
-        options = buildOptionMap(options),
-      )
+      MLNShapeSource(identifier = id, URL = NSURL(string = uri), options = buildOptionMap(options))
   }
 
   public actual constructor(id: String, data: GeoJson, options: GeoJsonOptions) {
@@ -53,8 +49,8 @@ public actual class GeoJsonSource : Source {
       )
     }
 
-  public actual fun setDataUrl(url: String) {
-    impl.setURL(NSURL(string = url))
+  public actual fun setUri(uri: String) {
+    impl.setURL(NSURL(string = uri))
   }
 
   public actual fun setData(geoJson: GeoJson) {

@@ -20,7 +20,7 @@ interface Demo {
   @Composable fun Component(navigateUp: () -> Unit)
 }
 
-private val REMOTE_STYLE_URLS =
+private val REMOTE_STYLE_URIS =
   listOf(
     "Bright" to "https://tiles.openfreemap.org/styles/bright",
     "Liberty" to "https://tiles.openfreemap.org/styles/liberty",
@@ -32,11 +32,11 @@ private val REMOTE_STYLE_URLS =
 // TODO demo some local styles
 private val LOCAL_STYLE_PATHS = emptyList<Pair<String, String>>()
 
-val DEFAULT_STYLE = REMOTE_STYLE_URLS[0].second
+val DEFAULT_STYLE = REMOTE_STYLE_URIS[0].second
 
 @OptIn(ExperimentalResourceApi::class)
 fun getAllStyleUrls() =
-  REMOTE_STYLE_URLS + LOCAL_STYLE_PATHS.map { it.first to Res.getUri(it.second) }
+  REMOTE_STYLE_URIS + LOCAL_STYLE_PATHS.map { it.first to Res.getUri(it.second) }
 
 /** Caution: this converter results in a loss of precision far from the origin. */
 class PositionVectorConverter(private val origin: Position) :

@@ -33,7 +33,7 @@ Android and iOS support is implemented with [MapLibre Native][maplibre-native].
 | Get the currently visible region and bounding box | :white_check_mark: | :white_check_mark: | :x:     | :x: |
 | Insert, remove, and replace layers                | :white_check_mark: | :white_check_mark: | :x:     | :x: |
 | Configure layers with expressions                 | :white_check_mark: | :white_check_mark: | :x:     | :x: |
-| Add data sources by URL or GeoJSON                | :white_check_mark: | :white_check_mark: | :x:     | :x: |
+| Add data sources by URI or GeoJSON                | :white_check_mark: | :white_check_mark: | :x:     | :x: |
 | Snapshot the map as an image                      | :x:                | :x:                | :x:     | :x: |
 | Configure the offline cache                       | :x:                | :x:                | :x:     | :x: |
 | Configure layer transitions                       | :x:                | :x:                | :x:     | :x: |

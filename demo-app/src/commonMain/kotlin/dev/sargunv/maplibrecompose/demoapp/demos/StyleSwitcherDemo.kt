@@ -37,7 +37,7 @@ object StyleSwitcherDemo : Demo {
 
         MaplibreMap(
           modifier = Modifier.weight(1f),
-          styleUrl = styles[selectedIndex].second,
+          styleUri = styles[selectedIndex].second,
           cameraState = cameraState,
         )
 

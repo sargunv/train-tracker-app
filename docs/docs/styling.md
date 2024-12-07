@@ -5,7 +5,7 @@
 Every MapLibre map requires a style to be displayed. The style is a JSON object
 that describes what data to display and how to display it. Typically, vector
 tile providers create styles designed to work with their data, and provide them
-as a URL. You can also create your own styles using [Maputnik][maputnik], a
+as a URI. You can also create your own styles using [Maputnik][maputnik], a
 visual style editor for MapLibre styles.
 
 There are a variety of free and commercial map tile providers available. See the
@@ -16,7 +16,7 @@ styles.
 
 ## Using a style
 
-To use a style, you can pass the `styleUrl` of your chosen style to the
+To use a style, you can pass the `styleUri` of your chosen style to the
 `MaplibreMap` composable:
 
 ```kotlin

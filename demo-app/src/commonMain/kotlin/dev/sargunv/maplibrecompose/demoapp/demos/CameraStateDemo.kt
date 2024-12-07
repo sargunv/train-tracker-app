@@ -38,7 +38,7 @@ object CameraStateDemo : Demo {
 
         MaplibreMap(
           modifier = Modifier.weight(1f),
-          styleUrl = DEFAULT_STYLE,
+          styleUri = DEFAULT_STYLE,
           cameraState = cameraState,
           onMapClick = { _, _ ->
             println(cameraState.queryVisibleBoundingBox())
