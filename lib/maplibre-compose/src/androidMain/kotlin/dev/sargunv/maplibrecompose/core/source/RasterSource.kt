@@ -5,6 +5,5 @@ import org.maplibre.android.style.sources.RasterSource
 
 public actual class RasterSource actual constructor(id: String, uri: String, tileSize: Int) :
   Source() {
-  override val impl: RasterSource =
-    RasterSource(id, uri.correctedAndroidUri().toString(), tileSize)
+  override val impl: RasterSource = RasterSource(id, uri.correctedAndroidUri().toString(), tileSize)
 }
