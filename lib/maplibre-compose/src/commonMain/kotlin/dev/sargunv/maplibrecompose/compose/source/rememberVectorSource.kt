@@ -1,8 +1,8 @@
 package dev.sargunv.maplibrecompose.compose.source
 
 import androidx.compose.runtime.Composable
-import dev.sargunv.maplibrecompose.core.source.Source
 import androidx.compose.runtime.key as composeKey
+import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.source.VectorSource
 
 @Composable

@@ -23,11 +23,7 @@ public actual class GeoJsonSource : Source {
 
   public actual constructor(id: String, uri: String, options: GeoJsonOptions) {
     impl =
-      MLNShapeSource(
-        identifier = id,
-        URL = NSURL(string = uri),
-        options = buildOptionMap(options),
-      )
+      MLNShapeSource(identifier = id, URL = NSURL(string = uri), options = buildOptionMap(options))
   }
 
   public actual constructor(id: String, data: GeoJson, options: GeoJsonOptions) {
