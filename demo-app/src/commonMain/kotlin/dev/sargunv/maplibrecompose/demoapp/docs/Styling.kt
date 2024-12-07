@@ -8,8 +8,8 @@ import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.demoapp.generated.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
+@OptIn(ExperimentalResourceApi::class)
 fun Styling() {
   // -8<- [start:simple]
   MaplibreMap(styleUrl = "https://tiles.openfreemap.org/styles/liberty")

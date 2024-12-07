@@ -100,19 +100,18 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
    * the list.
    *
    * @param offset position from the top-left corner of the map composable to query for
-   * @param layerIds the ids of the layers to limit the query to. If not specified or empty,
-   *   features in *any* layer are returned
+   * @param layerIds the ids of the layers to limit the query to. If not specified, features in
+   *   *any* layer are returned
    * @param predicate expression that has to evaluate to true for a feature to be included in the
    *   result
    */
   public fun queryRenderedFeatures(
     offset: DpOffset,
-    layerIds: Set<String> = emptySet(),
+    layerIds: Set<String>? = null,
     predicate: Expression<Boolean> = const(true),
   ): List<Feature> {
-    val layerIdsOrNull = layerIds.takeUnless { it.isEmpty() }
     val predicateOrNull = predicate.takeUnless { it == const(true) }
-    return map?.queryRenderedFeatures(offset, layerIdsOrNull, predicateOrNull) ?: emptyList()
+    return map?.queryRenderedFeatures(offset, layerIds, predicateOrNull) ?: emptyList()
   }
 
   /**
@@ -121,19 +120,18 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
    * is sorted by render order, i.e. the feature in front is first in the list.
    *
    * @param rect rectangle to intersect with rendered geometry
-   * @param layerIds the ids of the layers to limit the query to. If not specified or empty,
-   *   features in *any* layer are returned
+   * @param layerIds the ids of the layers to limit the query to. If not specified, features in
+   *   *any* layer are returned
    * @param predicate expression that has to evaluate to true for a feature to be included in the
    *   result
    */
   public fun queryRenderedFeatures(
     rect: DpRect,
-    layerIds: Set<String> = emptySet(),
+    layerIds: Set<String>? = null,
     predicate: Expression<Boolean> = const(true),
   ): List<Feature> {
-    val layerIdsOrNull = layerIds.takeUnless { it.isEmpty() }
     val predicateOrNull = predicate.takeUnless { it == const(true) }
-    return map?.queryRenderedFeatures(rect, layerIdsOrNull, predicateOrNull) ?: emptyList()
+    return map?.queryRenderedFeatures(rect, layerIds, predicateOrNull) ?: emptyList()
   }
 
   /**

@@ -1,4 +1,4 @@
-# Getting Started
+# Getting started
 
 This documentation assumes you already have a Compose Multiplatform project set
 up. If you haven't already, follow [the official JetBrains
@@ -11,11 +11,11 @@ This library is published via [Maven Central][maven], and snapshot builds of
 
 === "Releases (Maven Central)"
 
-    The latest release is **v{{ gradle.base_version }}**. In your Gradle version catalog, add:
+    The latest release is **v{{ gradle.release_version }}**. In your Gradle version catalog, add:
 
     ```toml title="libs.versions.toml"
     [libraries]
-    maplibre-compose = { module = "dev.sargunv.maplibre-compose:maplibre-compose", version = "{{ gradle.base_version }}" }
+    maplibre-compose = { module = "dev.sargunv.maplibre-compose:maplibre-compose", version = "{{ gradle.release_version }}" }
     ```
 
 === "Snapshots (GitHub Packages)"
@@ -41,11 +41,11 @@ This library is published via [Maven Central][maven], and snapshot builds of
     }
     ```
 
-    The latest snapshot is **v{{ gradle.next_patch_version }}-SNAPSHOT**. In your Gradle version catalog, add:
+    The latest snapshot is **v{{ gradle.snapshot_version }}**. In your Gradle version catalog, add:
 
     ```toml title="libs.versions.toml"
     [libraries]
-    maplibre-compose = { module = "dev.sargunv.maplibre-compose:maplibre-compose", version = "{{ gradle.next_patch_version }}-SNAPSHOT" }
+    maplibre-compose = { module = "dev.sargunv.maplibre-compose:maplibre-compose", version = "{{ gradle.snapshot_version }}" }
     ```
 
 In your Gradle build script, add:

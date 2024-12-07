@@ -32,5 +32,6 @@ public data class OrnamentSettings(
 ) {
   public companion object {
     public val AllEnabled: OrnamentSettings = OrnamentSettings()
+    public val AttributionOnly: OrnamentSettings = OrnamentSettings(isCompassEnabled = false)
   }
 }

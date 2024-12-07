@@ -30,10 +30,12 @@ mkdocs {
 }
 
 tasks.withType<MkdocsTask>().configureEach {
+  val releaseVersion = ext["base_tag"].toString().replace("v", "")
+  val snapshotVersion = "${ext["next_patch_version"]}-SNAPSHOT"
   extras.set(
     mapOf(
-      "next_patch_version" to ext["next_patch_version"].toString(),
-      "base_version" to ext["base_tag"].toString().replace("v", ""),
+      "release_version" to releaseVersion,
+      "snapshot_version" to snapshotVersion,
       "maplibre_ios_version" to libs.versions.maplibre.ios.get(),
     )
   )

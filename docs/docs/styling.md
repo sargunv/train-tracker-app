@@ -1,4 +1,4 @@
-# Styling
+# Styling the map
 
 ## Acquiring a style
 
@@ -10,13 +10,14 @@ visual style editor for MapLibre styles.
 
 There are a variety of free and commercial map tile providers available. See the
 [awesome-maplibre][awesome-maplibre] repository for a list of tile providers.
-This documentation primarily uses OpenFreeMap and Protomaps. Both of these are
-free tile providers with their own styles.
+This documentation primarily uses [OpenFreeMap][openfreemap] and
+[Protomaps][protomaps]. Both of these are free tile providers with their own
+styles.
 
 ## Using a style
 
-To use a style, you can pass the `styleUrl` of the style to the `MaplibreMap`
-composable:
+To use a style, you can pass the `styleUrl` of your chosen style to the
+`MaplibreMap` composable:
 
 ```kotlin
 -8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Styling.kt:simple"
@@ -25,7 +26,8 @@ composable:
 ## Dark mode
 
 You can select a style at runtime based on regular Compose logic. MapLibre will
-automatically animate the transition between styles:
+automatically animate the transition between styles. This is handy if you have a
+light and a dark mode style:
 
 ```kotlin
 -8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Styling.kt:dynamic"
@@ -33,8 +35,8 @@ automatically animate the transition between styles:
 
 ## Local styles
 
-While styles are typically hosted on the internet, you can also load a style
-from a Compose resource URI:
+While styles are typically hosted on the internet, you can also load a local
+style with [Compose Multiplatform resources][resources]:
 
 ```kotlin
 -8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Styling.kt:local"
@@ -45,3 +47,5 @@ from a Compose resource URI:
   https://github.com/maplibre/awesome-maplibre#maptile-providers
 [openfreemap]: https://openfreemap.org/
 [protomaps]: https://protomaps.com/
+[resources]:
+  https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-resources.html

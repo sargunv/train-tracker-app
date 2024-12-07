@@ -14,6 +14,8 @@ import dev.sargunv.maplibrecompose.compose.layer.LineLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.CameraPosition
+import dev.sargunv.maplibrecompose.core.expression.LineCap
+import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
@@ -60,7 +62,15 @@ object AnimatedLayerDemo : Demo {
             id = "amtrak-routes",
             source = routeSource,
             color = const(animatedColor),
-            width = const(4.dp),
+            cap = const(LineCap.Round),
+            join = const(LineJoin.Round),
+            width =
+              interpolate(
+                type = exponential(const(1.2f)),
+                input = zoom(),
+                7 to const(1.75.dp),
+                20 to const(22.dp),
+              ),
           )
         }
       }
