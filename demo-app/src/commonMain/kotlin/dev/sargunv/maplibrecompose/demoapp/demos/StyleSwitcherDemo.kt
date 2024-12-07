@@ -16,7 +16,7 @@ import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
-import dev.sargunv.maplibrecompose.demoapp.getAllStyleUrls
+import dev.sargunv.maplibrecompose.demoapp.getAllStyleUris
 import io.github.dellisd.spatialk.geojson.Position
 
 private val NEW_YORK = Position(latitude = 40.744, longitude = -73.981)
@@ -29,7 +29,7 @@ object StyleSwitcherDemo : Demo {
   override fun Component(navigateUp: () -> Unit) {
     DemoScaffold(this, navigateUp) {
       Column {
-        val styles = remember { getAllStyleUrls() }
+        val styles = remember { getAllStyleUris() }
         var selectedIndex by remember { mutableStateOf(0) }
 
         val cameraState =

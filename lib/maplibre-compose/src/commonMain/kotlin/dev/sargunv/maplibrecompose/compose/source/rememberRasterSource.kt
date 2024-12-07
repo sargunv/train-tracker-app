@@ -6,7 +6,7 @@ import dev.sargunv.maplibrecompose.core.source.DEFAULT_RASTER_TILE_SIZE
 import dev.sargunv.maplibrecompose.core.source.RasterSource
 
 /**
- * Remember a new [RasterSource] with the given [id] and [tileSize] from the given [configUrl].
+ * Remember a new [RasterSource] with the given [id] and [tileSize] from the given [uri].
  *
  * @throws IllegalArgumentException if a layer with the given [id] already exists.
  */

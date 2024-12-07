@@ -8,7 +8,7 @@ import io.github.dellisd.spatialk.geojson.GeoJson
 
 /**
  * Remember a new [GeoJsonSource] with the given [id] and [options] from the GeoJson data at the
- * given [dataUrl].
+ * given [uri].
  *
  * @throws IllegalArgumentException if a layer with the given [id] already exists.
  */

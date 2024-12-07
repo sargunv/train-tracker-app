@@ -35,7 +35,7 @@ private val LOCAL_STYLE_PATHS = emptyList<Pair<String, String>>()
 val DEFAULT_STYLE = REMOTE_STYLE_URIS[0].second
 
 @OptIn(ExperimentalResourceApi::class)
-fun getAllStyleUrls() =
+fun getAllStyleUris() =
   REMOTE_STYLE_URIS + LOCAL_STYLE_PATHS.map { it.first to Res.getUri(it.second) }
 
 /** Caution: this converter results in a loss of precision far from the origin. */
