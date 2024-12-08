@@ -11,11 +11,11 @@ plugins {
   alias(libs.plugins.kotlin.multiplatform)
   alias(libs.plugins.kotlin.cocoapods)
   alias(libs.plugins.android.library)
-  alias(libs.plugins.jetbrains.compose)
-  alias(libs.plugins.kotlin.compose)
+  alias(libs.plugins.compose)
+  alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
-  alias(libs.plugins.maven.publish)
+  alias(libs.plugins.mavenPublish)
   alias(libs.plugins.jgitver)
   id("maven-publish")
 }
@@ -97,8 +97,8 @@ kotlin {
     commonMain.dependencies {
       api(compose.runtime)
       api(compose.foundation)
-      api(libs.kermit)
       api(compose.ui)
+      api(libs.kermit)
       api(libs.spatialk.geojson)
     }
 
@@ -116,7 +116,7 @@ kotlin {
 
     androidInstrumentedTest.dependencies {
       implementation(compose.desktop.uiTestJUnit4)
-      implementation(libs.compose.ui.test.manifest)
+      implementation(libs.androidx.composeUi.testManifest)
     }
   }
 }

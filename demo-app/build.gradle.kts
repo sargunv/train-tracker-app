@@ -10,8 +10,8 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 plugins {
   alias(libs.plugins.kotlin.multiplatform)
   alias(libs.plugins.android.application)
-  alias(libs.plugins.kotlin.compose)
-  alias(libs.plugins.jetbrains.compose)
+  alias(libs.plugins.kotlin.composeCompiler)
+  alias(libs.plugins.compose)
   alias(libs.plugins.kotlin.cocoapods)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.spotless)
@@ -57,7 +57,7 @@ kotlin {
   cocoapods {
     summary = "PLACEHOLDER SUMMARY"
     homepage = "PLACEHOLDER HOMEPAGE"
-    ios.deploymentTarget = "15.3"
+    ios.deploymentTarget = libs.versions.ios.deploymentTarget.get()
     podfile = project.file("../iosApp/Podfile")
     framework {
       baseName = "DemoApp"
@@ -83,10 +83,10 @@ kotlin {
       implementation(compose.material3)
       implementation(compose.runtime)
       implementation(compose.ui)
-      implementation(libs.navigation.compose)
+      implementation(libs.androidx.navigation.compose)
       implementation(libs.ktor.client.core)
-      implementation(libs.ktor.client.content.negotiation)
-      implementation(libs.ktor.serialization.kotlinx.json)
+      implementation(libs.ktor.client.contentNegotiation)
+      implementation(libs.ktor.serialization.kotlinxJson)
       implementation(project(":lib:maplibre-compose"))
     }
 
@@ -109,7 +109,7 @@ kotlin {
 
     androidInstrumentedTest.dependencies {
       implementation(compose.desktop.uiTestJUnit4)
-      implementation(libs.compose.ui.test.manifest)
+      implementation(libs.androidx.composeUi.testManifest)
     }
   }
 }

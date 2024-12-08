@@ -1,37 +1,50 @@
 [versions]
-agp = "8.5.2"
-android-compileSdk = "34"
+android-compileSdk = "35"
 android-minSdk = "23"
-android-targetSdk = "34"
-compose = "1.7.1"
-compose-androidx = "1.7.5"
-kotlin = "2.1.0"
-ktor = "3.0.1"
+android-targetSdk = "35"
+ios-deploymentTarget = "15.3"
+
+androidx-activity = "1.9.3"
+androidx-composeUi = "1.7.5"
+androidx-navigation = "2.8.0-alpha10"
+kermit = "2.0.5"
+ktor = "3.0.2"
+maplibre-android = "11.6.1"
 maplibre-ios = "6.8.1"
+spatialk = "0.3.0"
+
+gradle-android = "8.7.3"
+gradle-compose = "1.7.1"
+gradle-dokka = "2.0.0-Beta"
+gradle-jgitver = "0.10.0-rc03"
+gradle-kotlin = "2.1.0"
+gradle-mavenPublish = "0.30.0"
+gradle-mkdocs = "4.0.1"
+gradle-spotless = "7.0.0.BETA4"
 
 [libraries]
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.3" }
-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-androidx" }
-kermit = { group = "co.touchlab", name = "kermit", version = "2.0.5" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-composeUi-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-composeUi" }
+androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-maplibre-android = { module = "org.maplibre.gl:android-sdk", version = "11.6.1" }
-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version = "2.8.0-alpha10" }
-spatialk-geojson = { group = "io.github.dellisd.spatialk", name = "geojson", version = "0.3.0" }
+ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinxJson = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+maplibre-android = { module = "org.maplibre.gl:android-sdk", version.ref = "maplibre-android" }
+spatialk-geojson = { group = "io.github.dellisd.spatialk", name = "geojson", version.ref = "spatialk" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-dokka = { id = "org.jetbrains.dokka", version = "2.0.0-Beta" }
-jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
-jgitver = { id = "fr.brouillard.oss.gradle.jgitver", version = "0.10.0-rc03" }
-kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
-mkdocs = { id = "ru.vyarus.mkdocs-build", version = "4.0.1" }
-spotless = { id = "com.diffplug.spotless", version = "7.0.0.BETA4" }
+android-application = { id = "com.android.application", version.ref = "gradle-android" }
+android-library = { id = "com.android.library", version.ref = "gradle-android" }
+compose = { id = "org.jetbrains.compose", version.ref = "gradle-compose" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "gradle-dokka" }
+jgitver = { id = "fr.brouillard.oss.gradle.jgitver", version.ref = "gradle-jgitver" }
+kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "gradle-kotlin" }
+kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "gradle-kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "gradle-kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "gradle-kotlin" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradle-mavenPublish" }
+mkdocs = { id = "ru.vyarus.mkdocs-build", version.ref = "gradle-mkdocs" }
+spotless = { id = "com.diffplug.spotless", version.ref = "gradle-spotless" }
