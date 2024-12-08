@@ -2,7 +2,6 @@
 
 import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
@@ -66,16 +65,13 @@ kotlin {
     pod("MapLibre", libs.versions.maplibre.ios.get())
   }
 
+  compilerOptions {
+    allWarningsAsErrors = true
+    freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xconsistent-data-class-copy-visibility")
+  }
+
   sourceSets {
-    all {
-      compilerOptions {
-        freeCompilerArgs.apply {
-          add("-Xexpect-actual-classes")
-          add("-Xconsistent-data-class-copy-visibility")
-        }
-      }
-      languageSettings { optIn("androidx.compose.material3.ExperimentalMaterial3Api") }
-    }
+    all { languageSettings { optIn("androidx.compose.material3.ExperimentalMaterial3Api") } }
 
     commonMain.dependencies {
       implementation(compose.components.resources)
@@ -116,10 +112,7 @@ kotlin {
 
 compose.resources { packageOfResClass = "dev.sargunv.maplibrecompose.demoapp.generated" }
 
-composeCompiler {
-  reportsDestination = layout.buildDirectory.dir("compose/reports")
-  featureFlags = setOf(ComposeFeatureFlag.StrongSkipping)
-}
+composeCompiler { reportsDestination = layout.buildDirectory.dir("compose/reports") }
 
 spotless {
   kotlinGradle { ktfmt().googleStyle() }
