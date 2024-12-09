@@ -757,8 +757,18 @@ public interface ExpressionScope {
 
   //region Color
 
+  /**
+   * Returns a four-element list, containing the [color]'s red, green, blue, and alpha components,
+   * in that order.
+   */
   public fun toRgba(color: Expression<Color>): Expression<List<Number>> = callFn("to-rgba", color)
 
+  /**
+   * Creates a color value from [red], [green], and [blue] components, which must range between 0
+   * and 255, and an [alpha] component which must range between 0 and 1.
+   *
+   * If any component is out of range, the expression is an error.
+   */
   public fun rgba(
     red: Expression<Number>,
     green: Expression<Number>,
@@ -766,6 +776,12 @@ public interface ExpressionScope {
     alpha: Expression<Number>,
   ): Expression<Color> = callFn("rgba", red, green, blue, alpha)
 
+  /**
+   * Creates a color value from [red], [green], and [blue] components, which must range between 0
+   * and 255, and an alpha component of 1.
+   *
+   * If any component is out of range, the expression is an error.
+   */
   public fun rgb(
     red: Expression<Number>,
     green: Expression<Number>,
