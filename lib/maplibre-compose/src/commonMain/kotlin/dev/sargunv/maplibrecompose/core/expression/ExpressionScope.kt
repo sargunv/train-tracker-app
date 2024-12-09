@@ -656,102 +656,154 @@ public interface ExpressionScope {
 
   //region Math
 
+  /** Returns mathematical constant ln(2) = natural logarithm of 2. */
   public fun ln2(): Expression<Number> = callFn("ln2")
 
+  /** Returns the mathematical constant π */
   public fun pi(): Expression<Number> = callFn("pi")
 
+  /** Returns the mathematical constant e */
   public fun e(): Expression<Number> = callFn("e")
 
+  /** Returns the sum of this number expression with [other]. */
   public operator fun Expression<Number>.plus(other: Expression<Number>): Expression<Number> =
     callFn("+", this, other)
 
+  /** Returns the sum of this dp expression with [other]. */
   @JvmName("plusDp")
   public operator fun Expression<Dp>.plus(other: Expression<Dp>): Expression<Dp> =
     callFn("+", this, other)
 
+  /** Returns the product of this number expression with [other]. */
   public operator fun Expression<Number>.times(other: Expression<Number>): Expression<Number> =
     callFn("*", this, other)
 
+  /** Returns the product of this dp expression with [other]. */
   @JvmName("timesDp")
   public operator fun Expression<Dp>.times(other: Expression<Dp>): Expression<Dp> =
     callFn("*", this, other)
 
+  /** Returns the result of subtracting [other] from this number expression. */
   public operator fun Expression<Number>.minus(other: Expression<Number>): Expression<Number> =
     callFn("-", this, other)
 
+  /** Returns the result of subtracting [other] from this dp expression. */
   @JvmName("minusDp")
   public operator fun Expression<Dp>.minus(other: Expression<Dp>): Expression<Dp> =
     callFn("-", this, other)
 
+  /** Negates this number expression. */
   public operator fun Expression<Number>.unaryMinus(): Expression<Number> = callFn("-", this)
 
+  /** Negates this dp expression. */
   @JvmName("unaryMinusDp")
   public operator fun Expression<Dp>.unaryMinus(): Expression<Dp> = callFn("-", this)
 
-  public operator fun Expression<Number>.div(b: Expression<Number>): Expression<Number> =
-    callFn("/", this, b)
+  /** Returns the result of floating point division of this number expression by [divisor]. */
+  public operator fun Expression<Number>.div(divisor: Expression<Number>): Expression<Number> =
+    callFn("/", this, divisor)
 
+  /** Returns the result of floating point division of this dp expression by [divisor]. */
   @JvmName("divDp")
-  public operator fun Expression<Dp>.div(b: Expression<Dp>): Expression<Dp> = callFn("/", this, b)
+  public operator fun Expression<Dp>.div(divisor: Expression<Dp>): Expression<Dp> =
+    callFn("/", this, divisor)
 
-  public operator fun Expression<Number>.rem(b: Expression<Number>): Expression<Number> =
-    callFn("%", this, b)
+  /** Returns the remainder after integer division of this number expression by [divisor]. */
+  public operator fun Expression<Number>.rem(divisor: Expression<Number>): Expression<Number> =
+    callFn("%", this, divisor)
 
+  /** Returns the remainder after dp division of this number expression by [divisor]. */
   @JvmName("remDp")
-  public operator fun Expression<Dp>.rem(b: Expression<Dp>): Expression<Dp> = callFn("%", this, b)
+  public operator fun Expression<Dp>.rem(divisor: Expression<Dp>): Expression<Dp> =
+    callFn("%", this, divisor)
 
+  /** Returns the result of raising this number expression to the power of [exponent]. */
   public fun Expression<Number>.pow(exponent: Expression<Number>): Expression<Number> =
     callFn("^", this, exponent)
 
+  /** Returns the result of raising this dp expression to the power of [exponent]. */
+  public fun Expression<Dp>.pow(exponent: Expression<Dp>): Expression<Number> =
+    callFn("^", this, exponent)
+
+  /** Returns the square root of [value]. */
   public fun sqrt(value: Expression<Number>): Expression<Number> = callFn("sqrt", value)
 
+  /** Returns the base-ten logarithm of [value]. */
   public fun log10(value: Expression<Number>): Expression<Number> = callFn("log10", value)
 
+  /** Returns the natural logarithm of [value]. */
   public fun ln(value: Expression<Number>): Expression<Number> = callFn("ln", value)
 
+  /** Returns the base-two logarithm of [value]. */
   public fun log2(value: Expression<Number>): Expression<Number> = callFn("log2", value)
 
+  /** Returns the sine of [value]. */
   public fun sin(value: Expression<Number>): Expression<Number> = callFn("sin", value)
 
+  /** Returns the cosine of [value]. */
   public fun cos(value: Expression<Number>): Expression<Number> = callFn("cos", value)
 
+  /** Returns the tangent of [value]. */
   public fun tan(value: Expression<Number>): Expression<Number> = callFn("tan", value)
 
+  /** Returns the arcsine of [value]. */
   public fun asin(value: Expression<Number>): Expression<Number> = callFn("asin", value)
 
+  /** Returns the arccosine of [value]. */
   public fun acos(value: Expression<Number>): Expression<Number> = callFn("acos", value)
 
+  /** Returns the arctangent of [value]. */
   public fun atan(value: Expression<Number>): Expression<Number> = callFn("atan", value)
 
+  /** Returns the smallest of all given [numbers]. */
   public fun min(vararg numbers: Expression<Number>): Expression<Number> = callFn("min", *numbers)
 
+  /** Returns the smallest of all given dp [numbers]. */
   @JvmName("minDp")
   public fun min(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("min", *numbers)
 
+  /** Returns the greatest of all given [numbers]. */
   public fun max(vararg numbers: Expression<Number>): Expression<Number> = callFn("max", *numbers)
 
+  /** Returns the greatest of all given dp [numbers]. */
   @JvmName("maxDp")
   public fun max(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("max", *numbers)
 
+  /** Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
+   *
+   *  For example `round(const(-1.5))` evaluates to `-2`.
+   */
   public fun round(value: Expression<Number>): Expression<Number> = callFn("round", value)
 
+  /** Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
+   *
+   *  For example `round(const(-1.5.dp))` evaluates to `-2.dp`.
+   */
   @JvmName("roundDp")
   public fun round(value: Expression<Dp>): Expression<Dp> = callFn("round", value)
 
+  /** Returns the absolute value of [value], i.e. always a positive value. */
   public fun abs(value: Expression<Number>): Expression<Number> = callFn("abs", value)
 
+  /** Returns the absolute dp value of [value], i.e. always a positive dp value. */
   @JvmName("absDp") public fun abs(value: Expression<Dp>): Expression<Dp> = callFn("abs", value)
 
+  /** Returns the smallest integer that is greater than or equal to [value]. */
   public fun ceil(value: Expression<Number>): Expression<Number> = callFn("ceil", value)
 
+  /** Returns the smallest integer that is greater than or equal to [value]. */
   @JvmName("ceilDp") public fun ceil(value: Expression<Dp>): Expression<Dp> = callFn("ceil", value)
 
+  /** Returns the largest integer that is less than or equal to [value]. */
   public fun floor(value: Expression<Number>): Expression<Number> = callFn("floor", value)
 
+  /** Returns the largest integer that is less than or equal to [value]. */
   @JvmName("floorDp")
   public fun floor(value: Expression<Dp>): Expression<Dp> = callFn("floor", value)
 
-  public fun distance(value: Expression<Geometry>): Expression<Number> = callFn("distance", value)
+  /** Returns the shortest distance in meters between the evaluated feature and [geometry]. */
+  public fun distance(geometry: Expression<Geometry>): Expression<Number> =
+    callFn("distance", geometry)
 
   //endregion
 
