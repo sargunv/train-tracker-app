@@ -15,6 +15,7 @@ jobs:
       - uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
+      - run: "git fetch --tags --force" # https://github.com/actions/checkout/issues/290
       - uses: "./.github/actions/setup"
       - run: "./gradlew publishAndReleaseToMavenCentral --no-configuration-cache"
         env:
@@ -37,6 +38,7 @@ jobs:
       - uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
+      - run: "git fetch --tags --force" # https://github.com/actions/checkout/issues/290
       - uses: "./.github/actions/setup"
       - run: "./gradlew generateDocs"
       - uses: "actions/upload-pages-artifact@v3"

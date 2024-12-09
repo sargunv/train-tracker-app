@@ -36,11 +36,10 @@ object AnimatedLayerDemo : Demo {
   override fun Component(navigateUp: () -> Unit) {
     DemoScaffold(this, navigateUp) {
       MaplibreMap(
-        styleUrl = DEFAULT_STYLE,
+        styleUri = DEFAULT_STYLE,
         cameraState = rememberCameraState(firstPosition = CameraPosition(target = US, zoom = 2.0)),
       ) {
-        val routeSource =
-          rememberGeoJsonSource(id = "amtrak-routes", dataUrl = Res.getUri(ROUTES_FILE))
+        val routeSource = rememberGeoJsonSource(id = "amtrak-routes", uri = Res.getUri(ROUTES_FILE))
 
         val infiniteTransition = rememberInfiniteTransition()
         val animatedColor by

@@ -23,7 +23,7 @@ import kotlin.math.roundToInt
 @Composable
 public fun MaplibreMap(
   modifier: Modifier = Modifier,
-  styleUrl: String = "https://demotiles.maplibre.org/style.json",
+  styleUri: String = "https://demotiles.maplibre.org/style.json",
   gestureSettings: GestureSettings = GestureSettings.AllEnabled,
   ornamentSettings: OrnamentSettings = OrnamentSettings.AllEnabled,
   cameraState: CameraState = rememberCameraState(),
@@ -95,7 +95,7 @@ public fun MaplibreMap(
 
   ComposableMapView(
     modifier = modifier,
-    styleUrl = styleUrl,
+    styleUri = styleUri,
     update = { map ->
       cameraState.map = map
       map.onFpsChanged = onFpsChanged

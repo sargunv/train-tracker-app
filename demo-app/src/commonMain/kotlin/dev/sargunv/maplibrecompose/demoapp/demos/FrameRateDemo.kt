@@ -34,7 +34,7 @@ object FrameRateDemo : Demo {
 
         MaplibreMap(
           modifier = Modifier.weight(1f),
-          styleUrl = DEFAULT_STYLE,
+          styleUri = DEFAULT_STYLE,
           maximumFps = maximumFps,
           onFpsChanged = fpsState::recordFps,
         )

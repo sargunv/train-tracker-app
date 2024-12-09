@@ -44,8 +44,7 @@ public interface ExpressionScope {
     get() = this as Expression<Dp>
 
   @Suppress("UNCHECKED_CAST")
-  public val Expression<Dp>.value: Expression<Number>
-    get() = this as Expression<Number>
+  public fun Expression<Dp>.asNumber(): Expression<Number> = this as Expression<Number>
 
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 

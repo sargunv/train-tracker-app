@@ -12,7 +12,9 @@ public actual object PlatformUtils {
     val context = LocalContext.current
     val display =
       if (Build.VERSION.SDK_INT >= 30) context.display
-      else (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+      else
+        @Suppress("DEPRECATION")
+        (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
     return display?.refreshRate ?: 0f
   }
 }

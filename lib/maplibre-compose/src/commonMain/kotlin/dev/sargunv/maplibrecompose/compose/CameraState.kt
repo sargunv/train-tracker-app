@@ -18,6 +18,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.channels.Channel
 
+/** Remember a new [CameraState] in the initial state as given in [firstPosition]. */
 @Composable
 public fun rememberCameraState(firstPosition: CameraPosition = CameraPosition()): CameraState {
   return remember { CameraState(firstPosition) }

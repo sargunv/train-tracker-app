@@ -3,8 +3,8 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.runtime.Immutable
 import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
 
-internal interface LayerPropertyEnum {
-  val expr: Expression<String>
+public interface LayerPropertyEnum {
+  public val expr: Expression<String>
 }
 
 /** Frame of reference for offsetting geometry */

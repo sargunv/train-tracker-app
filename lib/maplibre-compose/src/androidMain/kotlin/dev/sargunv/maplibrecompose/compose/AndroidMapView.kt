@@ -19,7 +19,7 @@ import org.maplibre.android.maps.MapView
 @Composable
 internal actual fun ComposableMapView(
   modifier: Modifier,
-  styleUrl: String,
+  styleUri: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
   logger: Logger?,
@@ -27,7 +27,7 @@ internal actual fun ComposableMapView(
 ) {
   AndroidMapView(
     modifier = modifier,
-    styleUrl = styleUrl,
+    styleUri = styleUri,
     update = update,
     onReset = onReset,
     logger = logger,
@@ -38,7 +38,7 @@ internal actual fun ComposableMapView(
 @Composable
 internal fun AndroidMapView(
   modifier: Modifier,
-  styleUrl: String,
+  styleUri: String,
   update: (map: MaplibreMap) -> Unit,
   onReset: () -> Unit,
   logger: Logger?,
@@ -67,7 +67,7 @@ internal fun AndroidMapView(
               layoutDir = layoutDir,
               density = density,
               callbacks = callbacks,
-              styleUrl = styleUrl,
+              styleUri = styleUri,
               logger = logger,
             )
         }
@@ -78,7 +78,7 @@ internal fun AndroidMapView(
       map.layoutDir = layoutDir
       map.density = density
       map.callbacks = callbacks
-      map.styleUrl = styleUrl
+      map.styleUri = styleUri
       map.logger = logger
       update(map)
     },
