@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import io.github.dellisd.spatialk.geojson.Geometry
+import io.github.dellisd.spatialk.geojson.Polygon
 import kotlin.jvm.JvmName
 
 @Suppress("INAPPLICABLE_JVM_NAME")
@@ -374,8 +375,24 @@ public interface ExpressionScope {
   //region Decision
 
   /**
-   * Selects the first output whose corresponding test condition evaluates to true, or the fallback
-   * value otherwise.
+   * Selects the first output from the given [branches] whose corresponding test condition evaluates
+   * to `true`, or the [fallback] value otherwise.
+   *
+   * Example:
+   *
+   * ```
+   * case(
+   *   all(has("color1"), has("color2")) then
+   *     interpolate(linear(), zoom(), 1 to get("color1"), 20 to get("color2")),
+   *   has("color") then
+   *     get("color"),
+   *   const(Color.Red)
+   * )
+   * ```
+   * If the feature has both a "color1" and "color2" property, the result is an interpolation
+   * between these two colors based on the zoom level. Otherwise, if the feature has a "color"
+   * property, that color is returned. If the feature has none of the three, the color red is
+   * returned.
    */
   public fun <T> case(vararg branches: CaseBranch<T>, fallback: Expression<T>): Expression<T> =
     callFn(
@@ -393,20 +410,31 @@ public interface ExpressionScope {
     internal val output: Expression<Output>,
   )
 
+  /** Create a [CaseBranch], see [case] */
   public infix fun <Output> Expression<Boolean>.then(
     output: Expression<Output>
   ): CaseBranch<Output> = CaseBranch(this, output)
 
   /**
-   * Selects the output whose label value matches the input value, or the fallback value if no match
-   * is found. The input can be any expression (e.g. ["get", "building_type"]). Each label must be
-   * either:
-   * - a single string; or
-   * - a list of strings. The input matches if any of the values in the array matches, similar to
-   *   the "in" operator.
+   * Selects the output from the given [branches] whose label value matches the [input] string, or
+   * the [fallback] value if no match is found.
    *
    * Each label must be unique. If the input type does not match the type of the labels, the result
-   * will be the fallback value.
+   * will be the [fallback] value.
+   *
+   * Example:
+   *
+   * ```
+   * match(
+   *   get("building_type"),
+   *   const(Color.Red),
+   *   "residential" then const(Color.Cyan),
+   *   listOf("commercial", "industrial") then const(Color.Yellow),
+   * )
+   * ```
+   * If the feature has a property  "building_type" with the value "residential", cyan is returned.
+   * Otherwise, if the value of that property is either "commercial" or "industrial", yellow is
+   * returned. If none of that is true, the fallback is returned, i.e. red.
    */
   @JvmName("matchStrings")
   public fun <T> match(
@@ -425,15 +453,13 @@ public interface ExpressionScope {
     )
 
   /**
-   * Selects the output whose label value matches the input value, or the fallback value if no match
-   * is found. The input can be any expression (e.g. ["get", "building_type"]). Each label must be
-   * either:
-   * - a single number; or
-   * - a list of numbers. The input matches if any of the values in the array matches, similar to
-   *   the "in" operator.
+   * Selects the output from the given [branches] whose label value matches the [input] value, or
+   * the [fallback] value if no match is found.
    *
    * Each label must be unique. If the input type does not match the type of the labels, the result
-   * will be the fallback value.
+   * will be the [fallback] value.
+   *
+   * @see match
    */
   @JvmName("matchNumbers")
   public fun <T> match(
@@ -454,17 +480,21 @@ public interface ExpressionScope {
   public data class MatchBranch<Label, Output>
   internal constructor(internal val label: Expression<*>, internal val output: Expression<Output>)
 
+  /** Create a [MatchBranch], see [match] */
   public infix fun <Output> String.then(output: Expression<Output>): MatchBranch<String, Output> =
     MatchBranch(const(this), output)
 
+  /** Create a [MatchBranch], see [match] */
   public infix fun <Output> Number.then(output: Expression<Output>): MatchBranch<Number, Output> =
     MatchBranch(const(this.toFloat()), output)
 
+  /** Create a [MatchBranch], see [match] */
   @JvmName("stringsThen")
   public infix fun <Output> List<String>.then(
     output: Expression<Output>
   ): MatchBranch<String, Output> = MatchBranch(Expression.ofList(this.map { const(it) }), output)
 
+  /** Create a [MatchBranch], see [match] */
   @JvmName("numbersThen")
   public infix fun <Output> List<Number>.then(
     output: Expression<Output>
@@ -478,109 +508,192 @@ public interface ExpressionScope {
   public fun <T> coalesce(vararg values: Expression<T?>): Expression<T> =
     callFn("coalesce", *values)
 
+  /**
+   * Returns whether this expression is equal to [other].
+   *
+   * The inputs must be Numbers, Strings, or Booleans, and both of the same type.
+   */
   public infix fun Expression<*>.eq(other: Expression<*>): Expression<Boolean> =
     callFn("==", this, other)
 
+  /**
+   * Returns whether the [left] string expression is equal to the [right] string expression. An
+   * optional [collator] (see [ExpressionScope.collator] function) can be specified to control
+   * locale-dependent string comparisons.
+   */
   public fun eq(
     left: Expression<String>,
     right: Expression<String>,
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn("==", left, right, *buildArgs { collator?.let { add(it) } })
 
+  /**
+   * Returns whether this expression is not equal to [other].
+   *
+   * The inputs must be Numbers, Strings, or Booleans, and both of the same type.
+   */
   public infix fun Expression<*>.neq(other: Expression<*>): Expression<Boolean> =
     callFn("!=", this, other)
 
+  /**
+   * Returns whether the [left] string expression is not equal to the [right] string expression. An
+   * optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * locale-dependent string comparisons.
+   */
   public fun neq(
     left: Expression<String>,
     right: Expression<String>,
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn("!=", left, right, *buildArgs { collator?.let { add(it) } })
 
+  /** Returns whether this number expression is strictly greater than [other]. */
   @JvmName("gtNumber")
   public infix fun Expression<Number>.gt(other: Expression<Number>): Expression<Boolean> =
     callFn(">", this, other)
 
+  /** Returns whether this dp expression is strictly greater than [other]. */
   @JvmName("gtDp")
   public infix fun Expression<Dp>.gt(other: Expression<Dp>): Expression<Boolean> =
     callFn(">", this, other)
 
+  /**
+   * Returns whether this string expression is strictly greater than [other].
+   *
+   * Strings are compared lexicographically (`"b" > "a"`).
+   */
   @JvmName("gtString")
   public infix fun Expression<String>.gt(other: Expression<String>): Expression<Boolean> =
     callFn(">", this, other)
 
+  /**
+   * Returns whether the [left] string expression is strictly greater than the [right] string
+   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * locale-dependent string comparisons.
+   *
+   * Strings are compared lexicographically (`"b" > "a"`).
+   */
   public fun gt(
     left: Expression<String>,
     right: Expression<String>,
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn(">", left, right, *buildArgs { collator?.let { add(it) } })
 
+  /** Returns whether this number expression is strictly less than [other]. */
   @JvmName("ltNumber")
   public infix fun Expression<Number>.lt(other: Expression<Number>): Expression<Boolean> =
     callFn("<", this, other)
 
+  /** Returns whether this dp expression is strictly less than [other]. */
   @JvmName("ltDp")
   public infix fun Expression<Dp>.lt(other: Expression<Dp>): Expression<Boolean> =
     callFn("<", this, other)
 
+  /**
+   * Returns whether this string expression is strictly less than [other].
+   *
+   * Strings are compared lexicographically (`"a" < "b"`).
+   */
   @JvmName("ltString")
   public infix fun Expression<String>.lt(other: Expression<String>): Expression<Boolean> =
     callFn("<", this, other)
 
+  /**
+   * Returns whether the [left] string expression is strictly less than the [right] string
+   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * locale-dependent string comparisons.
+   *
+   * Strings are compared lexicographically (`"a" < "b"`).
+   */
   public fun lt(
     left: Expression<String>,
     right: Expression<String>,
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn("<", left, right, *buildArgs { collator?.let { add(it) } })
 
+  /** Returns whether this number expression is greater than or equal to [other]. */
   @JvmName("gteNumber")
   public infix fun Expression<Number>.gte(other: Expression<Number>): Expression<Boolean> =
     callFn(">=", this, other)
 
+  /** Returns whether this dp expression is greater than or equal to [other]. */
   @JvmName("gteDp")
   public infix fun Expression<Dp>.gte(other: Expression<Dp>): Expression<Boolean> =
     callFn(">=", this, other)
 
+  /**
+   * Returns whether this string expression is greater than or equal to [other].
+   *
+   * Strings are compared lexicographically (`"b" >= "a"`).
+   */
   @JvmName("gteString")
   public infix fun Expression<String>.gte(other: Expression<String>): Expression<Boolean> =
     callFn(">=", this, other)
 
+  /**
+   * Returns whether the [left] string expression is greater than or equal to the [right] string
+   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * locale-dependent string comparisons.
+   *
+   * Strings are compared lexicographically (`"b" >= "a"`).
+   */
   public fun gte(
     left: Expression<String>,
     right: Expression<String>,
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn(">=", left, right, *buildArgs { collator?.let { add(it) } })
 
+  /** Returns whether this number expression is less than or equal to [other]. */
   @JvmName("lteNumber")
   public infix fun Expression<Number>.lte(other: Expression<Number>): Expression<Boolean> =
     callFn("<=", this, other)
 
+  /** Returns whether this dp expression is less than or equal to [other]. */
   @JvmName("lteDp")
   public infix fun Expression<Dp>.lte(other: Expression<Dp>): Expression<Boolean> =
     callFn("<=", this, other)
 
+  /**
+   * Returns whether this string expression is less than or equal to [other].
+   *
+   * Strings are compared lexicographically (`"a" <= "b"`).
+   */
   @JvmName("lteString")
   public infix fun Expression<String>.lte(other: Expression<String>): Expression<Boolean> =
     callFn("<=", this, other)
 
+  /**
+   * Returns whether the [left] string expression is less than or equal to the [right] string
+   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * locale-dependent string comparisons.
+   *
+   * Strings are compared lexicographically (`"a" < "b"`).
+   */
   public fun lte(
     left: Expression<String>,
     right: Expression<String>,
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn("<=", left, right, *buildArgs { collator?.let { add(it) } })
 
+  /** Returns whether all of the [expressions] are `true`. */
   public fun all(vararg expressions: Expression<Boolean>): Expression<Boolean> =
     callFn("all", *expressions)
 
+  /** Returns whether any of the [expressions] are `true`. */
   public fun any(vararg expressions: Expression<Boolean>): Expression<Boolean> =
     callFn("any", *expressions)
 
   public fun not(expression: Expression<Boolean>): Expression<Boolean> = callFn("!", expression)
 
+  /** Negates this expression. */
   @JvmName("notOperator")
   public operator fun Expression<Boolean>.not(): Expression<Boolean> = not(this)
 
-  public fun within(geometry: Expression<Geometry>): Expression<Boolean> =
-    callFn("within", geometry)
+  /**
+   * Returns whether the evaluated feature is fully contained inside the boundary of the given
+   * [polygon].
+   */
+  public fun within(polygon: Expression<Polygon>): Expression<Boolean> =
+    callFn("within", polygon)
 
   //endregion
 
