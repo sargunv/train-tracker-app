@@ -793,6 +793,11 @@ public interface ExpressionScope {
 
   //region Zoom
 
+  /**
+   * Gets the current zoom level. Note that in layer style properties, [zoom] may only appear as
+   * the input to a top-level [step] or [interpolate] (, [interpolateHcl], [interpolateLab], ...)
+   * expression.
+   */
   public fun zoom(): Expression<Number> = callFn("zoom")
 
   //endregion
