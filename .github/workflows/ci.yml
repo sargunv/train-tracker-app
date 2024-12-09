@@ -9,6 +9,7 @@ on:
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   check-format:
@@ -146,3 +147,11 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - run: "echo 'All checks passed!'"
+
+  # https://github.com/orgs/community/discussions/8336
+  delete-cancelled-runs:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "MercuryTechnologies/delete-cancelled-runs@v1"
+        with:
+          workflow-file: "ci.yml"
