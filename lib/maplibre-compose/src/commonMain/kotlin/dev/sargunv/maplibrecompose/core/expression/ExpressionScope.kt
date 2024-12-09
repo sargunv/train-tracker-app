@@ -799,6 +799,11 @@ public interface ExpressionScope {
 
   //region Heatmap
 
+  /** Gets the kernel density estimation of a pixel in a heatmap layer, which is a relative measure
+   *  of how many data points are crowded around a particular pixel. Can only be used in the
+   *  expression for `color` parameter in a
+   *  [HeatmapLayer][dev.sargunv.maplibrecompose.compose.layer.HeatmapLayer].
+   */
   public fun heatmapDensity(): Expression<Number> = callFn("heatmap-density")
 
   //endregion
