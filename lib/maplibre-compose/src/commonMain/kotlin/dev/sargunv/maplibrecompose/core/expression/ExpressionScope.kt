@@ -586,7 +586,18 @@ public interface ExpressionScope {
 
   //region Ramps, Scales, Curves
 
+  /**
+   * Produces discrete, stepped results by evaluating a piecewise-constant function defined by pairs
+   * of input and output values ([stops]). Returns the output value of the stop just less than the
+   * [input], or the [fallback] if the input is less than the first stop.
 
+   * Example:
+   *
+   * `step(zoom(), const(0), 10 to const(2.5), 20 to const(10.5))`
+   *
+   * returns 0 if the zoom is less than 10, 2.5 if the zoom is between 10 and less than 20, 10.5 if
+   * the zoom is greater than or equal 20.
+   * */
   public fun <Output> step(
     input: Expression<Number>,
     fallback: Expression<Output>,
@@ -622,29 +633,66 @@ public interface ExpressionScope {
         },
     )
 
+  /**
+   * Produces continuous, smooth results by interpolating between pairs of input and output values
+   * ([stops]), given the [input] value.
+   *
+   * Example:
+   *
+   * ```
+   * interpolate(
+   *   linear(), zoom(),
+   *   1 to const(Color.Red),
+   *   5 to const(Color.Blue),
+   *   10 to const(Color.Green)
+   * )
+   * ```
+   *
+   * interpolates linearly from red to blue between in zoom levels 1 to 5, then interpolates
+   * linearly from blue to green in zoom levels 5 to 10, which it where it remains until maximum
+   * zoom.
+   */
   public fun <Output> interpolate(
     type: Expression<TInterpolationType>,
     input: Expression<Number>,
     vararg stops: Pair<Number, Expression<Output>>,
   ): Expression<Output> = interpolateImpl("interpolate", type, input, *stops)
 
+  /**
+   * Produces continuous, smooth results by interpolating between pairs of input and output values
+   * ([stops]), given the [input] value. Works like [interpolate], but the interpolation is
+   * performed in the
+   * [Hue-Chroma-Luminance color space](https://en.wikipedia.org/wiki/HCL_color_space).
+   */
   public fun interpolateHcl(
     type: Expression<TInterpolationType>,
     input: Expression<Number>,
     vararg stops: Pair<Number, Expression<Color>>,
   ): Expression<Color> = interpolateImpl("interpolate-hcl", type, input, *stops)
 
+  /**
+   * Produces continuous, smooth results by interpolating between pairs of input and output values
+   * ([stops]), given the [input] value. Works like [interpolate], but the interpolation is
+   * performed in the [CIELAB color space](https://en.wikipedia.org/wiki/CIELAB_color_space).
+   */
   public fun interpolateLab(
     type: Expression<TInterpolationType>,
     input: Expression<Number>,
     vararg stops: Pair<Number, Expression<Color>>,
   ): Expression<Color> = interpolateImpl("interpolate-lab", type, input, *stops)
 
+  /** Interpolates exponentially between the stops. [base] controls the rate at which the output
+   * increases: higher values make the output increase more towards the high end of the range. With
+   * values close to 1 the output increases linearly.
+   */
   public fun exponential(base: Expression<Number>): Expression<TInterpolationType> =
     callFn("exponential", base)
 
+  /** Interpolates linearly between the pairs of stops. */
   public fun linear(): Expression<TInterpolationType> = callFn("linear")
 
+  /** Interpolates using the cubic bezier curve defined by the given control points between the
+   *  pairs of stops. */
   public fun cubicBezier(
     x1: Expression<Number>,
     y1: Expression<Number>,
