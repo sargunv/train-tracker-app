@@ -14,6 +14,8 @@ public interface ExpressionScope {
 
   // basic types: https://maplibre.org/maplibre-style-spec/types/
 
+  //region Literals
+
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
   public fun <T : LayerPropertyEnum> const(value: T): Expression<T> =
@@ -49,6 +51,7 @@ public interface ExpressionScope {
 
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 
+  //endregion
   //region Variable binding
 
   /**
