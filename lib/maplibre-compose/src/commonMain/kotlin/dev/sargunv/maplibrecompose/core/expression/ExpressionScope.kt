@@ -48,7 +48,7 @@ public interface ExpressionScope {
 
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 
-  // variable binding
+  //region Variable binding
 
   /**
    * Binds expressions to named variables, which can then be referenced in the result expression
@@ -60,7 +60,9 @@ public interface ExpressionScope {
   /** References variable bound using [let]. */
   public fun <T> `var`(name: String): Expression<T> = callFn("var", const(name))
 
-  // types
+  //endregion
+
+  //region Types
 
   /** Produces a literal array value. */
   public fun <T> literal(values: List<Expression<T>>): Expression<List<T>> =
@@ -244,7 +246,9 @@ public interface ExpressionScope {
   public fun toColor(value: Expression<*>, vararg fallbacks: Expression<*>): Expression<Color> =
     callFn("to-color", value, *fallbacks)
 
-  // lookup
+  //endregion
+
+  //region Lookup
 
   /** Retrieves an item from an array. */
   public fun <T> at(index: Expression<Number>, array: Expression<List<T>>): Expression<T> =
@@ -365,7 +369,9 @@ public interface ExpressionScope {
   @JvmName("lengthOfList")
   public fun length(value: Expression<List<*>>): Expression<Number> = callFn("length", value)
 
-  // decision
+  //endregion
+
+  //region Decision
 
   /**
    * Selects the first output whose corresponding test condition evaluates to true, or the fallback
@@ -576,7 +582,10 @@ public interface ExpressionScope {
   public fun within(geometry: Expression<Geometry>): Expression<Boolean> =
     callFn("within", geometry)
 
-  // ramps, scales, curves
+  //endregion
+
+  //region Ramps, Scales, Curves
+
 
   public fun <Output> step(
     input: Expression<Number>,
@@ -643,7 +652,9 @@ public interface ExpressionScope {
     y2: Expression<Number>,
   ): Expression<TInterpolationType> = callFn("cubic-bezier", x1, y1, x2, y2)
 
-  // math
+  //endregion
+
+  //region Math
 
   public fun ln2(): Expression<Number> = callFn("ln2")
 
@@ -751,7 +762,9 @@ public interface ExpressionScope {
 
   public fun distance(value: Expression<Geometry>): Expression<Number> = callFn("distance", value)
 
-  // color
+  //endregion
+
+  //region Color
 
   public fun toRgba(color: Expression<Color>): Expression<List<Number>> = callFn("to-rgba", color)
 
@@ -768,7 +781,9 @@ public interface ExpressionScope {
     blue: Expression<Number>,
   ): Expression<Color> = callFn("rgb", red, green, blue)
 
-  // feature data
+  //endregion
+
+  //region Feature data
 
   public fun <T> properties(): Expression<Map<String, T>> = callFn("properties")
 
@@ -783,15 +798,21 @@ public interface ExpressionScope {
 
   public fun <T> accumulated(key: Expression<String>): Expression<T> = callFn("accumulated", key)
 
-  // zoom
+  //endregion
+
+  //region Zoom
 
   public fun zoom(): Expression<Number> = callFn("zoom")
 
-  // heatmap
+  //endregion
+
+  //region Heatmap
 
   public fun heatmapDensity(): Expression<Number> = callFn("heatmap-density")
 
-  // string
+  //endregion
+
+  //region String
 
   public fun isSupportedScript(script: Expression<String>): Expression<Boolean> =
     callFn("is-supported-script", script)
@@ -806,7 +827,9 @@ public interface ExpressionScope {
   public fun resolvedLocale(collator: Expression<TCollator>): Expression<String> =
     callFn("resolved-locale", collator)
 
-  // utils
+  //endregion
+
+  //region Utils
 
   @Suppress("UNCHECKED_CAST")
   private fun <Return> callFn(function: String, vararg args: Expression<*>) =
@@ -825,4 +848,6 @@ public interface ExpressionScope {
   private fun <T> List<T>.foldToArgs(block: MutableList<Expression<*>>.(element: T) -> Unit) =
     fold(mutableListOf<Expression<*>>()) { acc, element -> acc.apply { block(element) } }
       .toTypedArray()
+
+  //endregion
 }
