@@ -662,28 +662,19 @@ public interface ExpressionScope {
 
   public fun e(): Expression<Number> = callFn("e")
 
-  public fun sum(vararg numbers: Expression<Number>): Expression<Number> = callFn("+", *numbers)
-
-  @JvmName("sumDp")
-  public fun sum(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("+", *numbers)
-
-  public fun product(vararg numbers: Expression<Number>): Expression<Number> = callFn("*", *numbers)
-
-  @JvmName("productDp")
-  public fun product(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("*", *numbers)
-
   public operator fun Expression<Number>.plus(other: Expression<Number>): Expression<Number> =
-    sum(this, other)
+    callFn("+", this, other)
 
   @JvmName("plusDp")
-  public operator fun Expression<Dp>.plus(other: Expression<Dp>): Expression<Dp> = sum(this, other)
+  public operator fun Expression<Dp>.plus(other: Expression<Dp>): Expression<Dp> =
+    callFn("+", this, other)
 
   public operator fun Expression<Number>.times(other: Expression<Number>): Expression<Number> =
-    product(this, other)
+    callFn("*", this, other)
 
   @JvmName("timesDp")
   public operator fun Expression<Dp>.times(other: Expression<Dp>): Expression<Dp> =
-    product(this, other)
+    callFn("*", this, other)
 
   public operator fun Expression<Number>.minus(other: Expression<Number>): Expression<Number> =
     callFn("-", this, other)
