@@ -152,6 +152,6 @@ jobs:
   delete-cancelled-runs:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "MercuryTechnologies/delete-cancelled-runs@v1"
+      - uses: "MercuryTechnologies/delete-cancelled-runs@v1.0.0"
         with:
           workflow-file: "ci.yml"
