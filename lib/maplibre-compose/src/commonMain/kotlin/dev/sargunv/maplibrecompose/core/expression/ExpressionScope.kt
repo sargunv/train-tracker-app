@@ -1008,17 +1008,35 @@ public interface ExpressionScope {
 
   //region Feature data
 
+  /**
+   * Gets the feature properties object. Note that in some cases, it may be more efficient to use
+   * `get("property_name")` directly.
+   */
   public fun <T> properties(): Expression<Map<String, T>> = callFn("properties")
 
   public fun <T> featureState(key: Expression<String>): Expression<T> = callFn("feature-state", key)
 
+  /**
+   * Gets the feature's geometry type as a string: "Point", "MultiPoint", "LineString",
+   * "MultiLineString", "Polygon" or "MultiPolygon".
+   */
   public fun geometryType(): Expression<String> = callFn("geometry-type")
 
+  /** Gets the feature's id, if it has one. */
   public fun <T> id(): Expression<T> = callFn("id")
 
+  /**
+   * Gets the progress along a gradient line. Can only be used in the `gradient` property of a line
+   * layer, see [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer].
+   */
   public fun lineProgress(value: Expression<Number>): Expression<Number> =
     callFn("line-progress", value)
 
+  /**
+   * Gets the value of a cluster property accumulated so far. Can only be used in the
+   * `clusterProperties` option of a clustered GeoJSON source, see
+   * [GeoJsonOptions][dev.sargunv.maplibrecompose.core.source.GeoJsonOptions].
+   */
   public fun <T> accumulated(key: Expression<String>): Expression<T> = callFn("accumulated", key)
 
   //endregion
