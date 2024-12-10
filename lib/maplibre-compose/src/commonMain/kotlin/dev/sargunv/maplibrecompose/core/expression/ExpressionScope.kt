@@ -1102,10 +1102,9 @@ public interface ExpressionScope {
    */
   public fun downcase(string: Expression<String>): Expression<String> = callFn("downcase", string)
 
-  /** Returns a string consisting of the concatenation of the [strings] expressions. */
-  public fun concat(vararg strings: Expression<String>): Expression<String> =
-    callFn("concat", *strings)
-
+  /** Concatenates this string expression with [other]. */
+  public operator fun Expression<String>.plus(other: Expression<String>): Expression<String> =
+    callFn("concat", this, other)
 
   /**
    * Returns the IETF language tag of the locale being used by the provided [collator]. This can be
