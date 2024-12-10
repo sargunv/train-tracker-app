@@ -336,8 +336,8 @@ public interface ExpressionScope {
   }
 
   /**
-   * Retrieves a property value from the current feature's properties, or from another object if a
-   * second argument is provided. Returns null if the requested property is missing.
+   * Retrieves a property value [key] from the current feature's properties, or from another object
+   * [obj] if a second argument is provided. Returns null if the requested property is missing.
    */
   public fun <T> get(
     key: Expression<String>,
@@ -348,8 +348,8 @@ public interface ExpressionScope {
   }
 
   /**
-   * Tests for the presence of an property value in the current feature's properties, or from
-   * another object if a second argument is provided.
+   * Tests for the presence of an property value [key] in the current feature's properties, or from
+   * another object [obj] if a second argument is provided.
    */
   public fun has(
     key: Expression<String>,
@@ -359,19 +359,13 @@ public interface ExpressionScope {
     return callFn("has", *args.toTypedArray())
   }
 
-  /**
-   * Gets the length of an array or string. In a string, a UTF-16 surrogate pair counts as a single
-   * position.
-   */
+  /** Gets the length of a [string]. A UTF-16 surrogate pair counts as a single position. */
   @JvmName("lengthOfString")
-  public fun length(value: Expression<String>): Expression<Number> = callFn("length", value)
+  public fun length(string: Expression<String>): Expression<Number> = callFn("length", string)
 
-  /**
-   * Gets the length of an array or string. In a string, a UTF-16 surrogate pair counts as a single
-   * position.
-   */
+  /** Gets the length of a [list]. */
   @JvmName("lengthOfList")
-  public fun length(value: Expression<List<*>>): Expression<Number> = callFn("length", value)
+  public fun length(list: Expression<List<*>>): Expression<Number> = callFn("length", list)
 
   //endregion
 
