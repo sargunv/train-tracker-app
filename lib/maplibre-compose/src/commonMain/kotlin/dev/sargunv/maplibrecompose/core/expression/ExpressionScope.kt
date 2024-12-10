@@ -68,7 +68,7 @@ public interface ExpressionScope {
 
   //region Types
 
-  /** Produces a literal array value. */
+  /** Produces a literal list value. */
   public fun <T> literal(values: List<Expression<T>>): Expression<List<T>> =
     callFn("literal", Expression.ofList(values))
 
@@ -1074,7 +1074,7 @@ public interface ExpressionScope {
 
   /** Gets the kernel density estimation of a pixel in a heatmap layer, which is a relative measure
    *  of how many data points are crowded around a particular pixel. Can only be used in the
-   *  expression for `color` parameter in a
+   *  expression for the `color` parameter in a
    *  [HeatmapLayer][dev.sargunv.maplibrecompose.compose.layer.HeatmapLayer].
    */
   public fun heatmapDensity(): Expression<Number> = callFn("heatmap-density")
