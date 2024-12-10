@@ -6,35 +6,26 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
+  id("library-conventions")
+  id("android-library-conventions")
   id(libs.plugins.kotlin.multiplatform.get().pluginId)
   id(libs.plugins.kotlin.cocoapods.get().pluginId)
   id(libs.plugins.android.library.get().pluginId)
   id(libs.plugins.compose.get().pluginId)
-  id(libs.plugins.kotlin.composeCompiler.get().pluginId)
   id(libs.plugins.mavenPublish.get().pluginId)
-  id("library-conventions")
 }
 
-android {
-  namespace = "dev.sargunv.maplibrecompose"
-  compileSdk = libs.versions.android.compileSdk.get().toInt()
+android { namespace = "dev.sargunv.maplibrecompose" }
 
-  defaultConfig {
-    minSdk = libs.versions.android.minSdk.get().toInt()
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+mavenPublishing {
+  pom {
+    name = "MapLibre Compose"
+    description = "Add interactive vector tile maps to your Compose app"
+    url = "https://github.com/sargunv/maplibre-compose"
   }
-
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-  }
-
-  @Suppress("UnstableApiUsage") testOptions { animationsDisabled = true }
 }
 
 kotlin {
-  explicitApi()
-
   androidTarget {
     compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
     instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
@@ -48,11 +39,6 @@ kotlin {
     noPodspec()
     ios.deploymentTarget = "12.0"
     pod("MapLibre", libs.versions.maplibre.ios.get())
-  }
-
-  compilerOptions {
-    allWarningsAsErrors = true
-    freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xconsistent-data-class-copy-visibility")
   }
 
   sourceSets {
@@ -84,15 +70,5 @@ kotlin {
       implementation(compose.desktop.uiTestJUnit4)
       implementation(libs.androidx.composeUi.testManifest)
     }
-  }
-}
-
-composeCompiler { reportsDestination = layout.buildDirectory.dir("compose/reports") }
-
-mavenPublishing {
-  pom {
-    name = "MapLibre Compose"
-    description = "Add interactive vector tile maps to your Compose app"
-    url = "https://github.com/sargunv/maplibre-compose"
   }
 }

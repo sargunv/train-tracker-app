@@ -1,7 +1,4 @@
 [versions]
-android-compileSdk = "35"
-android-minSdk = "23"
-android-targetSdk = "35"
 ios-deploymentTarget = "15.3"
 
 androidx-activity = "1.9.3"

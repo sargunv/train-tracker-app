@@ -6,23 +6,23 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
+  id("module-conventions")
   id(libs.plugins.kotlin.multiplatform.get().pluginId)
   id(libs.plugins.android.application.get().pluginId)
   id(libs.plugins.kotlin.composeCompiler.get().pluginId)
   id(libs.plugins.compose.get().pluginId)
   id(libs.plugins.kotlin.cocoapods.get().pluginId)
   id(libs.plugins.kotlin.serialization.get().pluginId)
-  id("module-conventions")
 }
 
 android {
   namespace = "dev.sargunv.maplibrecompose.demoapp"
-  compileSdk = libs.versions.android.compileSdk.get().toInt()
 
   defaultConfig {
     applicationId = "dev.sargunv.maplibrecompose.demoapp"
-    minSdk = libs.versions.android.minSdk.get().toInt()
-    targetSdk = libs.versions.android.targetSdk.get().toInt()
+    minSdk = project.properties["androidMinSdk"]!!.toString().toInt()
+    compileSdk = project.properties["androidCompileSdk"]!!.toString().toInt()
+    targetSdk = project.properties["androidTargetSdk"]!!.toString().toInt()
     versionCode = 1
     versionName = project.version.toString()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
