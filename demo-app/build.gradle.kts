@@ -13,7 +13,6 @@ plugins {
   alias(libs.plugins.compose)
   alias(libs.plugins.kotlin.cocoapods)
   alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.spotless)
   alias(libs.plugins.jgitver)
 }
 
@@ -113,11 +112,3 @@ kotlin {
 compose.resources { packageOfResClass = "dev.sargunv.maplibrecompose.demoapp.generated" }
 
 composeCompiler { reportsDestination = layout.buildDirectory.dir("compose/reports") }
-
-spotless {
-  kotlinGradle { ktfmt().googleStyle() }
-  kotlin {
-    target("src/**/*.kt")
-    ktfmt().googleStyle()
-  }
-}

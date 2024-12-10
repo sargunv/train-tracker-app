@@ -60,7 +60,14 @@ tasks.register("generateDocs") {
 dependencies { dokka(project(":lib:maplibre-compose:")) }
 
 spotless {
-  kotlinGradle { ktfmt().googleStyle() }
+  kotlinGradle {
+    target("**/*.gradle.kts")
+    ktfmt().googleStyle()
+  }
+  kotlin {
+    target("**/*.kt")
+    ktfmt().googleStyle()
+  }
   format("swift") {
     target("iosApp/iosApp/**/*.swift")
     nativeCmd("swiftFormat", "/usr/bin/env", listOf("swift", "format"))

@@ -12,14 +12,11 @@ plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.compose)
   alias(libs.plugins.kotlin.composeCompiler)
-  alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
   alias(libs.plugins.mavenPublish)
   alias(libs.plugins.jgitver)
-  id("maven-publish")
+  id("library-conventions")
 }
-
-group = "dev.sargunv.maplibre-compose"
 
 jgitver {
   strategy(Strategies.MAVEN)
@@ -120,27 +117,6 @@ kotlin {
 }
 
 composeCompiler { reportsDestination = layout.buildDirectory.dir("compose/reports") }
-
-spotless {
-  kotlinGradle { ktfmt().googleStyle() }
-  kotlin {
-    target("src/**/*.kt")
-    ktfmt().googleStyle()
-  }
-}
-
-publishing {
-  repositories {
-    maven {
-      name = "GitHubPackages"
-      setUrl("https://maven.pkg.github.com/sargunv/maplibre-compose")
-      credentials {
-        username = project.properties["githubUser"]?.toString()
-        password = project.properties["githubToken"]?.toString()
-      }
-    }
-  }
-}
 
 mavenPublishing {
   pom {
