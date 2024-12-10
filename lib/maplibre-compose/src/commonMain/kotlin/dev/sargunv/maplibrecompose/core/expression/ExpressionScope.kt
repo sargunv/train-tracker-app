@@ -281,19 +281,38 @@ public interface ExpressionScope {
     `in`(this, other)
 
   /**
-   * Returns the first position at which an item can be found in an array or a substring can be
-   * found in a string, or -1 if the input cannot be found. Accepts an optional index from where to
-   * begin the search. In a string, a UTF-16 surrogate pair counts as a single position.
+   * Returns the first position at which an [substring] can be found in a [string], or -1 if it
+   * cannot be found. Accepts an optional index from where to begin the search. A UTF-16 surrogate
+   * pair counts as a single position.
    */
+  @JvmName("indexOfString")
   public fun indexOf(
-    value: Expression<*>,
-    array: Expression<List<*>>,
-    start: Expression<Number>? = null,
+    substring: Expression<String>,
+    string: Expression<String>,
+    startIndex: Expression<Number>? = null,
   ): Expression<Number> {
     val args = buildList {
-      add(value)
-      add(array)
-      start?.let { add(it) }
+      add(substring)
+      add(string)
+      startIndex?.let { add(it) }
+    }
+    return callFn("index-of", *args.toTypedArray())
+  }
+
+  /**
+   * Returns the first position at which an [item] can be found in a [list], or -1 if it cannot be
+   * found. Accepts an optional index from where to begin the search.
+   */
+  @JvmName("indexOfList")
+  public fun indexOf(
+    item: Expression<*>,
+    list: Expression<List<*>>,
+    startIndex: Expression<Number>? = null,
+  ): Expression<Number> {
+    val args = buildList {
+      add(item)
+      add(list)
+      startIndex?.let { add(it) }
     }
     return callFn("index-of", *args.toTypedArray())
   }
