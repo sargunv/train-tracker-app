@@ -1,7 +1,4 @@
-plugins {
-  `kotlin-dsl`
-  alias(libs.plugins.jgitver)
-}
+plugins { `kotlin-dsl` }
 
 repositories {
   mavenCentral()
