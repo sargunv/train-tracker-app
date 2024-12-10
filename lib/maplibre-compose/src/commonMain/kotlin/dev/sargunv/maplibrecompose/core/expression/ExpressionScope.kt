@@ -1031,7 +1031,8 @@ public interface ExpressionScope {
    */
   public fun <T> properties(): Expression<Map<String, T>> = callFn("properties")
 
-  public fun <T> featureState(key: Expression<String>): Expression<T> = callFn("feature-state", key)
+  // not supported on native yet: https://github.com/maplibre/maplibre-native/issues/1698
+  //public fun <T> featureState(key: Expression<String>): Expression<T> = callFn("feature-state", key)
 
   /**
    * Gets the feature's geometry type as a string: "Point", "MultiPoint", "LineString",
