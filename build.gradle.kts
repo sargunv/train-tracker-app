@@ -1,4 +1,3 @@
-import fr.brouillard.oss.jgitver.Strategies
 import ru.vyarus.gradle.plugin.mkdocs.task.MkdocsTask
 
 plugins {

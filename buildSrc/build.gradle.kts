@@ -1,5 +1,3 @@
-import fr.brouillard.oss.jgitver.Strategies
-
 plugins {
   `kotlin-dsl`
   alias(libs.plugins.jgitver)
