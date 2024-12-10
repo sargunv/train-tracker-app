@@ -1047,16 +1047,36 @@ public interface ExpressionScope {
 
   //region String
 
+  /**
+   * Returns true if the input string is expected to render legibly. Returns false if the input
+   * string contains sections that cannot be rendered without potential loss of meaning (e.g. Indic
+   * scripts that require complex text shaping
+   */
   public fun isSupportedScript(script: Expression<String>): Expression<Boolean> =
     callFn("is-supported-script", script)
 
+  /**
+   * Returns the input [string] converted to uppercase. Follows the Unicode Default Case Conversion
+   * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
+   */
   public fun upcase(string: Expression<String>): Expression<String> = callFn("upcase", string)
 
+  /**
+   * Returns the input [string] converted to lowercase. Follows the Unicode Default Case Conversion
+   * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
+   */
   public fun downcase(string: Expression<String>): Expression<String> = callFn("downcase", string)
 
+  /** Returns a string consisting of the concatenation of the [strings] expressions. */
   public fun concat(vararg strings: Expression<String>): Expression<String> =
     callFn("concat", *strings)
 
+
+  /**
+   * Returns the IETF language tag of the locale being used by the provided [collator]. This can be
+   * used to determine the default system locale, or to determine if a requested locale was
+   * successfully loaded.
+   */
   public fun resolvedLocale(collator: Expression<TCollator>): Expression<String> =
     callFn("resolved-locale", collator)
 
