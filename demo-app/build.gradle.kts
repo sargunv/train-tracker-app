@@ -13,12 +13,7 @@ plugins {
   id(libs.plugins.compose.get().pluginId)
   id(libs.plugins.kotlin.cocoapods.get().pluginId)
   id(libs.plugins.kotlin.serialization.get().pluginId)
-  id(libs.plugins.jgitver.get().pluginId)
-}
-
-jgitver {
-  strategy(Strategies.MAVEN)
-  nonQualifierBranches("main")
+  id("module-conventions")
 }
 
 android {

@@ -1,17 +1,10 @@
-import fr.brouillard.oss.jgitver.Strategies
-
 plugins {
-  id("fr.brouillard.oss.gradle.jgitver")
   id("org.jetbrains.dokka")
   id("maven-publish")
+  id("module-conventions")
 }
 
 group = "dev.sargunv.maplibre-compose"
-
-jgitver {
-  strategy(Strategies.MAVEN)
-  nonQualifierBranches("main")
-}
 
 dokka {
   dokkaSourceSets {

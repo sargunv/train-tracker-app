@@ -2,16 +2,10 @@ import fr.brouillard.oss.jgitver.Strategies
 import ru.vyarus.gradle.plugin.mkdocs.task.MkdocsTask
 
 plugins {
-  id(libs.plugins.kotlin.multiplatform.get().pluginId)
   id(libs.plugins.spotless.get().pluginId)
   id(libs.plugins.dokka.get().pluginId)
   id(libs.plugins.mkdocs.get().pluginId)
-  id(libs.plugins.jgitver.get().pluginId)
-}
-
-jgitver {
-  strategy(Strategies.MAVEN)
-  nonQualifierBranches("main")
+  id("module-conventions")
 }
 
 mkdocs {

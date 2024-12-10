@@ -5,11 +5,6 @@ plugins {
   alias(libs.plugins.jgitver)
 }
 
-jgitver {
-  strategy(Strategies.MAVEN)
-  nonQualifierBranches("main")
-}
-
 repositories {
   mavenCentral()
   gradlePluginPortal()
