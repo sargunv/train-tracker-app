@@ -702,11 +702,9 @@ public interface ExpressionScope {
   public fun any(vararg expressions: Expression<Boolean>): Expression<Boolean> =
     callFn("any", *expressions)
 
-  public fun not(expression: Expression<Boolean>): Expression<Boolean> = callFn("!", expression)
-
   /** Negates this expression. */
   @JvmName("notOperator")
-  public operator fun Expression<Boolean>.not(): Expression<Boolean> = not(this)
+  public operator fun Expression<Boolean>.not(): Expression<Boolean> = callFn("!", this)
 
   /**
    * Returns whether the evaluated feature is fully contained inside the boundary of the given
