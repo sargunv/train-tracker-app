@@ -1,47 +1,18 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class, ExperimentalComposeLibrary::class)
 
-import fr.brouillard.oss.jgitver.Strategies
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
-  alias(libs.plugins.kotlin.multiplatform)
-  alias(libs.plugins.kotlin.cocoapods)
-  alias(libs.plugins.android.library)
-  alias(libs.plugins.compose)
-  alias(libs.plugins.kotlin.composeCompiler)
-  alias(libs.plugins.dokka)
-  alias(libs.plugins.mavenPublish)
-  alias(libs.plugins.jgitver)
+  id(libs.plugins.kotlin.multiplatform.get().pluginId)
+  id(libs.plugins.kotlin.cocoapods.get().pluginId)
+  id(libs.plugins.android.library.get().pluginId)
+  id(libs.plugins.compose.get().pluginId)
+  id(libs.plugins.kotlin.composeCompiler.get().pluginId)
+  id(libs.plugins.mavenPublish.get().pluginId)
   id("library-conventions")
-}
-
-jgitver {
-  strategy(Strategies.MAVEN)
-  nonQualifierBranches("main")
-}
-
-dokka {
-  dokkaSourceSets {
-    configureEach {
-      includes.from("MODULE.md")
-      sourceLink {
-        remoteUrl("https://github.com/sargunv/maplibre-compose/tree/${project.ext["base_tag"]}/")
-        localDirectory.set(rootDir)
-      }
-      externalDocumentationLinks {
-        create("spatial-k") { url("https://dellisd.github.io/spatial-k/api/") }
-        create("maplibre-native") {
-          url("https://maplibre.org/maplibre-native/android/api/")
-          packageListUrl(
-            "https://maplibre.org/maplibre-native/android/api/-map-libre%20-native%20-android/package-list"
-          )
-        }
-      }
-    }
-  }
 }
 
 android {
