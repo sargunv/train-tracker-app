@@ -258,27 +258,31 @@ public interface ExpressionScope {
   public fun <T> at(index: Expression<Number>, array: Expression<List<T>>): Expression<T> =
     callFn("at", index, array)
 
+  /** Retrieves an item from an array. */
   @JvmName("getAtIndex")
   public operator fun <T> Expression<List<T>>.get(index: Expression<Number>): Expression<T> =
     at(index, this)
 
-  /** Determines whether an item exists in an array. */
+
+  /** Determines whether an [item] exists in [list]. */
   @JvmName("inList")
-  public fun `in`(needle: Expression<*>, haystack: Expression<List<*>>): Expression<Boolean> =
-    callFn("in", needle, haystack)
+  public fun `in`(item: Expression<*>, list: Expression<List<*>>): Expression<Boolean> =
+    callFn("in", item, list)
 
-  /** Determines whether a substring exists in a string. */
-  @JvmName("inString")
-  public fun `in`(needle: Expression<String>, haystack: Expression<String>): Expression<Boolean> =
-    callFn("in", needle, haystack)
-
+  /** Determines whether an [item] exists in this list expression. */
   @JvmName("inListInfix")
-  public infix fun Expression<*>.`in`(other: Expression<List<*>>): Expression<Boolean> =
-    `in`(this, other)
+  public infix fun Expression<*>.`in`(item: Expression<List<*>>): Expression<Boolean> =
+    `in`(this, item)
 
+  /** Determines whether a [substring] exists in a [string]. */
+  @JvmName("inString")
+  public fun `in`(substring: Expression<String>, string: Expression<String>): Expression<Boolean> =
+    callFn("in", substring, string)
+
+  /** Determines whether a [substring] exists in this string expression. */
   @JvmName("inStringInfix")
-  public infix fun Expression<String>.`in`(other: Expression<String>): Expression<Boolean> =
-    `in`(this, other)
+  public infix fun Expression<String>.`in`(substring: Expression<String>): Expression<Boolean> =
+    `in`(this, substring)
 
   /**
    * Returns the first position at which an [substring] can be found in a [string], or -1 if it
