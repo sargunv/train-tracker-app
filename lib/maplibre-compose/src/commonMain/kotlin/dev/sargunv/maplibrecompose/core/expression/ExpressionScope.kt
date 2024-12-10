@@ -299,38 +299,38 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns a substring from a string from a specified start index, or between a start index and an
-   * end index if set. The return value is inclusive of the start index but not of the end index. A
-   * UTF-16 surrogate pair counts as a single position.
+   * Returns a substring from a [string] from a specified start index, or between a [startIndex] and
+   * an [endIndex] if set. The return value is inclusive of the start index but not of the end
+   * index. A UTF-16 surrogate pair counts as a single position.
    */
   @JvmName("sliceString")
   public fun slice(
-    value: Expression<String>,
-    start: Expression<Number>,
-    length: Expression<Number>? = null,
+    string: Expression<String>,
+    startIndex: Expression<Number>,
+    endIndex: Expression<Number>? = null,
   ): Expression<String> {
     val args = buildList {
-      add(value)
-      add(start)
-      length?.let { add(it) }
+      add(string)
+      add(startIndex)
+      endIndex?.let { add(it) }
     }
     return callFn("slice", *args.toTypedArray())
   }
 
   /**
-   * Returns an item from an list from a specified start index, or between a start index and an end
-   * index if set. The return value is inclusive of the start index but not of the end index.
+   * Returns an item from a [list] from a specified start index, or between a [startIndex] and an
+   * [endIndex] if set. The return value is inclusive of the start index but not of the end index.
    */
   @JvmName("sliceList")
   public fun <T> slice(
-    value: Expression<List<T>>,
-    start: Expression<Number>,
-    length: Expression<Number>? = null,
+    list: Expression<List<T>>,
+    startIndex: Expression<Number>,
+    endIndex: Expression<Number>? = null,
   ): Expression<T> {
     val args = buildList {
-      add(value)
-      add(start)
-      length?.let { add(it) }
+      add(list)
+      add(startIndex)
+      endIndex?.let { add(it) }
     }
     return callFn("slice", *args.toTypedArray())
   }
