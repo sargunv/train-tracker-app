@@ -667,13 +667,13 @@ public interface ExpressionScope {
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn("<=", left, right, *buildArgs { collator?.let { add(it) } })
 
-  /** Returns whether all of the [expressions] are `true`. */
-  public fun all(vararg expressions: Expression<Boolean>): Expression<Boolean> =
-    callFn("all", *expressions)
+  /** Returns whether both this and [other] expressions are true. */
+  public infix fun Expression<Boolean>.and(other: Expression<Boolean>): Expression<Boolean> =
+    callFn("all", this, other)
 
-  /** Returns whether any of the [expressions] are `true`. */
-  public fun any(vararg expressions: Expression<Boolean>): Expression<Boolean> =
-    callFn("any", *expressions)
+  /** Returns whether any of this or the [other] expressions are true. */
+  public infix fun Expression<Boolean>.or(other: Expression<Boolean>): Expression<Boolean> =
+    callFn("any", this, other)
 
   /** Negates this expression. */
   @JvmName("notOperator")
