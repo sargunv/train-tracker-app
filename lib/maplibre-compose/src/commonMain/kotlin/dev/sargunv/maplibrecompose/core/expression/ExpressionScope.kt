@@ -137,7 +137,7 @@ public interface ExpressionScope {
 
   /**
    * Returns a collator for use in locale-dependent comparison operations. The [caseSensitive] and
-   * [diacriticSensitive] options default to false. The [locale] argument specifies the IETF
+   * [diacriticSensitive] options default to `false`. The [locale] argument specifies the IETF
    * language tag of the locale to use. If none is provided, the default locale is used. If the
    * requested locale is not available, the collator will use a system-defined fallback locale. Use
    * [resolvedLocale] to test the results of locale fallback behavior.
@@ -157,9 +157,9 @@ public interface ExpressionScope {
     )
 
   /**
-   * Returns a formatted string for displaying mixed-format text in the text-field property. The
-   * input may contain a string literal or expression, including an 'image' expression. Strings may
-   * be followed by a style override object that supports the following properties:
+   * Returns a formatted string for displaying mixed-format text in the `textField` property (see
+   * [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer]). The input may contain a
+   * string literal or expression, including an 'image' expression.
    */
   public fun format(vararg sections: Pair<Expression<*>, FormatStyle>): Expression<TFormatted> =
     callFn(
