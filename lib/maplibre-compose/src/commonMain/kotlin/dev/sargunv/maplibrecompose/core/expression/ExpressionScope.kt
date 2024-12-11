@@ -854,8 +854,8 @@ public interface ExpressionScope {
   public fun linear(): Expression<TInterpolationType> = callFn("linear")
 
   /**
-   * Interpolates using the cubic bezier curve defined by the given control points between the
-   * pairs of stops.
+   * Interpolates using the cubic bezier curve defined by the given control points between the pairs
+   * of stops.
    */
   public fun cubicBezier(
     x1: Expression<Number>,
