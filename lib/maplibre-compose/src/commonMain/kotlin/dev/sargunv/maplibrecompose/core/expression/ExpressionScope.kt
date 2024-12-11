@@ -746,7 +746,9 @@ public interface ExpressionScope {
    * [input], or the [fallback] if the input is less than the first stop.
    *
    * Example:
-   * `step(zoom(), const(0), 10 to const(2.5), 20 to const(10.5))`
+   * ```
+   * step(zoom(), const(0), 10 to const(2.5), 20 to const(10.5))
+   * ```
    *
    * returns 0 if the zoom is less than 10, 2.5 if the zoom is between 10 and less than 20, 10.5 if
    * the zoom is greater than or equal 20.
@@ -844,8 +846,10 @@ public interface ExpressionScope {
   /** Interpolates linearly between the pairs of stops. */
   public fun linear(): Expression<TInterpolationType> = callFn("linear")
 
-  /** Interpolates using the cubic bezier curve defined by the given control points between the
-   *  pairs of stops. */
+  /**
+   * Interpolates using the cubic bezier curve defined by the given control points between the
+   * pairs of stops.
+   */
   public fun cubicBezier(
     x1: Expression<Number>,
     y1: Expression<Number>,
