@@ -33,8 +33,8 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  *
  *   TODO examples missing, see https://maplibre.org/maplibre-style-spec/sources/#clusterproperties
  *
- * @param lineMetrics Whether to calculate line distance metrics. This is required for line layers
- *   that specify line-gradient values.
+ * @param lineMetrics Whether to calculate line distance metrics. This is required for
+ *   [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer]s that specify a `gradient`.
  */
 // not supported yet:
 // @param clusterMinPoints Minimum number of points necessary to form a cluster if clustering is

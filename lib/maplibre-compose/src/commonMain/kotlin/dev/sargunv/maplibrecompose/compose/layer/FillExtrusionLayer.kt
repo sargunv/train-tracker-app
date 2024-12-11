@@ -27,7 +27,9 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *   this, the layer will be hidden. A value in the range of `[0..24]`.
  * @param filter An expression specifying conditions on source features. Only features that match
  *   the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom
- *   levels. The `feature-state` expression is not supported in filter expressions.
+ *   levels. The
+ *   [featureState][dev.sargunv.maplibrecompose.core.expression.ExpressionScope.featureState]
+ *   expression is not supported in filter expressions.
  * @param visible Whether the layer should be displayed.
  * @param translate The geometry's offset relative to the [translateAnchor]. Negative numbers
  *   indicate left and up (on the flat plane), respectively.
