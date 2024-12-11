@@ -542,18 +542,22 @@ public interface ExpressionScope {
     callFn("coalesce", *values)
 
   /** Returns whether this expression is equal to [other]. */
+  @JvmName("eqBoolean")
   public infix fun Expression<Boolean>.eq(other: Expression<Boolean>): Expression<Boolean> =
     callFn("==", this, other)
 
   /** Returns whether this expression is equal to [other]. */
+  @JvmName("eqString")
   public infix fun Expression<String>.eq(other: Expression<String>): Expression<Boolean> =
     callFn("==", this, other)
 
   /** Returns whether this expression is equal to [other]. */
+  @JvmName("eqNumber")
   public infix fun Expression<Number>.eq(other: Expression<Number>): Expression<Boolean> =
     callFn("==", this, other)
 
   /** Returns whether this expression is equal to [other]. */
+  @JvmName("eqDp")
   public infix fun Expression<Dp>.eq(other: Expression<Dp>): Expression<Boolean> =
     callFn("==", this, other)
 
@@ -569,18 +573,22 @@ public interface ExpressionScope {
   ): Expression<Boolean> = callFn("==", left, right, *buildArgs { collator?.let { add(it) } })
 
   /** Returns whether this expression is not equal to [other]. */
+  @JvmName("neqBoolean")
   public infix fun Expression<Boolean>.neq(other: Expression<Boolean>): Expression<Boolean> =
     callFn("!=", this, other)
 
   /** Returns whether this expression is not equal to [other]. */
+  @JvmName("neqString")
   public infix fun Expression<String>.neq(other: Expression<String>): Expression<Boolean> =
     callFn("!=", this, other)
 
   /** Returns whether this expression is not equal to [other]. */
+  @JvmName("neqNumber")
   public infix fun Expression<Number>.neq(other: Expression<Number>): Expression<Boolean> =
     callFn("!=", this, other)
 
   /** Returns whether this expression is not equal to [other]. */
+  @JvmName("neqDp")
   public infix fun Expression<Dp>.neq(other: Expression<Dp>): Expression<Boolean> =
     callFn("!=", this, other)
 
@@ -747,12 +755,14 @@ public interface ExpressionScope {
    * Returns whether the evaluated feature is fully contained inside the boundary of the given
    * [polygon].
    */
+  @JvmName("withinPolygon")
   public fun within(polygon: Expression<Polygon>): Expression<Boolean> = callFn("within", polygon)
 
   /**
    * Returns whether the evaluated feature is fully contained inside the boundary of the given
    * [polygon].
    */
+  @JvmName("withinMultiPolygon")
   public fun within(polygon: Expression<MultiPolygon>): Expression<Boolean> =
     callFn("within", polygon)
 
@@ -904,6 +914,7 @@ public interface ExpressionScope {
   public fun e(): Expression<Number> = callFn("e")
 
   /** Returns the sum of this number expression with [other]. */
+  @JvmName("plusNumber")
   public operator fun Expression<Number>.plus(other: Expression<Number>): Expression<Number> =
     callFn("+", this, other)
 
@@ -956,10 +967,12 @@ public interface ExpressionScope {
     callFn("%", this, divisor)
 
   /** Returns the result of raising this number expression to the power of [exponent]. */
+  @JvmName("powNumber")
   public fun Expression<Number>.pow(exponent: Expression<Number>): Expression<Number> =
     callFn("^", this, exponent)
 
   /** Returns the result of raising this dp expression to the power of [exponent]. */
+  @JvmName("powDp")
   public fun Expression<Dp>.pow(exponent: Expression<Dp>): Expression<Number> =
     callFn("^", this, exponent)
 
@@ -1175,6 +1188,7 @@ public interface ExpressionScope {
   public fun Expression<String>.lowercase(): Expression<String> = callFn("downcase", this)
 
   /** Concatenates this string expression with [other]. */
+  @JvmName("plusString")
   public operator fun Expression<String>.plus(other: Expression<String>): Expression<String> =
     callFn("concat", this, other)
 
