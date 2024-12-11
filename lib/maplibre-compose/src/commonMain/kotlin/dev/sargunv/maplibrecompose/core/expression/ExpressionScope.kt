@@ -529,12 +529,20 @@ public interface ExpressionScope {
   public fun <T> coalesce(vararg values: Expression<T?>): Expression<T> =
     callFn("coalesce", *values)
 
-  /**
-   * Returns whether this expression is equal to [other].
-   *
-   * The inputs must be Numbers, Strings, or Booleans, and both of the same type.
-   */
-  public infix fun Expression<*>.eq(other: Expression<*>): Expression<Boolean> =
+  /** Returns whether this expression is equal to [other]. */
+  public infix fun Expression<Boolean>.eq(other: Expression<Boolean>): Expression<Boolean> =
+    callFn("==", this, other)
+
+  /** Returns whether this expression is equal to [other]. */
+  public infix fun Expression<String>.eq(other: Expression<String>): Expression<Boolean> =
+    callFn("==", this, other)
+
+  /** Returns whether this expression is equal to [other]. */
+  public infix fun Expression<Number>.eq(other: Expression<Number>): Expression<Boolean> =
+    callFn("==", this, other)
+
+  /** Returns whether this expression is equal to [other]. */
+  public infix fun Expression<Dp>.eq(other: Expression<Dp>): Expression<Boolean> =
     callFn("==", this, other)
 
   /**
@@ -548,12 +556,20 @@ public interface ExpressionScope {
     collator: Expression<TCollator>? = null,
   ): Expression<Boolean> = callFn("==", left, right, *buildArgs { collator?.let { add(it) } })
 
-  /**
-   * Returns whether this expression is not equal to [other].
-   *
-   * The inputs must be Numbers, Strings, or Booleans, and both of the same type.
-   */
-  public infix fun Expression<*>.neq(other: Expression<*>): Expression<Boolean> =
+  /** Returns whether this expression is not equal to [other]. */
+  public infix fun Expression<Boolean>.neq(other: Expression<Boolean>): Expression<Boolean> =
+    callFn("!=", this, other)
+
+  /** Returns whether this expression is not equal to [other]. */
+  public infix fun Expression<String>.neq(other: Expression<String>): Expression<Boolean> =
+    callFn("!=", this, other)
+
+  /** Returns whether this expression is not equal to [other]. */
+  public infix fun Expression<Number>.neq(other: Expression<Number>): Expression<Boolean> =
+    callFn("!=", this, other)
+
+  /** Returns whether this expression is not equal to [other]. */
+  public infix fun Expression<Dp>.neq(other: Expression<Dp>): Expression<Boolean> =
     callFn("!=", this, other)
 
   /**
