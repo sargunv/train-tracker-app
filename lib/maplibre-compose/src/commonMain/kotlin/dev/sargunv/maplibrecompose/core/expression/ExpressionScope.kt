@@ -72,17 +72,23 @@ public interface ExpressionScope {
   public fun <T> literal(values: List<Expression<T>>): Expression<List<T>> =
     callFn("literal", Expression.ofList(values))
 
-  /** Produces a literal object value. */
+  /** Produces a literal map value. */
   public fun <T> literal(values: Map<String, Expression<T>>): Expression<Map<String, T>> =
     callFn("literal", Expression.ofMap(values))
 
   /**
-   * Asserts that the input is a list (optionally with a specific item type and length). If, when
-   * the input expression is evaluated, it is not of the asserted type, then this assertion will
-   * cause the whole expression to be aborted.
+   * Returns a string describing the type of this expression. Either "boolean", "string", "number",
+   * "color" or "array".
+   * */
+  public fun Expression<*>.type(): Expression<String> = callFn("typeof", this)
+
+  /**
+   * Asserts that this is a list (optionally with a specific item [type] and [length]).
+   *
+   * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
+   * will cause the whole expression to be aborted.
    */
-  public fun <T> array(
-    value: Expression<*>,
+  public fun <T> Expression<*>.asList(
     type: Expression<String>? = null,
     length: Expression<Number>? = null,
   ): Expression<List<T>> {
@@ -90,45 +96,44 @@ public interface ExpressionScope {
       type?.let { add(const("array")) }
       length?.let { add(const("array")) }
     }
-    return callFn("array", value, *args.toTypedArray())
+    return callFn("array", this, *args.toTypedArray())
   }
 
-  /** Returns a string describing the type of the given value. */
-  public fun `typeof`(expression: Expression<*>): Expression<String> = callFn("typeof", expression)
+  /**
+   * Asserts that this value is a string.
+   *
+   * In case this expression is not a string, each of the [fallbacks] is evaluated in order until a
+   * string is obtained. If none of the inputs are strings, the expression is an error.
+   */
+  public fun Expression<*>.asString(vararg fallbacks: Expression<*>): Expression<String> =
+    callFn("string", this, *fallbacks)
 
   /**
-   * Asserts that the input value is a string. If multiple values are provided, each one is
-   * evaluated in order until a string is obtained. If none of the inputs are strings, the
-   * expression is an error.
+   * Asserts that this value is a number.
+   *
+   * In case this expression is not a number, each of the [fallbacks] is evaluated in order until a
+   * number is obtained. If none of the inputs are numbers, the expression is an error.
    */
-  public fun string(value: Expression<*>, vararg fallbacks: Expression<*>): Expression<String> =
-    callFn("string", value, *fallbacks)
+  public fun Expression<*>.asNumber(vararg fallbacks: Expression<*>): Expression<Number> =
+    callFn("number", this, *fallbacks)
 
   /**
-   * Asserts that the input value is a number. If multiple values are provided, each one is
-   * evaluated in order until a number is obtained. If none of the inputs are numbers, the
-   * expression is an error.
+   * Asserts that this value is a boolean.
+   *
+   * In case this expression is not a boolean, each of the [fallbacks] is evaluated in order until a
+   * boolean is obtained. If none of the inputs are booleans, the expression is an error.
    */
-  public fun number(value: Expression<*>, vararg fallbacks: Expression<*>): Expression<Number> =
-    callFn("number", value, *fallbacks)
+  public fun Expression<*>.asBoolean(vararg fallbacks: Expression<*>): Expression<Boolean> =
+    callFn("boolean", this, *fallbacks)
 
   /**
-   * Asserts that the input value is a boolean. If multiple values are provided, each one is
-   * evaluated in order until a boolean is obtained. If none of the inputs are booleans, the
-   * expression is an error.
+   * Asserts that this value is a map.
+   *
+   * In case this expression is not a map, each of the [fallbacks] is evaluated in order until a map
+   * is obtained. If none of the inputs are maps, the expression is an error.
    */
-  public fun boolean(value: Expression<*>, vararg fallbacks: Expression<*>): Expression<Boolean> =
-    callFn("boolean", value, *fallbacks)
-
-  /**
-   * Asserts that the input value is an object. If multiple values are provided, each one is
-   * evaluated in order until an object is obtained. If none of the inputs are objects, the
-   * expression is an error.
-   */
-  public fun <T> `object`(
-    value: Expression<*>,
-    vararg fallbacks: Expression<*>,
-  ): Expression<Map<String, T>> = callFn("object", value, *fallbacks)
+  public fun <T> Expression<*>.asMap(vararg fallbacks: Expression<*>): Expression<Map<String, T>> =
+    callFn("object", this, *fallbacks)
 
   /**
    * Returns a collator for use in locale-dependent comparison operations. The [caseSensitive] and
