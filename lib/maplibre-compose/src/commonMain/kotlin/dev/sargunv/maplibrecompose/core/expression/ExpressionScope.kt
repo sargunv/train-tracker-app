@@ -736,6 +736,13 @@ public interface ExpressionScope {
    */
   public fun within(polygon: Expression<Polygon>): Expression<Boolean> = callFn("within", polygon)
 
+  /**
+   * Returns whether the evaluated feature is fully contained inside the boundary of the given
+   * [polygon].
+   */
+  public fun within(polygon: Expression<MultiPolygon>): Expression<Boolean> =
+    callFn("within", polygon)
+
   // endregion
 
   // region Ramps, Scales, Curves
