@@ -375,7 +375,7 @@ public interface ExpressionScope {
    *
    * ```
    * case(
-   *   all(has("color1"), has("color2")) then
+   *   (has("color1") and has("color2")) then
    *     interpolate(linear(), zoom(), 1 to get("color1"), 20 to get("color2")),
    *   has("color") then
    *     get("color"),
@@ -420,9 +420,9 @@ public interface ExpressionScope {
    * ```
    * match(
    *   get("building_type"),
-   *   const(Color.Red),
    *   "residential" then const(Color.Cyan),
    *   listOf("commercial", "industrial") then const(Color.Yellow),
+   *   const(Color.Red),
    * )
    * ```
    * If the feature has a property  "building_type" with the value "residential", cyan is returned.
