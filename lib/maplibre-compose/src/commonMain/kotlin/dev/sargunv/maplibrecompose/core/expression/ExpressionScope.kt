@@ -215,40 +215,52 @@ public interface ExpressionScope {
     )
 
   /**
-   * Converts the input value to a string. If the input is null, the result is "". If the input is a
-   * boolean, the result is "true" or "false". If the input is a number, it is converted to a string
-   * as specified by the "NumberToString" algorithm of the ECMAScript Language Specification. If the
-   * input is a color, it is converted to a string of the form "rgba(r,g,b,a)", where r, g, and b
-   * are numerals ranging from 0 to 255, and a ranges from 0 to 1. Otherwise, the input is converted
-   * to a string in the format specified by the JSON.stringify function of the ECMAScript Language
-   * Specification.
+   * Converts this expression to a string.
+   *
+   * If this is ...
+   * - `null`, the result is `""`
+   * - a boolean, the result is `"true"` or `"false"`
+   * - a number, it is converted to a string as specified by the "NumberToString" algorithm of the
+   *   ECMAScript Language Specification.
+   * - a color, it is converted to a string of the form `"rgba(r,g,b,a)"`, where `r`, `g`, and `b`
+   *   are numerals ranging from 0 to 255, and `a` ranges from 0 to 1.
+   *
+   * Otherwise, the input is converted to a string in the format specified by the JSON.stringify
+   * function of the ECMAScript Language Specification.
    */
-  public fun toString(value: Expression<*>): Expression<String> = callFn("to-string", value)
+  public fun Expression<*>.toStringExpression(): Expression<String> = callFn("to-string", this)
 
   /**
-   * Converts the input value to a number, if possible. If the input is null or false, the result
-   * is 0. If the input is true, the result is 1. If the input is a string, it is converted to a
-   * number as specified by the "ToNumber Applied to the String Type" algorithm of the ECMAScript
-   * Language Specification. If multiple values are provided, each one is evaluated in order until
-   * the first successful conversion is obtained. If none of the inputs can be converted, the
-   * expression is an error.
+   * Converts this expression to a number.
+   *
+   * If this expression is `null` or `false`, the result is `0`. If this is `true`, the result is
+   * `1`. If the input is a string, it is converted to a number as specified by the "ToNumber
+   * Applied to the String Type" algorithm of the ECMAScript Language Specification.
+   *
+   * In case this expression cannot be converted to a number, each of the [fallbacks] is evaluated
+   * in order until the first successful conversion is obtained. If none of the inputs can be
+   * converted, the expression is an error.
    */
-  public fun toNumber(value: Expression<*>, vararg fallbacks: Expression<*>): Expression<Number> =
-    callFn("to-number", value, *fallbacks)
+  public fun Expression<*>.toNumberExpression(vararg fallbacks: Expression<*>): Expression<Number> =
+    callFn("to-number", this, *fallbacks)
 
   /**
-   * Converts the input value to a boolean. The result is false when then input is an empty string,
-   * 0, false, null, or NaN; otherwise it is true.
+   * Converts this expression to a boolean expression.
+   *
+   * The result is `false` when then this is an empty string, `0`, `false`,`null` or `NaN`;
+   * otherwise it is `true`.
    */
-  public fun toBoolean(value: Expression<*>): Expression<Boolean> = callFn("to-boolean", value)
+  public fun Expression<*>.toBooleanExpression(): Expression<Boolean> = callFn("to-boolean", this)
 
   /**
-   * Converts the input value to a color. If multiple values are provided, each one is evaluated in
+   * Converts this expression to a color expression.
+   *
+   * In case this expression cannot be converted to a color, each of the [fallbacks] is evaluated in
    * order until the first successful conversion is obtained. If none of the inputs can be
    * converted, the expression is an error.
    */
-  public fun toColor(value: Expression<*>, vararg fallbacks: Expression<*>): Expression<Color> =
-    callFn("to-color", value, *fallbacks)
+  public fun Expression<*>.toColorExpression(vararg fallbacks: Expression<*>): Expression<Color> =
+    callFn("to-color", this, *fallbacks)
 
   //endregion
 
