@@ -186,23 +186,29 @@ public interface ExpressionScope {
   )
 
   /**
-   * Returns an image type for use in icon-image, *-pattern entries and as a section in the [format]
-   * expression. If set, the image argument will check that the requested image exists in the style
-   * and will return either the resolved image name or null, depending on whether or not the image
+   * Returns an image type for use in `iconImage` (see
+   * [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer]), `pattern` entries (see
+   * [BackgroundLayer][dev.sargunv.maplibrecompose.compose.layer.BackgroundLayer],
+   * [FillLayer][dev.sargunv.maplibrecompose.compose.layer.FillLayer],
+   * [FillExtrusionLayer][dev.sargunv.maplibrecompose.compose.layer.FillExtrusionLayer],
+   * [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer])  and as a section in the
+   * [format] expression.
+   *
+   * If set, the image argument will check that the requested image exists in the style
+   * and will return either the resolved image name or `null`, depending on whether or not the image
    * is currently in the style. This validation process is synchronous and requires the image to
    * have been added to the style before requesting it in the image argument.
    */
   public fun image(value: Expression<String>): Expression<TResolvedImage> = callFn("image", value)
 
   /**
-   * Converts the input number into a string representation using the providing formatting rules. If
-   * set, the locale argument specifies the locale to use, as a BCP 47 language tag. If set, the
-   * currency argument specifies an ISO 4217 code to use for currency-style formatting. If set, the
-   * min-fraction-digits and max-fraction-digits arguments specify the minimum and maximum number of
-   * fractional digits to include.
+   * Converts this number into a string representation using the provided formatting rules.
+   * @param locale BCP 47 language tag for which locale to use
+   * @param currency an ISO 4217 code to use for currency-style formatting
+   * @param minFractionDigits minimum fractional digits to include
+   * @param maxFractionDigits maximum fractional digits to include
    */
-  public fun numberFormat(
-    number: Expression<Number>,
+  public fun Expression<Number>.numberFormat(
     locale: Expression<String>? = null,
     currency: Expression<String>? = null,
     minFractionDigits: Expression<Number>? = null,
@@ -210,7 +216,7 @@ public interface ExpressionScope {
   ): Expression<String> =
     callFn(
       "number-format",
-      number,
+      this,
       buildOptions {
         locale?.let { put("locale", it) }
         currency?.let { put("currency", it) }
@@ -233,7 +239,7 @@ public interface ExpressionScope {
    * Otherwise, the input is converted to a string in the format specified by the JSON.stringify
    * function of the ECMAScript Language Specification.
    */
-  public fun Expression<*>.toStringExpression(): Expression<String> = callFn("to-string", this)
+  public fun Expression<*>.convertToString(): Expression<String> = callFn("to-string", this)
 
   /**
    * Converts this expression to a number.
@@ -246,7 +252,7 @@ public interface ExpressionScope {
    * in order until the first successful conversion is obtained. If none of the inputs can be
    * converted, the expression is an error.
    */
-  public fun Expression<*>.toNumberExpression(vararg fallbacks: Expression<*>): Expression<Number> =
+  public fun Expression<*>.convertToNumber(vararg fallbacks: Expression<*>): Expression<Number> =
     callFn("to-number", this, *fallbacks)
 
   /**
@@ -255,7 +261,7 @@ public interface ExpressionScope {
    * The result is `false` when then this is an empty string, `0`, `false`,`null` or `NaN`;
    * otherwise it is `true`.
    */
-  public fun Expression<*>.toBooleanExpression(): Expression<Boolean> = callFn("to-boolean", this)
+  public fun Expression<*>.convertToBoolean(): Expression<Boolean> = callFn("to-boolean", this)
 
   /**
    * Converts this expression to a color expression.
@@ -264,7 +270,7 @@ public interface ExpressionScope {
    * order until the first successful conversion is obtained. If none of the inputs can be
    * converted, the expression is an error.
    */
-  public fun Expression<*>.toColorExpression(vararg fallbacks: Expression<*>): Expression<Color> =
+  public fun Expression<*>.convertToColor(vararg fallbacks: Expression<*>): Expression<Color> =
     callFn("to-color", this, *fallbacks)
 
   //endregion
@@ -276,19 +282,19 @@ public interface ExpressionScope {
   public operator fun <T> Expression<List<T>>.get(index: Expression<Number>): Expression<T> =
     callFn("at", index, this)
 
-  /** Returns whether this list contains an [item]. */
+  /** Returns whether this list contains the [item]. */
   @JvmName("containsList")
   public fun Expression<List<*>>.contains(item: Expression<*>): Expression<Boolean> =
     callFn("in", item, this)
 
-  /** Returns whether this string contains a [substring]. */
+  /** Returns whether this string contains the [substring]. */
   @JvmName("containsString")
   public fun Expression<String>.contains(substring: Expression<String>): Expression<Boolean> =
     callFn("in", substring, this)
 
   /**
-   * Returns the first index at which a [substring] is found in this string, or -1 if it cannot be
-   * found. Accepts an optional [startIndex] from where to begin the search.
+   * Returns the first index at which the [substring] is located in this string, or `-1` if it
+   * cannot be found. Accepts an optional [startIndex] from where to begin the search.
    */
   @JvmName("indexOfString")
   public fun Expression<String>.indexOf(
@@ -304,8 +310,8 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns the first index at which an [item] is found in this list, or -1 if it cannot be found.
-   * Accepts an optional [startIndex] from where to begin the search.
+   * Returns the first index at which the [item] is located in this list, or `-1` if it cannot be
+   * found. Accepts an optional [startIndex] from where to begin the search.
    */
   @JvmName("indexOfList")
   public fun Expression<List<*>>.indexOf(
@@ -321,9 +327,10 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns a substring from this string from the [startIndex] (inclusive) to the [endIndex]
-   * (exclusive). If [endIndex] is not set or null, till the end of the string. A UTF-16 surrogate
-   * pair counts as a single position.
+   * Returns a substring from this string from the [startIndex] (inclusive) to the end of the
+   * string if [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
+   *
+   * A UTF-16 surrogate pair counts as a single position.
    */
   public fun Expression<String>.substring(
     startIndex: Expression<Number>,
@@ -338,8 +345,8 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns the items in this list from the [startIndex] (inclusive) to the [endIndex] (exclusive).
-   * If [endIndex] is not set or null, till the end of the list.
+   * Returns the items in this list from the [startIndex] (inclusive) to the end of this list if
+   * [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
    */
   public fun <T> Expression<List<T>>.slice(
     startIndex: Expression<Number>,
@@ -354,8 +361,8 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns the value corresponding to the given [key] in the current feature's properties or null
-   * if it is not present.
+   * Returns the value corresponding to the given [key] in the current feature's properties or
+   * `null` if it is not present.
    */
   public fun <T> get(key: Expression<String>): Expression<T> =
     callFn("get", key)
@@ -364,7 +371,7 @@ public interface ExpressionScope {
   public fun has(key: Expression<String>): Expression<Boolean> =
     callFn("has", key)
 
-  /** Returns the value corresponding the given [key] or null if it is not present in this map. */
+  /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
   public operator fun <T> Expression<Map<String, *>>.get(key: Expression<String>): Expression<T> =
     callFn("get", key, this)
 
@@ -372,7 +379,11 @@ public interface ExpressionScope {
   public fun Expression<Map<String, *>>.has(key: Expression<String>): Expression<Boolean> =
     callFn("has", key, this)
 
-  /** Gets the length of this string. A UTF-16 surrogate pair counts as a single position. */
+  /**
+   * Gets the length of this string.
+   *
+   * A UTF-16 surrogate pair counts as a single position.
+   */
   @JvmName("lengthOfString")
   public fun Expression<String>.length(): Expression<Number> = callFn("length", this)
 
@@ -512,8 +523,8 @@ public interface ExpressionScope {
     MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
 
   /**
-   * Evaluates each expression in turn until the first non-null value is obtained, and returns that
-   * value.
+   * Evaluates each expression in [values] in turn until the first non-null value is obtained, and
+   * returns that value.
    */
   public fun <T> coalesce(vararg values: Expression<T?>): Expression<T> =
     callFn("coalesce", *values)
