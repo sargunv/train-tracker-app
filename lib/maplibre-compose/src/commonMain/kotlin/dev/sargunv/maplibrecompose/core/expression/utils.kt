@@ -21,7 +21,7 @@ public sealed interface TCollator
  * @see ExpressionScope.linear
  * @see ExpressionScope.exponential
  * @see ExpressionScope.cubicBezier
- * */
+ */
 public sealed interface TInterpolationType
 
 // helpers for default expression values

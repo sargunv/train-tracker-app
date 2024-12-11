@@ -31,6 +31,7 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  *   [maplibre-native#261](https://github.com/maplibre/maplibre-native/issues/261)**
  *
  *   Minimum number of points necessary to form a cluster if clustering is enabled.
+ *
  * @param clusterProperties A map defining custom properties on the generated clusters if clustering
  *   is enabled, aggregating values from clustered points. The keys are the property names, the
  *   values are expressions.

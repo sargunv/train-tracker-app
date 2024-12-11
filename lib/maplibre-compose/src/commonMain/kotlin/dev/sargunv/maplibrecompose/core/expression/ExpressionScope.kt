@@ -14,7 +14,7 @@ public interface ExpressionScope {
 
   // basic types: https://maplibre.org/maplibre-style-spec/types/
 
-  //region Literals
+  // region Literals
 
   public fun const(string: String): Expression<String> = Expression.ofString(string)
 
@@ -51,9 +51,9 @@ public interface ExpressionScope {
 
   // expressions: https://maplibre.org/maplibre-style-spec/expressions/
 
-  //endregion
-  //region Variable binding
+  // endregion
 
+  // region Variable binding
   /**
    * Binds expressions to named variables, which can then be referenced in the result expression
    * using [var].
@@ -64,9 +64,9 @@ public interface ExpressionScope {
   /** References variable bound using [let]. */
   public fun <T> `var`(name: String): Expression<T> = callFn("var", const(name))
 
-  //endregion
+  // endregion
 
-  //region Types
+  // region Types
 
   /** Produces a literal list value. */
   public fun <T> literal(values: List<Expression<T>>): Expression<List<T>> =
@@ -79,7 +79,7 @@ public interface ExpressionScope {
   /**
    * Returns a string describing the type of this expression. Either "boolean", "string", "number",
    * "color" or "array".
-   * */
+   */
   public fun Expression<*>.type(): Expression<String> = callFn("typeof", this)
 
   /**
@@ -191,18 +191,19 @@ public interface ExpressionScope {
    * [BackgroundLayer][dev.sargunv.maplibrecompose.compose.layer.BackgroundLayer],
    * [FillLayer][dev.sargunv.maplibrecompose.compose.layer.FillLayer],
    * [FillExtrusionLayer][dev.sargunv.maplibrecompose.compose.layer.FillExtrusionLayer],
-   * [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer])  and as a section in the
+   * [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer]) and as a section in the
    * [format] expression.
    *
-   * If set, the image argument will check that the requested image exists in the style
-   * and will return either the resolved image name or `null`, depending on whether or not the image
-   * is currently in the style. This validation process is synchronous and requires the image to
-   * have been added to the style before requesting it in the image argument.
+   * If set, the image argument will check that the requested image exists in the style and will
+   * return either the resolved image name or `null`, depending on whether or not the image is
+   * currently in the style. This validation process is synchronous and requires the image to have
+   * been added to the style before requesting it in the image argument.
    */
   public fun image(value: Expression<String>): Expression<TResolvedImage> = callFn("image", value)
 
   /**
    * Converts this number into a string representation using the provided formatting rules.
+   *
    * @param locale BCP 47 language tag for which locale to use
    * @param currency an ISO 4217 code to use for currency-style formatting
    * @param minFractionDigits minimum fractional digits to include
@@ -273,9 +274,9 @@ public interface ExpressionScope {
   public fun Expression<*>.convertToColor(vararg fallbacks: Expression<*>): Expression<Color> =
     callFn("to-color", this, *fallbacks)
 
-  //endregion
+  // endregion
 
-  //region Lookup
+  // region Lookup
 
   /** Returns the item at [index]. */
   @JvmName("getAtIndex")
@@ -327,8 +328,8 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns a substring from this string from the [startIndex] (inclusive) to the end of the
-   * string if [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
+   * Returns a substring from this string from the [startIndex] (inclusive) to the end of the string
+   * if [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
    *
    * A UTF-16 surrogate pair counts as a single position.
    */
@@ -364,12 +365,10 @@ public interface ExpressionScope {
    * Returns the value corresponding to the given [key] in the current feature's properties or
    * `null` if it is not present.
    */
-  public fun <T> get(key: Expression<String>): Expression<T> =
-    callFn("get", key)
+  public fun <T> get(key: Expression<String>): Expression<T> = callFn("get", key)
 
   /** Tests for the presence of a property value [key] in the current feature's properties. */
-  public fun has(key: Expression<String>): Expression<Boolean> =
-    callFn("has", key)
+  public fun has(key: Expression<String>): Expression<Boolean> = callFn("has", key)
 
   /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
   public operator fun <T> Expression<Map<String, *>>.get(key: Expression<String>): Expression<T> =
@@ -391,16 +390,15 @@ public interface ExpressionScope {
   @JvmName("lengthOfList")
   public fun Expression<List<*>>.length(): Expression<Number> = callFn("length", this)
 
-  //endregion
+  // endregion
 
-  //region Decision
+  // region Decision
 
   /**
    * Selects the first output from the given [branches] whose corresponding test condition evaluates
    * to `true`, or the [fallback] value otherwise.
    *
    * Example:
-   *
    * ```
    * case(
    *   (has("color1") and has("color2")) then
@@ -410,6 +408,7 @@ public interface ExpressionScope {
    *   const(Color.Red)
    * )
    * ```
+   *
    * If the feature has both a "color1" and "color2" property, the result is an interpolation
    * between these two colors based on the zoom level. Otherwise, if the feature has a "color"
    * property, that color is returned. If the feature has none of the three, the color red is
@@ -444,7 +443,6 @@ public interface ExpressionScope {
    * will be the [fallback] value.
    *
    * Example:
-   *
    * ```
    * match(
    *   get("building_type"),
@@ -453,6 +451,7 @@ public interface ExpressionScope {
    *   const(Color.Red),
    * )
    * ```
+   *
    * If the feature has a property  "building_type" with the value "residential", cyan is returned.
    * Otherwise, if the value of that property is either "commercial" or "industrial", yellow is
    * returned. If none of that is true, the fallback is returned, i.e. red.
@@ -738,9 +737,9 @@ public interface ExpressionScope {
   public fun within(polygon: Expression<Polygon>): Expression<Boolean> =
     callFn("within", polygon)
 
-  //endregion
+  // endregion
 
-  //region Ramps, Scales, Curves
+  // region Ramps, Scales, Curves
 
   /**
    * Produces discrete, stepped results by evaluating a piecewise-constant function defined by pairs
@@ -753,7 +752,7 @@ public interface ExpressionScope {
    *
    * returns 0 if the zoom is less than 10, 2.5 if the zoom is between 10 and less than 20, 10.5 if
    * the zoom is greater than or equal 20.
-   * */
+   */
   public fun <Output> step(
     input: Expression<Number>,
     fallback: Expression<Output>,
@@ -837,7 +836,8 @@ public interface ExpressionScope {
     vararg stops: Pair<Number, Expression<Color>>,
   ): Expression<Color> = interpolateImpl("interpolate-lab", type, input, *stops)
 
-  /** Interpolates exponentially between the stops. [base] controls the rate at which the output
+  /**
+   * Interpolates exponentially between the stops. [base] controls the rate at which the output
    * increases: higher values make the output increase more towards the high end of the range. With
    * values close to 1 the output increases linearly.
    */
@@ -856,9 +856,9 @@ public interface ExpressionScope {
     y2: Expression<Number>,
   ): Expression<TInterpolationType> = callFn("cubic-bezier", x1, y1, x2, y2)
 
-  //endregion
+  // endregion
 
-  //region Math
+  // region Math
 
   /** Returns mathematical constant ln(2) = natural logarithm of 2. */
   public fun ln2(): Expression<Number> = callFn("ln2")
@@ -973,15 +973,17 @@ public interface ExpressionScope {
   @JvmName("maxDp")
   public fun max(vararg numbers: Expression<Dp>): Expression<Dp> = callFn("max", *numbers)
 
-  /** Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
+  /**
+   * Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
    *
-   *  For example `round(const(-1.5))` evaluates to `-2`.
+   * For example `round(const(-1.5))` evaluates to `-2`.
    */
   public fun round(value: Expression<Number>): Expression<Number> = callFn("round", value)
 
-  /** Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
+  /**
+   * Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
    *
-   *  For example `round(const(-1.5.dp))` evaluates to `-2.dp`.
+   * For example `round(const(-1.5.dp))` evaluates to `-2.dp`.
    */
   @JvmName("roundDp")
   public fun round(value: Expression<Dp>): Expression<Dp> = callFn("round", value)
@@ -1009,13 +1011,13 @@ public interface ExpressionScope {
   public fun distance(geometry: Expression<Geometry>): Expression<Number> =
     callFn("distance", geometry)
 
-  //endregion
+  // endregion
 
-  //region Color
+  // region Color
 
   /**
-   * Returns a four-element list, containing the color's red, green, blue, and alpha components,
-   * in that order.
+   * Returns a four-element list, containing the color's red, green, blue, and alpha components, in
+   * that order.
    */
   public fun Expression<Color>.toRgbaComponents(): Expression<List<Number>> =
     callFn("to-rgba", this)
@@ -1038,9 +1040,9 @@ public interface ExpressionScope {
       callFn("rgb", red, green, blue)
     }
 
-  //endregion
+  // endregion
 
-  //region Feature data
+  // region Feature data
 
   /**
    * Gets the feature properties object. Note that in some cases, it may be more efficient to use
@@ -1063,8 +1065,7 @@ public interface ExpressionScope {
    * provided, features are identified by their `promoteId` property, which may be a number, string,
    * or any primitive data type. Note that [featureState] can only be used with layer properties
    * that support data-driven styling.
-   *
- */
+   */
   // TODO: latest when featureState is supported on native platforms, should document which layer
   //   properties support data-driven styling, i.e. featureState expressions.
   public fun <T> featureState(key: Expression<String>): Expression<T> = callFn("feature-state", key)
@@ -1092,36 +1093,37 @@ public interface ExpressionScope {
    */
   public fun <T> accumulated(key: Expression<String>): Expression<T> = callFn("accumulated", key)
 
-  //endregion
+  // endregion
 
-  //region Zoom
+  // region Zoom
 
   /**
-   * Gets the current zoom level. Note that in layer style properties, [zoom] may only appear as
-   * the input to a top-level [step] or [interpolate] (, [interpolateHcl], [interpolateLab], ...)
+   * Gets the current zoom level. Note that in layer style properties, [zoom] may only appear as the
+   * input to a top-level [step] or [interpolate] (, [interpolateHcl], [interpolateLab], ...)
    * expression.
    */
   public fun zoom(): Expression<Number> = callFn("zoom")
 
-  //endregion
+  // endregion
 
-  //region Heatmap
+  // region Heatmap
 
-  /** Gets the kernel density estimation of a pixel in a heatmap layer, which is a relative measure
-   *  of how many data points are crowded around a particular pixel. Can only be used in the
-   *  expression for the `color` parameter in a
-   *  [HeatmapLayer][dev.sargunv.maplibrecompose.compose.layer.HeatmapLayer].
+  /**
+   * Gets the kernel density estimation of a pixel in a heatmap layer, which is a relative measure
+   * of how many data points are crowded around a particular pixel. Can only be used in the
+   * expression for the `color` parameter in a
+   * [HeatmapLayer][dev.sargunv.maplibrecompose.compose.layer.HeatmapLayer].
    */
   public fun heatmapDensity(): Expression<Number> = callFn("heatmap-density")
 
-  //endregion
+  // endregion
 
-  //region String
+  // region String
 
   /**
-   * Returns true if this string is expected to render legibly. Returns false if this string
-   * contains sections that cannot be rendered without potential loss of meaning (e.g. Indic
-   * scripts that require complex text shaping).
+   * Returns `true` if this string is expected to render legibly. Returns `false` if this string
+   * contains sections that cannot be rendered without potential loss of meaning (e.g. Indic scripts
+   * that require complex text shaping).
    */
   public fun Expression<String>.isScriptSupported(): Expression<Boolean> =
     callFn("is-supported-script", this)
@@ -1150,9 +1152,9 @@ public interface ExpressionScope {
   public fun resolvedLocale(collator: Expression<TCollator>): Expression<String> =
     callFn("resolved-locale", collator)
 
-  //endregion
+  // endregion
 
-  //region Utils
+  // region Utils
 
   @Suppress("UNCHECKED_CAST")
   private fun <Return> callFn(function: String, vararg args: Expression<*>) =
@@ -1172,5 +1174,5 @@ public interface ExpressionScope {
     fold(mutableListOf<Expression<*>>()) { acc, element -> acc.apply { block(element) } }
       .toTypedArray()
 
-  //endregion
+  // endregion
 }
