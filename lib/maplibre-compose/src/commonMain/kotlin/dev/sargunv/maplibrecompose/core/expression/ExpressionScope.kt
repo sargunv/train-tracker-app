@@ -1040,8 +1040,26 @@ public interface ExpressionScope {
    */
   public fun <T> properties(): Expression<Map<String, T>> = callFn("properties")
 
-  // not supported on native yet: https://github.com/maplibre/maplibre-native/issues/1698
-  //public fun <T> featureState(key: Expression<String>): Expression<T> = callFn("feature-state", key)
+  /**
+   * **Note: Not supported on native platforms. See
+   * [ticket #1698](https://github.com/maplibre/maplibre-native/issues/1698)**
+   *
+   * Retrieves a property value from the current feature's state. Returns `null` if the requested
+   * property is not present on the feature's state.
+   *
+   * A feature's state is not part of the GeoJSON or vector tile data, and must be set
+   * programmatically on each feature.
+   *
+   * When `source.promoteId` is not provided, features are identified by their `id` attribute, which
+   * must be an integer or a string that can be cast to an integer. When `source.promoteId` is
+   * provided, features are identified by their `promoteId` property, which may be a number, string,
+   * or any primitive data type. Note that [featureState] can only be used with layer properties
+   * that support data-driven styling.
+   *
+ */
+  // TODO: latest when featureState is supported on native platforms, should document which layer
+  //   properties support data-driven styling, i.e. featureState expressions.
+  public fun <T> featureState(key: Expression<String>): Expression<T> = callFn("feature-state", key)
 
   /**
    * Gets the feature's geometry type as a string: "Point", "MultiPoint", "LineString",
