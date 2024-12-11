@@ -146,7 +146,8 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [iconImage] is not specified.
  *
- *   **Note**: This property is not supported on native platforms, yet.
+ *   **Note**: This property is not supported on native platforms, yet, see
+ *   [maplibre-native#251](https://github.com/maplibre/maplibre-native/issues/251)**
  *
  * @param iconIgnorePlacement If true, other symbols can be visible even if they collide with the
  *   icon.
@@ -324,7 +325,8 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [textField] is not specified.
  *
- *   **Note**: This property is not supported on native platforms, yet.
+ *   **Note**: This property is not supported on native platforms, yet, see
+ *   [maplibre-native#251](https://github.com/maplibre/maplibre-native/issues/251)**
  *
  * @param textIgnorePlacement If true, other symbols can be visible even if they collide with the
  *   text.
