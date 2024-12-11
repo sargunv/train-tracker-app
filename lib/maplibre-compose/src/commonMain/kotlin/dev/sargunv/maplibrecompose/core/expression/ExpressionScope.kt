@@ -452,7 +452,7 @@ public interface ExpressionScope {
    * )
    * ```
    *
-   * If the feature has a property  "building_type" with the value "residential", cyan is returned.
+   * If the feature has a property "building_type" with the value "residential", cyan is returned.
    * Otherwise, if the value of that property is either "commercial" or "industrial", yellow is
    * returned. If none of that is true, the fallback is returned, i.e. red.
    */
@@ -734,8 +734,7 @@ public interface ExpressionScope {
    * Returns whether the evaluated feature is fully contained inside the boundary of the given
    * [polygon].
    */
-  public fun within(polygon: Expression<Polygon>): Expression<Boolean> =
-    callFn("within", polygon)
+  public fun within(polygon: Expression<Polygon>): Expression<Boolean> = callFn("within", polygon)
 
   // endregion
 
@@ -745,9 +744,8 @@ public interface ExpressionScope {
    * Produces discrete, stepped results by evaluating a piecewise-constant function defined by pairs
    * of input and output values ([stops]). Returns the output value of the stop just less than the
    * [input], or the [fallback] if the input is less than the first stop.
-
-   * Example:
    *
+   * Example:
    * `step(zoom(), const(0), 10 to const(2.5), 20 to const(10.5))`
    *
    * returns 0 if the zoom is less than 10, 2.5 if the zoom is between 10 and less than 20, 10.5 if
@@ -793,7 +791,6 @@ public interface ExpressionScope {
    * ([stops]), given the [input] value.
    *
    * Example:
-   *
    * ```
    * interpolate(
    *   linear(), zoom(),
