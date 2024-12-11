@@ -161,6 +161,17 @@ public interface ExpressionScope {
    * Returns a formatted string for displaying mixed-format text in the `textField` property (see
    * [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer]). The input may contain a
    * string literal or expression, including an 'image' expression.
+   *
+   * Example:
+   * ```
+   * format(
+   *   get("name").substring(const(0), const(1)).uppercase() to FormatStyle(textScale = const(1.5)),
+   *   get("name").substring(const(1)) to FormatStyle(),
+   * )
+   * ```
+   *
+   * Capitalizes the first letter of the features' property "name" and formats it to be extra-large,
+   * the rest of the name is written normally.
    */
   public fun format(vararg sections: Pair<Expression<*>, FormatStyle>): Expression<TFormatted> =
     callFn(
@@ -177,6 +188,7 @@ public interface ExpressionScope {
       },
     )
 
+  /** Use a string as a formatted value without any extra formatting */
   public fun format(value: Expression<String>): Expression<TFormatted> =
     callFn("format", value, buildOptions {})
 
@@ -803,16 +815,15 @@ public interface ExpressionScope {
    * Example:
    * ```
    * interpolate(
-   *   linear(), zoom(),
-   *   1 to const(Color.Red),
-   *   5 to const(Color.Blue),
-   *   10 to const(Color.Green)
+   *   exponential(2), zoom(),
+   *   16 to const(1),
+   *   24 to const(256),
    * )
    * ```
    *
-   * interpolates linearly from red to blue between in zoom levels 1 to 5, then interpolates
-   * linearly from blue to green in zoom levels 5 to 10, which it where it remains until maximum
-   * zoom.
+   * interpolates exponentially from 1 to 256 in zoom levels 16 to 24. Below zoom 16, it is 1, above
+   * zoom 24, it is 256. Applied to for example line width, this has the visual effect that the line
+   * stays the same width in meters on the map (rather than on the viewport).
    */
   public fun <Output> interpolate(
     type: Expression<TInterpolationType>,
@@ -825,6 +836,20 @@ public interface ExpressionScope {
    * ([stops]), given the [input] value. Works like [interpolate], but the interpolation is
    * performed in the
    * [Hue-Chroma-Luminance color space](https://en.wikipedia.org/wiki/HCL_color_space).
+   *
+   * Example:
+   * ```
+   * interpolateHcl(
+   *   linear(), zoom(),
+   *   1 to const(Color.Red),
+   *   5 to const(Color.Blue),
+   *   10 to const(Color.Green)
+   * )
+   * ```
+   *
+   * interpolates linearly from red to blue between in zoom levels 1 to 5, then interpolates
+   * linearly from blue to green in zoom levels 5 to 10, which it where it remains until maximum
+   * zoom.
    */
   public fun interpolateHcl(
     type: Expression<TInterpolationType>,
