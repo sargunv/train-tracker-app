@@ -63,7 +63,7 @@ object ClusteredPointsDemo : Demo {
           rememberGeoJsonSource(
             "bikes",
             gbfsData,
-            GeoJsonOptions(cluster = true, clusterMaxZoom = 16, clusterRadius = 32),
+            GeoJsonOptions(cluster = true, clusterRadius = 32, clusterMaxZoom = 16),
           )
 
         CircleLayer(

@@ -27,6 +27,10 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  * @param clusterMaxZoom Max zoom to cluster points on. Clusters are re-evaluated at integer zoom
  *   levels. So, setting the max zoom to 14 means that the clusters will still be displayed on zoom
  *   14.9.
+ * @param clusterMinPoints **Note: Not supported on native platforms, see
+ *   [maplibre-native#261](https://github.com/maplibre/maplibre-native/issues/261)**
+ *
+ *   Minimum number of points necessary to form a cluster if clustering is enabled.
  * @param clusterProperties A map defining custom properties on the generated clusters if clustering
  *   is enabled, aggregating values from clustered points. The keys are the property names, the
  *   values are expressions.
@@ -36,9 +40,6 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
  * @param lineMetrics Whether to calculate line distance metrics. This is required for
  *   [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer]s that specify a `gradient`.
  */
-// not supported yet:
-// @param clusterMinPoints Minimum number of points necessary to form a cluster if clustering is
-//   enabled.
 @Immutable
 public data class GeoJsonOptions(
   val minZoom: Int = 0,
@@ -47,8 +48,7 @@ public data class GeoJsonOptions(
   val tolerance: Float = 0.375f,
   val cluster: Boolean = false,
   val clusterRadius: Int = 50,
-  // Not supported yet on Android, iOS: https://github.com/maplibre/maplibre-native/issues/261
-  // val clusterMinPoints: Int = 2,
+  val clusterMinPoints: Int = 2,
   val clusterMaxZoom: Int = maxZoom - 1,
   val clusterProperties: Map<String, ClusterProperty> = emptyMap(),
   val lineMetrics: Boolean = false,

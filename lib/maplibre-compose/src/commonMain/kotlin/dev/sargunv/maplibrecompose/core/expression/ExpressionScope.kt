@@ -1042,7 +1042,7 @@ public interface ExpressionScope {
 
   /**
    * **Note: Not supported on native platforms. See
-   * [ticket #1698](https://github.com/maplibre/maplibre-native/issues/1698)**
+   * [maplibre-native#1698](https://github.com/maplibre/maplibre-native/issues/1698)**
    *
    * Retrieves a property value from the current feature's state. Returns `null` if the requested
    * property is not present on the feature's state.
