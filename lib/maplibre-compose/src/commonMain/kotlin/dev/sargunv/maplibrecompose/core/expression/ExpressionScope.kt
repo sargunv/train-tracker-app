@@ -432,8 +432,8 @@ public interface ExpressionScope {
   @JvmName("matchStrings")
   public fun <T> match(
     input: Expression<String>,
-    fallback: Expression<T>,
     vararg branches: MatchBranch<String, T>,
+    fallback: Expression<T>,
   ): Expression<T> =
     callFn(
       "match",
@@ -457,8 +457,8 @@ public interface ExpressionScope {
   @JvmName("matchNumbers")
   public fun <T> match(
     input: Expression<Number>,
-    fallback: Expression<T>,
     vararg branches: MatchBranch<Number, T>,
+    fallback: Expression<T>,
   ): Expression<T> =
     callFn(
       "match",
