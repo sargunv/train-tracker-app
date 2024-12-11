@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import io.github.dellisd.spatialk.geojson.Geometry
+import io.github.dellisd.spatialk.geojson.MultiPolygon
 import io.github.dellisd.spatialk.geojson.Polygon
 import kotlin.jvm.JvmName
 
