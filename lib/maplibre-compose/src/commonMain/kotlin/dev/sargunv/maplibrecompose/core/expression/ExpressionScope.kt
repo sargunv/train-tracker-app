@@ -77,7 +77,7 @@ public interface ExpressionScope {
     callFn("literal", Expression.ofMap(values))
 
   /**
-   * Asserts that the input is an array (optionally with a specific item type and length). If, when
+   * Asserts that the input is a list (optionally with a specific item type and length). If, when
    * the input expression is evaluated, it is not of the asserted type, then this assertion will
    * cause the whole expression to be aborted.
    */
@@ -254,86 +254,66 @@ public interface ExpressionScope {
 
   //region Lookup
 
-  /** Retrieves an item from an array. */
-  public fun <T> at(index: Expression<Number>, array: Expression<List<T>>): Expression<T> =
-    callFn("at", index, array)
-
-  /** Retrieves an item from an array. */
+  /** Returns the item at [index]. */
   @JvmName("getAtIndex")
   public operator fun <T> Expression<List<T>>.get(index: Expression<Number>): Expression<T> =
-    at(index, this)
+    callFn("at", index, this)
 
+  /** Returns whether this list contains an [item]. */
+  @JvmName("containsList")
+  public fun Expression<List<*>>.contains(item: Expression<*>): Expression<Boolean> =
+    callFn("in", item, this)
 
-  /** Determines whether an [item] exists in [list]. */
-  @JvmName("inList")
-  public fun `in`(item: Expression<*>, list: Expression<List<*>>): Expression<Boolean> =
-    callFn("in", item, list)
-
-  /** Determines whether an [item] exists in this list expression. */
-  @JvmName("inListInfix")
-  public infix fun Expression<*>.`in`(item: Expression<List<*>>): Expression<Boolean> =
-    `in`(this, item)
-
-  /** Determines whether a [substring] exists in a [string]. */
-  @JvmName("inString")
-  public fun `in`(substring: Expression<String>, string: Expression<String>): Expression<Boolean> =
-    callFn("in", substring, string)
-
-  /** Determines whether a [substring] exists in this string expression. */
-  @JvmName("inStringInfix")
-  public infix fun Expression<String>.`in`(substring: Expression<String>): Expression<Boolean> =
-    `in`(this, substring)
+  /** Returns whether this string contains a [substring]. */
+  @JvmName("containsString")
+  public fun Expression<String>.contains(substring: Expression<String>): Expression<Boolean> =
+    callFn("in", substring, this)
 
   /**
-   * Returns the first position at which an [substring] can be found in a [string], or -1 if it
-   * cannot be found. Accepts an optional index from where to begin the search. A UTF-16 surrogate
-   * pair counts as a single position.
+   * Returns the first index at which a [substring] is found in this string, or -1 if it cannot be
+   * found. Accepts an optional [startIndex] from where to begin the search.
    */
   @JvmName("indexOfString")
-  public fun indexOf(
+  public fun Expression<String>.indexOf(
     substring: Expression<String>,
-    string: Expression<String>,
     startIndex: Expression<Number>? = null,
   ): Expression<Number> {
     val args = buildList {
       add(substring)
-      add(string)
+      add(this@indexOf)
       startIndex?.let { add(it) }
     }
     return callFn("index-of", *args.toTypedArray())
   }
 
   /**
-   * Returns the first position at which an [item] can be found in a [list], or -1 if it cannot be
-   * found. Accepts an optional index from where to begin the search.
+   * Returns the first index at which an [item] is found in this list, or -1 if it cannot be found.
+   * Accepts an optional [startIndex] from where to begin the search.
    */
   @JvmName("indexOfList")
-  public fun indexOf(
+  public fun Expression<List<*>>.indexOf(
     item: Expression<*>,
-    list: Expression<List<*>>,
     startIndex: Expression<Number>? = null,
   ): Expression<Number> {
     val args = buildList {
       add(item)
-      add(list)
+      add(this@indexOf)
       startIndex?.let { add(it) }
     }
     return callFn("index-of", *args.toTypedArray())
   }
 
   /**
-   * Returns a substring from a [string] from a specified start index, or between a [startIndex] and
-   * an [endIndex] if set. The return value is inclusive of the start index but not of the end
-   * index. A UTF-16 surrogate pair counts as a single position.
+   * Returns a substring from this string from the [startIndex] (inclusive) to the [endIndex]
+   * (exclusive). If [endIndex] is not set or null, till the end of the string. A UTF-16 surrogate
+   * pair counts as a single position.
    */
-  @JvmName("sliceString")
-  public fun slice(
-    string: Expression<String>,
+  public fun Expression<String>.substring(
     startIndex: Expression<Number>,
     endIndex: Expression<Number>? = null,
   ): Expression<String> {
     val args = buildList {
-      add(string)
+      add(this@substring)
       add(startIndex)
       endIndex?.let { add(it) }
     }
@@ -341,17 +321,15 @@ public interface ExpressionScope {
   }
 
   /**
-   * Returns an item from a [list] from a specified start index, or between a [startIndex] and an
-   * [endIndex] if set. The return value is inclusive of the start index but not of the end index.
+   * Returns the items in this list from the [startIndex] (inclusive) to the [endIndex] (exclusive).
+   * If [endIndex] is not set or null, till the end of the list.
    */
-  @JvmName("sliceList")
-  public fun <T> slice(
-    list: Expression<List<T>>,
+  public fun <T> Expression<List<T>>.slice(
     startIndex: Expression<Number>,
     endIndex: Expression<Number>? = null,
   ): Expression<T> {
     val args = buildList {
-      add(list)
+      add(this@slice)
       add(startIndex)
       endIndex?.let { add(it) }
     }
@@ -359,36 +337,31 @@ public interface ExpressionScope {
   }
 
   /**
-   * Retrieves a property value [key] from the current feature's properties, or from another object
-   * [obj] if a second argument is provided. Returns null if the requested property is missing.
+   * Returns the value corresponding to the given [key] in the current feature's properties or null
+   * if it is not present.
    */
-  public fun <T> get(
-    key: Expression<String>,
-    obj: Expression<Map<String, *>>? = null,
-  ): Expression<T> {
-    val args = obj?.let { listOf(key, it) } ?: listOf(key)
-    return callFn("get", *args.toTypedArray())
-  }
+  public fun <T> get(key: Expression<String>): Expression<T> =
+    callFn("get", key)
 
-  /**
-   * Tests for the presence of an property value [key] in the current feature's properties, or from
-   * another object [obj] if a second argument is provided.
-   */
-  public fun has(
-    key: Expression<String>,
-    obj: Expression<Map<String, *>>? = null,
-  ): Expression<Boolean> {
-    val args = obj?.let { listOf(key, it) } ?: listOf(key)
-    return callFn("has", *args.toTypedArray())
-  }
+  /** Tests for the presence of a property value [key] in the current feature's properties. */
+  public fun has(key: Expression<String>): Expression<Boolean> =
+    callFn("has", key)
 
-  /** Gets the length of a [string]. A UTF-16 surrogate pair counts as a single position. */
+  /** Returns the value corresponding the given [key] or null if it is not present in this map. */
+  public operator fun <T> Expression<Map<String, *>>.get(key: Expression<String>): Expression<T> =
+    callFn("get", key, this)
+
+  /** Returns whether the given [key] is in this map. */
+  public fun Expression<Map<String, *>>.has(key: Expression<String>): Expression<Boolean> =
+    callFn("has", key, this)
+
+  /** Gets the length of this string. A UTF-16 surrogate pair counts as a single position. */
   @JvmName("lengthOfString")
-  public fun length(string: Expression<String>): Expression<Number> = callFn("length", string)
+  public fun Expression<String>.length(): Expression<Number> = callFn("length", this)
 
-  /** Gets the length of a [list]. */
+  /** Gets the length of a this list. */
   @JvmName("lengthOfList")
-  public fun length(list: Expression<List<*>>): Expression<Number> = callFn("length", list)
+  public fun Expression<List<*>>.length(): Expression<Number> = callFn("length", this)
 
   //endregion
 
@@ -1082,24 +1055,24 @@ public interface ExpressionScope {
   //region String
 
   /**
-   * Returns true if the input string is expected to render legibly. Returns false if the input
-   * string contains sections that cannot be rendered without potential loss of meaning (e.g. Indic
-   * scripts that require complex text shaping
+   * Returns true if this string is expected to render legibly. Returns false if this string
+   * contains sections that cannot be rendered without potential loss of meaning (e.g. Indic
+   * scripts that require complex text shaping).
    */
-  public fun isSupportedScript(script: Expression<String>): Expression<Boolean> =
-    callFn("is-supported-script", script)
+  public fun Expression<String>.isScriptSupported(): Expression<Boolean> =
+    callFn("is-supported-script", this)
 
   /**
-   * Returns the input [string] converted to uppercase. Follows the Unicode Default Case Conversion
+   * Returns this string converted to uppercase. Follows the Unicode Default Case Conversion
    * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
    */
-  public fun upcase(string: Expression<String>): Expression<String> = callFn("upcase", string)
+  public fun Expression<String>.uppercase(): Expression<String> = callFn("upcase", this)
 
   /**
-   * Returns the input [string] converted to lowercase. Follows the Unicode Default Case Conversion
+   * Returns this string converted to lowercase. Follows the Unicode Default Case Conversion
    * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
    */
-  public fun downcase(string: Expression<String>): Expression<String> = callFn("downcase", string)
+  public fun Expression<String>.lowercase(): Expression<String> = callFn("downcase", this)
 
   /** Concatenates this string expression with [other]. */
   public operator fun Expression<String>.plus(other: Expression<String>): Expression<String> =
