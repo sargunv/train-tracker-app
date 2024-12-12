@@ -101,7 +101,7 @@ androidMain.dependencies {
 In your Composable UI, add a map:
 
 ```kotlin title="App.kt"
--8 < -"demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/GettingStarted.kt:app"
+-8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/GettingStarted.kt:app"
 ```
 
 When you run your app, you should see the default [demotiles] map. To learn how
