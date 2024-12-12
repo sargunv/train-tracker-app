@@ -1,8 +1,5 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import cocoapods.MapLibre.MLNCircleStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
@@ -24,55 +21,55 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
       impl.sourceLayerIdentifier = value
     }
 
-  actual override fun setFilter(filter: Expression<Boolean>) {
+  actual override fun setFilter(filter: Expression.Boolean) {
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setCircleSortKey(sortKey: Expression<Number>) {
+  actual fun setCircleSortKey(sortKey: Expression.Number) {
     impl.circleSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setCircleRadius(radius: Expression<Dp>) {
+  actual fun setCircleRadius(radius: Expression.Dp) {
     impl.circleRadius = radius.toNSExpression()
   }
 
-  actual fun setCircleColor(color: Expression<Color>) {
+  actual fun setCircleColor(color: Expression.Color) {
     impl.circleColor = color.toNSExpression()
   }
 
-  actual fun setCircleBlur(blur: Expression<Number>) {
+  actual fun setCircleBlur(blur: Expression.Number) {
     impl.circleBlur = blur.toNSExpression()
   }
 
-  actual fun setCircleOpacity(opacity: Expression<Number>) {
+  actual fun setCircleOpacity(opacity: Expression.Number) {
     impl.circleOpacity = opacity.toNSExpression()
   }
 
-  actual fun setCircleTranslate(translate: Expression<DpOffset>) {
+  actual fun setCircleTranslate(translate: Expression.DpOffset) {
     impl.circleTranslation = translate.toNSExpression()
   }
 
-  actual fun setCircleTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
+  actual fun setCircleTranslateAnchor(translateAnchor: Expression.Enum<TranslateAnchor>) {
     impl.circleTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setCirclePitchScale(pitchScale: Expression<CirclePitchScale>) {
+  actual fun setCirclePitchScale(pitchScale: Expression.Enum<CirclePitchScale>) {
     impl.circleScaleAlignment = pitchScale.toNSExpression()
   }
 
-  actual fun setCirclePitchAlignment(pitchAlignment: Expression<CirclePitchAlignment>) {
+  actual fun setCirclePitchAlignment(pitchAlignment: Expression.Enum<CirclePitchAlignment>) {
     impl.circlePitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setCircleStrokeWidth(strokeWidth: Expression<Dp>) {
+  actual fun setCircleStrokeWidth(strokeWidth: Expression.Dp) {
     impl.circleStrokeWidth = strokeWidth.toNSExpression()
   }
 
-  actual fun setCircleStrokeColor(strokeColor: Expression<Color>) {
+  actual fun setCircleStrokeColor(strokeColor: Expression.Color) {
     impl.circleStrokeColor = strokeColor.toNSExpression()
   }
 
-  actual fun setCircleStrokeOpacity(strokeOpacity: Expression<Number>) {
+  actual fun setCircleStrokeOpacity(strokeOpacity: Expression.Number) {
     impl.circleStrokeOpacity = strokeOpacity.toNSExpression()
   }
 }

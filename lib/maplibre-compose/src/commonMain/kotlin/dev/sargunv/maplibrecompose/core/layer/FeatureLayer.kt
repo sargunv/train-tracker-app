@@ -8,5 +8,5 @@ internal expect sealed class FeatureLayer(source: Source) : Layer {
   val source: Source
   abstract var sourceLayer: String
 
-  abstract fun setFilter(filter: Expression<Boolean>)
+  abstract fun setFilter(filter: Expression.Boolean)
 }

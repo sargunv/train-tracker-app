@@ -51,7 +51,7 @@ internal fun Position.toLatLng(): LatLng = LatLng(latitude = latitude, longitude
 internal fun LatLngBounds.toBoundingBox(): BoundingBox =
   BoundingBox(northeast = northEast.toPosition(), southwest = southWest.toPosition())
 
-internal fun Expression<*>.toMLNExpression(): MLNExpression? =
+internal fun Expression.toMLNExpression(): MLNExpression? =
   when (value) {
     null -> null
     else -> MLNExpression.Converter.convert(normalizeJsonLike(value))

@@ -3,7 +3,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.layer.RasterLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -40,14 +40,14 @@ public inline fun RasterLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: Expression<Number> = const(1f),
-  hueRotate: Expression<Number> = const(0f),
-  brightnessMin: Expression<Number> = const(0f),
-  brightnessMax: Expression<Number> = const(1f),
-  saturation: Expression<Number> = const(0f),
-  contrast: Expression<Number> = const(0f),
-  resampling: Expression<RasterResampling> = const(RasterResampling.Linear),
-  fadeDuration: Expression<Number> = const(300f),
+  opacity: Expression.Number = const(1f),
+  hueRotate: Expression.Number = const(0f),
+  brightnessMin: Expression.Number = const(0f),
+  brightnessMax: Expression.Number = const(1f),
+  saturation: Expression.Number = const(0f),
+  contrast: Expression.Number = const(0f),
+  resampling: Expression.Enum<RasterResampling> = const(RasterResampling.Linear),
+  fadeDuration: Expression.Number = const(300f),
 ) {
   key(id) {
     LayerNode(

@@ -114,13 +114,13 @@ internal fun GeoJson.toMLNShape(): MLNShape {
   )!!
 }
 
-internal fun Expression<*>.toNSExpression(): NSExpression =
+internal fun Expression.toNSExpression(): NSExpression =
   when (value) {
     null -> NSExpression.expressionForConstantValue(null)
     else -> NSExpression.expressionWithMLNJSONObject(normalizeJsonLike(value)!!)
   }
 
-internal fun Expression<Boolean>.toNSPredicate(): NSPredicate? =
+internal fun Expression.Boolean.toNSPredicate(): NSPredicate? =
   value?.let { NSPredicate.predicateWithMLNJSONObject(normalizeJsonLike(it)!!) }
 
 private fun normalizeJsonLike(value: Any?): Any? =

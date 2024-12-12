@@ -1,13 +1,9 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import cocoapods.MapLibre.MLNLineStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -25,74 +21,74 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
       impl.sourceLayerIdentifier = value
     }
 
-  actual override fun setFilter(filter: Expression<Boolean>) {
+  actual override fun setFilter(filter: Expression.Boolean) {
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setLineCap(cap: Expression<LineCap>) {
+  actual fun setLineCap(cap: Expression.Enum<LineCap>) {
     impl.lineCap = cap.toNSExpression()
   }
 
-  actual fun setLineJoin(join: Expression<LineJoin>) {
+  actual fun setLineJoin(join: Expression.Enum<LineJoin>) {
     impl.lineJoin = join.toNSExpression()
   }
 
-  actual fun setLineMiterLimit(miterLimit: Expression<Number>) {
+  actual fun setLineMiterLimit(miterLimit: Expression.Number) {
     impl.lineMiterLimit = miterLimit.toNSExpression()
   }
 
-  actual fun setLineRoundLimit(roundLimit: Expression<Number>) {
+  actual fun setLineRoundLimit(roundLimit: Expression.Number) {
     impl.lineRoundLimit = roundLimit.toNSExpression()
   }
 
-  actual fun setLineSortKey(sortKey: Expression<Number>) {
+  actual fun setLineSortKey(sortKey: Expression.Number) {
     impl.lineSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setLineOpacity(opacity: Expression<Number>) {
+  actual fun setLineOpacity(opacity: Expression.Number) {
     impl.lineOpacity = opacity.toNSExpression()
   }
 
-  actual fun setLineColor(color: Expression<Color>) {
+  actual fun setLineColor(color: Expression.Color) {
     impl.lineColor = color.toNSExpression()
   }
 
-  actual fun setLineTranslate(translate: Expression<DpOffset>) {
+  actual fun setLineTranslate(translate: Expression.DpOffset) {
     impl.lineTranslation = translate.toNSExpression()
   }
 
-  actual fun setLineTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
+  actual fun setLineTranslateAnchor(translateAnchor: Expression.Enum<TranslateAnchor>) {
     impl.lineTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setLineWidth(width: Expression<Dp>) {
+  actual fun setLineWidth(width: Expression.Dp) {
     impl.lineWidth = width.toNSExpression()
   }
 
-  actual fun setLineGapWidth(gapWidth: Expression<Dp>) {
+  actual fun setLineGapWidth(gapWidth: Expression.Dp) {
     impl.lineGapWidth = gapWidth.toNSExpression()
   }
 
-  actual fun setLineOffset(offset: Expression<Dp>) {
+  actual fun setLineOffset(offset: Expression.Dp) {
     impl.lineOffset = offset.toNSExpression()
   }
 
-  actual fun setLineBlur(blur: Expression<Dp>) {
+  actual fun setLineBlur(blur: Expression.Dp) {
     impl.lineBlur = blur.toNSExpression()
   }
 
-  actual fun setLineDasharray(dasharray: Expression<List<Number>>) {
+  actual fun setLineDasharray(dasharray: Expression.Vector) {
     impl.lineDashPattern = dasharray.toNSExpression()
   }
 
-  actual fun setLinePattern(pattern: Expression<TResolvedImage>) {
+  actual fun setLinePattern(pattern: Expression.ResolvedImage) {
     // TODO: figure out how to unset a pattern in iOS
     if (pattern.value != null) {
       impl.linePattern = pattern.toNSExpression()
     }
   }
 
-  actual fun setLineGradient(gradient: Expression<Color>) {
+  actual fun setLineGradient(gradient: Expression.Color) {
     impl.lineGradient = gradient.toNSExpression()
   }
 }

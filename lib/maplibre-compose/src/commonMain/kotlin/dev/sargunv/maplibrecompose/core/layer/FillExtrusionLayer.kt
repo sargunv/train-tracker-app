@@ -1,9 +1,6 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -11,21 +8,21 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: Expression<Boolean>)
+  override fun setFilter(filter: Expression.Boolean)
 
-  fun setFillExtrusionOpacity(opacity: Expression<Number>)
+  fun setFillExtrusionOpacity(opacity: Expression.Number)
 
-  fun setFillExtrusionColor(color: Expression<Color>)
+  fun setFillExtrusionColor(color: Expression.Color)
 
-  fun setFillExtrusionTranslate(translate: Expression<DpOffset>)
+  fun setFillExtrusionTranslate(translate: Expression.DpOffset)
 
-  fun setFillExtrusionTranslateAnchor(anchor: Expression<TranslateAnchor>)
+  fun setFillExtrusionTranslateAnchor(anchor: Expression.Enum<TranslateAnchor>)
 
-  fun setFillExtrusionPattern(pattern: Expression<TResolvedImage>)
+  fun setFillExtrusionPattern(pattern: Expression.ResolvedImage)
 
-  fun setFillExtrusionHeight(height: Expression<Number>)
+  fun setFillExtrusionHeight(height: Expression.Number)
 
-  fun setFillExtrusionBase(base: Expression<Number>)
+  fun setFillExtrusionBase(base: Expression.Number)
 
-  fun setFillExtrusionVerticalGradient(verticalGradient: Expression<Boolean>)
+  fun setFillExtrusionVerticalGradient(verticalGradient: Expression.Boolean)
 }

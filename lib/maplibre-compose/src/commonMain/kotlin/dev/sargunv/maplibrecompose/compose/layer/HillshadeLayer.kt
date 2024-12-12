@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.layer.HillshadeLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -41,12 +41,12 @@ public inline fun HillshadeLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  shadowColor: Expression<Color> = const(Color.Black),
-  highlightColor: Expression<Color> = const(Color.White),
-  accentColor: Expression<Color> = const(Color.Black),
-  illuminationDirection: Expression<Number> = const(355f),
-  illuminationAnchor: Expression<IlluminationAnchor> = const(IlluminationAnchor.Viewport),
-  exaggeration: Expression<Number> = const(0.5f),
+  shadowColor: Expression.Color = const(Color.Black),
+  highlightColor: Expression.Color = const(Color.White),
+  accentColor: Expression.Color = const(Color.Black),
+  illuminationDirection: Expression.Number = const(355f),
+  illuminationAnchor: Expression.Enum<IlluminationAnchor> = const(IlluminationAnchor.Viewport),
+  exaggeration: Expression.Number = const(0.5f),
 ) {
   key(id) {
     LayerNode(

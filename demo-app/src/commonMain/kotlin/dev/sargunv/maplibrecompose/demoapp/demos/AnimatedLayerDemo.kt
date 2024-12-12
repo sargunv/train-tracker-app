@@ -14,6 +14,7 @@ import dev.sargunv.maplibrecompose.compose.layer.LineLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.CameraPosition
+import dev.sargunv.maplibrecompose.core.expression.Interpolation
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
@@ -65,7 +66,7 @@ object AnimatedLayerDemo : Demo {
             join = const(LineJoin.Round),
             width =
               interpolate(
-                type = exponential(const(1.2f)),
+                type = Interpolation.Exponential(const(1.2f)),
                 input = zoom(),
                 7 to const(1.75.dp),
                 20 to const(22.dp),

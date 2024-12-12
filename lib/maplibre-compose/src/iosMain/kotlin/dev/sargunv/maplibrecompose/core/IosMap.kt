@@ -432,7 +432,7 @@ internal class IosMap(
   override fun queryRenderedFeatures(
     offset: DpOffset,
     layerIds: Set<String>?,
-    predicate: Expression<Boolean>?,
+    predicate: Expression.Boolean?,
   ): List<Feature> =
     mapView
       .visibleFeaturesAtPoint(
@@ -445,7 +445,7 @@ internal class IosMap(
   override fun queryRenderedFeatures(
     rect: DpRect,
     layerIds: Set<String>?,
-    predicate: Expression<Boolean>?,
+    predicate: Expression.Boolean?,
   ): List<Feature> =
     mapView
       .visibleFeaturesInRect(

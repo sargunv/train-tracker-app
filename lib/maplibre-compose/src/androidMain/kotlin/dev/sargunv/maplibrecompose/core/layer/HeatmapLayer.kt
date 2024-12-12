@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -16,27 +15,27 @@ internal actual class HeatmapLayer actual constructor(id: String, source: Source
 
   actual override var sourceLayer: String by impl::sourceLayer
 
-  actual override fun setFilter(filter: Expression<Boolean>) {
+  actual override fun setFilter(filter: Expression.Boolean) {
     impl.setFilter(filter.toMLNExpression() ?: MLNExpression.literal(true))
   }
 
-  actual fun setHeatmapRadius(radius: Expression<Dp>) {
+  actual fun setHeatmapRadius(radius: Expression.Dp) {
     impl.setProperties(PropertyFactory.heatmapRadius(radius.toMLNExpression()))
   }
 
-  actual fun setHeatmapWeight(weight: Expression<Number>) {
+  actual fun setHeatmapWeight(weight: Expression.Number) {
     impl.setProperties(PropertyFactory.heatmapWeight(weight.toMLNExpression()))
   }
 
-  actual fun setHeatmapIntensity(intensity: Expression<Number>) {
+  actual fun setHeatmapIntensity(intensity: Expression.Number) {
     impl.setProperties(PropertyFactory.heatmapIntensity(intensity.toMLNExpression()))
   }
 
-  actual fun setHeatmapColor(color: Expression<Color>) {
+  actual fun setHeatmapColor(color: Expression.Color) {
     impl.setProperties(PropertyFactory.heatmapColor(color.toMLNExpression()))
   }
 
-  actual fun setHeatmapOpacity(opacity: Expression<Number>) {
+  actual fun setHeatmapOpacity(opacity: Expression.Number) {
     impl.setProperties(PropertyFactory.heatmapOpacity(opacity.toMLNExpression()))
   }
 }

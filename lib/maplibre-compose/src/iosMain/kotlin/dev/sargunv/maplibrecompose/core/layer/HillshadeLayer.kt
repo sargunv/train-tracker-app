@@ -1,6 +1,5 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNHillshadeStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
@@ -13,27 +12,27 @@ internal actual class HillshadeLayer actual constructor(id: String, actual val s
 
   override val impl = MLNHillshadeStyleLayer(id, source.impl)
 
-  actual fun setHillshadeIlluminationDirection(direction: Expression<Number>) {
+  actual fun setHillshadeIlluminationDirection(direction: Expression.Number) {
     impl.hillshadeIlluminationDirection = direction.toNSExpression()
   }
 
-  actual fun setHillshadeIlluminationAnchor(anchor: Expression<IlluminationAnchor>) {
+  actual fun setHillshadeIlluminationAnchor(anchor: Expression.Enum<IlluminationAnchor>) {
     impl.hillshadeIlluminationAnchor = anchor.toNSExpression()
   }
 
-  actual fun setHillshadeExaggeration(exaggeration: Expression<Number>) {
+  actual fun setHillshadeExaggeration(exaggeration: Expression.Number) {
     impl.hillshadeExaggeration = exaggeration.toNSExpression()
   }
 
-  actual fun setHillshadeShadowColor(shadowColor: Expression<Color>) {
+  actual fun setHillshadeShadowColor(shadowColor: Expression.Color) {
     impl.hillshadeShadowColor = shadowColor.toNSExpression()
   }
 
-  actual fun setHillshadeHighlightColor(highlightColor: Expression<Color>) {
+  actual fun setHillshadeHighlightColor(highlightColor: Expression.Color) {
     impl.hillshadeHighlightColor = highlightColor.toNSExpression()
   }
 
-  actual fun setHillshadeAccentColor(accentColor: Expression<Color>) {
+  actual fun setHillshadeAccentColor(accentColor: Expression.Color) {
     impl.hillshadeAccentColor = accentColor.toNSExpression()
   }
 }

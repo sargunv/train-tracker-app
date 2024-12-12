@@ -4,9 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
+import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
 import dev.sargunv.maplibrecompose.core.layer.BackgroundLayer
 
 /**
@@ -34,9 +33,9 @@ public inline fun BackgroundLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: Expression<Number> = const(1f),
-  color: Expression<Color> = const(Color.Black),
-  pattern: Expression<TResolvedImage> = nil(),
+  opacity: Expression.Number = const(1f),
+  color: Expression.Color = const(Color.Black),
+  pattern: Expression.ResolvedImage = nil(),
 ) {
   key(id) {
     LayerNode(

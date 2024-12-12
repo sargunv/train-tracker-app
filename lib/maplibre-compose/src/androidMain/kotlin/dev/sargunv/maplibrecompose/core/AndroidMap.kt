@@ -276,7 +276,7 @@ internal class AndroidMap(
   override fun queryRenderedFeatures(
     offset: DpOffset,
     layerIds: Set<String>?,
-    predicate: Expression<Boolean>?,
+    predicate: Expression.Boolean?,
   ): List<Feature> {
     // Kotlin hack to pass null to a java nullable varargs
     val query: (PointF, MLNExpression?, Array<String>?) -> List<MLNFeature> =
@@ -288,7 +288,7 @@ internal class AndroidMap(
   override fun queryRenderedFeatures(
     rect: DpRect,
     layerIds: Set<String>?,
-    predicate: Expression<Boolean>?,
+    predicate: Expression.Boolean?,
   ): List<Feature> {
     // Kotlin hack to pass null to a java nullable varargs
     val query: (RectF, MLNExpression?, Array<String>?) -> List<MLNFeature> =

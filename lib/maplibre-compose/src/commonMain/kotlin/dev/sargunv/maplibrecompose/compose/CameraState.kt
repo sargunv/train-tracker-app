@@ -10,7 +10,7 @@ import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.VisibleRegion
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
@@ -109,7 +109,7 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   public fun queryRenderedFeatures(
     offset: DpOffset,
     layerIds: Set<String>? = null,
-    predicate: Expression<Boolean> = const(true),
+    predicate: Expression.Boolean = const(true),
   ): List<Feature> {
     val predicateOrNull = predicate.takeUnless { it == const(true) }
     return map?.queryRenderedFeatures(offset, layerIds, predicateOrNull) ?: emptyList()
@@ -129,7 +129,7 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   public fun queryRenderedFeatures(
     rect: DpRect,
     layerIds: Set<String>? = null,
-    predicate: Expression<Boolean> = const(true),
+    predicate: Expression.Boolean = const(true),
   ): List<Feature> {
     val predicateOrNull = predicate.takeUnless { it == const(true) }
     return map?.queryRenderedFeatures(rect, layerIds, predicateOrNull) ?: emptyList()

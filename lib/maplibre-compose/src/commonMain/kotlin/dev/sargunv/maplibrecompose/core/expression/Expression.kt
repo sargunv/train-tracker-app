@@ -1,81 +1,106 @@
 package dev.sargunv.maplibrecompose.core.expression
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Immutable
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
+public sealed interface Expression {
+  public val value: Any?
 
-// would make this an inline value class, but we lose varargs
-// https://youtrack.jetbrains.com/issue/KT-33565/Allow-vararg-parameter-of-inline-class-type
-@Immutable
-public data class Expression<out T> private constructor(internal val value: Any?) {
-  public companion object : ExpressionScope {
-    // instantiate some commonly used values so we're not allocating them over and over
-    private val constSmallInts = Array<Expression<Number>>(512) { Expression(it) }
-    private val constSmallFloats = Array<Expression<Number>>(512) { Expression(it.toFloat() / 20f) }
-    private val constBlack: Expression<Color> = Expression(Color.Black)
-    private val constWhite: Expression<Color> = Expression(Color.White)
-    private val constTransparent: Expression<Color> = Expression(Color.Transparent)
-    private val constFalse: Expression<Boolean> = Expression(false)
-    private val constTrue: Expression<Boolean> = Expression(true)
-    private val constNull: Expression<Nothing?> = Expression(null)
-    private val constZeroOffset: Expression<Offset> = Expression(Offset.Zero)
-    private val constZeroPadding: Expression<PaddingValues.Absolute> = Expression(ZeroPadding)
+  public sealed interface Boolean : Expression
 
-    // TODO for values not covered by the above, try an LRU cache
+  public sealed interface Scalar : Expression, Matchable, Interpolateable, Comparable
 
-    internal fun ofString(string: String): Expression<String> = Expression(string)
+  public sealed interface Number : Scalar
 
-    private fun Float.isSmallInt(): Boolean =
-      this >= 0 && this < constSmallInts.size && this.toInt().toFloat() == this
+  // TODO make Dp extend Scalar instead of Number (so you can't pass Dp to non-dp expressions)
+  // need to update certain expression functions to accept Scalar instead of Number
+  public sealed interface Dp : Number
 
-    internal fun ofFloat(float: Float): Expression<Number> {
-      return when {
-        float.isSmallInt() -> constSmallInts[float.toInt()]
-        (float * 20f).isSmallInt() -> constSmallFloats[(float * 20f).toInt()]
-        else -> Expression(float)
-      }
+  public sealed interface String : Expression, Matchable, Comparable
+
+  public sealed interface Enum<out T : LayerPropertyEnum> : String
+
+  public sealed interface Color : Expression, Interpolateable
+
+  public sealed interface Map : Expression
+
+  public sealed interface List : Expression // TODO make it generic again
+
+  public sealed interface Vector : List, Interpolateable
+
+  public sealed interface Offset : Vector
+
+  public sealed interface DpOffset : Vector
+
+  public sealed interface Padding : Vector
+
+  public sealed interface Formatted : Expression
+
+  public sealed interface ResolvedImage : Expression
+
+  public sealed interface GeoJson : Expression
+
+  public sealed interface Collator : Expression
+
+  public sealed interface Interpolateable : Expression
+
+  public sealed interface Matchable : Expression
+
+  public sealed interface Comparable : Expression
+
+  /**
+   * An implementation of [Expression] that wraps a JSON-like value and is assignable to all kinds
+   * of expressions. It's the implementation returned by non-const expression DSL functions (see
+   * [ExpressionScope]), allowing you to do a checked cast to other expression types.
+   */
+  public class Impl internal constructor(override val value: Any?) :
+    Boolean,
+    Number,
+    Dp,
+    String,
+    Enum<LayerPropertyEnum>,
+    Color,
+    Map,
+    List,
+    Vector,
+    Offset,
+    DpOffset,
+    Padding,
+    Formatted,
+    ResolvedImage,
+    Collator,
+    Interpolation {
+    internal inline fun <reified T : Expression> cast(): T = this as T
+
+    internal companion object {
+      fun ofList(value: kotlin.collections.List<Expression>): Impl = Impl(value.map { it.value })
+
+      fun ofMap(value: kotlin.collections.Map<kotlin.String, Expression>): Impl =
+        Impl(value.mapValues { it.value.value })
     }
-
-    @Suppress("UNCHECKED_CAST")
-    internal fun ofDp(dp: Dp): Expression<Dp> = ofFloat(dp.value) as Expression<Dp>
-
-    internal fun ofColor(color: Color): Expression<Color> =
-      when (color) {
-        Color.Transparent -> constTransparent
-        Color.Black -> constBlack
-        Color.White -> constWhite
-        else -> Expression(color)
-      }
-
-    internal fun ofBoolean(bool: Boolean): Expression<Boolean> = if (bool) constTrue else constFalse
-
-    internal fun ofNull(): Expression<Nothing?> = constNull
-
-    internal fun ofOffset(offset: Offset): Expression<Offset> =
-      if (offset == Offset.Zero) constZeroOffset else Expression(offset)
-
-    @Suppress("UNCHECKED_CAST")
-    internal fun ofDpOffset(dpOffset: DpOffset): Expression<DpOffset> =
-      (if (dpOffset == DpOffset.Zero) constZeroOffset
-      else Expression(Offset(dpOffset.x.value, dpOffset.y.value)))
-        as Expression<DpOffset>
-
-    @Suppress("UNCHECKED_CAST")
-    internal fun <T : LayerPropertyEnum> ofLayerPropertyEnum(enum: T): Expression<T> =
-      enum.expr as Expression<T>
-
-    internal fun ofPadding(padding: PaddingValues.Absolute): Expression<PaddingValues.Absolute> =
-      if (padding == ZeroPadding) constZeroPadding else Expression(padding)
-
-    // return Expression<*> because without ["literal" ... ] MapLibre may not treat it as a list
-    internal fun ofList(list: List<Expression<*>>): Expression<*> =
-      Expression<Any?>(list.map { it.value })
-
-    // return Expression<*> because without ["literal" ... ] MapLibre may not treat it as a list
-    internal fun ofMap(map: Map<String, Expression<*>>): Expression<*> =
-      Expression<Any?>(map.entries.associate { (key, value) -> key to value.value })
   }
+}
+
+public sealed interface Interpolation : Expression {
+  /** Interpolates linearly between the pairs of stops. */
+  public data object Linear : Interpolation by Expression.Impl("linear")
+
+  /**
+   * Interpolates exponentially between the stops. [base] controls the rate at which the output
+   * increases: higher values make the output increase more towards the high end of the range. With
+   * values close to 1 the output increases linearly.
+   */
+  public class Exponential(base: Expression.Number) :
+    Interpolation by Expression.Impl(listOf("exponential", base.value))
+
+  /**
+   * Interpolates using the cubic bezier curve defined by the given control points between the pairs
+   * of stops.
+   */
+  public class CubicBezier(
+    x1: Expression.Number,
+    y1: Expression.Number,
+    x2: Expression.Number,
+    y2: Expression.Number,
+  ) :
+    Interpolation by Expression.Impl(
+      listOf("cubic-bezier", x1.value, y1.value, x2.value, y2.value)
+    )
 }

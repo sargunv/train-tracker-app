@@ -3,16 +3,14 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
+import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -85,24 +83,24 @@ public inline fun LineLayer(
   sourceLayer: String = "",
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
-  filter: Expression<Boolean> = nil(),
+  filter: Expression.Boolean = nil(),
   visible: Boolean = true,
-  sortKey: Expression<Number> = nil(),
-  translate: Expression<DpOffset> = const(DpOffset.Zero),
-  translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
-  opacity: Expression<Number> = const(1f),
-  color: Expression<Color> = const(Color.Black),
-  dasharray: Expression<List<Number>> = nil(),
-  pattern: Expression<TResolvedImage> = nil(),
-  gradient: Expression<Color> = nil(),
-  blur: Expression<Dp> = const(0.dp),
-  width: Expression<Dp> = const(1.dp),
-  gapWidth: Expression<Dp> = const(0.dp),
-  offset: Expression<Dp> = const(0.dp),
-  cap: Expression<LineCap> = const(LineCap.Butt),
-  join: Expression<LineJoin> = const(LineJoin.Miter),
-  miterLimit: Expression<Number> = const(2f),
-  roundLimit: Expression<Number> = const(1.05f),
+  sortKey: Expression.Number = nil(),
+  translate: Expression.DpOffset = const(DpOffset.Zero),
+  translateAnchor: Expression.Enum<TranslateAnchor> = const(TranslateAnchor.Map),
+  opacity: Expression.Number = const(1f),
+  color: Expression.Color = const(Color.Black),
+  dasharray: Expression.Vector = nil(),
+  pattern: Expression.ResolvedImage = nil(),
+  gradient: Expression.Color = nil(),
+  blur: Expression.Dp = const(0.dp),
+  width: Expression.Dp = const(1.dp),
+  gapWidth: Expression.Dp = const(0.dp),
+  offset: Expression.Dp = const(0.dp),
+  cap: Expression.Enum<LineCap> = const(LineCap.Butt),
+  join: Expression.Enum<LineJoin> = const(LineJoin.Miter),
+  miterLimit: Expression.Number = const(2f),
+  roundLimit: Expression.Number = const(1.05f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

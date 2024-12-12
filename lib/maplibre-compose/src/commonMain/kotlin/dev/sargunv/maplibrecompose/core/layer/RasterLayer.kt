@@ -8,19 +8,19 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class RasterLayer(id: String, source: Source) : Layer {
   val source: Source
 
-  fun setRasterOpacity(opacity: Expression<Number>)
+  fun setRasterOpacity(opacity: Expression.Number)
 
-  fun setRasterHueRotate(hueRotate: Expression<Number>)
+  fun setRasterHueRotate(hueRotate: Expression.Number)
 
-  fun setRasterBrightnessMin(brightnessMin: Expression<Number>)
+  fun setRasterBrightnessMin(brightnessMin: Expression.Number)
 
-  fun setRasterBrightnessMax(brightnessMax: Expression<Number>)
+  fun setRasterBrightnessMax(brightnessMax: Expression.Number)
 
-  fun setRasterSaturation(saturation: Expression<Number>)
+  fun setRasterSaturation(saturation: Expression.Number)
 
-  fun setRasterContrast(contrast: Expression<Number>)
+  fun setRasterContrast(contrast: Expression.Number)
 
-  fun setRasterResampling(resampling: Expression<RasterResampling>)
+  fun setRasterResampling(resampling: Expression.Enum<RasterResampling>)
 
-  fun setRasterFadeDuration(fadeDuration: Expression<Number>)
+  fun setRasterFadeDuration(fadeDuration: Expression.Number)
 }

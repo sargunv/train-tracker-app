@@ -1,12 +1,8 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -22,71 +18,71 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
 
   actual override var sourceLayer: String by impl::sourceLayer
 
-  actual override fun setFilter(filter: Expression<Boolean>) {
+  actual override fun setFilter(filter: Expression.Boolean) {
     impl.setFilter(filter.toMLNExpression() ?: MLNExpression.literal(true))
   }
 
-  actual fun setLineCap(cap: Expression<LineCap>) {
+  actual fun setLineCap(cap: Expression.Enum<LineCap>) {
     impl.setProperties(PropertyFactory.lineCap(cap.toMLNExpression()))
   }
 
-  actual fun setLineJoin(join: Expression<LineJoin>) {
+  actual fun setLineJoin(join: Expression.Enum<LineJoin>) {
     impl.setProperties(PropertyFactory.lineJoin(join.toMLNExpression()))
   }
 
-  actual fun setLineMiterLimit(miterLimit: Expression<Number>) {
+  actual fun setLineMiterLimit(miterLimit: Expression.Number) {
     impl.setProperties(PropertyFactory.lineMiterLimit(miterLimit.toMLNExpression()))
   }
 
-  actual fun setLineRoundLimit(roundLimit: Expression<Number>) {
+  actual fun setLineRoundLimit(roundLimit: Expression.Number) {
     impl.setProperties(PropertyFactory.lineRoundLimit(roundLimit.toMLNExpression()))
   }
 
-  actual fun setLineSortKey(sortKey: Expression<Number>) {
+  actual fun setLineSortKey(sortKey: Expression.Number) {
     impl.setProperties(PropertyFactory.lineSortKey(sortKey.toMLNExpression()))
   }
 
-  actual fun setLineOpacity(opacity: Expression<Number>) {
+  actual fun setLineOpacity(opacity: Expression.Number) {
     impl.setProperties(PropertyFactory.lineOpacity(opacity.toMLNExpression()))
   }
 
-  actual fun setLineColor(color: Expression<Color>) {
+  actual fun setLineColor(color: Expression.Color) {
     impl.setProperties(PropertyFactory.lineColor(color.toMLNExpression()))
   }
 
-  actual fun setLineTranslate(translate: Expression<DpOffset>) {
+  actual fun setLineTranslate(translate: Expression.DpOffset) {
     impl.setProperties(PropertyFactory.lineTranslate(translate.toMLNExpression()))
   }
 
-  actual fun setLineTranslateAnchor(translateAnchor: Expression<TranslateAnchor>) {
+  actual fun setLineTranslateAnchor(translateAnchor: Expression.Enum<TranslateAnchor>) {
     impl.setProperties(PropertyFactory.lineTranslateAnchor(translateAnchor.toMLNExpression()))
   }
 
-  actual fun setLineWidth(width: Expression<Dp>) {
+  actual fun setLineWidth(width: Expression.Dp) {
     impl.setProperties(PropertyFactory.lineWidth(width.toMLNExpression()))
   }
 
-  actual fun setLineGapWidth(gapWidth: Expression<Dp>) {
+  actual fun setLineGapWidth(gapWidth: Expression.Dp) {
     impl.setProperties(PropertyFactory.lineGapWidth(gapWidth.toMLNExpression()))
   }
 
-  actual fun setLineOffset(offset: Expression<Dp>) {
+  actual fun setLineOffset(offset: Expression.Dp) {
     impl.setProperties(PropertyFactory.lineOffset(offset.toMLNExpression()))
   }
 
-  actual fun setLineBlur(blur: Expression<Dp>) {
+  actual fun setLineBlur(blur: Expression.Dp) {
     impl.setProperties(PropertyFactory.lineBlur(blur.toMLNExpression()))
   }
 
-  actual fun setLineDasharray(dasharray: Expression<List<Number>>) {
+  actual fun setLineDasharray(dasharray: Expression.Vector) {
     impl.setProperties(PropertyFactory.lineDasharray(dasharray.toMLNExpression()))
   }
 
-  actual fun setLinePattern(pattern: Expression<TResolvedImage>) {
+  actual fun setLinePattern(pattern: Expression.ResolvedImage) {
     impl.setProperties(PropertyFactory.linePattern(pattern.toMLNExpression()))
   }
 
-  actual fun setLineGradient(gradient: Expression<Color>) {
+  actual fun setLineGradient(gradient: Expression.Color) {
     impl.setProperties(PropertyFactory.lineGradient(gradient.toMLNExpression()))
   }
 }

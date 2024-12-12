@@ -6,9 +6,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.const
-import dev.sargunv.maplibrecompose.core.expression.Expression.Companion.nil
-import dev.sargunv.maplibrecompose.core.expression.TResolvedImage
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
+import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.FillExtrusionLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -63,16 +62,16 @@ public inline fun FillExtrusionLayer(
   sourceLayer: String = "",
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
-  filter: Expression<Boolean> = nil(),
+  filter: Expression.Boolean = nil(),
   visible: Boolean = true,
-  translate: Expression<DpOffset> = const(DpOffset.Zero),
-  translateAnchor: Expression<TranslateAnchor> = const(TranslateAnchor.Map),
-  opacity: Expression<Number> = const(1f),
-  color: Expression<Color> = const(Color.Black),
-  pattern: Expression<TResolvedImage> = nil(),
-  height: Expression<Number> = const(0f),
-  base: Expression<Number> = const(0f),
-  verticalGradient: Expression<Boolean> = const(true),
+  translate: Expression.DpOffset = const(DpOffset.Zero),
+  translateAnchor: Expression.Enum<TranslateAnchor> = const(TranslateAnchor.Map),
+  opacity: Expression.Number = const(1f),
+  color: Expression.Color = const(Color.Black),
+  pattern: Expression.ResolvedImage = nil(),
+  height: Expression.Number = const(0f),
+  base: Expression.Number = const(0f),
+  verticalGradient: Expression.Boolean = const(true),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {
