@@ -6,7 +6,7 @@ androidx-composeUi = "1.7.5"
 androidx-navigation = "2.8.0-alpha10"
 kermit = "2.0.5"
 ktor = "3.0.2"
-maplibre-android = "11.7.0-pre1"
+maplibre-android = "11.7.0"
 maplibre-ios = "6.8.1"
 spatialk = "0.3.0"
 
