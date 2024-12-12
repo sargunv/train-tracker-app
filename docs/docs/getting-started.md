@@ -68,12 +68,40 @@ cocoapods {
 }
 ```
 
+## Set up Vulkan on Android (Optional)
+
+By default, we ship with the standard version of MapLibre for Android, which
+uses the OpenGL backend. If you'd prefer to use the Vulkan backend, you can
+update your build.
+
+First, add the Vulkan build of MapLibre to your version catalog:
+
+```toml title="libs.versions.toml"
+[libraries]
+maplibre-android-vulkan = { module = "org.maplibre.gl:android-sdk-vulkan", version = "{{ gradle.maplibre_android_version }}" }
+```
+
+Then, exclude the standard MapLibre build from your dependency tree, and add the
+Vulkan build to your Android dependencies:
+
+```kotlin title="build.gradle.kts"
+commonMain.dependencies {
+  implementation(libs.maplibre.compose) {
+    exclude(group = "org.maplibre.gl", module = "android-sdk")
+  }
+}
+
+androidMain.dependencies {
+  implementation(libs.maplibre.android.vulkan)
+}
+```
+
 ## Display your first map
 
 In your Composable UI, add a map:
 
 ```kotlin title="App.kt"
--8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/GettingStarted.kt:app"
+-8 < -"demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/GettingStarted.kt:app"
 ```
 
 When you run your app, you should see the default [demotiles] map. To learn how
