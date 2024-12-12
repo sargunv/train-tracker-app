@@ -57,13 +57,16 @@ public interface ExpressionScope {
   // region Variable binding
   /**
    * Binds expressions to named variables, which can then be referenced in the result expression
-   * using [var].
+   * using [useVariable].
    */
-  public fun <T> let(name: String, value: Expression<*>, expression: Expression<T>): Expression<T> =
-    callFn("let", const(name), value, expression)
+  public fun <T> withVariable(
+    name: String,
+    value: Expression<*>,
+    expression: Expression<T>,
+  ): Expression<T> = callFn("let", const(name), value, expression)
 
-  /** References variable bound using [let]. */
-  public fun <T> `var`(name: String): Expression<T> = callFn("var", const(name))
+  /** References variable bound using [withVariable]. */
+  public fun <T> useVariable(name: String): Expression<T> = callFn("var", const(name))
 
   // endregion
 
