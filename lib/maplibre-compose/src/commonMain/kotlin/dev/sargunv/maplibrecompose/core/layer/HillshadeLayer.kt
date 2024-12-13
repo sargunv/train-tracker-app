@@ -8,11 +8,11 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class HillshadeLayer(id: String, source: Source) : Layer {
   val source: Source
 
-  fun setHillshadeIlluminationDirection(direction: Expression.Number)
+  fun setHillshadeIlluminationDirection(direction: Expression.Int)
 
   fun setHillshadeIlluminationAnchor(anchor: Expression.Enum<IlluminationAnchor>)
 
-  fun setHillshadeExaggeration(exaggeration: Expression.Number)
+  fun setHillshadeExaggeration(exaggeration: Expression.Float)
 
   fun setHillshadeShadowColor(shadowColor: Expression.Color)
 

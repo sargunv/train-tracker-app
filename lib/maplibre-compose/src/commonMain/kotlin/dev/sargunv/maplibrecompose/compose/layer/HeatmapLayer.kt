@@ -52,10 +52,10 @@ public inline fun HeatmapLayer(
   filter: Expression.Boolean = nil(),
   visible: Boolean = true,
   color: Expression.Color = Defaults.HeatmapColors,
-  opacity: Expression.Number = const(1f),
+  opacity: Expression.Float = const(1f),
   radius: Expression.Dp = const(30.dp),
-  weight: Expression.Number = const(1f),
-  intensity: Expression.Number = const(1f),
+  weight: Expression.Float = const(1f),
+  intensity: Expression.Float = const(1f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

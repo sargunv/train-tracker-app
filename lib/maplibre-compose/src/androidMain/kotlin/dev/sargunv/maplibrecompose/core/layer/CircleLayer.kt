@@ -21,7 +21,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.setFilter(filter.toMLNExpression() ?: MLNExpression.literal(true))
   }
 
-  actual fun setCircleSortKey(sortKey: Expression.Number) {
+  actual fun setCircleSortKey(sortKey: Expression.Float) {
     impl.setProperties(PropertyFactory.circleSortKey(sortKey.toMLNExpression()))
   }
 
@@ -33,11 +33,11 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.circleColor(color.toMLNExpression()))
   }
 
-  actual fun setCircleBlur(blur: Expression.Number) {
+  actual fun setCircleBlur(blur: Expression.Float) {
     impl.setProperties(PropertyFactory.circleBlur(blur.toMLNExpression()))
   }
 
-  actual fun setCircleOpacity(opacity: Expression.Number) {
+  actual fun setCircleOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.circleOpacity(opacity.toMLNExpression()))
   }
 
@@ -65,7 +65,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.circleStrokeColor(strokeColor.toMLNExpression()))
   }
 
-  actual fun setCircleStrokeOpacity(strokeOpacity: Expression.Number) {
+  actual fun setCircleStrokeOpacity(strokeOpacity: Expression.Float) {
     impl.setProperties(PropertyFactory.circleStrokeOpacity(strokeOpacity.toMLNExpression()))
   }
 }

@@ -26,7 +26,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setSymbolAvoidEdges(avoidEdges: Expression.Boolean)
 
-  fun setSymbolSortKey(sortKey: Expression.Number)
+  fun setSymbolSortKey(sortKey: Expression.Float)
 
   fun setSymbolZOrder(zOrder: Expression.Enum<SymbolZOrder>)
 
@@ -40,7 +40,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconRotationAlignment(rotationAlignment: Expression.Enum<IconRotationAlignment>)
 
-  fun setIconSize(size: Expression.Number)
+  fun setIconSize(size: Expression.Float)
 
   fun setIconTextFit(textFit: Expression.Enum<IconTextFit>)
 
@@ -48,7 +48,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconImage(image: Expression.ResolvedImage)
 
-  fun setIconRotate(rotate: Expression.Number)
+  fun setIconRotate(rotate: Expression.Int)
 
   fun setIconPadding(padding: Expression.Dp)
 
@@ -60,7 +60,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconPitchAlignment(pitchAlignment: Expression.Enum<IconPitchAlignment>)
 
-  fun setIconOpacity(opacity: Expression.Number)
+  fun setIconOpacity(opacity: Expression.Float)
 
   fun setIconColor(color: Expression.Color)
 
@@ -84,15 +84,15 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextSize(size: Expression.Dp)
 
-  fun setTextMaxWidth(maxWidth: Expression.Number)
+  fun setTextMaxWidth(maxWidth: Expression.Float)
 
-  fun setTextLineHeight(lineHeight: Expression.Number)
+  fun setTextLineHeight(lineHeight: Expression.Float)
 
-  fun setTextLetterSpacing(letterSpacing: Expression.Number)
+  fun setTextLetterSpacing(letterSpacing: Expression.Float)
 
   fun setTextJustify(justify: Expression.Enum<TextJustify>)
 
-  fun setTextRadialOffset(radialOffset: Expression.Number)
+  fun setTextRadialOffset(radialOffset: Expression.Float)
 
   fun setTextVariableAnchor(variableAnchor: Expression.List)
 
@@ -100,11 +100,11 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextAnchor(anchor: Expression.Enum<SymbolAnchor>)
 
-  fun setTextMaxAngle(maxAngle: Expression.Number)
+  fun setTextMaxAngle(maxAngle: Expression.Int)
 
   fun setTextWritingMode(writingMode: Expression.List)
 
-  fun setTextRotate(rotate: Expression.Number)
+  fun setTextRotate(rotate: Expression.Int)
 
   fun setTextPadding(padding: Expression.Dp)
 
@@ -122,7 +122,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextOptional(optional: Expression.Boolean)
 
-  fun setTextOpacity(opacity: Expression.Number)
+  fun setTextOpacity(opacity: Expression.Float)
 
   fun setTextColor(color: Expression.Color)
 

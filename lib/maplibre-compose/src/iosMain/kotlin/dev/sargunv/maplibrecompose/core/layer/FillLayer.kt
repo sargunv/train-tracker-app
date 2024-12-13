@@ -23,7 +23,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setFillSortKey(sortKey: Expression.Number) {
+  actual fun setFillSortKey(sortKey: Expression.Float) {
     impl.fillSortKey = sortKey.toNSExpression()
   }
 
@@ -31,7 +31,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.fillAntialiased = antialias.toNSExpression()
   }
 
-  actual fun setFillOpacity(opacity: Expression.Number) {
+  actual fun setFillOpacity(opacity: Expression.Float) {
     impl.fillOpacity = opacity.toNSExpression()
   }
 

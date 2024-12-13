@@ -18,7 +18,7 @@ internal actual class BackgroundLayer actual constructor(id: String) : Layer() {
     impl.setProperties(PropertyFactory.backgroundPattern(pattern.toMLNExpression()))
   }
 
-  actual fun setBackgroundOpacity(opacity: Expression.Number) {
+  actual fun setBackgroundOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.backgroundOpacity(opacity.toMLNExpression()))
   }
 }

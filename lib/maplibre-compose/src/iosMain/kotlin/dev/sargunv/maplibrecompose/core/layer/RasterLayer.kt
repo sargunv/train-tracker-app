@@ -12,27 +12,27 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
 
   override val impl = MLNRasterStyleLayer(id, source.impl)
 
-  actual fun setRasterOpacity(opacity: Expression.Number) {
+  actual fun setRasterOpacity(opacity: Expression.Float) {
     impl.rasterOpacity = opacity.toNSExpression()
   }
 
-  actual fun setRasterHueRotate(hueRotate: Expression.Number) {
+  actual fun setRasterHueRotate(hueRotate: Expression.Int) {
     impl.rasterHueRotation = hueRotate.toNSExpression()
   }
 
-  actual fun setRasterBrightnessMin(brightnessMin: Expression.Number) {
+  actual fun setRasterBrightnessMin(brightnessMin: Expression.Float) {
     impl.minimumRasterBrightness = brightnessMin.toNSExpression()
   }
 
-  actual fun setRasterBrightnessMax(brightnessMax: Expression.Number) {
+  actual fun setRasterBrightnessMax(brightnessMax: Expression.Float) {
     impl.maximumRasterBrightness = brightnessMax.toNSExpression()
   }
 
-  actual fun setRasterSaturation(saturation: Expression.Number) {
+  actual fun setRasterSaturation(saturation: Expression.Float) {
     impl.rasterSaturation = saturation.toNSExpression()
   }
 
-  actual fun setRasterContrast(contrast: Expression.Number) {
+  actual fun setRasterContrast(contrast: Expression.Float) {
     impl.rasterContrast = contrast.toNSExpression()
   }
 
@@ -40,7 +40,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.rasterResamplingMode = resampling.toNSExpression()
   }
 
-  actual fun setRasterFadeDuration(fadeDuration: Expression.Number) {
+  actual fun setRasterFadeDuration(fadeDuration: Expression.Int) {
     impl.rasterFadeDuration = fadeDuration.toNSExpression()
   }
 }

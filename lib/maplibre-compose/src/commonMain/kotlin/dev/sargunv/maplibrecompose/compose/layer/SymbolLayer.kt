@@ -355,7 +355,7 @@ public inline fun SymbolLayer(
   maxZoom: Float = 24.0f,
   filter: Expression.Boolean = nil(),
   visible: Boolean = true,
-  sortKey: Expression.Number = nil(),
+  sortKey: Expression.Float = nil(),
   placement: Expression.Enum<SymbolPlacement> = const(SymbolPlacement.Point),
   spacing: Expression.Dp = const(250.dp),
   avoidEdges: Expression.Boolean = const(false),
@@ -365,20 +365,20 @@ public inline fun SymbolLayer(
   iconImage: Expression.ResolvedImage = nil(),
 
   // icon colors
-  iconOpacity: Expression.Number = const(1f),
+  iconOpacity: Expression.Float = const(1f),
   iconColor: Expression.Color = const(Color.Black),
   iconHaloColor: Expression.Color = const(Color.Transparent),
   iconHaloWidth: Expression.Dp = const(0.dp),
   iconHaloBlur: Expression.Dp = const(0.dp),
 
   // icon layout
-  iconSize: Expression.Number = const(1f),
+  iconSize: Expression.Float = const(1f),
   iconRotationAlignment: Expression.Enum<IconRotationAlignment> = const(IconRotationAlignment.Auto),
   iconPitchAlignment: Expression.Enum<IconPitchAlignment> = const(IconPitchAlignment.Auto),
   iconTextFit: Expression.Enum<IconTextFit> = const(IconTextFit.None),
   iconTextFitPadding: Expression.Padding = const(ZeroPadding),
   iconKeepUpright: Expression.Boolean = const(false),
-  iconRotate: Expression.Number = const(0f),
+  iconRotate: Expression.Int = const(0),
 
   // icon anchoring
   iconAnchor: Expression.Enum<SymbolAnchor> = const(SymbolAnchor.Center),
@@ -399,7 +399,7 @@ public inline fun SymbolLayer(
   textField: Expression.Formatted = nil(),
 
   // text glyph colors
-  textOpacity: Expression.Number = const(1f),
+  textOpacity: Expression.Float = const(1f),
   textColor: Expression.Color = const(Color.Black),
   textHaloColor: Expression.Color = const(Color.Transparent),
   textHaloWidth: Expression.Dp = const(0.dp),
@@ -409,24 +409,24 @@ public inline fun SymbolLayer(
   textFont: Expression.List = Defaults.FontNames,
   textSize: Expression.Dp = const(16.dp),
   textTransform: Expression.Enum<TextTransform> = const(TextTransform.None),
-  textLetterSpacing: Expression.Number = const(0f),
+  textLetterSpacing: Expression.Float = const(0f),
   textRotationAlignment: Expression.Enum<TextRotationAlignment> = const(TextRotationAlignment.Auto),
   textPitchAlignment: Expression.Enum<TextPitchAlignment> = const(TextPitchAlignment.Auto),
-  textMaxAngle: Expression.Number = const(45f),
+  textMaxAngle: Expression.Int = const(45),
 
   // text paragraph layout
-  textMaxWidth: Expression.Number = const(10f),
-  textLineHeight: Expression.Number = const(1.2f),
+  textMaxWidth: Expression.Float = const(10f),
+  textLineHeight: Expression.Float = const(1.2f),
   textJustify: Expression.Enum<TextJustify> = const(TextJustify.Center),
   textWritingMode: Expression.List = nil(),
   textKeepUpright: Expression.Boolean = const(true),
-  textRotate: Expression.Number = const(0f),
+  textRotate: Expression.Int = const(0),
 
   // text anchoring
   textAnchor: Expression.Enum<SymbolAnchor> = const(SymbolAnchor.Center),
   textOffset: Expression.Offset = const(Offset.Zero),
   textVariableAnchor: Expression.List = nil(),
-  textRadialOffset: Expression.Number = const(0f),
+  textRadialOffset: Expression.Float = const(0f),
   textVariableAnchorOffset: Expression.List = nil(),
 
   // text collision

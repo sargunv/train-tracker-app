@@ -10,11 +10,11 @@ internal expect class FillLayer(id: String, source: Source) : FeatureLayer {
 
   override fun setFilter(filter: Expression.Boolean)
 
-  fun setFillSortKey(sortKey: Expression.Number)
+  fun setFillSortKey(sortKey: Expression.Float)
 
   fun setFillAntialias(antialias: Expression.Boolean)
 
-  fun setFillOpacity(opacity: Expression.Number)
+  fun setFillOpacity(opacity: Expression.Float)
 
   fun setFillColor(color: Expression.Color)
 

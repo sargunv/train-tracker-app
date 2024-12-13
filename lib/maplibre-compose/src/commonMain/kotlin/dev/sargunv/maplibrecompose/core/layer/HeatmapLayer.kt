@@ -1,6 +1,5 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -12,11 +11,11 @@ internal expect class HeatmapLayer(id: String, source: Source) : FeatureLayer {
 
   fun setHeatmapRadius(radius: Expression.Dp)
 
-  fun setHeatmapWeight(weight: Expression.Number)
+  fun setHeatmapWeight(weight: Expression.Float)
 
-  fun setHeatmapIntensity(intensity: Expression.Number)
+  fun setHeatmapIntensity(intensity: Expression.Float)
 
   fun setHeatmapColor(color: Expression.Color)
 
-  fun setHeatmapOpacity(opacity: Expression.Number)
+  fun setHeatmapOpacity(opacity: Expression.Float)
 }

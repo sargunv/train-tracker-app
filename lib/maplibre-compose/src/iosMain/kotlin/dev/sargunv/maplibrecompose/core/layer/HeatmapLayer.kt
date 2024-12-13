@@ -1,6 +1,5 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import androidx.compose.ui.graphics.Color
 import cocoapods.MapLibre.MLNHeatmapStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -27,11 +26,11 @@ internal actual class HeatmapLayer actual constructor(id: String, source: Source
     impl.heatmapRadius = radius.toNSExpression()
   }
 
-  actual fun setHeatmapWeight(weight: Expression.Number) {
+  actual fun setHeatmapWeight(weight: Expression.Float) {
     impl.heatmapWeight = weight.toNSExpression()
   }
 
-  actual fun setHeatmapIntensity(intensity: Expression.Number) {
+  actual fun setHeatmapIntensity(intensity: Expression.Float) {
     impl.heatmapIntensity = intensity.toNSExpression()
   }
 
@@ -39,7 +38,7 @@ internal actual class HeatmapLayer actual constructor(id: String, source: Source
     impl.heatmapColor = color.toNSExpression()
   }
 
-  actual fun setHeatmapOpacity(opacity: Expression.Number) {
+  actual fun setHeatmapOpacity(opacity: Expression.Float) {
     impl.heatmapOpacity = opacity.toNSExpression()
   }
 }

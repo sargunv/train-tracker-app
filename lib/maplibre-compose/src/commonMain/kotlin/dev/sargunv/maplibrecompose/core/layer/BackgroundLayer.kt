@@ -8,5 +8,5 @@ internal expect class BackgroundLayer(id: String) : Layer {
 
   fun setBackgroundPattern(pattern: Expression.ResolvedImage)
 
-  fun setBackgroundOpacity(opacity: Expression.Number)
+  fun setBackgroundOpacity(opacity: Expression.Float)
 }

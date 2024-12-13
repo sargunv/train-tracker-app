@@ -20,7 +20,9 @@ public interface ExpressionScope {
   public fun <T : LayerPropertyEnum> const(value: T): Expression.Enum<T> =
     value.expr as Expression.Enum<T>
 
-  public fun const(float: Float): Expression.Number = Literals.Number(float)
+  public fun const(float: Float): Expression.Float = Literals.Float(float)
+
+  public fun const(int: Int): Expression.Int = Literals.Int(int)
 
   public fun const(dp: Dp): Expression.Dp = Literals.Dp(dp)
 
@@ -85,7 +87,7 @@ public interface ExpressionScope {
    */
   public fun Expression.asList(
     type: Expression.String? = null,
-    length: Expression.Number? = null,
+    length: Expression.Int? = null,
   ): Expression.List {
     val args = buildList {
       type?.let { add(type) }
@@ -189,7 +191,7 @@ public interface ExpressionScope {
   public data class FormatStyle(
     val textFont: Expression.String? = null,
     val textColor: Expression.String? = null,
-    val fontScale: Expression.Number? = null,
+    val fontScale: Expression.Float? = null,
   )
 
   /**
@@ -216,11 +218,11 @@ public interface ExpressionScope {
    * @param minFractionDigits minimum fractional digits to include
    * @param maxFractionDigits maximum fractional digits to include
    */
-  public fun Expression.Number.numberFormat(
+  public fun Expression.Scalar.numberFormat(
     locale: Expression.String? = null,
     currency: Expression.String? = null,
-    minFractionDigits: Expression.Number? = null,
-    maxFractionDigits: Expression.Number? = null,
+    minFractionDigits: Expression.Int? = null,
+    maxFractionDigits: Expression.Int? = null,
   ): Expression.String =
     callFn(
       "number-format",
@@ -286,7 +288,7 @@ public interface ExpressionScope {
   // region Lookup
 
   /** Returns the item at [index]. */
-  public operator fun <T : Expression> Expression.List.get(index: Expression.Number): T =
+  public operator fun <T : Expression> Expression.List.get(index: Expression.Int): T =
     callFn("at", index, this)
 
   /** Returns whether this list contains the [item]. */
@@ -306,8 +308,8 @@ public interface ExpressionScope {
   @JvmName("indexOfString")
   public fun Expression.String.indexOf(
     substring: Expression.String,
-    startIndex: Expression.Number? = null,
-  ): Expression.Number {
+    startIndex: Expression.Int? = null,
+  ): Expression.Int {
     val args = buildList {
       add(substring)
       add(this@indexOf)
@@ -323,8 +325,8 @@ public interface ExpressionScope {
   @JvmName("indexOfList")
   public fun Expression.List.indexOf(
     item: Expression,
-    startIndex: Expression.Number? = null,
-  ): Expression.Number {
+    startIndex: Expression.Int? = null,
+  ): Expression.Int {
     val args = buildList {
       add(item)
       add(this@indexOf)
@@ -340,8 +342,8 @@ public interface ExpressionScope {
    * A UTF-16 surrogate pair counts as a single position.
    */
   public fun Expression.String.substring(
-    startIndex: Expression.Number,
-    endIndex: Expression.Number? = null,
+    startIndex: Expression.Int,
+    endIndex: Expression.Int? = null,
   ): Expression.String {
     val args = buildList {
       add(this@substring)
@@ -356,8 +358,8 @@ public interface ExpressionScope {
    * [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
    */
   public fun Expression.List.slice(
-    startIndex: Expression.Number,
-    endIndex: Expression.Number? = null,
+    startIndex: Expression.Int,
+    endIndex: Expression.Int? = null,
   ): Expression.List {
     val args = buildList {
       add(this@slice)
@@ -390,11 +392,11 @@ public interface ExpressionScope {
    * A UTF-16 surrogate pair counts as a single position.
    */
   @JvmName("lengthOfString")
-  public fun Expression.String.length(): Expression.Number = callFn("length", this)
+  public fun Expression.String.length(): Expression.Int = callFn("length", this)
 
   /** Gets the length of a this list. */
   @JvmName("lengthOfList")
-  public fun Expression.List.length(): Expression.Number = callFn("length", this)
+  public fun Expression.List.length(): Expression.Int = callFn("length", this)
 
   // endregion
 
@@ -768,94 +770,93 @@ public interface ExpressionScope {
   // region Math
 
   /** Returns mathematical constant ln(2) = natural logarithm of 2. */
-  public fun ln2(): Expression.Number = callFn("ln2")
+  public fun ln2(): Expression.Float = callFn("ln2")
 
   /** Returns the mathematical constant π */
-  public fun pi(): Expression.Number = callFn("pi")
+  public fun pi(): Expression.Float = callFn("pi")
 
   /** Returns the mathematical constant e */
-  public fun e(): Expression.Number = callFn("e")
+  public fun e(): Expression.Float = callFn("e")
 
   /** Returns the sum of this number expression with [other]. */
-  public operator fun <T : Expression.Number> T.plus(other: T): T = callFn("+", this, other)
+  public operator fun <T : Expression.Scalar> T.plus(other: T): T = callFn("+", this, other)
 
   /** Returns the product of this number expression with [other]. */
-  public operator fun <T : Expression.Number> T.times(other: Expression.Number): T =
+  public operator fun <T : Expression.Scalar> T.times(other: Expression.Number): T =
     callFn("*", this, other)
 
   /** Returns the result of subtracting [other] from this number expression. */
-  public operator fun <T : Expression.Number> T.minus(other: T): T = callFn("-", this, other)
+  public operator fun <T : Expression.Scalar> T.minus(other: T): T = callFn("-", this, other)
 
   /** Negates this number expression. */
-  public operator fun <T : Expression.Number> T.unaryMinus(): T = callFn("-", this)
+  public operator fun <T : Expression.Scalar> T.unaryMinus(): T = callFn("-", this)
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
-  public operator fun <T : Expression.Number> T.div(divisor: Expression.Number): T =
+  public operator fun <T : Expression.FloatScalar> T.div(divisor: Expression.Float): T =
     callFn("/", this, divisor)
 
   /** Returns the remainder after integer division of this number expression by [divisor]. */
-  public operator fun <T : Expression.Number> T.rem(divisor: Expression.Number): T =
+  public operator fun <T : Expression.IntScalar> T.rem(divisor: Expression.Int): T =
     callFn("%", this, divisor)
 
   /** Returns the result of raising this number expression to the power of [exponent]. */
-  public fun Expression.Number.pow(exponent: Expression.Number): Expression.Number =
+  public fun Expression.Number.pow(exponent: Expression.Number): Expression.Float =
     callFn("^", this, exponent)
 
   /** Returns the square root of [value]. */
-  public fun sqrt(value: Expression.Number): Expression.Number = callFn("sqrt", value)
+  public fun sqrt(value: Expression.Number): Expression.Float = callFn("sqrt", value)
 
   /** Returns the base-ten logarithm of [value]. */
-  public fun log10(value: Expression.Number): Expression.Number = callFn("log10", value)
+  public fun log10(value: Expression.Number): Expression.Float = callFn("log10", value)
 
   /** Returns the natural logarithm of [value]. */
-  public fun ln(value: Expression.Number): Expression.Number = callFn("ln", value)
+  public fun ln(value: Expression.Number): Expression.Float = callFn("ln", value)
 
   /** Returns the base-two logarithm of [value]. */
-  public fun log2(value: Expression.Number): Expression.Number = callFn("log2", value)
+  public fun log2(value: Expression.Number): Expression.Float = callFn("log2", value)
 
   /** Returns the sine of [value]. */
-  public fun sin(value: Expression.Number): Expression.Number = callFn("sin", value)
+  public fun sin(value: Expression.Number): Expression.Float = callFn("sin", value)
 
   /** Returns the cosine of [value]. */
-  public fun cos(value: Expression.Number): Expression.Number = callFn("cos", value)
+  public fun cos(value: Expression.Number): Expression.Float = callFn("cos", value)
 
   /** Returns the tangent of [value]. */
-  public fun tan(value: Expression.Number): Expression.Number = callFn("tan", value)
+  public fun tan(value: Expression.Number): Expression.Float = callFn("tan", value)
 
   /** Returns the arcsine of [value]. */
-  public fun asin(value: Expression.Number): Expression.Number = callFn("asin", value)
+  public fun asin(value: Expression.Number): Expression.Float = callFn("asin", value)
 
   /** Returns the arccosine of [value]. */
-  public fun acos(value: Expression.Number): Expression.Number = callFn("acos", value)
+  public fun acos(value: Expression.Number): Expression.Float = callFn("acos", value)
 
   /** Returns the arctangent of [value]. */
-  public fun atan(value: Expression.Number): Expression.Number = callFn("atan", value)
+  public fun atan(value: Expression.Number): Expression.Float = callFn("atan", value)
 
   /** Returns the smallest of all given [numbers]. */
-  public fun <T : Expression.Number> min(vararg numbers: T): T = callFn("min", *numbers)
+  public fun <T : Expression.Scalar> min(vararg numbers: T): T = callFn("min", *numbers)
 
   /** Returns the greatest of all given [numbers]. */
-  public fun <T : Expression.Number> max(vararg numbers: T): T = callFn("max", *numbers)
+  public fun <T : Expression.Scalar> max(vararg numbers: T): T = callFn("max", *numbers)
+
+  /** Returns the absolute value of [value], i.e. always a positive value. */
+  public fun <T : Expression.Scalar> abs(value: T): T = callFn("abs", value)
 
   /**
    * Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
    *
    * For example `round(const(-1.5))` evaluates to `-2`.
    */
-  public fun <T : Expression.Number> round(value: T): T = callFn("round", value)
-
-  /** Returns the absolute value of [value], i.e. always a positive value. */
-  public fun <T : Expression.Number> abs(value: T): T = callFn("abs", value)
+  public fun round(value: Expression.Number): Expression.Int = callFn("round", value)
 
   /** Returns the smallest integer that is greater than or equal to [value]. */
-  public fun <T : Expression.Number> ceil(value: T): T = callFn("ceil", value)
+  public fun ceil(value: Expression.Number): Expression.Int = callFn("ceil", value)
 
   /** Returns the largest integer that is less than or equal to [value]. */
-  public fun floor(value: Expression.Number): Expression.Number = callFn("floor", value)
+  public fun floor(value: Expression.Number): Expression.Int = callFn("floor", value)
 
   /** Returns the shortest distance in meters between the evaluated feature and [geometry]. */
-  public fun distance(geometry: Expression.GeoJson): Expression.Number =
-    callFn("distance", geometry)
+  public fun distance(geometry: Expression.GeoJson): Expression.Float = callFn("distance", geometry)
 
   // endregion
 
@@ -874,10 +875,10 @@ public interface ExpressionScope {
    * If any component is out of range, the expression is an error.
    */
   public fun rgbColor(
-    red: Expression.Number,
-    green: Expression.Number,
-    blue: Expression.Number,
-    alpha: Expression.Number? = null,
+    red: Expression.Int,
+    green: Expression.Int,
+    blue: Expression.Int,
+    alpha: Expression.Float? = null,
   ): Expression.Color =
     if (alpha != null) {
       callFn("rgba", red, green, blue, alpha)
@@ -928,7 +929,7 @@ public interface ExpressionScope {
    * Gets the progress along a gradient line. Can only be used in the `gradient` property of a line
    * layer, see [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer].
    */
-  public fun lineProgress(value: Expression.Number): Expression.Number =
+  public fun lineProgress(value: Expression.Float): Expression.Float =
     callFn("line-progress", value)
 
   /**
@@ -947,7 +948,7 @@ public interface ExpressionScope {
    * input to a top-level [step] or [interpolate] (, [interpolateHcl], [interpolateLab], ...)
    * expression.
    */
-  public fun zoom(): Expression.Number = callFn("zoom")
+  public fun zoom(): Expression.Float = callFn("zoom")
 
   // endregion
 
@@ -959,7 +960,7 @@ public interface ExpressionScope {
    * expression for the `color` parameter in a
    * [HeatmapLayer][dev.sargunv.maplibrecompose.compose.layer.HeatmapLayer].
    */
-  public fun heatmapDensity(): Expression.Number = callFn("heatmap-density")
+  public fun heatmapDensity(): Expression.Float = callFn("heatmap-density")
 
   // endregion
 
@@ -1013,9 +1014,6 @@ public interface ExpressionScope {
 
   private inline fun buildOptions(block: MutableMap<String, Expression>.() -> Unit) =
     Expression.Impl(mutableMapOf<String, Expression>().apply(block).mapValues { it.value.value })
-
-  private fun buildArgs(block: MutableList<Expression>.() -> Unit) =
-    mutableListOf<Expression>().apply(block).toTypedArray()
 
   private fun <T> Array<T>.foldToArgs(block: MutableList<Expression>.(element: T) -> Unit) =
     fold(mutableListOf<Expression>()) { acc, element -> acc.apply { block(element) } }

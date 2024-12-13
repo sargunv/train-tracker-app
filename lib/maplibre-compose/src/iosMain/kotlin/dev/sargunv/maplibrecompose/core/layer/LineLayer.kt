@@ -33,19 +33,19 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.lineJoin = join.toNSExpression()
   }
 
-  actual fun setLineMiterLimit(miterLimit: Expression.Number) {
+  actual fun setLineMiterLimit(miterLimit: Expression.Float) {
     impl.lineMiterLimit = miterLimit.toNSExpression()
   }
 
-  actual fun setLineRoundLimit(roundLimit: Expression.Number) {
+  actual fun setLineRoundLimit(roundLimit: Expression.Float) {
     impl.lineRoundLimit = roundLimit.toNSExpression()
   }
 
-  actual fun setLineSortKey(sortKey: Expression.Number) {
+  actual fun setLineSortKey(sortKey: Expression.Float) {
     impl.lineSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setLineOpacity(opacity: Expression.Number) {
+  actual fun setLineOpacity(opacity: Expression.Float) {
     impl.lineOpacity = opacity.toNSExpression()
   }
 

@@ -10,12 +10,21 @@ internal object Literals {
 
   internal data object False : Expression.Boolean by Expression.Impl(false)
 
-  internal class Number private constructor(number: kotlin.Number) :
-    Expression.Number by Expression.Impl(number) {
+  internal class Float private constructor(number: kotlin.Float) :
+    Expression.Float by Expression.Impl(number) {
     companion object {
-      private val NumberCache = NumberCache(::Number)
+      private val cached = SmallFloatCache(::Float)
 
-      operator fun invoke(float: Float) = NumberCache.get(float)
+      operator fun invoke(float: kotlin.Float) = cached.get(float) ?: Float(float)
+    }
+  }
+
+  internal class Int private constructor(number: kotlin.Int) :
+    Expression.Int by Expression.Impl(number) {
+    companion object {
+      private val cached = SmallIntCache(::Int)
+
+      operator fun invoke(int: kotlin.Int) = cached.get(int) ?: Int(int)
     }
   }
 
@@ -48,9 +57,9 @@ internal object Literals {
   internal class Dp private constructor(dp: androidx.compose.ui.unit.Dp) :
     Expression.Dp by Expression.Impl(dp.value) {
     companion object {
-      private val NumberCache = NumberCache { Dp(it.dp) }
+      private val cached = SmallFloatCache { Dp(it.dp) }
 
-      operator fun invoke(dp: androidx.compose.ui.unit.Dp) = NumberCache.get(dp.value)
+      operator fun invoke(dp: androidx.compose.ui.unit.Dp) = cached.get(dp.value) ?: Dp(dp)
     }
   }
 
@@ -87,22 +96,36 @@ internal object Literals {
     }
   }
 
-  private class NumberCache<out T : Expression>(private val factory: (Float) -> T) {
+  private class SmallFloatCache<out T : Expression>(private val factory: (kotlin.Float) -> T) {
     private val constSmallInts = List(SIZE) { factory(it.toFloat()) }
     private val constSmallFloats = List(SIZE) { factory(it.toFloat() / RESOLUTION) }
 
-    private fun isSmallInt(f: Float) = f >= 0 && f < SIZE && f.toInt().toFloat() == f
+    private fun isSmallInt(f: kotlin.Float) = f >= 0 && f < SIZE && f.toInt().toFloat() == f
 
-    fun get(float: Float) =
+    fun get(float: kotlin.Float) =
       when {
         isSmallInt(float) -> constSmallInts[float.toInt()]
         isSmallInt(float * RESOLUTION) -> constSmallFloats[(float * 20f).toInt()]
-        else -> factory(float)
+        else -> null
       }
 
     companion object {
       private const val SIZE = 512
       private const val RESOLUTION = 20f
+    }
+  }
+
+  private class SmallIntCache<out T : Expression>(private val factory: (kotlin.Int) -> T) {
+    private val constSmallInts = List(SIZE) { factory(it) }
+
+    fun get(int: kotlin.Int) =
+      when {
+        int in 0..<SIZE -> constSmallInts[int]
+        else -> null
+      }
+
+    companion object {
+      private const val SIZE = 512
     }
   }
 }

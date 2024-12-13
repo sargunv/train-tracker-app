@@ -12,7 +12,7 @@ internal actual class HillshadeLayer actual constructor(id: String, actual val s
 
   override val impl = MLNHillshadeStyleLayer(id, source.impl)
 
-  actual fun setHillshadeIlluminationDirection(direction: Expression.Number) {
+  actual fun setHillshadeIlluminationDirection(direction: Expression.Int) {
     impl.hillshadeIlluminationDirection = direction.toNSExpression()
   }
 
@@ -20,7 +20,7 @@ internal actual class HillshadeLayer actual constructor(id: String, actual val s
     impl.hillshadeIlluminationAnchor = anchor.toNSExpression()
   }
 
-  actual fun setHillshadeExaggeration(exaggeration: Expression.Number) {
+  actual fun setHillshadeExaggeration(exaggeration: Expression.Float) {
     impl.hillshadeExaggeration = exaggeration.toNSExpression()
   }
 

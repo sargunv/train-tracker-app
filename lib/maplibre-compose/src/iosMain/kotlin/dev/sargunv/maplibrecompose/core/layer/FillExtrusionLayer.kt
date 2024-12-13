@@ -23,7 +23,7 @@ internal actual class FillExtrusionLayer actual constructor(id: String, source: 
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setFillExtrusionOpacity(opacity: Expression.Number) {
+  actual fun setFillExtrusionOpacity(opacity: Expression.Float) {
     impl.fillExtrusionOpacity = opacity.toNSExpression()
   }
 
@@ -44,11 +44,11 @@ internal actual class FillExtrusionLayer actual constructor(id: String, source: 
     if (pattern.value != null) impl.fillExtrusionPattern = pattern.toNSExpression()
   }
 
-  actual fun setFillExtrusionHeight(height: Expression.Number) {
+  actual fun setFillExtrusionHeight(height: Expression.Float) {
     impl.fillExtrusionHeight = height.toNSExpression()
   }
 
-  actual fun setFillExtrusionBase(base: Expression.Number) {
+  actual fun setFillExtrusionBase(base: Expression.Float) {
     impl.fillExtrusionBase = base.toNSExpression()
   }
 

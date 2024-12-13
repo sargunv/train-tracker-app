@@ -19,7 +19,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.setFilter(filter.toMLNExpression() ?: MLNExpression.literal(true))
   }
 
-  actual fun setFillSortKey(sortKey: Expression.Number) {
+  actual fun setFillSortKey(sortKey: Expression.Float) {
     impl.setProperties(PropertyFactory.fillSortKey(sortKey.toMLNExpression()))
   }
 
@@ -27,7 +27,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.setProperties(PropertyFactory.fillAntialias(antialias.toMLNExpression()))
   }
 
-  actual fun setFillOpacity(opacity: Expression.Number) {
+  actual fun setFillOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.fillOpacity(opacity.toMLNExpression()))
   }
 

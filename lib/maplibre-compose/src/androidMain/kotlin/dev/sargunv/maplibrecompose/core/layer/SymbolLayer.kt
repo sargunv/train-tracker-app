@@ -41,7 +41,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.symbolAvoidEdges(avoidEdges.toMLNExpression()))
   }
 
-  actual fun setSymbolSortKey(sortKey: Expression.Number) {
+  actual fun setSymbolSortKey(sortKey: Expression.Float) {
     impl.setProperties(PropertyFactory.symbolSortKey(sortKey.toMLNExpression()))
   }
 
@@ -70,7 +70,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconRotationAlignment(rotationAlignment.toMLNExpression()))
   }
 
-  actual fun setIconSize(size: Expression.Number) {
+  actual fun setIconSize(size: Expression.Float) {
     impl.setProperties(PropertyFactory.iconSize(size.toMLNExpression()))
   }
 
@@ -86,7 +86,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconImage(image.toMLNExpression()))
   }
 
-  actual fun setIconRotate(rotate: Expression.Number) {
+  actual fun setIconRotate(rotate: Expression.Int) {
     impl.setProperties(PropertyFactory.iconRotate(rotate.toMLNExpression()))
   }
 
@@ -110,7 +110,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconPitchAlignment(pitchAlignment.toMLNExpression()))
   }
 
-  actual fun setIconOpacity(opacity: Expression.Number) {
+  actual fun setIconOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.iconOpacity(opacity.toMLNExpression()))
   }
 
@@ -158,15 +158,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textSize(size.toMLNExpression()))
   }
 
-  actual fun setTextMaxWidth(maxWidth: Expression.Number) {
+  actual fun setTextMaxWidth(maxWidth: Expression.Float) {
     impl.setProperties(PropertyFactory.textMaxWidth(maxWidth.toMLNExpression()))
   }
 
-  actual fun setTextLineHeight(lineHeight: Expression.Number) {
+  actual fun setTextLineHeight(lineHeight: Expression.Float) {
     impl.setProperties(PropertyFactory.textLineHeight(lineHeight.toMLNExpression()))
   }
 
-  actual fun setTextLetterSpacing(letterSpacing: Expression.Number) {
+  actual fun setTextLetterSpacing(letterSpacing: Expression.Float) {
     impl.setProperties(PropertyFactory.textLetterSpacing(letterSpacing.toMLNExpression()))
   }
 
@@ -174,7 +174,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textJustify(justify.toMLNExpression()))
   }
 
-  actual fun setTextRadialOffset(radialOffset: Expression.Number) {
+  actual fun setTextRadialOffset(radialOffset: Expression.Float) {
     impl.setProperties(PropertyFactory.textRadialOffset(radialOffset.toMLNExpression()))
   }
 
@@ -192,7 +192,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textAnchor(anchor.toMLNExpression()))
   }
 
-  actual fun setTextMaxAngle(maxAngle: Expression.Number) {
+  actual fun setTextMaxAngle(maxAngle: Expression.Int) {
     impl.setProperties(PropertyFactory.textMaxAngle(maxAngle.toMLNExpression()))
   }
 
@@ -200,7 +200,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textWritingMode(writingMode.toMLNExpression()))
   }
 
-  actual fun setTextRotate(rotate: Expression.Number) {
+  actual fun setTextRotate(rotate: Expression.Int) {
     impl.setProperties(PropertyFactory.textRotate(rotate.toMLNExpression()))
   }
 
@@ -237,7 +237,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textOptional(optional.toMLNExpression()))
   }
 
-  actual fun setTextOpacity(opacity: Expression.Number) {
+  actual fun setTextOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.textOpacity(opacity.toMLNExpression()))
   }
 

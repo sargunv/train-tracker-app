@@ -12,15 +12,15 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   override fun setFilter(filter: Expression.Boolean)
 
-  fun setCircleSortKey(sortKey: Expression.Number)
+  fun setCircleSortKey(sortKey: Expression.Float)
 
   fun setCircleRadius(radius: Expression.Dp)
 
   fun setCircleColor(color: Expression.Color)
 
-  fun setCircleBlur(blur: Expression.Number)
+  fun setCircleBlur(blur: Expression.Float)
 
-  fun setCircleOpacity(opacity: Expression.Number)
+  fun setCircleOpacity(opacity: Expression.Float)
 
   fun setCircleTranslate(translate: Expression.DpOffset)
 
@@ -34,5 +34,5 @@ internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
 
   fun setCircleStrokeColor(strokeColor: Expression.Color)
 
-  fun setCircleStrokeOpacity(strokeOpacity: Expression.Number)
+  fun setCircleStrokeOpacity(strokeOpacity: Expression.Float)
 }

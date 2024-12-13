@@ -30,19 +30,19 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.setProperties(PropertyFactory.lineJoin(join.toMLNExpression()))
   }
 
-  actual fun setLineMiterLimit(miterLimit: Expression.Number) {
+  actual fun setLineMiterLimit(miterLimit: Expression.Float) {
     impl.setProperties(PropertyFactory.lineMiterLimit(miterLimit.toMLNExpression()))
   }
 
-  actual fun setLineRoundLimit(roundLimit: Expression.Number) {
+  actual fun setLineRoundLimit(roundLimit: Expression.Float) {
     impl.setProperties(PropertyFactory.lineRoundLimit(roundLimit.toMLNExpression()))
   }
 
-  actual fun setLineSortKey(sortKey: Expression.Number) {
+  actual fun setLineSortKey(sortKey: Expression.Float) {
     impl.setProperties(PropertyFactory.lineSortKey(sortKey.toMLNExpression()))
   }
 
-  actual fun setLineOpacity(opacity: Expression.Number) {
+  actual fun setLineOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.lineOpacity(opacity.toMLNExpression()))
   }
 

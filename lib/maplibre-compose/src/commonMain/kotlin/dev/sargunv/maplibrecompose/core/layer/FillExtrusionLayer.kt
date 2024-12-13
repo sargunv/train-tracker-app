@@ -10,7 +10,7 @@ internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLa
 
   override fun setFilter(filter: Expression.Boolean)
 
-  fun setFillExtrusionOpacity(opacity: Expression.Number)
+  fun setFillExtrusionOpacity(opacity: Expression.Float)
 
   fun setFillExtrusionColor(color: Expression.Color)
 
@@ -20,9 +20,9 @@ internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLa
 
   fun setFillExtrusionPattern(pattern: Expression.ResolvedImage)
 
-  fun setFillExtrusionHeight(height: Expression.Number)
+  fun setFillExtrusionHeight(height: Expression.Float)
 
-  fun setFillExtrusionBase(base: Expression.Number)
+  fun setFillExtrusionBase(base: Expression.Float)
 
   fun setFillExtrusionVerticalGradient(verticalGradient: Expression.Boolean)
 }

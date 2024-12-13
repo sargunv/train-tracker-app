@@ -16,13 +16,13 @@ internal expect class LineLayer(id: String, source: Source) : FeatureLayer {
 
   fun setLineJoin(join: Expression.Enum<LineJoin>)
 
-  fun setLineMiterLimit(miterLimit: Expression.Number)
+  fun setLineMiterLimit(miterLimit: Expression.Float)
 
-  fun setLineRoundLimit(roundLimit: Expression.Number)
+  fun setLineRoundLimit(roundLimit: Expression.Float)
 
-  fun setLineSortKey(sortKey: Expression.Number)
+  fun setLineSortKey(sortKey: Expression.Float)
 
-  fun setLineOpacity(opacity: Expression.Number)
+  fun setLineOpacity(opacity: Expression.Float)
 
   fun setLineColor(color: Expression.Color)
 

@@ -19,7 +19,7 @@ internal actual class FillExtrusionLayer actual constructor(id: String, source: 
     impl.setFilter(filter.toMLNExpression() ?: MLNExpression.literal(true))
   }
 
-  actual fun setFillExtrusionOpacity(opacity: Expression.Number) {
+  actual fun setFillExtrusionOpacity(opacity: Expression.Float) {
     impl.setProperties(PropertyFactory.fillExtrusionOpacity(opacity.toMLNExpression()))
   }
 
@@ -39,11 +39,11 @@ internal actual class FillExtrusionLayer actual constructor(id: String, source: 
     impl.setProperties(PropertyFactory.fillExtrusionPattern(pattern.toMLNExpression()))
   }
 
-  actual fun setFillExtrusionHeight(height: Expression.Number) {
+  actual fun setFillExtrusionHeight(height: Expression.Float) {
     impl.setProperties(PropertyFactory.fillExtrusionHeight(height.toMLNExpression()))
   }
 
-  actual fun setFillExtrusionBase(base: Expression.Number) {
+  actual fun setFillExtrusionBase(base: Expression.Float) {
     impl.setProperties(PropertyFactory.fillExtrusionBase(base.toMLNExpression()))
   }
 

@@ -33,7 +33,7 @@ public inline fun BackgroundLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: Expression.Number = const(1f),
+  opacity: Expression.Float = const(1f),
   color: Expression.Color = const(Color.Black),
   pattern: Expression.ResolvedImage = nil(),
 ) {

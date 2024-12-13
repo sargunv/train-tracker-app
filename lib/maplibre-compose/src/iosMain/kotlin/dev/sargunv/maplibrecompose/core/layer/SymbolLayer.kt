@@ -45,7 +45,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.symbolAvoidsEdges = avoidEdges.toNSExpression()
   }
 
-  actual fun setSymbolSortKey(sortKey: Expression.Number) {
+  actual fun setSymbolSortKey(sortKey: Expression.Float) {
     impl.symbolSortKey = sortKey.toNSExpression()
   }
 
@@ -74,7 +74,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconRotationAlignment = rotationAlignment.toNSExpression()
   }
 
-  actual fun setIconSize(size: Expression.Number) {
+  actual fun setIconSize(size: Expression.Float) {
     impl.iconScale = size.toNSExpression()
   }
 
@@ -91,7 +91,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     if (image.value != null) impl.iconImageName = image.toNSExpression()
   }
 
-  actual fun setIconRotate(rotate: Expression.Number) {
+  actual fun setIconRotate(rotate: Expression.Int) {
     impl.iconRotation = rotate.toNSExpression()
   }
 
@@ -115,7 +115,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconPitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setIconOpacity(opacity: Expression.Number) {
+  actual fun setIconOpacity(opacity: Expression.Float) {
     impl.iconOpacity = opacity.toNSExpression()
   }
 
@@ -163,15 +163,15 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textFontSize = size.toNSExpression()
   }
 
-  actual fun setTextMaxWidth(maxWidth: Expression.Number) {
+  actual fun setTextMaxWidth(maxWidth: Expression.Float) {
     impl.maximumTextWidth = maxWidth.toNSExpression()
   }
 
-  actual fun setTextLineHeight(lineHeight: Expression.Number) {
+  actual fun setTextLineHeight(lineHeight: Expression.Float) {
     impl.textLineHeight = lineHeight.toNSExpression()
   }
 
-  actual fun setTextLetterSpacing(letterSpacing: Expression.Number) {
+  actual fun setTextLetterSpacing(letterSpacing: Expression.Float) {
     impl.textLetterSpacing = letterSpacing.toNSExpression()
   }
 
@@ -179,7 +179,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textJustification = justify.toNSExpression()
   }
 
-  actual fun setTextRadialOffset(radialOffset: Expression.Number) {
+  actual fun setTextRadialOffset(radialOffset: Expression.Float) {
     impl.textRadialOffset = radialOffset.toNSExpression()
   }
 
@@ -195,7 +195,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textAnchor = anchor.toNSExpression()
   }
 
-  actual fun setTextMaxAngle(maxAngle: Expression.Number) {
+  actual fun setTextMaxAngle(maxAngle: Expression.Int) {
     impl.maximumTextAngle = maxAngle.toNSExpression()
   }
 
@@ -203,7 +203,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textWritingModes = writingMode.toNSExpression()
   }
 
-  actual fun setTextRotate(rotate: Expression.Number) {
+  actual fun setTextRotate(rotate: Expression.Int) {
     impl.textRotation = rotate.toNSExpression()
   }
 
@@ -240,7 +240,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textOptional = optional.toNSExpression()
   }
 
-  actual fun setTextOpacity(opacity: Expression.Number) {
+  actual fun setTextOpacity(opacity: Expression.Float) {
     impl.textOpacity = opacity.toNSExpression()
   }
 

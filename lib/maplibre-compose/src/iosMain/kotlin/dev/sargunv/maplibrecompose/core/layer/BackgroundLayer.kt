@@ -19,7 +19,7 @@ internal actual class BackgroundLayer actual constructor(id: String) : Layer() {
     }
   }
 
-  actual fun setBackgroundOpacity(opacity: Expression.Number) {
+  actual fun setBackgroundOpacity(opacity: Expression.Float) {
     impl.backgroundOpacity = opacity.toNSExpression()
   }
 }

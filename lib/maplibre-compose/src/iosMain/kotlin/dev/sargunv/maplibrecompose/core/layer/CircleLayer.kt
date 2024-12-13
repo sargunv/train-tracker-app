@@ -25,7 +25,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setCircleSortKey(sortKey: Expression.Number) {
+  actual fun setCircleSortKey(sortKey: Expression.Float) {
     impl.circleSortKey = sortKey.toNSExpression()
   }
 
@@ -37,11 +37,11 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.circleColor = color.toNSExpression()
   }
 
-  actual fun setCircleBlur(blur: Expression.Number) {
+  actual fun setCircleBlur(blur: Expression.Float) {
     impl.circleBlur = blur.toNSExpression()
   }
 
-  actual fun setCircleOpacity(opacity: Expression.Number) {
+  actual fun setCircleOpacity(opacity: Expression.Float) {
     impl.circleOpacity = opacity.toNSExpression()
   }
 
@@ -69,7 +69,7 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
     impl.circleStrokeColor = strokeColor.toNSExpression()
   }
 
-  actual fun setCircleStrokeOpacity(strokeOpacity: Expression.Number) {
+  actual fun setCircleStrokeOpacity(strokeOpacity: Expression.Float) {
     impl.circleStrokeOpacity = strokeOpacity.toNSExpression()
   }
 }
