@@ -1,6 +1,11 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageExpression
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -8,21 +13,21 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: Expression.Boolean)
+  override fun setFilter(filter: BooleanExpression)
 
-  fun setFillExtrusionOpacity(opacity: Expression.Float)
+  fun setFillExtrusionOpacity(opacity: FloatExpression)
 
-  fun setFillExtrusionColor(color: Expression.Color)
+  fun setFillExtrusionColor(color: ColorExpression)
 
-  fun setFillExtrusionTranslate(translate: Expression.DpOffset)
+  fun setFillExtrusionTranslate(translate: DpOffsetExpression)
 
-  fun setFillExtrusionTranslateAnchor(anchor: Expression.Enum<TranslateAnchor>)
+  fun setFillExtrusionTranslateAnchor(anchor: EnumExpression<TranslateAnchor>)
 
-  fun setFillExtrusionPattern(pattern: Expression.ResolvedImage)
+  fun setFillExtrusionPattern(pattern: ImageExpression)
 
-  fun setFillExtrusionHeight(height: Expression.Float)
+  fun setFillExtrusionHeight(height: FloatExpression)
 
-  fun setFillExtrusionBase(base: Expression.Float)
+  fun setFillExtrusionBase(base: FloatExpression)
 
-  fun setFillExtrusionVerticalGradient(verticalGradient: Expression.Boolean)
+  fun setFillExtrusionVerticalGradient(verticalGradient: BooleanExpression)
 }

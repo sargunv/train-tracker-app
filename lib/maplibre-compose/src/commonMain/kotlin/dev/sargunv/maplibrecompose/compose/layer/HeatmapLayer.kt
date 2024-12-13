@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
+import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
 import dev.sargunv.maplibrecompose.core.expression.Defaults
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.DpExpression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.heatmapDensity
 import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
 import dev.sargunv.maplibrecompose.core.layer.HeatmapLayer
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -49,13 +52,13 @@ public inline fun HeatmapLayer(
   sourceLayer: String = "",
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
-  filter: Expression.Boolean = nil(),
+  filter: BooleanExpression = nil(),
   visible: Boolean = true,
-  color: Expression.Color = Defaults.HeatmapColors,
-  opacity: Expression.Float = const(1f),
-  radius: Expression.Dp = const(30.dp),
-  weight: Expression.Float = const(1f),
-  intensity: Expression.Float = const(1f),
+  color: ColorExpression = Defaults.HeatmapColors,
+  opacity: FloatExpression = const(1f),
+  radius: DpExpression = const(30.dp),
+  weight: FloatExpression = const(1f),
+  intensity: FloatExpression = const(1f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

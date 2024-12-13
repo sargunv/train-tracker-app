@@ -5,9 +5,14 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageExpression
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.FillLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -61,16 +66,16 @@ public inline fun FillLayer(
   sourceLayer: String = "",
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
-  filter: Expression.Boolean = nil(),
+  filter: BooleanExpression = nil(),
   visible: Boolean = true,
-  sortKey: Expression.Float = nil(),
-  translate: Expression.DpOffset = const(DpOffset.Zero),
-  translateAnchor: Expression.Enum<TranslateAnchor> = const(TranslateAnchor.Map),
-  opacity: Expression.Float = const(1f),
-  color: Expression.Color = const(Color.Black),
-  pattern: Expression.ResolvedImage = nil(),
-  antialias: Expression.Boolean = const(true),
-  outlineColor: Expression.Color = color,
+  sortKey: FloatExpression = nil(),
+  translate: DpOffsetExpression = const(DpOffset.Zero),
+  translateAnchor: EnumExpression<TranslateAnchor> = const(TranslateAnchor.Map),
+  opacity: FloatExpression = const(1f),
+  color: ColorExpression = const(Color.Black),
+  pattern: ImageExpression = nil(),
+  antialias: BooleanExpression = const(true),
+  outlineColor: ColorExpression = color,
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

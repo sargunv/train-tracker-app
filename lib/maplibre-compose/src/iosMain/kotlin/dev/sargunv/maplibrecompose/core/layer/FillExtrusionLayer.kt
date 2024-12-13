@@ -1,7 +1,12 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNFillExtrusionStyleLayer
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageExpression
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -19,40 +24,40 @@ internal actual class FillExtrusionLayer actual constructor(id: String, source: 
       impl.sourceLayerIdentifier = value
     }
 
-  actual override fun setFilter(filter: Expression.Boolean) {
+  actual override fun setFilter(filter: BooleanExpression) {
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setFillExtrusionOpacity(opacity: Expression.Float) {
+  actual fun setFillExtrusionOpacity(opacity: FloatExpression) {
     impl.fillExtrusionOpacity = opacity.toNSExpression()
   }
 
-  actual fun setFillExtrusionColor(color: Expression.Color) {
+  actual fun setFillExtrusionColor(color: ColorExpression) {
     impl.fillExtrusionColor = color.toNSExpression()
   }
 
-  actual fun setFillExtrusionTranslate(translate: Expression.DpOffset) {
+  actual fun setFillExtrusionTranslate(translate: DpOffsetExpression) {
     impl.fillExtrusionTranslation = translate.toNSExpression()
   }
 
-  actual fun setFillExtrusionTranslateAnchor(anchor: Expression.Enum<TranslateAnchor>) {
+  actual fun setFillExtrusionTranslateAnchor(anchor: EnumExpression<TranslateAnchor>) {
     impl.fillExtrusionTranslationAnchor = anchor.toNSExpression()
   }
 
-  actual fun setFillExtrusionPattern(pattern: Expression.ResolvedImage) {
+  actual fun setFillExtrusionPattern(pattern: ImageExpression) {
     // TODO figure out how to unset pattern
     if (pattern.value != null) impl.fillExtrusionPattern = pattern.toNSExpression()
   }
 
-  actual fun setFillExtrusionHeight(height: Expression.Float) {
+  actual fun setFillExtrusionHeight(height: FloatExpression) {
     impl.fillExtrusionHeight = height.toNSExpression()
   }
 
-  actual fun setFillExtrusionBase(base: Expression.Float) {
+  actual fun setFillExtrusionBase(base: FloatExpression) {
     impl.fillExtrusionBase = base.toNSExpression()
   }
 
-  actual fun setFillExtrusionVerticalGradient(verticalGradient: Expression.Boolean) {
+  actual fun setFillExtrusionVerticalGradient(verticalGradient: BooleanExpression) {
     impl.fillExtrusionHasVerticalGradient = verticalGradient.toNSExpression()
   }
 }

@@ -1,6 +1,11 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageExpression
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -8,21 +13,21 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class FillLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: Expression.Boolean)
+  override fun setFilter(filter: BooleanExpression)
 
-  fun setFillSortKey(sortKey: Expression.Float)
+  fun setFillSortKey(sortKey: FloatExpression)
 
-  fun setFillAntialias(antialias: Expression.Boolean)
+  fun setFillAntialias(antialias: BooleanExpression)
 
-  fun setFillOpacity(opacity: Expression.Float)
+  fun setFillOpacity(opacity: FloatExpression)
 
-  fun setFillColor(color: Expression.Color)
+  fun setFillColor(color: ColorExpression)
 
-  fun setFillOutlineColor(outlineColor: Expression.Color)
+  fun setFillOutlineColor(outlineColor: ColorExpression)
 
-  fun setFillTranslate(translate: Expression.DpOffset)
+  fun setFillTranslate(translate: DpOffsetExpression)
 
-  fun setFillTranslateAnchor(translateAnchor: Expression.Enum<TranslateAnchor>)
+  fun setFillTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>)
 
-  fun setFillPattern(pattern: Expression.ResolvedImage)
+  fun setFillPattern(pattern: ImageExpression)
 }

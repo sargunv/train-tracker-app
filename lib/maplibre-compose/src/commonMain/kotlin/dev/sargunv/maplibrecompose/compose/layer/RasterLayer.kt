@@ -2,8 +2,10 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.layer.RasterLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -40,14 +42,14 @@ public inline fun RasterLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: Expression.Float = const(1f),
-  hueRotate: Expression.Int = const(0),
-  brightnessMin: Expression.Float = const(0f),
-  brightnessMax: Expression.Float = const(1f),
-  saturation: Expression.Float = const(0f),
-  contrast: Expression.Float = const(0f),
-  resampling: Expression.Enum<RasterResampling> = const(RasterResampling.Linear),
-  fadeDuration: Expression.Int = const(300),
+  opacity: FloatExpression = const(1f),
+  hueRotate: IntExpression = const(0),
+  brightnessMin: FloatExpression = const(0f),
+  brightnessMax: FloatExpression = const(1f),
+  saturation: FloatExpression = const(0f),
+  contrast: FloatExpression = const(0f),
+  resampling: EnumExpression<RasterResampling> = const(RasterResampling.Linear),
+  fadeDuration: IntExpression = const(300),
 ) {
   key(id) {
     LayerNode(

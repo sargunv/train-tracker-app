@@ -6,12 +6,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.DpExpression
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageExpression
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
+import dev.sargunv.maplibrecompose.core.expression.VectorExpression
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -83,24 +90,24 @@ public inline fun LineLayer(
   sourceLayer: String = "",
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
-  filter: Expression.Boolean = nil(),
+  filter: BooleanExpression = nil(),
   visible: Boolean = true,
-  sortKey: Expression.Float = nil(),
-  translate: Expression.DpOffset = const(DpOffset.Zero),
-  translateAnchor: Expression.Enum<TranslateAnchor> = const(TranslateAnchor.Map),
-  opacity: Expression.Float = const(1f),
-  color: Expression.Color = const(Color.Black),
-  dasharray: Expression.Vector = nil(),
-  pattern: Expression.ResolvedImage = nil(),
-  gradient: Expression.Color = nil(),
-  blur: Expression.Dp = const(0.dp),
-  width: Expression.Dp = const(1.dp),
-  gapWidth: Expression.Dp = const(0.dp),
-  offset: Expression.Dp = const(0.dp),
-  cap: Expression.Enum<LineCap> = const(LineCap.Butt),
-  join: Expression.Enum<LineJoin> = const(LineJoin.Miter),
-  miterLimit: Expression.Float = const(2f),
-  roundLimit: Expression.Float = const(1.05f),
+  sortKey: FloatExpression = nil(),
+  translate: DpOffsetExpression = const(DpOffset.Zero),
+  translateAnchor: EnumExpression<TranslateAnchor> = const(TranslateAnchor.Map),
+  opacity: FloatExpression = const(1f),
+  color: ColorExpression = const(Color.Black),
+  dasharray: VectorExpression = nil(),
+  pattern: ImageExpression = nil(),
+  gradient: ColorExpression = nil(),
+  blur: DpExpression = const(0.dp),
+  width: DpExpression = const(1.dp),
+  gapWidth: DpExpression = const(0.dp),
+  offset: DpExpression = const(0.dp),
+  cap: EnumExpression<LineCap> = const(LineCap.Butt),
+  join: EnumExpression<LineJoin> = const(LineJoin.Miter),
+  miterLimit: FloatExpression = const(2f),
+  roundLimit: FloatExpression = const(1.05f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

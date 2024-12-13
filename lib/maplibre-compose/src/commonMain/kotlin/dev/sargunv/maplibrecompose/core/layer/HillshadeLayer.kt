@@ -1,22 +1,25 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatExpression
 import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
+import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.source.Source
 
 @PublishedApi
 internal expect class HillshadeLayer(id: String, source: Source) : Layer {
   val source: Source
 
-  fun setHillshadeIlluminationDirection(direction: Expression.Int)
+  fun setHillshadeIlluminationDirection(direction: IntExpression)
 
-  fun setHillshadeIlluminationAnchor(anchor: Expression.Enum<IlluminationAnchor>)
+  fun setHillshadeIlluminationAnchor(anchor: EnumExpression<IlluminationAnchor>)
 
-  fun setHillshadeExaggeration(exaggeration: Expression.Float)
+  fun setHillshadeExaggeration(exaggeration: FloatExpression)
 
-  fun setHillshadeShadowColor(shadowColor: Expression.Color)
+  fun setHillshadeShadowColor(shadowColor: ColorExpression)
 
-  fun setHillshadeHighlightColor(highlightColor: Expression.Color)
+  fun setHillshadeHighlightColor(highlightColor: ColorExpression)
 
-  fun setHillshadeAccentColor(accentColor: Expression.Color)
+  fun setHillshadeAccentColor(accentColor: ColorExpression)
 }

@@ -1,157 +1,203 @@
 package dev.sargunv.maplibrecompose.core.expression
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+
+/** Wraps a JSON-like value that represents an expression, typically used for styling map layers. */
 public sealed interface Expression {
+  /** The JSON-like value that backs this expression. */
   public val value: Any?
-
-  /** Represents an expression that resolves to a true or false value. */
-  public sealed interface Boolean : Expression
-
-  /**
-   * Represents an expression that resolves to any numeric quantity. Corresponds to numbers in the
-   * JSON style spec.
-   */
-  public sealed interface Scalar : Expression, Matchable, Interpolateable, Comparable
-
-  /** Represents an expression that resolves to an integer quantity. */
-  public sealed interface IntScalar : Scalar
-
-  /** Represents an expression that resolves to a floating-point quantity. */
-  public sealed interface FloatScalar : Scalar
-
-  /** Represents an expression that resolves to any dimensionless quantity. */
-  public sealed interface Number : Scalar
-
-  /** Represents an expression that resolves to a floating-point dimensionless quantity. */
-  public sealed interface Float : Number, FloatScalar
-
-  /** Represents an expression that resolves to an integer dimensionless quantity. */
-  public sealed interface Int : Number, IntScalar
-
-  /** Represents an expression that resolves to device-independent pixels (dp). */
-  public sealed interface Dp : FloatScalar
-
-  /** Represents an expression that resolves to a string value. */
-  public sealed interface String : Expression, Matchable, Comparable
-
-  /** Represents an expression that resolves to an enum value of type [T]. */
-  public sealed interface Enum<out T : LayerPropertyEnum> : String
-
-  /** Represents an expression that resolves to a color value. */
-  public sealed interface Color : Expression, Interpolateable
-
-  /** Represents an expression that resolves to a map value (corresponds to a JSON object). */
-  public sealed interface Map : Expression
-
-  /** Represents an expression that resolves to a list value (corresponds to a JSON array). */
-  public sealed interface List<out T : Expression> : Expression
-
-  /** Represents an expression that resolves to a list of scalar values. */
-  public sealed interface Vector : List<Scalar>, Interpolateable
-
-  /** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
-  public sealed interface Offset : Vector
-
-  /**
-   * Represents an expression that resolves to a 2D floating point offset in device-independent
-   * pixels.
-   */
-  public sealed interface DpOffset : Vector
-
-  /**
-   * Represents an expression that resolves to an absolute (RTL unaware) padding applied along the
-   * edges inside a box.
-   */
-  public sealed interface Padding : Vector
-
-  /** Represents an expression that resolves to a formatted string. See [ExpressionScope.format]. */
-  public sealed interface Formatted : Expression
-
-  /** Represents an expression that resolves to an image. See [ExpressionScope.image]. */
-  public sealed interface ResolvedImage : Expression
-
-  /** Represents an expression that resolves to a geometry object. */
-  public sealed interface GeoJson : Expression
-
-  /**
-   * Represents an expression that resolves to a collator object for use in locale-dependent
-   * comparison operations. See [ExpressionScope.collator].
-   */
-  public sealed interface Collator : Expression
-
-  /**
-   * Represents an expression that resolves to a value that can be interpolated. See
-   * [ExpressionScope.interpolate].
-   */
-  public sealed interface Interpolateable : Expression
-
-  /**
-   * Represents an expression that resolves to a value that can be matched. See
-   * [ExpressionScope.match].
-   */
-  public sealed interface Matchable : Expression
-
-  /**
-   * Represents an expression that resolves to a value that can be ordered with other values of its
-   * type.
-   */
-  public sealed interface Comparable : Expression
-
-  /**
-   * An implementation of [Expression] that wraps a JSON-like value and is assignable to all kinds
-   * of expressions. It's the implementation returned by non-const expression DSL functions (see
-   * [ExpressionScope]), allowing you to do a checked cast to other expression types.
-   */
-  public class Impl internal constructor(override val value: Any?) :
-    Boolean,
-    Float,
-    Int,
-    Dp,
-    String,
-    Enum<LayerPropertyEnum>,
-    Color,
-    Map,
-    Vector,
-    Offset,
-    DpOffset,
-    Padding,
-    Formatted,
-    ResolvedImage,
-    Collator,
-    Interpolation {
-    internal inline fun <reified T : Expression> cast(): T = this as T
-
-    internal companion object {
-      fun ofList(value: kotlin.collections.List<Expression>): Impl = Impl(value.map { it.value })
-
-      fun ofMap(value: kotlin.collections.Map<kotlin.String, Expression>): Impl =
-        Impl(value.mapValues { it.value.value })
-    }
-  }
 }
 
+/** Represents an expression that resolves to a true or false value. */
+public sealed interface BooleanExpression : Expression
+
+/**
+ * Represents an expression that resolves to any numeric quantity. Corresponds to numbers in the
+ * JSON style spec.
+ */
+public sealed interface ScalarExpression :
+  Expression, MatchableExpression, InterpolateableExpression, ComparableExpression
+
+/** Represents an expression that resolves to an integer quantity. */
+public sealed interface IntScalarExpression : ScalarExpression
+
+/** Represents an expression that resolves to a floating-point quantity. */
+public sealed interface FloatScalarExpression : ScalarExpression
+
+/** Represents an expression that resolves to any dimensionless quantity. */
+public sealed interface NumberExpression : ScalarExpression
+
+/** Represents an expression that resolves to a floating-point dimensionless quantity. */
+public sealed interface FloatExpression : NumberExpression, FloatScalarExpression
+
+/** Represents an expression that resolves to an integer dimensionless quantity. */
+public sealed interface IntExpression : NumberExpression, IntScalarExpression
+
+/** Represents an expression that resolves to device-independent pixels (dp). */
+public sealed interface DpExpression : FloatScalarExpression
+
+/** Represents an expression that resolves to a string value. */
+public sealed interface StringExpression : Expression, MatchableExpression, ComparableExpression
+
+/** Represents an expression that resolves to an enum value of type [T]. */
+public sealed interface EnumExpression<out T : LayerPropertyEnum> : StringExpression
+
+/** Represents an expression that resolves to a color value. */
+public sealed interface ColorExpression : Expression, InterpolateableExpression
+
+/** Represents an expression that resolves to a map value (corresponds to a JSON object). */
+public sealed interface MapExpression : Expression
+
+/** Represents an expression that resolves to a list value (corresponds to a JSON array). */
+public sealed interface ListExpression<out T : Expression> : Expression
+
+/** Represents an expression that resolves to a list of scalar values. */
+public sealed interface VectorExpression :
+  ListExpression<ScalarExpression>, InterpolateableExpression
+
+/** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
+public sealed interface OffsetExpression : VectorExpression
+
+/**
+ * Represents an expression that resolves to a 2D floating point offset in device-independent
+ * pixels.
+ */
+public sealed interface DpOffsetExpression : VectorExpression
+
+/**
+ * Represents an expression that resolves to an absolute (RTL unaware) padding applied along the
+ * edges inside a box.
+ */
+public sealed interface PaddingExpression : VectorExpression
+
+/**
+ * Represents an expression that resolves to a collator object for use in locale-dependent
+ * comparison operations. See [ExpressionScope.collator].
+ */
+public sealed interface CollatorExpression : Expression
+
+/** Represents an expression that resolves to a formatted string. See [ExpressionScope.format]. */
+public sealed interface FormattedExpression : Expression
+
+/** Represents an expression that resolves to a geometry object. */
+public sealed interface GeoJsonExpression : Expression
+
+/** Represents an expression that resolves to an image. See [ExpressionScope.image]. */
+public sealed interface ImageExpression : Expression
+
+/**
+ * Represents an expression that resolves to a value that can be matched. See
+ * [ExpressionScope.match].
+ */
+public sealed interface MatchableExpression : Expression
+
+/**
+ * Represents an expression that resolves to a value that can be ordered with other values of its
+ * type.
+ */
+public sealed interface ComparableExpression : Expression
+
+/**
+ * Represents an expression that resolves to a value that can be interpolated. See
+ * [ExpressionScope.interpolate].
+ */
+public sealed interface InterpolateableExpression : Expression
+
 public sealed interface Interpolation : Expression {
+
   /** Interpolates linearly between the pairs of stops. */
-  public data object Linear : Interpolation by Expression.Impl("linear")
+  public data object Linear : Interpolation by ExpressionImpl("linear")
 
   /**
-   * Interpolates exponentially between the stops. [base] controls the rate at which the output
-   * increases: higher values make the output increase more towards the high end of the range. With
-   * values close to 1 the output increases linearly.
+   * Interpolates exponentially between the stops.
+   *
+   * @param [base] controls the rate at which the output increases: higher values make the output
+   *   increase more towards the high end of the range. With values close to 1 the output increases
+   *   linearly.
    */
-  public class Exponential(base: Expression.Float) :
-    Interpolation by Expression.Impl(listOf("exponential", base.value))
+  public class Exponential(base: FloatExpression) :
+    Interpolation by ExpressionImpl(listOf("exponential", base.value))
 
   /**
    * Interpolates using the cubic bezier curve defined by the given control points between the pairs
    * of stops.
    */
   public class CubicBezier(
-    x1: Expression.Float,
-    y1: Expression.Float,
-    x2: Expression.Float,
-    y2: Expression.Float,
+    x1: FloatExpression,
+    y1: FloatExpression,
+    x2: FloatExpression,
+    y2: FloatExpression,
   ) :
-    Interpolation by Expression.Impl(
-      listOf("cubic-bezier", x1.value, y1.value, x2.value, y2.value)
-    )
+    Interpolation by ExpressionImpl(listOf("cubic-bezier", x1.value, y1.value, x2.value, y2.value))
+}
+
+internal class ExpressionImpl(override val value: Any?) :
+  BooleanExpression,
+  FloatExpression,
+  IntExpression,
+  DpExpression,
+  StringExpression,
+  EnumExpression<LayerPropertyEnum>,
+  ColorExpression,
+  MapExpression,
+  VectorExpression, // also provides ListExpression<*> (with type erasure)
+  OffsetExpression,
+  DpOffsetExpression,
+  PaddingExpression,
+  FormattedExpression,
+  ImageExpression,
+  CollatorExpression,
+  Interpolation {
+  internal inline fun <reified T : Expression> cast(): T = this as T
+
+  internal companion object {
+    val ofNull = ExpressionImpl(null)
+    val ofTrue = ExpressionImpl(true)
+    val ofFalse = ExpressionImpl(false)
+
+    private val constSmallInts = Array(512) { ExpressionImpl(it.toFloat()) }
+    private val constSmallFloats = Array(512) { ExpressionImpl(it.toFloat() / 20f) }
+    private val ofEmptyString = ExpressionImpl("")
+    private val ofTransparent = ExpressionImpl(Color.Transparent)
+    private val ofBlack = ExpressionImpl(Color.Black)
+    private val ofWhite = ExpressionImpl(Color.White)
+    private val ofEmptyList = ExpressionImpl(emptyList<Any?>())
+    private val ofZeroOffset = ExpressionImpl(Offset.Zero)
+    private val ofZeroPadding = ExpressionImpl(ZeroPadding)
+
+    private val ofEmptyMap = ExpressionImpl(emptyMap<String, Any?>())
+
+    private fun isSmallInt(f: Float) = f >= 0 && f < 512 && f.toInt().toFloat() == f
+
+    fun ofFloat(float: Float) =
+      when {
+        isSmallInt(float) -> constSmallInts[float.toInt()]
+        isSmallInt(float * 20f) -> constSmallFloats[(float * 20f).toInt()]
+        else -> ExpressionImpl(float)
+      }
+
+    fun ofString(string: String) = if (string.isEmpty()) ofEmptyString else ExpressionImpl(string)
+
+    fun ofColor(color: Color) =
+      when (color) {
+        Color.Transparent -> ofTransparent
+        Color.Black -> ofBlack
+        Color.White -> ofWhite
+        else -> ExpressionImpl(color)
+      }
+
+    fun ofMap(map: Map<String, Expression>) =
+      if (map.isEmpty()) ofEmptyMap else ExpressionImpl(map.mapValues { it.value.value })
+
+    fun ofList(list: List<Expression>) =
+      if (list.isEmpty()) ofEmptyList else ExpressionImpl(list.map { it.value })
+
+    fun ofOffset(offset: Offset) =
+      if (offset == Offset.Zero) ofZeroOffset else ExpressionImpl(offset)
+
+    fun ofPadding(padding: PaddingValues.Absolute) =
+      if (padding == ZeroPadding) ofZeroPadding else ExpressionImpl(padding)
+  }
 }
