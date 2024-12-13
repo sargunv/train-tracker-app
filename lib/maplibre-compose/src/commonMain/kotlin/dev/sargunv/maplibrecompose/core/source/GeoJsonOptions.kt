@@ -55,5 +55,5 @@ public data class GeoJsonOptions(
   val lineMetrics: Boolean = false,
 ) {
   // TODO seems to contradict https://maplibre.org/maplibre-style-spec/sources/#clusterproperties
-  public data class ClusterProperty(val operator: String, val mapper: Expression)
+  public data class ClusterProperty(val operator: String, val mapper: Expression<*>)
 }

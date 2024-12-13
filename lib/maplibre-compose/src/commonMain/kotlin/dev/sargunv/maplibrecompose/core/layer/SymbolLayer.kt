@@ -5,6 +5,7 @@ import dev.sargunv.maplibrecompose.core.expression.ColorExpression
 import dev.sargunv.maplibrecompose.core.expression.DpExpression
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
 import dev.sargunv.maplibrecompose.core.expression.FormattedExpression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -15,6 +16,7 @@ import dev.sargunv.maplibrecompose.core.expression.ListExpression
 import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
 import dev.sargunv.maplibrecompose.core.expression.StringExpression
+import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -92,7 +94,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextField(field: FormattedExpression)
 
-  fun setTextFont(font: ListExpression<StringExpression>)
+  fun setTextFont(font: ListExpression<StringValue>)
 
   fun setTextSize(size: DpExpression)
 
@@ -106,7 +108,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextRadialOffset(radialOffset: FloatExpression)
 
-  fun setTextVariableAnchor(variableAnchor: ListExpression<EnumExpression<SymbolAnchor>>)
+  fun setTextVariableAnchor(variableAnchor: ListExpression<EnumValue<SymbolAnchor>>)
 
   // TODO: this is a list of alternating SymbolAnchor and Offset
   fun setTextVariableAnchorOffset(variableAnchorOffset: ListExpression<*>)
@@ -115,7 +117,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextMaxAngle(maxAngle: FloatExpression)
 
-  fun setTextWritingMode(writingMode: ListExpression<EnumExpression<TextWritingMode>>)
+  fun setTextWritingMode(writingMode: ListExpression<EnumValue<TextWritingMode>>)
 
   fun setTextRotate(rotate: FloatExpression)
 

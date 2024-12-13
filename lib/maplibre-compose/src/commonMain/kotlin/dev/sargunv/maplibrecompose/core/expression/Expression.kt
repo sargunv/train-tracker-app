@@ -1,102 +1,125 @@
 package dev.sargunv.maplibrecompose.core.expression
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+
 /** Wraps a JSON-like value that represents an expression, typically used for styling map layers. */
-public sealed interface Expression {
+public data class Expression<@Suppress("unused") out T : ExpressionValue>
+private constructor(
   /** The JSON-like value that backs this expression. */
   public val value: Any?
+) {
+  @Suppress("UNCHECKED_CAST")
+  internal fun <T : ExpressionValue> cast(): Expression<T> = this as Expression<T>
+
+  internal companion object {
+    private const val NUM_SMALL_NUMBERS = 512
+    private const val SMALL_FLOAT_RESOLUTION = 0.05f
+
+    private val constSmallInts = Array(NUM_SMALL_NUMBERS) { Expression<IntValue>(it) }
+    private val constSmallFloats =
+      Array(NUM_SMALL_NUMBERS) { Expression<FloatValue>(it.toFloat() / 20f) }
+    private val ofEmptyString = Expression<StringValue>("")
+    private val ofTransparent = Expression<ColorValue>(Color.Transparent)
+    private val ofBlack = Expression<ColorValue>(Color.Black)
+    private val ofWhite = Expression<ColorValue>(Color.White)
+    private val ofEmptyMap = Expression<MapValue>(emptyMap<String, Any?>())
+    private val ofEmptyList = Expression<ListValue<*>>(emptyList<Any?>())
+    private val ofZeroOffset = Expression<OffsetValue>(Offset.Zero)
+    private val ofZeroPadding = Expression<PaddingValue>(ZeroPadding)
+
+    val ofNull = Expression<ExpressionValue>(null)
+    val ofTrue = Expression<BooleanValue>(true)
+    val ofFalse = Expression<BooleanValue>(false)
+
+    private fun Float.isSmallInt() = toInt().toFloat() == this && toInt().isSmallInt()
+
+    private fun Int.isSmallInt() = this in 0..<NUM_SMALL_NUMBERS
+
+    fun <T : FloatScalarValue> ofFloat(float: Float): Expression<T> =
+      when {
+        float.isSmallInt() -> constSmallInts[float.toInt()]
+        (float / SMALL_FLOAT_RESOLUTION).isSmallInt() ->
+          constSmallFloats[(float / SMALL_FLOAT_RESOLUTION).toInt()]
+
+        else -> Expression<FloatValue>(float)
+      }.cast()
+
+    fun <T : IntScalarValue> ofInt(int: Int): Expression<T> =
+      (if (int.isSmallInt()) constSmallInts[int] else Expression(int)).cast()
+
+    fun ofString(string: String): StringExpression =
+      if (string.isEmpty()) ofEmptyString else Expression(string)
+
+    fun ofColor(color: Color): ColorExpression =
+      when (color) {
+        Color.Transparent -> ofTransparent
+        Color.Black -> ofBlack
+        Color.White -> ofWhite
+        else -> Expression(color)
+      }
+
+    fun ofMap(map: Map<String, Expression<*>>): MapExpression =
+      if (map.isEmpty()) ofEmptyMap else Expression(map.mapValues { it.value.value })
+
+    fun <T : ExpressionValue> ofList(list: List<Expression<T>>): ListExpression<T> =
+      if (list.isEmpty()) ofEmptyList.cast() else Expression(list.map { it.value })
+
+    fun ofOffset(offset: Offset) = if (offset == Offset.Zero) ofZeroOffset else Expression(offset)
+
+    fun ofPadding(padding: PaddingValues.Absolute) =
+      if (padding == ZeroPadding) ofZeroPadding else Expression(padding)
+  }
 }
 
-/** Represents an expression that resolves to a true or false value. */
-public sealed interface BooleanExpression : Expression
+// TODO inline these
+public typealias BooleanExpression = Expression<BooleanValue>
 
-/**
- * Represents an expression that resolves to any numeric quantity. Corresponds to numbers in the
- * JSON style spec.
- */
-public sealed interface ScalarExpression :
-  Expression, MatchableExpression, InterpolateableExpression, ComparableExpression
+public typealias ScalarExpression = Expression<ScalarValue>
 
-/** Represents an expression that resolves to an integer quantity. */
-public sealed interface IntScalarExpression : ScalarExpression
+public typealias IntScalarExpression = Expression<IntScalarValue>
 
-/** Represents an expression that resolves to a floating-point quantity. */
-public sealed interface FloatScalarExpression : ScalarExpression
+public typealias FloatScalarExpression = Expression<FloatScalarValue>
 
-/** Represents an expression that resolves to any dimensionless quantity. */
-public sealed interface NumberExpression : ScalarExpression
+public typealias NumberExpression = Expression<NumberValue>
 
-/** Represents an expression that resolves to a floating-point dimensionless quantity. */
-public sealed interface FloatExpression : NumberExpression, FloatScalarExpression
+public typealias FloatExpression = Expression<FloatValue>
 
-/** Represents an expression that resolves to an integer dimensionless quantity. */
-public sealed interface IntExpression : NumberExpression, IntScalarExpression
+public typealias IntExpression = Expression<IntValue>
 
-/** Represents an expression that resolves to device-independent pixels (dp). */
-public sealed interface DpExpression : FloatScalarExpression
+public typealias DpExpression = Expression<DpValue>
 
-/** Represents an expression that resolves to a string value. */
-public sealed interface StringExpression : Expression, MatchableExpression, ComparableExpression
+public typealias StringExpression = Expression<StringValue>
 
-/** Represents an expression that resolves to an enum value of type [T]. */
-public sealed interface EnumExpression<out T : LayerPropertyEnum> : StringExpression
+public typealias EnumExpression<T> = Expression<EnumValue<T>>
 
-/** Represents an expression that resolves to a color value. */
-public sealed interface ColorExpression : Expression, InterpolateableExpression
+public typealias ColorExpression = Expression<ColorValue>
 
-/** Represents an expression that resolves to a map value (corresponds to a JSON object). */
-public sealed interface MapExpression : Expression
+public typealias MapExpression = Expression<MapValue>
 
-/** Represents an expression that resolves to a list value (corresponds to a JSON array). */
-public sealed interface ListExpression<out T : Expression> : Expression
+public typealias ListExpression<T> = Expression<ListValue<T>>
 
-/** Represents an expression that resolves to a list of scalar values. */
-public sealed interface VectorExpression :
-  ListExpression<ScalarExpression>, InterpolateableExpression
+public typealias VectorExpression = Expression<VectorValue>
 
-/** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
-public sealed interface OffsetExpression : VectorExpression
+public typealias OffsetExpression = Expression<OffsetValue>
 
-/**
- * Represents an expression that resolves to a 2D floating point offset in device-independent
- * pixels.
- */
-public sealed interface DpOffsetExpression : VectorExpression
+public typealias DpOffsetExpression = Expression<DpOffsetValue>
 
-/**
- * Represents an expression that resolves to an absolute (layout direction unaware) padding applied
- * along the edges inside a box.
- */
-public sealed interface PaddingExpression : VectorExpression
+public typealias PaddingExpression = Expression<PaddingValue>
 
-/**
- * Represents an expression that resolves to a collator object for use in locale-dependent
- * comparison operations. See [ExpressionScope.collator].
- */
-public sealed interface CollatorExpression : Expression
+public typealias CollatorExpression = Expression<CollatorValue>
 
-/** Represents an expression that resolves to a formatted string. See [ExpressionScope.format]. */
-public sealed interface FormattedExpression : Expression
+public typealias FormattedExpression = Expression<FormattedValue>
 
-/** Represents an expression that resolves to a geometry object. */
-public sealed interface GeoJsonExpression : Expression
+public typealias GeoJsonExpression = Expression<GeoJsonValue>
 
-/** Represents an expression that resolves to an image. See [ExpressionScope.image]. */
-public sealed interface ImageExpression : Expression
+public typealias ImageExpression = Expression<ImageValue>
 
-/**
- * Represents an expression that resolves to a value that can be matched. See
- * [ExpressionScope.match].
- */
-public sealed interface MatchableExpression : Expression
+public typealias Interpolation = Expression<InterpolationValue>
 
-/**
- * Represents an expression that resolves to a value that can be ordered with other values of its
- * type.
- */
-public sealed interface ComparableExpression : Expression
+public typealias MatchableExpression = Expression<MatchableValue>
 
-/**
- * Represents an expression that resolves to a value that can be interpolated. See
- * [ExpressionScope.interpolate].
- */
-public sealed interface InterpolateableExpression : Expression
+public typealias ComparableExpression = Expression<ComparableValue>
+
+public typealias InterpolateableExpression = Expression<InterpolateableValue>

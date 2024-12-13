@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.heatmapDensity
 import dev.sargunv.maplibrecompose.core.expression.Expressions.interpolate
+import dev.sargunv.maplibrecompose.core.expression.Expressions.linear
 import dev.sargunv.maplibrecompose.core.expression.Expressions.literal
 
 // helpers for default expression values
@@ -15,7 +16,7 @@ public val ZeroPadding: PaddingValues.Absolute = PaddingValues.Absolute(0.dp)
 public object Defaults {
   public val HeatmapColors: ColorExpression =
     interpolate(
-      Interpolation.Linear,
+      linear(),
       heatmapDensity(),
       0 to const(Color.Transparent),
       0.1 to const(Color(0xFF4169E1)), // royal blue
@@ -25,6 +26,6 @@ public object Defaults {
       1 to const(Color(0xFFFF0000)), // red
     )
 
-  public val FontNames: ListExpression<StringExpression> =
+  public val FontNames: ListExpression<StringValue> =
     literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular")))
 }

@@ -13,6 +13,7 @@ import dev.sargunv.maplibrecompose.core.expression.Defaults
 import dev.sargunv.maplibrecompose.core.expression.DpExpression
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
@@ -25,6 +26,7 @@ import dev.sargunv.maplibrecompose.core.expression.ListExpression
 import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
 import dev.sargunv.maplibrecompose.core.expression.StringExpression
+import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -418,7 +420,7 @@ public inline fun SymbolLayer(
   textHaloBlur: DpExpression = const(0.dp),
 
   // text glyph properties
-  textFont: ListExpression<StringExpression> = Defaults.FontNames,
+  textFont: ListExpression<StringValue> = Defaults.FontNames,
   textSize: DpExpression = const(16.dp),
   textTransform: EnumExpression<TextTransform> = const(TextTransform.None),
   textLetterSpacing: FloatExpression = const(0f),
@@ -430,14 +432,14 @@ public inline fun SymbolLayer(
   textMaxWidth: FloatExpression = const(10f),
   textLineHeight: FloatExpression = const(1.2f),
   textJustify: EnumExpression<TextJustify> = const(TextJustify.Center),
-  textWritingMode: ListExpression<EnumExpression<TextWritingMode>> = nil(),
+  textWritingMode: ListExpression<EnumValue<TextWritingMode>> = nil(),
   textKeepUpright: BooleanExpression = const(true),
   textRotate: FloatExpression = const(0f),
 
   // text anchoring
   textAnchor: EnumExpression<SymbolAnchor> = const(SymbolAnchor.Center),
   textOffset: OffsetExpression = const(Offset.Zero),
-  textVariableAnchor: ListExpression<EnumExpression<SymbolAnchor>> = nil(),
+  textVariableAnchor: ListExpression<EnumValue<SymbolAnchor>> = nil(),
   textRadialOffset: FloatExpression = const(0f),
   textVariableAnchorOffset: ListExpression<*> = nil(),
 

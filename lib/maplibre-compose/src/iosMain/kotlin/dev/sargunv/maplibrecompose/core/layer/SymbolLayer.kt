@@ -6,6 +6,7 @@ import dev.sargunv.maplibrecompose.core.expression.ColorExpression
 import dev.sargunv.maplibrecompose.core.expression.DpExpression
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
 import dev.sargunv.maplibrecompose.core.expression.FormattedExpression
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -16,6 +17,7 @@ import dev.sargunv.maplibrecompose.core.expression.ListExpression
 import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
 import dev.sargunv.maplibrecompose.core.expression.StringExpression
+import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
@@ -167,7 +169,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.text = field.toNSExpression()
   }
 
-  actual fun setTextFont(font: ListExpression<StringExpression>) {
+  actual fun setTextFont(font: ListExpression<StringValue>) {
     impl.textFontNames = font.toNSExpression()
   }
 
@@ -195,7 +197,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textRadialOffset = radialOffset.toNSExpression()
   }
 
-  actual fun setTextVariableAnchor(variableAnchor: ListExpression<EnumExpression<SymbolAnchor>>) {
+  actual fun setTextVariableAnchor(variableAnchor: ListExpression<EnumValue<SymbolAnchor>>) {
     impl.textVariableAnchor = variableAnchor.toNSExpression()
   }
 
@@ -211,7 +213,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.maximumTextAngle = maxAngle.toNSExpression()
   }
 
-  actual fun setTextWritingMode(writingMode: ListExpression<EnumExpression<TextWritingMode>>) {
+  actual fun setTextWritingMode(writingMode: ListExpression<EnumValue<TextWritingMode>>) {
     impl.textWritingModes = writingMode.toNSExpression()
   }
 

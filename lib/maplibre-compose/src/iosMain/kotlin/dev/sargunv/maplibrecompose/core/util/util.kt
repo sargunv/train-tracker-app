@@ -115,7 +115,7 @@ internal fun GeoJson.toMLNShape(): MLNShape {
   )!!
 }
 
-internal fun Expression.toNSExpression(): NSExpression =
+internal fun Expression<*>.toNSExpression(): NSExpression =
   when (value) {
     null -> NSExpression.expressionForConstantValue(null)
     else -> NSExpression.expressionWithMLNJSONObject(normalizeJsonLike(value)!!)

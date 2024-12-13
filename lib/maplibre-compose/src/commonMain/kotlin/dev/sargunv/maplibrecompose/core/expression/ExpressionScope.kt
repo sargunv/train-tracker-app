@@ -10,47 +10,43 @@ import kotlin.jvm.JvmName
 @Suppress("INAPPLICABLE_JVM_NAME")
 public interface ExpressionScope {
 
-  // basic types: https://maplibre.org/maplibre-style-spec/types/
-
   // region Literals
 
-  public fun const(string: String): StringExpression = ExpressionImpl.ofString(string)
+  public fun const(string: String): StringExpression = Expression.ofString(string)
 
-  @Suppress("UNCHECKED_CAST")
-  public fun <T : LayerPropertyEnum> const(value: T): EnumExpression<T> =
-    value.expr as EnumExpression<T>
+  public fun <T : LayerPropertyEnum> const(value: T): EnumExpression<T> = value.expr.cast()
 
-  public fun const(float: Float): FloatExpression = ExpressionImpl.ofFloat(float)
+  public fun const(float: Float): FloatExpression = Expression.ofFloat(float)
 
-  public fun const(int: Int): IntExpression = ExpressionImpl.ofInt(int)
+  public fun const(int: Int): IntExpression = Expression.ofInt(int)
 
-  public fun const(dp: Dp): DpExpression = ExpressionImpl.ofFloat(dp.value)
+  public fun const(dp: Dp): DpExpression = Expression.ofFloat(dp.value)
 
   public fun const(bool: Boolean): BooleanExpression =
-    if (bool) ExpressionImpl.ofTrue else ExpressionImpl.ofFalse
+    if (bool) Expression.ofTrue else Expression.ofFalse
 
-  public fun const(color: Color): ColorExpression = ExpressionImpl.ofColor(color)
+  public fun const(color: Color): ColorExpression = Expression.ofColor(color)
 
-  public fun const(offset: Offset): OffsetExpression = ExpressionImpl.ofOffset(offset)
+  public fun const(offset: Offset): OffsetExpression = Expression.ofOffset(offset)
 
   public fun const(dpOffset: DpOffset): DpOffsetExpression =
-    ExpressionImpl.ofOffset(Offset(dpOffset.x.value, dpOffset.y.value))
+    Expression.ofOffset(Offset(dpOffset.x.value, dpOffset.y.value)).cast()
 
   public fun const(padding: PaddingValues.Absolute): PaddingExpression =
-    ExpressionImpl.ofPadding(padding)
+    Expression.ofPadding(padding)
 
   /**
    * For simplicity, the expression type system does not encode nullability, so the return value of
    * this function is assignable to any kind of expression.
    */
-  @Suppress("UNCHECKED_CAST") public fun <T : Expression> nil(): T = ExpressionImpl.ofNull as T
+  public fun <T : ExpressionValue> nil(): Expression<T> = Expression.ofNull.cast()
 
   // endregion
 
   // region Conversion
 
   public val NumberExpression.dp: DpExpression
-    get() = this as DpExpression
+    get() = this.cast()
 
   // endregion
 
@@ -60,29 +56,33 @@ public interface ExpressionScope {
    * Binds expressions to named variables, which can then be referenced in the result expression
    * using [useVariable].
    */
-  public fun <T : Expression> withVariable(name: String, value: Expression, expression: T): T =
-    callFn("let", const(name), value, expression)
+  public fun <T : ExpressionValue> withVariable(
+    name: String,
+    value: Expression<*>,
+    expression: Expression<T>,
+  ): Expression<T> = callFn("let", const(name), value, expression)
 
   /** References variable bound using [withVariable]. */
-  public fun <T : Expression> useVariable(name: String): T = callFn("var", const(name))
+  public fun <T : ExpressionValue> useVariable(name: String): Expression<T> =
+    callFn("var", const(name))
 
   // endregion
 
   // region Types
 
   /** Produces a literal list value. */
-  public fun <T : Expression> literal(values: List<T>): ListExpression<T> =
-    callFn("literal", ExpressionImpl.ofList(values))
+  public fun <T : ExpressionValue> literal(values: List<Expression<T>>): ListExpression<T> =
+    callFn("literal", Expression.ofList(values))
 
   /** Produces a literal map value. */
-  public fun literal(values: Map<String, Expression>): MapExpression =
-    callFn("literal", ExpressionImpl.ofMap(values))
+  public fun literal(values: Map<String, Expression<*>>): MapExpression =
+    callFn("literal", Expression.ofMap(values))
 
   /**
    * Returns a string describing the type of this expression. Either "boolean", "string", "number",
    * "color" or "array".
    */
-  public fun Expression.type(): StringExpression = callFn("typeof", this)
+  public fun Expression<*>.type(): StringExpression = callFn("typeof", this)
 
   /**
    * Asserts that this is a list (optionally with a specific item [type] and [length]).
@@ -90,7 +90,7 @@ public interface ExpressionScope {
    * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
    * will cause the whole expression to be aborted.
    */
-  public fun Expression.asList(
+  public fun Expression<*>.asList(
     type: StringExpression? = null,
     length: IntExpression? = null,
   ): ListExpression<*> {
@@ -98,7 +98,7 @@ public interface ExpressionScope {
       type?.let { add(type) }
       length?.let { add(length) }
     }
-    return callFn("array", this, *args.toTypedArray<Expression>())
+    return callFn("array", this, *args.toTypedArray<Expression<*>>())
   }
 
   /**
@@ -107,7 +107,7 @@ public interface ExpressionScope {
    * In case this expression is not a string, each of the [fallbacks] is evaluated in order until a
    * string is obtained. If none of the inputs are strings, the expression is an error.
    */
-  public fun Expression.asString(vararg fallbacks: Expression): StringExpression =
+  public fun Expression<*>.asString(vararg fallbacks: Expression<*>): StringExpression =
     callFn("string", this, *fallbacks)
 
   /**
@@ -116,7 +116,7 @@ public interface ExpressionScope {
    * In case this expression is not a number, each of the [fallbacks] is evaluated in order until a
    * number is obtained. If none of the inputs are numbers, the expression is an error.
    */
-  public fun Expression.asNumber(vararg fallbacks: Expression): NumberExpression =
+  public fun Expression<*>.asNumber(vararg fallbacks: Expression<*>): NumberExpression =
     callFn("number", this, *fallbacks)
 
   /**
@@ -125,7 +125,7 @@ public interface ExpressionScope {
    * In case this expression is not a boolean, each of the [fallbacks] is evaluated in order until a
    * boolean is obtained. If none of the inputs are booleans, the expression is an error.
    */
-  public fun Expression.asBoolean(vararg fallbacks: Expression): BooleanExpression =
+  public fun Expression<*>.asBoolean(vararg fallbacks: Expression<*>): BooleanExpression =
     callFn("boolean", this, *fallbacks)
 
   /**
@@ -134,7 +134,7 @@ public interface ExpressionScope {
    * In case this expression is not a map, each of the [fallbacks] is evaluated in order until a map
    * is obtained. If none of the inputs are maps, the expression is an error.
    */
-  public fun Expression.asMap(vararg fallbacks: Expression): MapExpression =
+  public fun Expression<*>.asMap(vararg fallbacks: Expression<*>): MapExpression =
     callFn("object", this, *fallbacks)
 
   /**
@@ -174,7 +174,7 @@ public interface ExpressionScope {
    * Capitalizes the first letter of the features' property "name" and formats it to be extra-large,
    * the rest of the name is written normally.
    */
-  public fun format(vararg sections: Pair<Expression, FormatStyle>): FormattedExpression =
+  public fun format(vararg sections: Pair<StringExpression, FormatStyle>): FormattedExpression =
     callFn(
       "format",
       *sections.foldToArgs { (value, style) ->
@@ -254,7 +254,7 @@ public interface ExpressionScope {
    * Otherwise, the input is converted to a string in the format specified by the JSON.stringify
    * function of the ECMAScript Language Specification.
    */
-  public fun Expression.convertToString(): StringExpression = callFn("to-string", this)
+  public fun Expression<*>.convertToString(): StringExpression = callFn("to-string", this)
 
   /**
    * Converts this expression to a number.
@@ -267,7 +267,7 @@ public interface ExpressionScope {
    * in order until the first successful conversion is obtained. If none of the inputs can be
    * converted, the expression is an error.
    */
-  public fun Expression.convertToNumber(vararg fallbacks: Expression): NumberExpression =
+  public fun Expression<*>.convertToNumber(vararg fallbacks: Expression<*>): NumberExpression =
     callFn("to-number", this, *fallbacks)
 
   /**
@@ -276,7 +276,7 @@ public interface ExpressionScope {
    * The result is `false` when then this is an empty string, `0`, `false`,`null` or `NaN`;
    * otherwise it is `true`.
    */
-  public fun Expression.convertToBoolean(): BooleanExpression = callFn("to-boolean", this)
+  public fun Expression<*>.convertToBoolean(): BooleanExpression = callFn("to-boolean", this)
 
   /**
    * Converts this expression to a color expression.
@@ -285,7 +285,7 @@ public interface ExpressionScope {
    * order until the first successful conversion is obtained. If none of the inputs can be
    * converted, the expression is an error.
    */
-  public fun Expression.convertToColor(vararg fallbacks: Expression): ColorExpression =
+  public fun Expression<*>.convertToColor(vararg fallbacks: Expression<*>): ColorExpression =
     callFn("to-color", this, *fallbacks)
 
   // endregion
@@ -293,13 +293,16 @@ public interface ExpressionScope {
   // region Lookup
 
   /** Returns the item at [index]. */
-  public operator fun <T : Expression> ListExpression<T>.get(index: IntExpression): T =
-    callFn("at", index, this)
+  @JvmName("getAt")
+  public operator fun <T : ExpressionValue> ListExpression<T>.get(
+    index: IntExpression
+  ): Expression<T> = callFn("at", index, this)
 
   /** Returns whether this list contains the [item]. */
   @JvmName("containsList")
-  public fun <T : Expression> ListExpression<T>.contains(item: T): BooleanExpression =
-    callFn("in", item, this)
+  public fun <T : ExpressionValue> ListExpression<T>.contains(
+    item: Expression<T>
+  ): BooleanExpression = callFn("in", item, this)
 
   /** Returns whether this string contains the [substring]. */
   @JvmName("containsString")
@@ -320,7 +323,7 @@ public interface ExpressionScope {
       add(this@indexOf)
       startIndex?.let { add(it) }
     }
-    return callFn("index-of", *args.toTypedArray<Expression>())
+    return callFn("index-of", *args.toTypedArray<Expression<*>>())
   }
 
   /**
@@ -329,7 +332,7 @@ public interface ExpressionScope {
    */
   @JvmName("indexOfList")
   public fun ListExpression<*>.indexOf(
-    item: Expression,
+    item: Expression<*>,
     startIndex: IntExpression? = null,
   ): IntExpression {
     val args = buildList {
@@ -355,14 +358,14 @@ public interface ExpressionScope {
       add(startIndex)
       endIndex?.let { add(it) }
     }
-    return callFn("slice", *args.toTypedArray<Expression>())
+    return callFn("slice", *args.toTypedArray<Expression<*>>())
   }
 
   /**
    * Returns the items in this list from the [startIndex] (inclusive) to the end of this list if
    * [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
    */
-  public fun <T : Expression> ListExpression<T>.slice(
+  public fun <T : ExpressionValue> ListExpression<T>.slice(
     startIndex: IntExpression,
     endIndex: IntExpression? = null,
   ): ListExpression<T> {
@@ -378,14 +381,15 @@ public interface ExpressionScope {
    * Returns the value corresponding to the given [key] in the current feature's properties or
    * `null` if it is not present.
    */
-  public fun <T : Expression> get(key: StringExpression): T = callFn("get", key)
+  public fun <T : ExpressionValue> get(key: StringExpression): Expression<T> = callFn("get", key)
 
   /** Tests for the presence of a property value [key] in the current feature's properties. */
   public fun has(key: StringExpression): BooleanExpression = callFn("has", key)
 
   /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
-  public operator fun <T : Expression> MapExpression.get(key: StringExpression): T =
-    callFn("get", key, this)
+  public operator fun <T : ExpressionValue> MapExpression.get(
+    key: StringExpression
+  ): Expression<T> = callFn("get", key, this)
 
   /** Returns whether the given [key] is in this map. */
   public fun MapExpression.has(key: StringExpression): BooleanExpression = callFn("has", key, this)
@@ -426,7 +430,10 @@ public interface ExpressionScope {
    * property, that color is returned. If the feature has none of the three, the color red is
    * returned.
    */
-  public fun <T : Expression> case(vararg branches: CaseBranch<T>, fallback: T): T =
+  public fun <T : ExpressionValue> case(
+    vararg branches: CaseBranch<T>,
+    fallback: Expression<T>,
+  ): Expression<T> =
     callFn(
       "case",
       *branches.foldToArgs { (test, output) ->
@@ -436,13 +443,13 @@ public interface ExpressionScope {
       fallback,
     )
 
-  public data class CaseBranch<Output : Expression>
-  internal constructor(internal val test: BooleanExpression, internal val output: Output)
+  public data class CaseBranch<T : ExpressionValue>
+  internal constructor(internal val test: BooleanExpression, internal val output: Expression<T>)
 
   /** Create a [CaseBranch], see [case] */
-  public infix fun <Output : Expression> BooleanExpression.then(
-    output: Output
-  ): CaseBranch<Output> = CaseBranch(this, output)
+  public infix fun <T : ExpressionValue> BooleanExpression.then(
+    output: Expression<T>
+  ): CaseBranch<T> = CaseBranch(this, output)
 
   /**
    * Selects the output from the given [branches] whose label value matches the [input], or the
@@ -465,11 +472,11 @@ public interface ExpressionScope {
    * Otherwise, if the value of that property is either "commercial" or "industrial", yellow is
    * returned. If none of that is true, the fallback is returned, i.e. red.
    */
-  public fun <Input : MatchableExpression, Output : Expression> match(
-    input: Input,
+  public fun <Input : MatchableValue, Output : ExpressionValue> match(
+    input: Expression<Input>,
     vararg branches: MatchBranch<Input, Output>,
-    fallback: Output,
-  ): Output =
+    fallback: Expression<Output>,
+  ): Expression<Output> =
     callFn(
       "match",
       input,
@@ -482,42 +489,44 @@ public interface ExpressionScope {
 
   public data class MatchBranch<
     @Suppress("unused")
-    Input : MatchableExpression,
-    Output : Expression,
-  > internal constructor(internal val label: Expression, internal val output: Output)
+    Input : MatchableValue,
+    Output : ExpressionValue,
+  >
+  internal constructor(internal val label: Expression<*>, internal val output: Expression<Output>)
 
   /** Create a [MatchBranch], see [match] */
-  public infix fun <Output : Expression> String.then(
-    output: Output
-  ): MatchBranch<StringExpression, Output> = MatchBranch(const(this), output)
+  public infix fun <T : ExpressionValue> String.then(
+    output: Expression<T>
+  ): MatchBranch<StringValue, T> = MatchBranch(const(this), output)
 
   /** Create a [MatchBranch], see [match] */
-  public infix fun <Output : Expression> Number.then(
-    output: Output
-  ): MatchBranch<NumberExpression, Output> = MatchBranch(const(this.toFloat()), output)
+  public infix fun <T : ExpressionValue> Number.then(
+    output: Expression<T>
+  ): MatchBranch<NumberValue, T> = MatchBranch(const(this.toFloat()), output)
 
   /** Create a [MatchBranch], see [match] */
   @JvmName("stringsThen")
-  public infix fun <Output : Expression> List<String>.then(
-    output: Output
-  ): MatchBranch<StringExpression, Output> =
-    MatchBranch(ExpressionImpl.ofList(this.map(::const)), output)
+  public infix fun <T : ExpressionValue> List<String>.then(
+    output: Expression<T>
+  ): MatchBranch<StringValue, T> = MatchBranch(Expression.ofList(this.map(::const)), output)
 
   /** Create a [MatchBranch], see [match] */
   @JvmName("numbersThen")
-  public infix fun <Output : Expression> List<Number>.then(
-    output: Output
-  ): MatchBranch<NumberExpression, Output> =
-    MatchBranch(ExpressionImpl.ofList(this.map { const(it.toFloat()) }), output)
+  public infix fun <T : ExpressionValue> List<Number>.then(
+    output: Expression<T>
+  ): MatchBranch<NumberValue, T> =
+    MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
 
   /**
    * Evaluates each expression in [values] in turn until the first non-null value is obtained, and
    * returns that value.
    */
-  public fun <T : Expression> coalesce(vararg values: T): T = callFn("coalesce", *values)
+  public fun <T : ExpressionValue> coalesce(vararg values: Expression<T>): Expression<T> =
+    callFn("coalesce", *values)
 
   /** Returns whether this expression is equal to [other]. */
-  public infix fun Expression.eq(other: Expression): BooleanExpression = callFn("==", this, other)
+  public infix fun Expression<*>.eq(other: Expression<*>): BooleanExpression =
+    callFn("==", this, other)
 
   /**
    * Returns whether the [left] string expression is equal to the [right] string expression. An
@@ -531,7 +540,8 @@ public interface ExpressionScope {
   ): BooleanExpression = callFn("==", left, right, collator)
 
   /** Returns whether this expression is not equal to [other]. */
-  public infix fun Expression.neq(other: Expression): BooleanExpression = callFn("!=", this, other)
+  public infix fun Expression<*>.neq(other: Expression<*>): BooleanExpression =
+    callFn("!=", this, other)
 
   /**
    * Returns whether the [left] string expression is not equal to the [right] string expression. An
@@ -675,11 +685,11 @@ public interface ExpressionScope {
    * returns 0 if the zoom is less than 10, 2.5 if the zoom is between 10 and less than 20, 10.5 if
    * the zoom is greater than or equal 20.
    */
-  public fun <Output : Expression> step(
+  public fun <T : ExpressionValue> step(
     input: NumberExpression,
-    fallback: Output,
-    vararg stops: Pair<Number, Output>,
-  ): Output =
+    fallback: Expression<T>,
+    vararg stops: Pair<Number, Expression<T>>,
+  ): Expression<T> =
     callFn(
       "step",
       input,
@@ -692,12 +702,12 @@ public interface ExpressionScope {
         },
     )
 
-  private fun <Output : InterpolateableExpression> interpolateImpl(
+  private fun <T : InterpolateableValue> interpolateImpl(
     name: String,
     type: Interpolation,
     input: NumberExpression,
-    vararg stops: Pair<Number, Output>,
-  ): Output =
+    vararg stops: Pair<Number, Expression<T>>,
+  ): Expression<T> =
     callFn(
       name,
       type,
@@ -727,11 +737,11 @@ public interface ExpressionScope {
    * zoom 24, it is 256. Applied to for example line width, this has the visual effect that the line
    * stays the same width in meters on the map (rather than on the viewport).
    */
-  public fun <Output : InterpolateableExpression> interpolate(
+  public fun <T : InterpolateableValue> interpolate(
     type: Interpolation,
     input: NumberExpression,
-    vararg stops: Pair<Number, Output>,
-  ): Output = interpolateImpl("interpolate", type, input, *stops)
+    vararg stops: Pair<Number, Expression<T>>,
+  ): Expression<T> = interpolateImpl("interpolate", type, input, *stops)
 
   /**
    * Produces continuous, smooth results by interpolating between pairs of input and output values
@@ -771,6 +781,29 @@ public interface ExpressionScope {
     vararg stops: Pair<Number, ColorExpression>,
   ): ColorExpression = interpolateImpl("interpolate-lab", type, input, *stops)
 
+  /** Interpolates linearly between the pairs of stops. */
+  public fun linear(): Interpolation = callFn("linear")
+
+  /**
+   * Interpolates exponentially between the stops.
+   *
+   * @param [base] controls the rate at which the output increases: higher values make the output
+   *   increase more towards the high end of the range. With values close to 1 the output increases
+   *   linearly.
+   */
+  public fun exponential(base: FloatExpression): Interpolation = callFn("exponential", base)
+
+  /**
+   * Interpolates using the cubic bezier curve defined by the given control points between the pairs
+   * of stops.
+   */
+  public fun cubicBezier(
+    x1: FloatExpression,
+    y1: FloatExpression,
+    x2: FloatExpression,
+    y2: FloatExpression,
+  ): Interpolation = callFn("cubic-bezier", x1, y1, x2, y2)
+
   // endregion
 
   // region Math
@@ -785,25 +818,31 @@ public interface ExpressionScope {
   public fun e(): FloatExpression = callFn("e")
 
   /** Returns the sum of this number expression with [other]. */
-  public operator fun <T : ScalarExpression> T.plus(other: T): T = callFn("+", this, other)
+  public operator fun <T : ScalarValue> Expression<T>.plus(other: Expression<T>): Expression<T> =
+    callFn("+", this, other)
 
   /** Returns the product of this number expression with [other]. */
-  public operator fun <T : ScalarExpression> T.times(other: NumberExpression): T =
-    callFn("*", this, other)
+  public operator fun <T : ScalarValue> Expression<T>.times(
+    other: NumberExpression
+  ): Expression<T> = callFn("*", this, other)
 
   /** Returns the result of subtracting [other] from this number expression. */
-  public operator fun <T : ScalarExpression> T.minus(other: T): T = callFn("-", this, other)
+  public operator fun <T : ScalarValue> Expression<T>.minus(other: Expression<T>): Expression<T> =
+    callFn("-", this, other)
 
   /** Negates this number expression. */
-  public operator fun <T : ScalarExpression> T.unaryMinus(): T = callFn("-", this)
+  public operator fun <T : ScalarValue> Expression<T>.unaryMinus(): Expression<T> =
+    callFn("-", this)
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
-  public operator fun <T : FloatScalarExpression> T.div(divisor: FloatExpression): T =
-    callFn("/", this, divisor)
+  public operator fun <T : FloatScalarValue> Expression<T>.div(
+    divisor: FloatExpression
+  ): Expression<T> = callFn("/", this, divisor)
 
   /** Returns the remainder after integer division of this number expression by [divisor]. */
-  public operator fun <T : IntScalarExpression> T.rem(divisor: IntExpression): T =
-    callFn("%", this, divisor)
+  public operator fun <T : IntScalarValue> Expression<T>.rem(
+    divisor: IntExpression
+  ): Expression<T> = callFn("%", this, divisor)
 
   /** Returns the result of raising this number expression to the power of [exponent]. */
   public fun NumberExpression.pow(exponent: NumberExpression): FloatExpression =
@@ -840,13 +879,15 @@ public interface ExpressionScope {
   public fun atan(value: NumberExpression): FloatExpression = callFn("atan", value)
 
   /** Returns the smallest of all given [numbers]. */
-  public fun <T : ScalarExpression> min(vararg numbers: T): T = callFn("min", *numbers)
+  public fun <T : ScalarValue> min(vararg numbers: Expression<T>): Expression<T> =
+    callFn("min", *numbers)
 
   /** Returns the greatest of all given [numbers]. */
-  public fun <T : ScalarExpression> max(vararg numbers: T): T = callFn("max", *numbers)
+  public fun <T : ScalarValue> max(vararg numbers: Expression<T>): Expression<T> =
+    callFn("max", *numbers)
 
   /** Returns the absolute value of [value], i.e. always a positive value. */
-  public fun <T : ScalarExpression> abs(value: T): T = callFn("abs", value)
+  public fun <T : ScalarValue> abs(value: Expression<T>): Expression<T> = callFn("abs", value)
 
   /**
    * Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
@@ -920,7 +961,8 @@ public interface ExpressionScope {
    */
   // TODO: latest when featureState is supported on native platforms, should document which layer
   //   properties support data-driven styling, i.e. featureState expressions.
-  public fun <T> featureState(key: StringExpression): T = callFn("feature-state", key)
+  public fun <T : ExpressionValue> featureState(key: StringExpression): Expression<T> =
+    callFn("feature-state", key)
 
   /**
    * Gets the feature's geometry type as a string: "Point", "MultiPoint", "LineString",
@@ -929,7 +971,7 @@ public interface ExpressionScope {
   public fun geometryType(): StringExpression = callFn("geometry-type")
 
   /** Gets the feature's id, if it has one. */
-  public fun <T> id(): T = callFn("id")
+  public fun <T : ExpressionValue> id(): Expression<T> = callFn("id")
 
   /**
    * Gets the progress along a gradient line. Can only be used in the `gradient` property of a line
@@ -942,7 +984,8 @@ public interface ExpressionScope {
    * `clusterProperties` option of a clustered GeoJSON source, see
    * [GeoJsonOptions][dev.sargunv.maplibrecompose.core.source.GeoJsonOptions].
    */
-  public fun <T> accumulated(key: StringExpression): T = callFn("accumulated", key)
+  public fun <T : ExpressionValue> accumulated(key: StringExpression): Expression<T> =
+    callFn("accumulated", key)
 
   // endregion
 
@@ -992,7 +1035,7 @@ public interface ExpressionScope {
   public fun StringExpression.lowercase(): StringExpression = callFn("downcase", this)
 
   /** Concatenates this string expression with [other]. */
-  @JvmName("plusString")
+  @JvmName("concat")
   public operator fun StringExpression.plus(other: StringExpression): StringExpression =
     callFn("concat", this, other)
 
@@ -1008,24 +1051,27 @@ public interface ExpressionScope {
 
   // region Utils
 
-  @Suppress("UNCHECKED_CAST")
-  private fun <T : Expression> callFn(function: String, vararg args: Expression) =
-    ExpressionImpl.ofList(
-      buildList {
-        add(const(function))
-        args.forEach { add(it) }
-      }
-    ) as T
+  private fun <T : ExpressionValue> callFn(
+    function: String,
+    vararg args: Expression<*>,
+  ): Expression<T> =
+    Expression.ofList(
+        buildList {
+          add(const(function))
+          args.forEach { add(it) }
+        }
+      )
+      .cast()
 
-  private inline fun buildOptions(block: MutableMap<String, Expression>.() -> Unit) =
-    ExpressionImpl.ofMap(mutableMapOf<String, Expression>().apply(block).mapValues { it.value })
+  private inline fun buildOptions(block: MutableMap<String, Expression<*>>.() -> Unit) =
+    Expression.ofMap(mutableMapOf<String, Expression<*>>().apply(block).mapValues { it.value })
 
-  private fun <T> Array<T>.foldToArgs(block: MutableList<Expression>.(element: T) -> Unit) =
-    fold(mutableListOf<Expression>()) { acc, element -> acc.apply { block(element) } }
+  private fun <T> Array<T>.foldToArgs(block: MutableList<Expression<*>>.(element: T) -> Unit) =
+    fold(mutableListOf<Expression<*>>()) { acc, element -> acc.apply { block(element) } }
       .toTypedArray()
 
-  private fun <T> List<T>.foldToArgs(block: MutableList<Expression>.(element: T) -> Unit) =
-    fold(mutableListOf<Expression>()) { acc, element -> acc.apply { block(element) } }
+  private fun <T> List<T>.foldToArgs(block: MutableList<Expression<*>>.(element: T) -> Unit) =
+    fold(mutableListOf<Expression<*>>()) { acc, element -> acc.apply { block(element) } }
       .toTypedArray()
 
   // endregion
