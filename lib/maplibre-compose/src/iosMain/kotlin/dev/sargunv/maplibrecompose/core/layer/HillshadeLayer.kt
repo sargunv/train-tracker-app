@@ -5,7 +5,6 @@ import dev.sargunv.maplibrecompose.core.expression.ColorExpression
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
 import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
 
@@ -15,7 +14,7 @@ internal actual class HillshadeLayer actual constructor(id: String, actual val s
 
   override val impl = MLNHillshadeStyleLayer(id, source.impl)
 
-  actual fun setHillshadeIlluminationDirection(direction: IntExpression) {
+  actual fun setHillshadeIlluminationDirection(direction: FloatExpression) {
     impl.hillshadeIlluminationDirection = direction.toNSExpression()
   }
 

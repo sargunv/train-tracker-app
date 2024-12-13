@@ -11,7 +11,6 @@ import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.ImageExpression
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.ListExpression
 import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
@@ -99,7 +98,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.iconImage(image.toMLNExpression()))
   }
 
-  actual fun setIconRotate(rotate: IntExpression) {
+  actual fun setIconRotate(rotate: FloatExpression) {
     impl.setProperties(PropertyFactory.iconRotate(rotate.toMLNExpression()))
   }
 
@@ -205,7 +204,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textAnchor(anchor.toMLNExpression()))
   }
 
-  actual fun setTextMaxAngle(maxAngle: IntExpression) {
+  actual fun setTextMaxAngle(maxAngle: FloatExpression) {
     impl.setProperties(PropertyFactory.textMaxAngle(maxAngle.toMLNExpression()))
   }
 
@@ -213,7 +212,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textWritingMode(writingMode.toMLNExpression()))
   }
 
-  actual fun setTextRotate(rotate: IntExpression) {
+  actual fun setTextRotate(rotate: FloatExpression) {
     impl.setProperties(PropertyFactory.textRotate(rotate.toMLNExpression()))
   }
 

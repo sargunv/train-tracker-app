@@ -2,7 +2,6 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -12,7 +11,7 @@ internal expect class RasterLayer(id: String, source: Source) : Layer {
 
   fun setRasterOpacity(opacity: FloatExpression)
 
-  fun setRasterHueRotate(hueRotate: IntExpression)
+  fun setRasterHueRotate(hueRotate: FloatExpression)
 
   fun setRasterBrightnessMin(brightnessMin: FloatExpression)
 
@@ -24,5 +23,5 @@ internal expect class RasterLayer(id: String, source: Source) : Layer {
 
   fun setRasterResampling(resampling: EnumExpression<RasterResampling>)
 
-  fun setRasterFadeDuration(fadeDuration: IntExpression)
+  fun setRasterFadeDuration(fadeDuration: FloatExpression)
 }

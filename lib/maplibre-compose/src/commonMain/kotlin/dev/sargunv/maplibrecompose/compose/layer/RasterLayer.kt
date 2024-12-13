@@ -5,7 +5,6 @@ import androidx.compose.runtime.key
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.layer.RasterLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -43,13 +42,13 @@ public inline fun RasterLayer(
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
   opacity: FloatExpression = const(1f),
-  hueRotate: IntExpression = const(0),
+  hueRotate: FloatExpression = const(0f),
   brightnessMin: FloatExpression = const(0f),
   brightnessMax: FloatExpression = const(1f),
   saturation: FloatExpression = const(0f),
   contrast: FloatExpression = const(0f),
   resampling: EnumExpression<RasterResampling> = const(RasterResampling.Linear),
-  fadeDuration: IntExpression = const(300),
+  fadeDuration: FloatExpression = const(300f),
 ) {
   key(id) {
     LayerNode(

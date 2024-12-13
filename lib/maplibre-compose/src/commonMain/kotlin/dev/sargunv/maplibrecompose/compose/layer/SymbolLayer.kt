@@ -21,7 +21,6 @@ import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.ImageExpression
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.ListExpression
 import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
 import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
@@ -391,7 +390,7 @@ public inline fun SymbolLayer(
   iconTextFit: EnumExpression<IconTextFit> = const(IconTextFit.None),
   iconTextFitPadding: PaddingExpression = const(ZeroPadding),
   iconKeepUpright: BooleanExpression = const(false),
-  iconRotate: IntExpression = const(0),
+  iconRotate: FloatExpression = const(0f),
 
   // icon anchoring
   iconAnchor: EnumExpression<SymbolAnchor> = const(SymbolAnchor.Center),
@@ -425,7 +424,7 @@ public inline fun SymbolLayer(
   textLetterSpacing: FloatExpression = const(0f),
   textRotationAlignment: EnumExpression<TextRotationAlignment> = const(TextRotationAlignment.Auto),
   textPitchAlignment: EnumExpression<TextPitchAlignment> = const(TextPitchAlignment.Auto),
-  textMaxAngle: IntExpression = const(45),
+  textMaxAngle: FloatExpression = const(45f),
 
   // text paragraph layout
   textMaxWidth: FloatExpression = const(10f),
@@ -433,7 +432,7 @@ public inline fun SymbolLayer(
   textJustify: EnumExpression<TextJustify> = const(TextJustify.Center),
   textWritingMode: ListExpression<EnumExpression<TextWritingMode>> = nil(),
   textKeepUpright: BooleanExpression = const(true),
-  textRotate: IntExpression = const(0),
+  textRotate: FloatExpression = const(0f),
 
   // text anchoring
   textAnchor: EnumExpression<SymbolAnchor> = const(SymbolAnchor.Center),

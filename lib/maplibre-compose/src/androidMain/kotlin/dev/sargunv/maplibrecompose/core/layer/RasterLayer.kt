@@ -2,7 +2,6 @@ package dev.sargunv.maplibrecompose.core.layer
 
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -18,7 +17,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.setProperties(PropertyFactory.rasterOpacity(opacity.toMLNExpression()))
   }
 
-  actual fun setRasterHueRotate(hueRotate: IntExpression) {
+  actual fun setRasterHueRotate(hueRotate: FloatExpression) {
     impl.setProperties(PropertyFactory.rasterHueRotate(hueRotate.toMLNExpression()))
   }
 
@@ -42,7 +41,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.setProperties(PropertyFactory.rasterResampling(resampling.toMLNExpression()))
   }
 
-  actual fun setRasterFadeDuration(fadeDuration: IntExpression) {
+  actual fun setRasterFadeDuration(fadeDuration: FloatExpression) {
     impl.setProperties(PropertyFactory.rasterFadeDuration(fadeDuration.toMLNExpression()))
   }
 }

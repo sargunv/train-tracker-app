@@ -3,7 +3,6 @@ package dev.sargunv.maplibrecompose.core.layer
 import cocoapods.MapLibre.MLNRasterStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.EnumExpression
 import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.IntExpression
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -18,7 +17,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.rasterOpacity = opacity.toNSExpression()
   }
 
-  actual fun setRasterHueRotate(hueRotate: IntExpression) {
+  actual fun setRasterHueRotate(hueRotate: FloatExpression) {
     impl.rasterHueRotation = hueRotate.toNSExpression()
   }
 
@@ -42,7 +41,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.rasterResamplingMode = resampling.toNSExpression()
   }
 
-  actual fun setRasterFadeDuration(fadeDuration: IntExpression) {
+  actual fun setRasterFadeDuration(fadeDuration: FloatExpression) {
     impl.rasterFadeDuration = fadeDuration.toNSExpression()
   }
 }
