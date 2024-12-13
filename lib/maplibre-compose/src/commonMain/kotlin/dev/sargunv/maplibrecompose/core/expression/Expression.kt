@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 
 /** Wraps a JSON-like value that represents an expression, typically used for styling map layers. */
 public sealed interface Expression {
@@ -108,7 +109,7 @@ public sealed interface InterpolateableExpression : Expression
 public sealed interface Interpolation : Expression {
 
   /** Interpolates linearly between the pairs of stops. */
-  public data object Linear : Interpolation by ExpressionImpl("linear")
+  public data object Linear : Interpolation by ExpressionImpl.ofString("linear")
 
   /**
    * Interpolates exponentially between the stops.
@@ -118,7 +119,7 @@ public sealed interface Interpolation : Expression {
    *   linearly.
    */
   public class Exponential(base: FloatExpression) :
-    Interpolation by ExpressionImpl(listOf("exponential", base.value))
+    Interpolation by ExpressionImpl.ofList(listOf(const("exponential"), base))
 
   /**
    * Interpolates using the cubic bezier curve defined by the given control points between the pairs
@@ -129,11 +130,10 @@ public sealed interface Interpolation : Expression {
     y1: FloatExpression,
     x2: FloatExpression,
     y2: FloatExpression,
-  ) :
-    Interpolation by ExpressionImpl(listOf("cubic-bezier", x1.value, y1.value, x2.value, y2.value))
+  ) : Interpolation by ExpressionImpl.ofList(listOf(const("cubic-bezier"), x1, y1, x2, y2))
 }
 
-internal class ExpressionImpl(override val value: Any?) :
+internal class ExpressionImpl private constructor(override val value: Any?) :
   BooleanExpression,
   FloatExpression,
   IntExpression,

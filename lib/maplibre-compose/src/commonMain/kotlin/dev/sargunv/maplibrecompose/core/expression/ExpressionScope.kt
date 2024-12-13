@@ -50,7 +50,7 @@ public interface ExpressionScope {
   // region Conversion
 
   public val NumberExpression.dp: DpExpression
-    get() = ExpressionImpl(value)
+    get() = this as DpExpression
 
   // endregion
 
@@ -500,13 +500,15 @@ public interface ExpressionScope {
   @JvmName("stringsThen")
   public infix fun <Output : Expression> List<String>.then(
     output: Output
-  ): MatchBranch<StringExpression, Output> = MatchBranch(ExpressionImpl(this), output)
+  ): MatchBranch<StringExpression, Output> =
+    MatchBranch(ExpressionImpl.ofList(this.map(::const)), output)
 
   /** Create a [MatchBranch], see [match] */
   @JvmName("numbersThen")
   public infix fun <Output : Expression> List<Number>.then(
     output: Output
-  ): MatchBranch<NumberExpression, Output> = MatchBranch(ExpressionImpl(this), output)
+  ): MatchBranch<NumberExpression, Output> =
+    MatchBranch(ExpressionImpl.ofList(this.map { const(it.toFloat()) }), output)
 
   /**
    * Evaluates each expression in [values] in turn until the first non-null value is obtained, and
@@ -1008,16 +1010,15 @@ public interface ExpressionScope {
 
   @Suppress("UNCHECKED_CAST")
   private fun <T : Expression> callFn(function: String, vararg args: Expression) =
-    ExpressionImpl(
+    ExpressionImpl.ofList(
       buildList {
-        add(function)
-        args.forEach { add(it.value) }
+        add(const(function))
+        args.forEach { add(it) }
       }
-    )
-      as T
+    ) as T
 
   private inline fun buildOptions(block: MutableMap<String, Expression>.() -> Unit) =
-    ExpressionImpl(mutableMapOf<String, Expression>().apply(block).mapValues { it.value.value })
+    ExpressionImpl.ofMap(mutableMapOf<String, Expression>().apply(block).mapValues { it.value })
 
   private fun <T> Array<T>.foldToArgs(block: MutableList<Expression>.(element: T) -> Unit) =
     fold(mutableListOf<Expression>()) { acc, element -> acc.apply { block(element) } }
