@@ -66,7 +66,7 @@ public interface ExpressionScope {
   // region Types
 
   /** Produces a literal list value. */
-  public fun literal(values: List<Expression>): Expression.List =
+  public fun <T : Expression> literal(values: List<T>): Expression.List<T> =
     callFn("literal", Expression.Impl.ofList(values))
 
   /** Produces a literal map value. */
@@ -88,7 +88,7 @@ public interface ExpressionScope {
   public fun Expression.asList(
     type: Expression.String? = null,
     length: Expression.Int? = null,
-  ): Expression.List {
+  ): Expression.List<*> {
     val args = buildList {
       type?.let { add(type) }
       length?.let { add(length) }
@@ -288,12 +288,12 @@ public interface ExpressionScope {
   // region Lookup
 
   /** Returns the item at [index]. */
-  public operator fun <T : Expression> Expression.List.get(index: Expression.Int): T =
+  public operator fun <T : Expression> Expression.List<T>.get(index: Expression.Int): T =
     callFn("at", index, this)
 
   /** Returns whether this list contains the [item]. */
   @JvmName("containsList")
-  public fun Expression.List.contains(item: Expression): Expression.Boolean =
+  public fun <T : Expression> Expression.List<T>.contains(item: T): Expression.Boolean =
     callFn("in", item, this)
 
   /** Returns whether this string contains the [substring]. */
@@ -323,7 +323,7 @@ public interface ExpressionScope {
    * found. Accepts an optional [startIndex] from where to begin the search.
    */
   @JvmName("indexOfList")
-  public fun Expression.List.indexOf(
+  public fun Expression.List<*>.indexOf(
     item: Expression,
     startIndex: Expression.Int? = null,
   ): Expression.Int {
@@ -357,10 +357,10 @@ public interface ExpressionScope {
    * Returns the items in this list from the [startIndex] (inclusive) to the end of this list if
    * [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
    */
-  public fun Expression.List.slice(
+  public fun <T : Expression> Expression.List<T>.slice(
     startIndex: Expression.Int,
     endIndex: Expression.Int? = null,
-  ): Expression.List {
+  ): Expression.List<T> {
     val args = buildList {
       add(this@slice)
       add(startIndex)
@@ -396,7 +396,7 @@ public interface ExpressionScope {
 
   /** Gets the length of a this list. */
   @JvmName("lengthOfList")
-  public fun Expression.List.length(): Expression.Int = callFn("length", this)
+  public fun Expression.List<*>.length(): Expression.Int = callFn("length", this)
 
   // endregion
 

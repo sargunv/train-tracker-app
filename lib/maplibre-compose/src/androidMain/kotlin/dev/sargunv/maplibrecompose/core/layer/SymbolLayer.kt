@@ -11,6 +11,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -150,7 +151,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textField(field.toMLNExpression()))
   }
 
-  actual fun setTextFont(font: Expression.List) {
+  actual fun setTextFont(font: Expression.List<Expression.String>) {
     impl.setProperties(PropertyFactory.textFont(font.toMLNExpression()))
   }
 
@@ -178,11 +179,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textRadialOffset(radialOffset.toMLNExpression()))
   }
 
-  actual fun setTextVariableAnchor(variableAnchor: Expression.List) {
+  actual fun setTextVariableAnchor(variableAnchor: Expression.List<Expression.Enum<SymbolAnchor>>) {
     impl.setProperties(PropertyFactory.textVariableAnchor(variableAnchor.toMLNExpression()))
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression.List) {
+  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression.List<*>) {
     impl.setProperties(
       PropertyFactory.textVariableAnchorOffset(variableAnchorOffset.toMLNExpression())
     )
@@ -196,7 +197,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.setProperties(PropertyFactory.textMaxAngle(maxAngle.toMLNExpression()))
   }
 
-  actual fun setTextWritingMode(writingMode: Expression.List) {
+  actual fun setTextWritingMode(writingMode: Expression.List<Expression.Enum<TextWritingMode>>) {
     impl.setProperties(PropertyFactory.textWritingMode(writingMode.toMLNExpression()))
   }
 

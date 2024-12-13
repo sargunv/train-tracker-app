@@ -12,6 +12,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -155,7 +156,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.text = field.toNSExpression()
   }
 
-  actual fun setTextFont(font: Expression.List) {
+  actual fun setTextFont(font: Expression.List<Expression.String>) {
     impl.textFontNames = font.toNSExpression()
   }
 
@@ -183,11 +184,11 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textRadialOffset = radialOffset.toNSExpression()
   }
 
-  actual fun setTextVariableAnchor(variableAnchor: Expression.List) {
+  actual fun setTextVariableAnchor(variableAnchor: Expression.List<Expression.Enum<SymbolAnchor>>) {
     impl.textVariableAnchor = variableAnchor.toNSExpression()
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression.List) {
+  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression.List<*>) {
     impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
   }
 
@@ -199,7 +200,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.maximumTextAngle = maxAngle.toNSExpression()
   }
 
-  actual fun setTextWritingMode(writingMode: Expression.List) {
+  actual fun setTextWritingMode(writingMode: Expression.List<Expression.Enum<TextWritingMode>>) {
     impl.textWritingModes = writingMode.toNSExpression()
   }
 

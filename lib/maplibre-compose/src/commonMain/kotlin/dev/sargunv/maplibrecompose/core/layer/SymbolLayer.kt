@@ -11,6 +11,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -80,7 +81,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextField(field: Expression.Formatted)
 
-  fun setTextFont(font: Expression.List)
+  fun setTextFont(font: Expression.List<Expression.String>)
 
   fun setTextSize(size: Expression.Dp)
 
@@ -94,15 +95,16 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextRadialOffset(radialOffset: Expression.Float)
 
-  fun setTextVariableAnchor(variableAnchor: Expression.List)
+  fun setTextVariableAnchor(variableAnchor: Expression.List<Expression.Enum<SymbolAnchor>>)
 
-  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression.List)
+  // TODO: this is a list of alternating SymbolAnchor and Offset
+  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression.List<*>)
 
   fun setTextAnchor(anchor: Expression.Enum<SymbolAnchor>)
 
   fun setTextMaxAngle(maxAngle: Expression.Int)
 
-  fun setTextWritingMode(writingMode: Expression.List)
+  fun setTextWritingMode(writingMode: Expression.List<Expression.Enum<TextWritingMode>>)
 
   fun setTextRotate(rotate: Expression.Int)
 

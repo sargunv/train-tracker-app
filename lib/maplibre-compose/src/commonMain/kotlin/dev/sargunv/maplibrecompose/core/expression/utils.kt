@@ -25,6 +25,6 @@ public object Defaults {
       1 to const(Color(0xFFFF0000)), // red
     )
 
-  public val FontNames: Expression.List =
+  public val FontNames: Expression.List<Expression.String> =
     literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular")))
 }

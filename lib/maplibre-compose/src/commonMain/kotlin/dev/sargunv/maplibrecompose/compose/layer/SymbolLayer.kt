@@ -21,6 +21,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.ZeroPadding
 import dev.sargunv.maplibrecompose.core.layer.SymbolLayer
@@ -406,7 +407,7 @@ public inline fun SymbolLayer(
   textHaloBlur: Expression.Dp = const(0.dp),
 
   // text glyph properties
-  textFont: Expression.List = Defaults.FontNames,
+  textFont: Expression.List<Expression.String> = Defaults.FontNames,
   textSize: Expression.Dp = const(16.dp),
   textTransform: Expression.Enum<TextTransform> = const(TextTransform.None),
   textLetterSpacing: Expression.Float = const(0f),
@@ -418,16 +419,16 @@ public inline fun SymbolLayer(
   textMaxWidth: Expression.Float = const(10f),
   textLineHeight: Expression.Float = const(1.2f),
   textJustify: Expression.Enum<TextJustify> = const(TextJustify.Center),
-  textWritingMode: Expression.List = nil(),
+  textWritingMode: Expression.List<Expression.Enum<TextWritingMode>> = nil(),
   textKeepUpright: Expression.Boolean = const(true),
   textRotate: Expression.Int = const(0),
 
   // text anchoring
   textAnchor: Expression.Enum<SymbolAnchor> = const(SymbolAnchor.Center),
   textOffset: Expression.Offset = const(Offset.Zero),
-  textVariableAnchor: Expression.List = nil(),
+  textVariableAnchor: Expression.List<Expression.Enum<SymbolAnchor>> = nil(),
   textRadialOffset: Expression.Float = const(0f),
-  textVariableAnchorOffset: Expression.List = nil(),
+  textVariableAnchorOffset: Expression.List<*> = nil(),
 
   // text collision
   textPadding: Expression.Dp = const(2.dp),

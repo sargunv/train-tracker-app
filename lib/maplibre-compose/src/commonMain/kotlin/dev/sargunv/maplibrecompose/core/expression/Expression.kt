@@ -43,10 +43,10 @@ public sealed interface Expression {
   public sealed interface Map : Expression
 
   /** Represents an expression that resolves to a list value (corresponds to a JSON array). */
-  public sealed interface List : Expression // TODO make it generic again
+  public sealed interface List<out T : Expression> : Expression
 
   /** Represents an expression that resolves to a list of scalar values. */
-  public sealed interface Vector : List, Interpolateable
+  public sealed interface Vector : List<Scalar>, Interpolateable
 
   /** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
   public sealed interface Offset : Vector
@@ -110,7 +110,6 @@ public sealed interface Expression {
     Enum<LayerPropertyEnum>,
     Color,
     Map,
-    List,
     Vector,
     Offset,
     DpOffset,
