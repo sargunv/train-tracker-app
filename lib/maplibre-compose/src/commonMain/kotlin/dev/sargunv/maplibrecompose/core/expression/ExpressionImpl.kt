@@ -24,30 +24,37 @@ internal class ExpressionImpl private constructor(override val value: Any?) :
   internal inline fun <reified T : Expression> cast(): T = this as T
 
   internal companion object {
-    val ofNull = ExpressionImpl(null)
-    val ofTrue = ExpressionImpl(true)
-    val ofFalse = ExpressionImpl(false)
+    private const val NUM_SMALL_NUMBERS = 512
+    private const val SMALL_FLOAT_RESOLUTION = 0.05f
 
-    private val constSmallInts = Array(512) { ExpressionImpl(it.toFloat()) }
-    private val constSmallFloats = Array(512) { ExpressionImpl(it.toFloat() / 20f) }
+    private val constSmallInts = Array(NUM_SMALL_NUMBERS) { ExpressionImpl(it) }
+    private val constSmallFloats = Array(NUM_SMALL_NUMBERS) { ExpressionImpl(it.toFloat() / 20f) }
     private val ofEmptyString = ExpressionImpl("")
     private val ofTransparent = ExpressionImpl(Color.Transparent)
     private val ofBlack = ExpressionImpl(Color.Black)
     private val ofWhite = ExpressionImpl(Color.White)
+    private val ofEmptyMap = ExpressionImpl(emptyMap<String, Any?>())
     private val ofEmptyList = ExpressionImpl(emptyList<Any?>())
     private val ofZeroOffset = ExpressionImpl(Offset.Zero)
     private val ofZeroPadding = ExpressionImpl(ZeroPadding)
 
-    private val ofEmptyMap = ExpressionImpl(emptyMap<String, Any?>())
+    val ofNull = ExpressionImpl(null)
+    val ofTrue = ExpressionImpl(true)
+    val ofFalse = ExpressionImpl(false)
 
-    private fun isSmallInt(f: Float) = f >= 0 && f < 512 && f.toInt().toFloat() == f
+    private fun Float.isSmallInt() = toInt().toFloat() == this && toInt().isSmallInt()
+
+    private fun Int.isSmallInt() = this in 0..<NUM_SMALL_NUMBERS
 
     fun ofFloat(float: Float) =
       when {
-        isSmallInt(float) -> constSmallInts[float.toInt()]
-        isSmallInt(float * 20f) -> constSmallFloats[(float * 20f).toInt()]
+        float.isSmallInt() -> constSmallInts[float.toInt()]
+        (float / SMALL_FLOAT_RESOLUTION).isSmallInt() ->
+          constSmallFloats[(float / SMALL_FLOAT_RESOLUTION).toInt()]
         else -> ExpressionImpl(float)
       }
+
+    fun ofInt(int: Int) = if (int.isSmallInt()) constSmallInts[int] else ExpressionImpl(int)
 
     fun ofString(string: String) = if (string.isEmpty()) ofEmptyString else ExpressionImpl(string)
 

@@ -63,8 +63,8 @@ public sealed interface OffsetExpression : VectorExpression
 public sealed interface DpOffsetExpression : VectorExpression
 
 /**
- * Represents an expression that resolves to an absolute (RTL unaware) padding applied along the
- * edges inside a box.
+ * Represents an expression that resolves to an absolute (layout direction unaware) padding applied
+ * along the edges inside a box.
  */
 public sealed interface PaddingExpression : VectorExpression
 

@@ -22,7 +22,7 @@ public interface ExpressionScope {
 
   public fun const(float: Float): FloatExpression = ExpressionImpl.ofFloat(float)
 
-  public fun const(int: Int): IntExpression = ExpressionImpl.ofFloat(int.toFloat())
+  public fun const(int: Int): IntExpression = ExpressionImpl.ofInt(int)
 
   public fun const(dp: Dp): DpExpression = ExpressionImpl.ofFloat(dp.value)
 
