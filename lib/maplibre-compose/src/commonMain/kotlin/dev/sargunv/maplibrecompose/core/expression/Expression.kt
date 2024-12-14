@@ -11,7 +11,7 @@ private constructor(
   public val value: Any?
 ) {
   @Suppress("UNCHECKED_CAST")
-  internal fun <T : ExpressionValue> cast(): Expression<T> = this as Expression<T>
+  internal inline fun <reified T : ExpressionValue> cast(): Expression<T> = this as Expression<T>
 
   internal companion object {
     private const val NUM_SMALL_NUMBERS = 512

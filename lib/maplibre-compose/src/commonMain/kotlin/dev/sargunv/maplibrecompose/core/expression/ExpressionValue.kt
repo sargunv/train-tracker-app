@@ -10,22 +10,21 @@ public sealed interface ExpressionValue
 public sealed interface BooleanValue : ExpressionValue
 
 /**
- * Represents an expression that resolves to any numeric quantity. Corresponds to numbers in the
- * JSON style spec.
+ * Represents an expression that resolves to a numeric quantity. Corresponds to numbers in the JSON
+ * style spec.
+ *
+ * @param U the unit type of the scalar value. For dimensionless quantities, use [Number].
  */
-public sealed interface ScalarValue<out Unit> :
-  ExpressionValue,
-  MatchableValue,
-  InterpolateableValue<@UnsafeVariance Unit>,
-  ComparableValue<ScalarValue<@UnsafeVariance Unit>>
+public sealed interface ScalarValue<U> :
+  ExpressionValue, MatchableValue, InterpolateableValue<U>, ComparableValue<ScalarValue<U>>
 
 /** Represents an expression that resolves to a dimensionless quantity. */
 public typealias FloatValue = ScalarValue<Number>
 
 /** Represents an expression that resolves to an integer dimensionless quantity. */
-public typealias IntValue = ScalarValue<Int>
+public sealed interface IntValue : ScalarValue<Number>
 
-/** Represents an expression that resolves to device-independent pixels (dp). */
+/** Represents an expression that resolves to device-independent pixels (see [Dp]). */
 public typealias DpValue = ScalarValue<Dp>
 
 /** Represents an expression that resolves to an amount of time with millisecond precision. */
@@ -46,9 +45,13 @@ public sealed interface MapValue : ExpressionValue
 /** Represents an expression that resolves to a list value (corresponds to a JSON array). */
 public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
 
-/** Represents an expression that resolves to a list of scalar values. */
-public sealed interface VectorValue<Unit> :
-  ListValue<ScalarValue<Unit>>, InterpolateableValue<VectorValue<Unit>>
+/**
+ * Represents an expression that resolves to a list of scalar values.
+ *
+ * @param U the unit type of the scalar values. For dimensionless quantities, use [Number].
+ */
+public sealed interface VectorValue<U> :
+  ListValue<ScalarValue<U>>, InterpolateableValue<VectorValue<U>>
 
 /** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
 public sealed interface OffsetValue : VectorValue<Number>

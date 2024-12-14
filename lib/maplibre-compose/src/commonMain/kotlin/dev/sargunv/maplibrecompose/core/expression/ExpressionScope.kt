@@ -845,21 +845,21 @@ public interface ExpressionScope {
   public fun e(): Expression<FloatValue> = callFn("e")
 
   /** Returns the sum of this number expression with [other]. */
-  public operator fun <Unit> Expression<ScalarValue<Unit>>.plus(
-    other: Expression<ScalarValue<Unit>>
-  ): Expression<ScalarValue<Unit>> = callFn("+", this, other)
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.plus(
+    other: Expression<V>
+  ): Expression<V> = callFn("+", this, other)
 
   /** Returns the product of this number expression with [other]. */
   @JvmName("timesUnitLeft")
-  public operator fun <Unit> Expression<ScalarValue<Unit>>.times(
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.times(
     other: Expression<FloatValue>
-  ): Expression<ScalarValue<Unit>> = callFn("*", this, other)
+  ): Expression<V> = callFn("*", this, other)
 
   /** Returns the product of this number expression with [other]. */
   @JvmName("timesUnitRight")
-  public operator fun <Unit> Expression<FloatValue>.times(
-    other: Expression<ScalarValue<Unit>>
-  ): Expression<ScalarValue<Unit>> = callFn("*", this, other)
+  public operator fun <U, V : ScalarValue<U>> Expression<FloatValue>.times(
+    other: Expression<V>
+  ): Expression<V> = callFn("*", this, other)
 
   /** Returns the product of this number expression with [other]. */
   public operator fun Expression<FloatValue>.times(
@@ -867,23 +867,23 @@ public interface ExpressionScope {
   ): Expression<FloatValue> = callFn("*", this, other)
 
   /** Returns the result of subtracting [other] from this number expression. */
-  public operator fun <Unit> Expression<ScalarValue<Unit>>.minus(
-    other: Expression<ScalarValue<Unit>>
-  ): Expression<ScalarValue<Unit>> = callFn("-", this, other)
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.minus(
+    other: Expression<ScalarValue<U>>
+  ): Expression<V> = callFn("-", this, other)
 
   /** Negates this number expression. */
-  public operator fun <Unit> Expression<ScalarValue<Unit>>.unaryMinus():
-    Expression<ScalarValue<Unit>> = callFn("-", this)
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.unaryMinus(): Expression<V> =
+    callFn("-", this)
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
-  public operator fun <Unit> Expression<ScalarValue<Unit>>.div(
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
     divisor: Expression<FloatValue>
-  ): Expression<ScalarValue<Unit>> = callFn("/", this, divisor)
+  ): Expression<ScalarValue<U>> = callFn("/", this, divisor)
 
   /** Returns the remainder after integer division of this number expression by [divisor]. */
-  public operator fun <Unit> Expression<ScalarValue<Unit>>.rem(
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.rem(
     divisor: Expression<IntValue>
-  ): Expression<ScalarValue<Unit>> = callFn("%", this, divisor)
+  ): Expression<V> = callFn("%", this, divisor)
 
   /** Returns the result of raising this number expression to the power of [exponent]. */
   public fun Expression<FloatValue>.pow(exponent: Expression<FloatValue>): Expression<FloatValue> =
@@ -920,18 +920,15 @@ public interface ExpressionScope {
   public fun atan(value: Expression<FloatValue>): Expression<FloatValue> = callFn("atan", value)
 
   /** Returns the smallest of all given [numbers]. */
-  public fun <Unit> min(
-    vararg numbers: Expression<ScalarValue<Unit>>
-  ): Expression<ScalarValue<Unit>> = callFn("min", *numbers)
+  public fun <U, V : ScalarValue<U>> min(vararg numbers: Expression<V>): Expression<V> =
+    callFn("min", *numbers)
 
   /** Returns the greatest of all given [numbers]. */
-  public fun <Unit> max(
-    vararg numbers: Expression<ScalarValue<Unit>>
-  ): Expression<ScalarValue<Unit>> = callFn("max", *numbers)
+  public fun <U, V : ScalarValue<U>> max(vararg numbers: Expression<V>): Expression<V> =
+    callFn("max", *numbers)
 
   /** Returns the absolute value of [value], i.e. always a positive value. */
-  public fun <Unit> abs(value: Expression<ScalarValue<Unit>>): Expression<ScalarValue<Unit>> =
-    callFn("abs", value)
+  public fun <U, V : ScalarValue<U>> abs(value: Expression<V>): Expression<V> = callFn("abs", value)
 
   /**
    * Rounds [value] to the nearest integer. Halfway values are rounded away from zero.
