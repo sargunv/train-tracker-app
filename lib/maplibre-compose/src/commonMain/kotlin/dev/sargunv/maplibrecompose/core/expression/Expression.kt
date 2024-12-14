@@ -10,10 +10,6 @@ private constructor(
   /** The JSON-like value that backs this expression. */
   public val value: Any?
 ) {
-  @PublishedApi
-  @Suppress("UNCHECKED_CAST")
-  internal fun <T : ExpressionValue> cast(): Expression<T> = this as Expression<T>
-
   internal companion object {
     private const val NUM_SMALL_NUMBERS = 512
     private const val SMALL_FLOAT_RESOLUTION = 0.05f

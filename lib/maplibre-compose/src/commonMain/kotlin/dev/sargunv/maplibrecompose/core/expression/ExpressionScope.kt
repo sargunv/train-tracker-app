@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
 import kotlin.enums.enumEntries
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
@@ -82,19 +83,22 @@ public object ExpressionScope {
 
   // region Variable binding
 
+  @JvmInline
+  public value class Variable<@Suppress("unused") T : ExpressionValue>(public val name: String)
+
   /**
    * Binds expressions to named variables, which can then be referenced in the result expression
    * using [useVariable].
    */
   public fun <T : ExpressionValue> withVariable(
-    name: String,
+    variable: Variable<T>,
     value: Expression<*>,
     expression: Expression<T>,
-  ): Expression<T> = callFn("let", const(name), value, expression).cast()
+  ): Expression<T> = callFn("let", const(variable.name), value, expression).cast()
 
   /** References variable bound using [withVariable]. */
-  public fun <T : ExpressionValue> useVariable(name: String): Expression<T> =
-    callFn("var", const(name)).cast()
+  public fun <T : ExpressionValue> useVariable(variable: Variable<T>): Expression<T> =
+    callFn("var", const(variable.name)).cast()
 
   // endregion
 
@@ -244,8 +248,8 @@ public object ExpressionScope {
    * Example:
    * ```
    * format(
-   *   get("name").substring(const(0), const(1)).uppercase() to FormatStyle(textScale = const(1.5)),
-   *   get("name").substring(const(1)) to FormatStyle(),
+   *   get("name").asString().substring(const(0), const(1)).uppercase() to FormatStyle(textScale = const(1.5)),
+   *   get("name").asString().substring(const(1)) to FormatStyle(),
    * )
    * ```
    *
@@ -418,8 +422,8 @@ public object ExpressionScope {
    * found. Accepts an optional [startIndex] from where to begin the search.
    */
   @JvmName("indexOfList")
-  public fun Expression<ListValue<*>>.indexOf(
-    item: Expression<*>,
+  public fun <T : ExpressionValue> Expression<ListValue<T>>.indexOf(
+    item: Expression<T>,
     startIndex: Expression<IntValue>? = null,
   ): Expression<IntValue> {
     val args = buildList {
@@ -468,16 +472,14 @@ public object ExpressionScope {
    * Returns the value corresponding to the given [key] in the current feature's properties or
    * `null` if it is not present.
    */
-  public fun <T : ExpressionValue> get(key: Expression<StringValue>): Expression<T> =
-    callFn("get", key).cast()
+  public fun get(key: Expression<StringValue>): Expression<*> = callFn("get", key)
 
   /** Tests for the presence of a property value [key] in the current feature's properties. */
   public fun has(key: Expression<StringValue>): Expression<BooleanValue> = callFn("has", key).cast()
 
   /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
-  public operator fun <T : ExpressionValue> Expression<MapValue>.get(
-    key: Expression<StringValue>
-  ): Expression<T> = callFn("get", key, this).cast()
+  public operator fun Expression<MapValue>.get(key: Expression<StringValue>): Expression<*> =
+    callFn("get", key, this)
 
   /** Returns whether the given [key] is in this map. */
   public fun Expression<MapValue>.has(key: Expression<StringValue>): Expression<BooleanValue> =
@@ -511,13 +513,13 @@ public object ExpressionScope {
    *     output = interpolate(
    *       linear(),
    *       zoom(),
-   *       1 to get(const("color1")),
-   *       20 to get(const("color2"))
+   *       1 to get(const("color1")).convertToColor(),
+   *       20 to get(const("color2")).convertToColor()
    *     ),
    *   ),
    *   condition(
    *     test = has(const("color")),
-   *     output = get(const("color")),
+   *     output = get(const("color")).convertToColor(),
    *   ),
    *   fallback = const(Color.Red),
    * )
@@ -564,7 +566,7 @@ public object ExpressionScope {
    * Example:
    * ```
    * switch(
-   *   input = get(const("building_type")),
+   *   input = get(const("building_type")).asString(),
    *   case(
    *     label = "residential",
    *     output = const(Color.Cyan),
@@ -1219,6 +1221,10 @@ public object ExpressionScope {
   // endregion
 
   // region Utils
+
+  @Suppress("UNCHECKED_CAST")
+  /** Casts this expression to the specified type without any runtime check. Use with caution. */
+  public fun <T : ExpressionValue> Expression<*>.cast(): Expression<T> = this as Expression<T>
 
   private fun callFn(function: String, vararg args: Expression<*>): Expression<*> =
     Expression.ofList(

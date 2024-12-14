@@ -74,7 +74,7 @@ object ClusteredPointsDemo : Demo {
           opacity = const(0.5f),
           radius =
             step(
-              input = get(const("point_count")),
+              input = get(const("point_count")).asNumber(),
               fallback = const(15.dp),
               25 to const(20.dp),
               100 to const(30.dp),
@@ -101,7 +101,7 @@ object ClusteredPointsDemo : Demo {
           id = "clustered-bikes-count",
           source = bikeSource,
           filter = has(const("point_count")),
-          textField = format(get(const("point_count_abbreviated"))),
+          textField = format(get(const("point_count_abbreviated")).asString()),
           textFont = literal(listOf(const("Noto Sans Regular"))),
           textColor = const(MaterialTheme.colorScheme.onBackground),
         )
