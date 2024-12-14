@@ -178,9 +178,9 @@ public object ExpressionScope {
     vararg fallbacks: Expression<*>
   ): Expression<T> where T : Enum<T>, T : EnumValue<T> {
     val entries = literal(enumEntries<T>().map { const(it) })
-    return case(
-        entries.contains(this) then this,
-        *fallbacks.map { entries.contains(it) then it }.toTypedArray(),
+    return switch(
+        condition(entries.contains(this), this),
+        *fallbacks.map { condition(entries.contains(it), it) }.toTypedArray(),
         fallback = nil(), // should always error .asString(), which is what we want as per kdoc
       )
       .asString()
@@ -500,17 +500,26 @@ public object ExpressionScope {
   // region Decision
 
   /**
-   * Selects the first output from the given [branches] whose corresponding test condition evaluates
-   * to `true`, or the [fallback] value otherwise.
+   * Selects the first output from the given [conditions] whose corresponding test condition
+   * evaluates to `true`, or the [fallback] value otherwise.
    *
    * Example:
    * ```
-   * case(
-   *   (has("color1") and has("color2")) then
-   *     interpolate(Interpolation.Linear, zoom(), 1 to get("color1"), 20 to get("color2")),
-   *   has("color") then
-   *     get("color"),
-   *   const(Color.Red)
+   * switch(
+   *   condition(
+   *     test = has(const("color1")) and has(const("color2")),
+   *     output = interpolate(
+   *       linear(),
+   *       zoom(),
+   *       1 to get(const("color1")),
+   *       20 to get(const("color2"))
+   *     ),
+   *   ),
+   *   condition(
+   *     test = has(const("color")),
+   *     output = get(const("color")),
+   *   ),
+   *   fallback = const(Color.Red),
    * )
    * ```
    *
@@ -519,13 +528,13 @@ public object ExpressionScope {
    * property, that color is returned. If the feature has none of the three, the color red is
    * returned.
    */
-  public fun <T : ExpressionValue> case(
-    vararg branches: CaseBranch<T>,
+  public fun <T : ExpressionValue> switch(
+    vararg conditions: Condition<T>,
     fallback: Expression<T>,
   ): Expression<T> =
     callFn(
         "case",
-        *branches.foldToArgs { (test, output) ->
+        *conditions.foldToArgs { (test, output) ->
           add(test)
           add(output)
         },
@@ -533,19 +542,20 @@ public object ExpressionScope {
       )
       .cast()
 
-  public data class CaseBranch<T : ExpressionValue>
+  public data class Condition<T : ExpressionValue>
   internal constructor(
     internal val test: Expression<BooleanValue>,
     internal val output: Expression<T>,
   )
 
-  /** Create a [CaseBranch], see [case] */
-  public infix fun <T : ExpressionValue> Expression<BooleanValue>.then(
-    output: Expression<T>
-  ): CaseBranch<T> = CaseBranch(this, output)
+  /** Create a [Condition], see [case] */
+  public fun <T : ExpressionValue> condition(
+    test: Expression<BooleanValue>,
+    output: Expression<T>,
+  ): Condition<T> = Condition(test, output)
 
   /**
-   * Selects the output from the given [branches] whose label value matches the [input], or the
+   * Selects the output from the given [cases] whose label value matches the [input], or the
    * [fallback] value if no match is found.
    *
    * Each label must be unique. If the input type does not match the type of the labels, the result
@@ -553,11 +563,17 @@ public object ExpressionScope {
    *
    * Example:
    * ```
-   * match(
-   *   get("building_type"),
-   *   "residential" then const(Color.Cyan),
-   *   listOf("commercial", "industrial") then const(Color.Yellow),
-   *   const(Color.Red),
+   * switch(
+   *   input = get(const("building_type")),
+   *   case(
+   *     label = "residential",
+   *     output = const(Color.Cyan),
+   *   ),
+   *   case(
+   *     label = listOf("commercial", "industrial"),
+   *     output = const(Color.Yellow),
+   *   ),
+   *   fallback = const(Color.Red),
    * )
    * ```
    *
@@ -565,15 +581,15 @@ public object ExpressionScope {
    * Otherwise, if the value of that property is either "commercial" or "industrial", yellow is
    * returned. If none of that is true, the fallback is returned, i.e. red.
    */
-  public fun <I : MatchableValue, O : ExpressionValue> match(
+  public fun <I : MatchableValue, O : ExpressionValue> switch(
     input: Expression<I>,
-    vararg branches: MatchBranch<I, O>,
+    vararg cases: Case<I, O>,
     fallback: Expression<O>,
   ): Expression<O> =
     callFn(
         "match",
         input,
-        *branches.foldToArgs { (label, output) ->
+        *cases.foldToArgs { (label, output) ->
           add(label)
           add(output)
         },
@@ -581,31 +597,32 @@ public object ExpressionScope {
       )
       .cast()
 
-  public data class MatchBranch<@Suppress("unused") I : MatchableValue, O : ExpressionValue>
+  public data class Case<@Suppress("unused") I : MatchableValue, O : ExpressionValue>
   internal constructor(internal val label: Expression<*>, internal val output: Expression<O>)
 
-  /** Create a [MatchBranch], see [match] */
-  public infix fun <T : ExpressionValue> String.then(
-    output: Expression<T>
-  ): MatchBranch<StringValue, T> = MatchBranch(const(this), output)
+  /** Create a [Case], see [switch] */
+  public fun <O : ExpressionValue> case(
+    label: String,
+    output: Expression<O>,
+  ): Case<StringValue, O> = Case(const(label), output)
 
-  /** Create a [MatchBranch], see [match] */
-  public infix fun <T : ExpressionValue> Number.then(
-    output: Expression<T>
-  ): MatchBranch<FloatValue, T> = MatchBranch(const(this.toFloat()), output)
+  /** Create a [Case], see [switch] */
+  public fun <O : ExpressionValue> case(label: Number, output: Expression<O>): Case<FloatValue, O> =
+    Case(const(label.toFloat()), output)
 
-  /** Create a [MatchBranch], see [match] */
-  @JvmName("stringsThen")
-  public infix fun <T : ExpressionValue> List<String>.then(
-    output: Expression<T>
-  ): MatchBranch<StringValue, T> = MatchBranch(Expression.ofList(this.map(::const)), output)
+  /** Create a [Case], see [switch] */
+  @JvmName("stringsCase")
+  public fun <O : ExpressionValue> case(
+    label: List<String>,
+    output: Expression<O>,
+  ): Case<StringValue, O> = Case(Expression.ofList(label.map(::const)), output)
 
-  /** Create a [MatchBranch], see [match] */
-  @JvmName("numbersThen")
-  public infix fun <T : ExpressionValue> List<Number>.then(
-    output: Expression<T>
-  ): MatchBranch<FloatValue, T> =
-    MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
+  /** Create a [Case], see [switch] */
+  @JvmName("numbersCase")
+  public fun <O : ExpressionValue> case(
+    label: List<Number>,
+    output: Expression<O>,
+  ): Case<FloatValue, O> = Case(Expression.ofList(label.map { const(it.toFloat()) }), output)
 
   /**
    * Evaluates each expression in [values] in turn until the first non-null value is obtained, and

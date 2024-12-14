@@ -140,7 +140,7 @@ public sealed interface EquatableValue : ExpressionValue
 
 /**
  * Union type for an [Expression] that resolves to a value that can be matched. See
- * [ExpressionScope.match].
+ * [ExpressionScope.switch].
  */
 public sealed interface MatchableValue : ExpressionValue
 
