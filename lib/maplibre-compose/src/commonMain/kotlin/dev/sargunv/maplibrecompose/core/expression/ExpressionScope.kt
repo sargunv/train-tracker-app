@@ -903,6 +903,7 @@ public interface ExpressionScope {
   ): Expression<FloatValue> = callFn("/", this, divisor)
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
+  @JvmName("divUnitLeftOnly")
   public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
     divisor: Expression<FloatValue>
   ): Expression<ScalarValue<U>> = callFn("/", this, divisor)
