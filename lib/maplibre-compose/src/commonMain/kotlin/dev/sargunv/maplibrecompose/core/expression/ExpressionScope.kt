@@ -134,7 +134,7 @@ public object ExpressionScope {
    * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
    * will cause the whole expression to be aborted.
    */
-  public fun <U, V : ScalarValue<V>> Expression<*>.asVector(
+  public fun <U, V : ScalarValue<U>> Expression<*>.asVector(
     length: Expression<IntValue>? = null
   ): Expression<V> = asList(const(ExpressionType.Number), length).cast()
 
