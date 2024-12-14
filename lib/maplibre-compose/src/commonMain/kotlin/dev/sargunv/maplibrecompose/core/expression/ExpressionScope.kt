@@ -49,13 +49,13 @@ public interface ExpressionScope {
 
   // region Conversion
 
-  public val Expression<ScalarValue<Number>>.dp: Expression<DpValue>
+  public val Expression<FloatValue>.dp: Expression<DpValue>
     get() = this.cast()
 
-  public val Expression<ScalarValue<Number>>.milliseconds: Expression<DurationValue>
+  public val Expression<FloatValue>.milliseconds: Expression<DurationValue>
     get() = this.cast()
 
-  public val Expression<ScalarValue<Number>>.seconds: Expression<DurationValue>
+  public val Expression<FloatValue>.seconds: Expression<DurationValue>
     get() = (this * const(1000)).cast()
 
   // endregion
@@ -126,9 +126,8 @@ public interface ExpressionScope {
    * In case this expression is not a number, each of the [fallbacks] is evaluated in order until a
    * number is obtained. If none of the inputs are numbers, the expression is an error.
    */
-  public fun Expression<*>.asNumber(
-    vararg fallbacks: Expression<*>
-  ): Expression<ScalarValue<Number>> = callFn("number", this, *fallbacks)
+  public fun Expression<*>.asNumber(vararg fallbacks: Expression<*>): Expression<FloatValue> =
+    callFn("number", this, *fallbacks)
 
   /**
    * Asserts that this value is a boolean.
@@ -282,7 +281,7 @@ public interface ExpressionScope {
    */
   public fun Expression<*>.convertToNumber(
     vararg fallbacks: Expression<*>
-  ): Expression<ScalarValue<Number>> = callFn("to-number", this, *fallbacks)
+  ): Expression<FloatValue> = callFn("to-number", this, *fallbacks)
 
   /**
    * Converts this expression to a boolean expression.
@@ -522,7 +521,7 @@ public interface ExpressionScope {
   /** Create a [MatchBranch], see [match] */
   public infix fun <T : ExpressionValue> Number.then(
     output: Expression<T>
-  ): MatchBranch<ScalarValue<Number>, T> = MatchBranch(const(this.toFloat()), output)
+  ): MatchBranch<FloatValue, T> = MatchBranch(const(this.toFloat()), output)
 
   /** Create a [MatchBranch], see [match] */
   @JvmName("stringsThen")
@@ -534,7 +533,7 @@ public interface ExpressionScope {
   @JvmName("numbersThen")
   public infix fun <T : ExpressionValue> List<Number>.then(
     output: Expression<T>
-  ): MatchBranch<ScalarValue<Number>, T> =
+  ): MatchBranch<FloatValue, T> =
     MatchBranch(Expression.ofList(this.map { const(it.toFloat()) }), output)
 
   /**
@@ -579,8 +578,8 @@ public interface ExpressionScope {
    *
    * Strings are compared lexicographically (`"b" > "a"`).
    */
-  public infix fun Expression<ComparableValue<*>>.gt(
-    other: Expression<ComparableValue<*>>
+  public infix fun <T> Expression<ComparableValue<T>>.gt(
+    other: Expression<ComparableValue<T>>
   ): Expression<BooleanValue> = callFn(">", this, other)
 
   /**
@@ -601,8 +600,8 @@ public interface ExpressionScope {
    *
    * Strings are compared lexicographically (`"a" < "b"`).
    */
-  public infix fun Expression<ComparableValue<*>>.lt(
-    other: Expression<ComparableValue<*>>
+  public infix fun <T> Expression<ComparableValue<T>>.lt(
+    other: Expression<ComparableValue<T>>
   ): Expression<BooleanValue> = callFn("<", this, other)
 
   /**
@@ -623,8 +622,8 @@ public interface ExpressionScope {
    *
    * Strings are compared lexicographically (`"b" >= "a"`).
    */
-  public infix fun Expression<ComparableValue<*>>.gte(
-    other: Expression<ComparableValue<*>>
+  public infix fun <T> Expression<ComparableValue<T>>.gte(
+    other: Expression<ComparableValue<T>>
   ): Expression<BooleanValue> = callFn(">=", this, other)
 
   /**
@@ -645,8 +644,8 @@ public interface ExpressionScope {
    *
    * Strings are compared lexicographically (`"a" <= "b"`).
    */
-  public infix fun Expression<ComparableValue<*>>.lte(
-    other: Expression<ComparableValue<*>>
+  public infix fun <T> Expression<ComparableValue<T>>.lte(
+    other: Expression<ComparableValue<T>>
   ): Expression<BooleanValue> = callFn("<=", this, other)
 
   /**
@@ -713,7 +712,7 @@ public interface ExpressionScope {
    * the zoom is greater than or equal 20.
    */
   public fun <T : ExpressionValue> step(
-    input: Expression<ScalarValue<Number>>,
+    input: Expression<FloatValue>,
     fallback: Expression<T>,
     vararg stops: Pair<Number, Expression<T>>,
   ): Expression<T> =
@@ -729,12 +728,12 @@ public interface ExpressionScope {
         },
     )
 
-  private fun <T : InterpolateableValue> interpolateImpl(
+  private fun <T, V : InterpolateableValue<T>> interpolateImpl(
     name: String,
     type: Expression<InterpolationValue>,
-    input: Expression<ScalarValue<Number>>,
-    vararg stops: Pair<Number, Expression<T>>,
-  ): Expression<T> =
+    input: Expression<FloatValue>,
+    vararg stops: Pair<Number, Expression<V>>,
+  ): Expression<V> =
     callFn(
       name,
       type,
@@ -764,11 +763,11 @@ public interface ExpressionScope {
    * zoom 24, it is 256. Applied to for example line width, this has the visual effect that the line
    * stays the same width in meters on the map (rather than on the viewport).
    */
-  public fun <T : InterpolateableValue> interpolate(
+  public fun <T, V : InterpolateableValue<T>> interpolate(
     type: Expression<InterpolationValue>,
-    input: Expression<ScalarValue<Number>>,
-    vararg stops: Pair<Number, Expression<T>>,
-  ): Expression<T> = interpolateImpl("interpolate", type, input, *stops)
+    input: Expression<FloatValue>,
+    vararg stops: Pair<Number, Expression<V>>,
+  ): Expression<V> = interpolateImpl("interpolate", type, input, *stops)
 
   /**
    * Produces continuous, smooth results by interpolating between pairs of input and output values
@@ -793,7 +792,7 @@ public interface ExpressionScope {
    */
   public fun interpolateHcl(
     type: Expression<InterpolationValue>,
-    input: Expression<ScalarValue<Number>>,
+    input: Expression<FloatValue>,
     vararg stops: Pair<Number, Expression<ColorValue>>,
   ): Expression<ColorValue> = interpolateImpl("interpolate-hcl", type, input, *stops)
 
@@ -804,7 +803,7 @@ public interface ExpressionScope {
    */
   public fun interpolateLab(
     type: Expression<InterpolationValue>,
-    input: Expression<ScalarValue<Number>>,
+    input: Expression<FloatValue>,
     vararg stops: Pair<Number, Expression<ColorValue>>,
   ): Expression<ColorValue> = interpolateImpl("interpolate-lab", type, input, *stops)
 
@@ -853,19 +852,19 @@ public interface ExpressionScope {
   /** Returns the product of this number expression with [other]. */
   @JvmName("timesUnitLeft")
   public operator fun <Unit> Expression<ScalarValue<Unit>>.times(
-    other: Expression<ScalarValue<Number>>
+    other: Expression<FloatValue>
   ): Expression<ScalarValue<Unit>> = callFn("*", this, other)
 
   /** Returns the product of this number expression with [other]. */
   @JvmName("timesUnitRight")
-  public operator fun <Unit> Expression<ScalarValue<Number>>.times(
+  public operator fun <Unit> Expression<FloatValue>.times(
     other: Expression<ScalarValue<Unit>>
   ): Expression<ScalarValue<Unit>> = callFn("*", this, other)
 
   /** Returns the product of this number expression with [other]. */
-  public operator fun Expression<ScalarValue<Number>>.times(
-    other: Expression<ScalarValue<Number>>
-  ): Expression<ScalarValue<Number>> = callFn("*", this, other)
+  public operator fun Expression<FloatValue>.times(
+    other: Expression<FloatValue>
+  ): Expression<FloatValue> = callFn("*", this, other)
 
   /** Returns the result of subtracting [other] from this number expression. */
   public operator fun <Unit> Expression<ScalarValue<Unit>>.minus(
@@ -878,7 +877,7 @@ public interface ExpressionScope {
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
   public operator fun <Unit> Expression<ScalarValue<Unit>>.div(
-    divisor: Expression<ScalarValue<Number>>
+    divisor: Expression<FloatValue>
   ): Expression<ScalarValue<Unit>> = callFn("/", this, divisor)
 
   /** Returns the remainder after integer division of this number expression by [divisor]. */
@@ -887,49 +886,38 @@ public interface ExpressionScope {
   ): Expression<ScalarValue<Unit>> = callFn("%", this, divisor)
 
   /** Returns the result of raising this number expression to the power of [exponent]. */
-  public fun Expression<ScalarValue<Number>>.pow(
-    exponent: Expression<ScalarValue<Number>>
-  ): Expression<ScalarValue<Number>> = callFn("^", this, exponent)
+  public fun Expression<FloatValue>.pow(exponent: Expression<FloatValue>): Expression<FloatValue> =
+    callFn("^", this, exponent)
 
   /** Returns the square root of [value]. */
-  public fun sqrt(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("sqrt", value)
+  public fun sqrt(value: Expression<FloatValue>): Expression<FloatValue> = callFn("sqrt", value)
 
   /** Returns the base-ten logarithm of [value]. */
-  public fun log10(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("log10", value)
+  public fun log10(value: Expression<FloatValue>): Expression<FloatValue> = callFn("log10", value)
 
   /** Returns the natural logarithm of [value]. */
-  public fun ln(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("ln", value)
+  public fun ln(value: Expression<FloatValue>): Expression<FloatValue> = callFn("ln", value)
 
   /** Returns the base-two logarithm of [value]. */
-  public fun log2(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("log2", value)
+  public fun log2(value: Expression<FloatValue>): Expression<FloatValue> = callFn("log2", value)
 
   /** Returns the sine of [value]. */
-  public fun sin(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("sin", value)
+  public fun sin(value: Expression<FloatValue>): Expression<FloatValue> = callFn("sin", value)
 
   /** Returns the cosine of [value]. */
-  public fun cos(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("cos", value)
+  public fun cos(value: Expression<FloatValue>): Expression<FloatValue> = callFn("cos", value)
 
   /** Returns the tangent of [value]. */
-  public fun tan(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("tan", value)
+  public fun tan(value: Expression<FloatValue>): Expression<FloatValue> = callFn("tan", value)
 
   /** Returns the arcsine of [value]. */
-  public fun asin(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("asin", value)
+  public fun asin(value: Expression<FloatValue>): Expression<FloatValue> = callFn("asin", value)
 
   /** Returns the arccosine of [value]. */
-  public fun acos(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("acos", value)
+  public fun acos(value: Expression<FloatValue>): Expression<FloatValue> = callFn("acos", value)
 
   /** Returns the arctangent of [value]. */
-  public fun atan(value: Expression<ScalarValue<Number>>): Expression<ScalarValue<Number>> =
-    callFn("atan", value)
+  public fun atan(value: Expression<FloatValue>): Expression<FloatValue> = callFn("atan", value)
 
   /** Returns the smallest of all given [numbers]. */
   public fun <Unit> min(
@@ -950,19 +938,16 @@ public interface ExpressionScope {
    *
    * For example `round(const(-1.5))` evaluates to `-2`.
    */
-  public fun round(value: Expression<ScalarValue<Number>>): Expression<IntValue> =
-    callFn("round", value)
+  public fun round(value: Expression<FloatValue>): Expression<IntValue> = callFn("round", value)
 
   /** Returns the smallest integer that is greater than or equal to [value]. */
-  public fun ceil(value: Expression<ScalarValue<Number>>): Expression<IntValue> =
-    callFn("ceil", value)
+  public fun ceil(value: Expression<FloatValue>): Expression<IntValue> = callFn("ceil", value)
 
   /** Returns the largest integer that is less than or equal to [value]. */
-  public fun floor(value: Expression<ScalarValue<Number>>): Expression<IntValue> =
-    callFn("floor", value)
+  public fun floor(value: Expression<FloatValue>): Expression<IntValue> = callFn("floor", value)
 
   /** Returns the shortest distance in meters between the evaluated feature and [geometry]. */
-  public fun distance(geometry: Expression<GeoJsonValue>): Expression<ScalarValue<Number>> =
+  public fun distance(geometry: Expression<GeoJsonValue>): Expression<FloatValue> =
     callFn("distance", geometry)
 
   // endregion
@@ -973,7 +958,7 @@ public interface ExpressionScope {
    * Returns a four-element list, containing the color's red, green, blue, and alpha components, in
    * that order.
    */
-  public fun Expression<ColorValue>.toRgbaComponents(): Expression<VectorValue<*>> =
+  public fun Expression<ColorValue>.toRgbaComponents(): Expression<VectorValue<Number>> =
     callFn("to-rgba", this)
 
   /**

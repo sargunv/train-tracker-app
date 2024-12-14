@@ -14,9 +14,12 @@ public sealed interface BooleanValue : ExpressionValue
  * JSON style spec.
  */
 public sealed interface ScalarValue<out Unit> :
-  ExpressionValue, MatchableValue, InterpolateableValue, ComparableValue<ScalarValue<Unit>>
+  ExpressionValue,
+  MatchableValue,
+  InterpolateableValue<@UnsafeVariance Unit>,
+  ComparableValue<ScalarValue<@UnsafeVariance Unit>>
 
-/** Represents an expression that resolves to a floating-point dimensionless quantity. */
+/** Represents an expression that resolves to a dimensionless quantity. */
 public typealias FloatValue = ScalarValue<Number>
 
 /** Represents an expression that resolves to an integer dimensionless quantity. */
@@ -35,7 +38,7 @@ public sealed interface StringValue : ExpressionValue, MatchableValue, Comparabl
 public sealed interface EnumValue<out T : LayerPropertyEnum> : StringValue
 
 /** Represents an expression that resolves to a color value. */
-public sealed interface ColorValue : ExpressionValue, InterpolateableValue
+public sealed interface ColorValue : ExpressionValue, InterpolateableValue<ColorValue>
 
 /** Represents an expression that resolves to a map value (corresponds to a JSON object). */
 public sealed interface MapValue : ExpressionValue
@@ -44,7 +47,8 @@ public sealed interface MapValue : ExpressionValue
 public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
 
 /** Represents an expression that resolves to a list of scalar values. */
-public sealed interface VectorValue<Unit> : ListValue<ScalarValue<Unit>>, InterpolateableValue
+public sealed interface VectorValue<Unit> :
+  ListValue<ScalarValue<Unit>>, InterpolateableValue<VectorValue<Unit>>
 
 /** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
 public sealed interface OffsetValue : VectorValue<Number>
@@ -89,10 +93,10 @@ public sealed interface MatchableValue : ExpressionValue
  * Represents an expression that resolves to a value that can be ordered with other values of its
  * type.
  */
-public sealed interface ComparableValue<out T> : ExpressionValue
+public sealed interface ComparableValue<T> : ExpressionValue
 
 /**
  * Represents an expression that resolves to a value that can be interpolated. See
  * [ExpressionScope.interpolate].
  */
-public sealed interface InterpolateableValue : ExpressionValue
+public sealed interface InterpolateableValue<T> : ExpressionValue

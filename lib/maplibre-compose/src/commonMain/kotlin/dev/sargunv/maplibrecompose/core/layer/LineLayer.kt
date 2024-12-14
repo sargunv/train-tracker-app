@@ -46,7 +46,7 @@ internal expect class LineLayer(id: String, source: Source) : FeatureLayer {
 
   fun setLineBlur(blur: Expression<DpValue>)
 
-  fun setLineDasharray(dasharray: Expression<VectorValue<*>>)
+  fun setLineDasharray(dasharray: Expression<VectorValue<Number>>)
 
   fun setLinePattern(pattern: Expression<ImageValue>)
 

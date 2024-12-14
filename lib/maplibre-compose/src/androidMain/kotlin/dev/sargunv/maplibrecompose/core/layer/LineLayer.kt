@@ -82,7 +82,7 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.setProperties(PropertyFactory.lineBlur(blur.toMLNExpression()))
   }
 
-  actual fun setLineDasharray(dasharray: Expression<VectorValue<*>>) {
+  actual fun setLineDasharray(dasharray: Expression<VectorValue<Number>>) {
     impl.setProperties(PropertyFactory.lineDasharray(dasharray.toMLNExpression()))
   }
 

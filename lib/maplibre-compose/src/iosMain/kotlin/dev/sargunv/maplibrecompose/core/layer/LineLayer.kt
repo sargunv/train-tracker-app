@@ -85,7 +85,7 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.lineBlur = blur.toNSExpression()
   }
 
-  actual fun setLineDasharray(dasharray: Expression<VectorValue<*>>) {
+  actual fun setLineDasharray(dasharray: Expression<VectorValue<Number>>) {
     impl.lineDashPattern = dasharray.toNSExpression()
   }
 

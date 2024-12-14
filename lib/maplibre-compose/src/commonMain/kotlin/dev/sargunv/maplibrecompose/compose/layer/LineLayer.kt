@@ -98,7 +98,7 @@ public inline fun LineLayer(
   translateAnchor: Expression<EnumValue<TranslateAnchor>> = const(TranslateAnchor.Map),
   opacity: Expression<FloatValue> = const(1f),
   color: Expression<ColorValue> = const(Color.Black),
-  dasharray: Expression<VectorValue<*>> = nil(),
+  dasharray: Expression<VectorValue<Number>> = nil(),
   pattern: Expression<ImageValue> = nil(),
   gradient: Expression<ColorValue> = nil(),
   blur: Expression<DpValue> = const(0.dp),
