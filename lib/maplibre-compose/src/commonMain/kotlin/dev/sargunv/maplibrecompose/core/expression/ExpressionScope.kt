@@ -16,8 +16,8 @@ public interface ExpressionScope {
   /** Creates a literal expression for a [String] value. */
   public fun const(string: String): Expression<StringValue> = Expression.ofString(string)
 
-  /** Creates a literal expression for a [LayerPropertyEnum] value. */
-  public fun <T : LayerPropertyEnum> const(value: T): Expression<EnumValue<T>> = value.expr.cast()
+  /** Creates a literal expression for an enum value implementing [EnumValue]. */
+  public fun <T : EnumValue<T>> const(value: T): Expression<EnumValue<T>> = value.expr.cast()
 
   /** Creates a literal expression for a dimensionless [Float] value. */
   public fun const(float: Float): Expression<FloatValue> = Expression.ofFloat(float)
@@ -112,7 +112,7 @@ public interface ExpressionScope {
    * Returns a string describing the type of this expression. Either "boolean", "string", "number",
    * "color" or "array".
    */
-  public fun Expression<*>.type(): Expression<StringValue> = callFn("typeof", this)
+  public fun Expression<*>.type(): Expression<ExpressionType> = callFn("typeof", this)
 
   /**
    * Asserts that this is a list (optionally with a specific item [type] and [length]).
@@ -511,11 +511,11 @@ public interface ExpressionScope {
    * Otherwise, if the value of that property is either "commercial" or "industrial", yellow is
    * returned. If none of that is true, the fallback is returned, i.e. red.
    */
-  public fun <Input : MatchableValue, Output : ExpressionValue> match(
-    input: Expression<Input>,
-    vararg branches: MatchBranch<Input, Output>,
-    fallback: Expression<Output>,
-  ): Expression<Output> =
+  public fun <I : MatchableValue, O : ExpressionValue> match(
+    input: Expression<I>,
+    vararg branches: MatchBranch<I, O>,
+    fallback: Expression<O>,
+  ): Expression<O> =
     callFn(
       "match",
       input,
@@ -526,12 +526,8 @@ public interface ExpressionScope {
       fallback,
     )
 
-  public data class MatchBranch<
-    @Suppress("unused")
-    Input : MatchableValue,
-    Output : ExpressionValue,
-  >
-  internal constructor(internal val label: Expression<*>, internal val output: Expression<Output>)
+  public data class MatchBranch<@Suppress("unused") I : MatchableValue, O : ExpressionValue>
+  internal constructor(internal val label: Expression<*>, internal val output: Expression<O>)
 
   /** Create a [MatchBranch], see [match] */
   public infix fun <T : ExpressionValue> String.then(
@@ -1041,11 +1037,8 @@ public interface ExpressionScope {
   public fun <T : ExpressionValue> featureState(key: Expression<StringValue>): Expression<T> =
     callFn("feature-state", key)
 
-  /**
-   * Gets the feature's geometry type as a string: "Point", "MultiPoint", "LineString",
-   * "MultiLineString", "Polygon" or "MultiPolygon".
-   */
-  public fun geometryType(): Expression<StringValue> = callFn("geometry-type")
+  /** Gets the feature's geometry type. */
+  public fun geometryType(): Expression<GeometryType> = callFn("geometry-type")
 
   /** Gets the feature's id, if it has one. */
   public fun <T : ExpressionValue> id(): Expression<T> = callFn("id")
