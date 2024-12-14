@@ -2,12 +2,15 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.DurationValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.layer.RasterLayer
 import dev.sargunv.maplibrecompose.core.source.Source
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Raster map textures such as satellite imagery.
@@ -41,14 +44,14 @@ public inline fun RasterLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: FloatExpression = const(1f),
-  hueRotate: FloatExpression = const(0f),
-  brightnessMin: FloatExpression = const(0f),
-  brightnessMax: FloatExpression = const(1f),
-  saturation: FloatExpression = const(0f),
-  contrast: FloatExpression = const(0f),
-  resampling: EnumExpression<RasterResampling> = const(RasterResampling.Linear),
-  fadeDuration: FloatExpression = const(300f),
+  opacity: Expression<FloatValue> = const(1f),
+  hueRotate: Expression<FloatValue> = const(0f),
+  brightnessMin: Expression<FloatValue> = const(0f),
+  brightnessMax: Expression<FloatValue> = const(1f),
+  saturation: Expression<FloatValue> = const(0f),
+  contrast: Expression<FloatValue> = const(0f),
+  resampling: Expression<EnumValue<RasterResampling>> = const(RasterResampling.Linear),
+  fadeDuration: Expression<DurationValue> = const(300.milliseconds),
 ) {
   key(id) {
     LayerNode(

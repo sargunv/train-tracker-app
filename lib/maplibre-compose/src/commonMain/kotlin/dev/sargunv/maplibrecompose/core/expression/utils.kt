@@ -14,7 +14,7 @@ import dev.sargunv.maplibrecompose.core.expression.Expressions.literal
 public val ZeroPadding: PaddingValues.Absolute = PaddingValues.Absolute(0.dp)
 
 public object Defaults {
-  public val HeatmapColors: ColorExpression =
+  public val HeatmapColors: Expression<ColorValue> =
     interpolate(
       linear(),
       heatmapDensity(),
@@ -26,6 +26,6 @@ public object Defaults {
       1 to const(Color(0xFFFF0000)), // red
     )
 
-  public val FontNames: ListExpression<StringValue> =
+  public val FontNames: Expression<ListValue<StringValue>> =
     literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular")))
 }

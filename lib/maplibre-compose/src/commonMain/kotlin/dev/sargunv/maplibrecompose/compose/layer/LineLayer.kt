@@ -6,19 +6,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
-import dev.sargunv.maplibrecompose.core.expression.VectorExpression
+import dev.sargunv.maplibrecompose.core.expression.VectorValue
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -90,24 +91,24 @@ public inline fun LineLayer(
   sourceLayer: String = "",
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
-  filter: BooleanExpression = nil(),
+  filter: Expression<BooleanValue> = nil(),
   visible: Boolean = true,
-  sortKey: FloatExpression = nil(),
-  translate: DpOffsetExpression = const(DpOffset.Zero),
-  translateAnchor: EnumExpression<TranslateAnchor> = const(TranslateAnchor.Map),
-  opacity: FloatExpression = const(1f),
-  color: ColorExpression = const(Color.Black),
-  dasharray: VectorExpression = nil(),
-  pattern: ImageExpression = nil(),
-  gradient: ColorExpression = nil(),
-  blur: DpExpression = const(0.dp),
-  width: DpExpression = const(1.dp),
-  gapWidth: DpExpression = const(0.dp),
-  offset: DpExpression = const(0.dp),
-  cap: EnumExpression<LineCap> = const(LineCap.Butt),
-  join: EnumExpression<LineJoin> = const(LineJoin.Miter),
-  miterLimit: FloatExpression = const(2f),
-  roundLimit: FloatExpression = const(1.05f),
+  sortKey: Expression<FloatValue> = nil(),
+  translate: Expression<DpOffsetValue> = const(DpOffset.Zero),
+  translateAnchor: Expression<EnumValue<TranslateAnchor>> = const(TranslateAnchor.Map),
+  opacity: Expression<FloatValue> = const(1f),
+  color: Expression<ColorValue> = const(Color.Black),
+  dasharray: Expression<VectorValue<*>> = nil(),
+  pattern: Expression<ImageValue> = nil(),
+  gradient: Expression<ColorValue> = nil(),
+  blur: Expression<DpValue> = const(0.dp),
+  width: Expression<DpValue> = const(1.dp),
+  gapWidth: Expression<DpValue> = const(0.dp),
+  offset: Expression<DpValue> = const(0.dp),
+  cap: Expression<EnumValue<LineCap>> = const(LineCap.Butt),
+  join: Expression<EnumValue<LineJoin>> = const(LineJoin.Miter),
+  miterLimit: Expression<FloatValue> = const(2f),
+  roundLimit: Expression<FloatValue> = const(1.05f),
   noinline onClick: FeaturesClickHandler? = null,
   noinline onLongClick: FeaturesClickHandler? = null,
 ) {

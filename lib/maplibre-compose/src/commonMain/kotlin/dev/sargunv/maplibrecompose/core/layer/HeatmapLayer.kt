@@ -1,24 +1,25 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.source.Source
 
 @PublishedApi
 internal expect class HeatmapLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: BooleanExpression)
+  override fun setFilter(filter: Expression<BooleanValue>)
 
-  fun setHeatmapRadius(radius: DpExpression)
+  fun setHeatmapRadius(radius: Expression<DpValue>)
 
-  fun setHeatmapWeight(weight: FloatExpression)
+  fun setHeatmapWeight(weight: Expression<FloatValue>)
 
-  fun setHeatmapIntensity(intensity: FloatExpression)
+  fun setHeatmapIntensity(intensity: Expression<FloatValue>)
 
-  fun setHeatmapColor(color: ColorExpression)
+  fun setHeatmapColor(color: Expression<ColorValue>)
 
-  fun setHeatmapOpacity(opacity: FloatExpression)
+  fun setHeatmapOpacity(opacity: Expression<FloatValue>)
 }

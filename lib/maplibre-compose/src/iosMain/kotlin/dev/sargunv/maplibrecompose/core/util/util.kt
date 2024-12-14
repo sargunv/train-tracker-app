@@ -20,7 +20,7 @@ import cocoapods.MapLibre.MLNOrnamentPositionTopRight
 import cocoapods.MapLibre.MLNShape
 import cocoapods.MapLibre.expressionWithMLNJSONObject
 import cocoapods.MapLibre.predicateWithMLNJSONObject
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import io.github.dellisd.spatialk.geojson.BoundingBox
 import io.github.dellisd.spatialk.geojson.Feature
@@ -121,7 +121,7 @@ internal fun Expression<*>.toNSExpression(): NSExpression =
     else -> NSExpression.expressionWithMLNJSONObject(normalizeJsonLike(value)!!)
   }
 
-internal fun BooleanExpression.toNSPredicate(): NSPredicate? =
+internal fun Expression<BooleanValue>.toNSPredicate(): NSPredicate? =
   value?.let { NSPredicate.predicateWithMLNJSONObject(normalizeJsonLike(it)!!) }
 
 private fun normalizeJsonLike(value: Any?): Any? =

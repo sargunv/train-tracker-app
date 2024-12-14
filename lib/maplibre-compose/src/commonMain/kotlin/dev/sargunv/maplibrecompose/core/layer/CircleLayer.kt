@@ -1,13 +1,14 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -15,29 +16,29 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class CircleLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: BooleanExpression)
+  override fun setFilter(filter: Expression<BooleanValue>)
 
-  fun setCircleSortKey(sortKey: FloatExpression)
+  fun setCircleSortKey(sortKey: Expression<FloatValue>)
 
-  fun setCircleRadius(radius: DpExpression)
+  fun setCircleRadius(radius: Expression<DpValue>)
 
-  fun setCircleColor(color: ColorExpression)
+  fun setCircleColor(color: Expression<ColorValue>)
 
-  fun setCircleBlur(blur: FloatExpression)
+  fun setCircleBlur(blur: Expression<FloatValue>)
 
-  fun setCircleOpacity(opacity: FloatExpression)
+  fun setCircleOpacity(opacity: Expression<FloatValue>)
 
-  fun setCircleTranslate(translate: DpOffsetExpression)
+  fun setCircleTranslate(translate: Expression<DpOffsetValue>)
 
-  fun setCircleTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>)
+  fun setCircleTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>)
 
-  fun setCirclePitchScale(pitchScale: EnumExpression<CirclePitchScale>)
+  fun setCirclePitchScale(pitchScale: Expression<EnumValue<CirclePitchScale>>)
 
-  fun setCirclePitchAlignment(pitchAlignment: EnumExpression<CirclePitchAlignment>)
+  fun setCirclePitchAlignment(pitchAlignment: Expression<EnumValue<CirclePitchAlignment>>)
 
-  fun setCircleStrokeWidth(strokeWidth: DpExpression)
+  fun setCircleStrokeWidth(strokeWidth: Expression<DpValue>)
 
-  fun setCircleStrokeColor(strokeColor: ColorExpression)
+  fun setCircleStrokeColor(strokeColor: Expression<ColorValue>)
 
-  fun setCircleStrokeOpacity(strokeOpacity: FloatExpression)
+  fun setCircleStrokeOpacity(strokeOpacity: Expression<FloatValue>)
 }

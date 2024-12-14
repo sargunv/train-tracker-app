@@ -3,10 +3,11 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.layer.HillshadeLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -43,12 +44,13 @@ public inline fun HillshadeLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  shadowColor: ColorExpression = const(Color.Black),
-  highlightColor: ColorExpression = const(Color.White),
-  accentColor: ColorExpression = const(Color.Black),
-  illuminationDirection: FloatExpression = const(355f),
-  illuminationAnchor: EnumExpression<IlluminationAnchor> = const(IlluminationAnchor.Viewport),
-  exaggeration: FloatExpression = const(0.5f),
+  shadowColor: Expression<ColorValue> = const(Color.Black),
+  highlightColor: Expression<ColorValue> = const(Color.White),
+  accentColor: Expression<ColorValue> = const(Color.Black),
+  illuminationDirection: Expression<FloatValue> = const(355f),
+  illuminationAnchor: Expression<EnumValue<IlluminationAnchor>> =
+    const(IlluminationAnchor.Viewport),
+  exaggeration: Expression<FloatValue> = const(0.5f),
 ) {
   key(id) {
     LayerNode(

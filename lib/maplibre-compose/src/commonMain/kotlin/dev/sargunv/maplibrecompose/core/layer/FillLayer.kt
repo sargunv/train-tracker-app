@@ -1,11 +1,12 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -13,21 +14,21 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class FillLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: BooleanExpression)
+  override fun setFilter(filter: Expression<BooleanValue>)
 
-  fun setFillSortKey(sortKey: FloatExpression)
+  fun setFillSortKey(sortKey: Expression<FloatValue>)
 
-  fun setFillAntialias(antialias: BooleanExpression)
+  fun setFillAntialias(antialias: Expression<BooleanValue>)
 
-  fun setFillOpacity(opacity: FloatExpression)
+  fun setFillOpacity(opacity: Expression<FloatValue>)
 
-  fun setFillColor(color: ColorExpression)
+  fun setFillColor(color: Expression<ColorValue>)
 
-  fun setFillOutlineColor(outlineColor: ColorExpression)
+  fun setFillOutlineColor(outlineColor: Expression<ColorValue>)
 
-  fun setFillTranslate(translate: DpOffsetExpression)
+  fun setFillTranslate(translate: Expression<DpOffsetValue>)
 
-  fun setFillTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>)
+  fun setFillTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>)
 
-  fun setFillPattern(pattern: ImageExpression)
+  fun setFillPattern(pattern: Expression<ImageValue>)
 }

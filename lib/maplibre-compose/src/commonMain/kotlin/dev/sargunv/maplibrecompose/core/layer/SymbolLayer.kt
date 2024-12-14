@@ -1,21 +1,20 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.FormattedExpression
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
-import dev.sargunv.maplibrecompose.core.expression.ListExpression
-import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
-import dev.sargunv.maplibrecompose.core.expression.StringExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ListValue
+import dev.sargunv.maplibrecompose.core.expression.OffsetValue
+import dev.sargunv.maplibrecompose.core.expression.PaddingValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -32,122 +31,122 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: BooleanExpression)
+  override fun setFilter(filter: Expression<BooleanValue>)
 
-  fun setSymbolPlacement(placement: EnumExpression<SymbolPlacement>)
+  fun setSymbolPlacement(placement: Expression<EnumValue<SymbolPlacement>>)
 
-  fun setSymbolSpacing(spacing: DpExpression)
+  fun setSymbolSpacing(spacing: Expression<DpValue>)
 
-  fun setSymbolAvoidEdges(avoidEdges: BooleanExpression)
+  fun setSymbolAvoidEdges(avoidEdges: Expression<BooleanValue>)
 
-  fun setSymbolSortKey(sortKey: FloatExpression)
+  fun setSymbolSortKey(sortKey: Expression<FloatValue>)
 
-  fun setSymbolZOrder(zOrder: EnumExpression<SymbolZOrder>)
+  fun setSymbolZOrder(zOrder: Expression<EnumValue<SymbolZOrder>>)
 
-  fun setIconAllowOverlap(allowOverlap: BooleanExpression)
+  fun setIconAllowOverlap(allowOverlap: Expression<BooleanValue>)
 
-  fun setIconOverlap(overlap: StringExpression)
+  fun setIconOverlap(overlap: Expression<StringValue>)
 
-  fun setIconIgnorePlacement(ignorePlacement: BooleanExpression)
+  fun setIconIgnorePlacement(ignorePlacement: Expression<BooleanValue>)
 
-  fun setIconOptional(optional: BooleanExpression)
+  fun setIconOptional(optional: Expression<BooleanValue>)
 
-  fun setIconRotationAlignment(rotationAlignment: EnumExpression<IconRotationAlignment>)
+  fun setIconRotationAlignment(rotationAlignment: Expression<EnumValue<IconRotationAlignment>>)
 
-  fun setIconSize(size: FloatExpression)
+  fun setIconSize(size: Expression<FloatValue>)
 
-  fun setIconTextFit(textFit: EnumExpression<IconTextFit>)
+  fun setIconTextFit(textFit: Expression<EnumValue<IconTextFit>>)
 
-  fun setIconTextFitPadding(textFitPadding: PaddingExpression)
+  fun setIconTextFitPadding(textFitPadding: Expression<PaddingValue>)
 
-  fun setIconImage(image: ImageExpression)
+  fun setIconImage(image: Expression<ImageValue>)
 
-  fun setIconRotate(rotate: FloatExpression)
+  fun setIconRotate(rotate: Expression<FloatValue>)
 
-  fun setIconPadding(padding: DpExpression)
+  fun setIconPadding(padding: Expression<DpValue>)
 
-  fun setIconKeepUpright(keepUpright: BooleanExpression)
+  fun setIconKeepUpright(keepUpright: Expression<BooleanValue>)
 
-  fun setIconOffset(offset: DpOffsetExpression)
+  fun setIconOffset(offset: Expression<DpOffsetValue>)
 
-  fun setIconAnchor(anchor: EnumExpression<SymbolAnchor>)
+  fun setIconAnchor(anchor: Expression<EnumValue<SymbolAnchor>>)
 
-  fun setIconPitchAlignment(pitchAlignment: EnumExpression<IconPitchAlignment>)
+  fun setIconPitchAlignment(pitchAlignment: Expression<EnumValue<IconPitchAlignment>>)
 
-  fun setIconOpacity(opacity: FloatExpression)
+  fun setIconOpacity(opacity: Expression<FloatValue>)
 
-  fun setIconColor(color: ColorExpression)
+  fun setIconColor(color: Expression<ColorValue>)
 
-  fun setIconHaloColor(haloColor: ColorExpression)
+  fun setIconHaloColor(haloColor: Expression<ColorValue>)
 
-  fun setIconHaloWidth(haloWidth: DpExpression)
+  fun setIconHaloWidth(haloWidth: Expression<DpValue>)
 
-  fun setIconHaloBlur(haloBlur: DpExpression)
+  fun setIconHaloBlur(haloBlur: Expression<DpValue>)
 
-  fun setIconTranslate(translate: DpOffsetExpression)
+  fun setIconTranslate(translate: Expression<DpOffsetValue>)
 
-  fun setIconTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>)
+  fun setIconTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>)
 
-  fun setTextPitchAlignment(pitchAlignment: EnumExpression<TextPitchAlignment>)
+  fun setTextPitchAlignment(pitchAlignment: Expression<EnumValue<TextPitchAlignment>>)
 
-  fun setTextRotationAlignment(rotationAlignment: EnumExpression<TextRotationAlignment>)
+  fun setTextRotationAlignment(rotationAlignment: Expression<EnumValue<TextRotationAlignment>>)
 
-  fun setTextField(field: FormattedExpression)
+  fun setTextField(field: Expression<FormattedValue>)
 
-  fun setTextFont(font: ListExpression<StringValue>)
+  fun setTextFont(font: Expression<ListValue<StringValue>>)
 
-  fun setTextSize(size: DpExpression)
+  fun setTextSize(size: Expression<DpValue>)
 
-  fun setTextMaxWidth(maxWidth: FloatExpression)
+  fun setTextMaxWidth(maxWidth: Expression<FloatValue>)
 
-  fun setTextLineHeight(lineHeight: FloatExpression)
+  fun setTextLineHeight(lineHeight: Expression<FloatValue>)
 
-  fun setTextLetterSpacing(letterSpacing: FloatExpression)
+  fun setTextLetterSpacing(letterSpacing: Expression<FloatValue>)
 
-  fun setTextJustify(justify: EnumExpression<TextJustify>)
+  fun setTextJustify(justify: Expression<EnumValue<TextJustify>>)
 
-  fun setTextRadialOffset(radialOffset: FloatExpression)
+  fun setTextRadialOffset(radialOffset: Expression<FloatValue>)
 
-  fun setTextVariableAnchor(variableAnchor: ListExpression<EnumValue<SymbolAnchor>>)
+  fun setTextVariableAnchor(variableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>>)
 
   // TODO: this is a list of alternating SymbolAnchor and Offset
-  fun setTextVariableAnchorOffset(variableAnchorOffset: ListExpression<*>)
+  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>)
 
-  fun setTextAnchor(anchor: EnumExpression<SymbolAnchor>)
+  fun setTextAnchor(anchor: Expression<EnumValue<SymbolAnchor>>)
 
-  fun setTextMaxAngle(maxAngle: FloatExpression)
+  fun setTextMaxAngle(maxAngle: Expression<FloatValue>)
 
-  fun setTextWritingMode(writingMode: ListExpression<EnumValue<TextWritingMode>>)
+  fun setTextWritingMode(writingMode: Expression<ListValue<EnumValue<TextWritingMode>>>)
 
-  fun setTextRotate(rotate: FloatExpression)
+  fun setTextRotate(rotate: Expression<FloatValue>)
 
-  fun setTextPadding(padding: DpExpression)
+  fun setTextPadding(padding: Expression<DpValue>)
 
-  fun setTextKeepUpright(keepUpright: BooleanExpression)
+  fun setTextKeepUpright(keepUpright: Expression<BooleanValue>)
 
-  fun setTextTransform(transform: EnumExpression<TextTransform>)
+  fun setTextTransform(transform: Expression<EnumValue<TextTransform>>)
 
-  fun setTextOffset(offset: OffsetExpression)
+  fun setTextOffset(offset: Expression<OffsetValue>)
 
-  fun setTextAllowOverlap(allowOverlap: BooleanExpression)
+  fun setTextAllowOverlap(allowOverlap: Expression<BooleanValue>)
 
-  fun setTextOverlap(overlap: StringExpression)
+  fun setTextOverlap(overlap: Expression<StringValue>)
 
-  fun setTextIgnorePlacement(ignorePlacement: BooleanExpression)
+  fun setTextIgnorePlacement(ignorePlacement: Expression<BooleanValue>)
 
-  fun setTextOptional(optional: BooleanExpression)
+  fun setTextOptional(optional: Expression<BooleanValue>)
 
-  fun setTextOpacity(opacity: FloatExpression)
+  fun setTextOpacity(opacity: Expression<FloatValue>)
 
-  fun setTextColor(color: ColorExpression)
+  fun setTextColor(color: Expression<ColorValue>)
 
-  fun setTextHaloColor(haloColor: ColorExpression)
+  fun setTextHaloColor(haloColor: Expression<ColorValue>)
 
-  fun setTextHaloWidth(haloWidth: DpExpression)
+  fun setTextHaloWidth(haloWidth: Expression<DpValue>)
 
-  fun setTextHaloBlur(haloBlur: DpExpression)
+  fun setTextHaloBlur(haloBlur: Expression<DpValue>)
 
-  fun setTextTranslate(translate: DpOffsetExpression)
+  fun setTextTranslate(translate: Expression<DpOffsetValue>)
 
-  fun setTextTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>)
+  fun setTextTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>)
 }

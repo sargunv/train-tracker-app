@@ -1,53 +1,54 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
-import dev.sargunv.maplibrecompose.core.expression.VectorExpression
+import dev.sargunv.maplibrecompose.core.expression.VectorValue
 import dev.sargunv.maplibrecompose.core.source.Source
 
 @PublishedApi
 internal expect class LineLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 
-  override fun setFilter(filter: BooleanExpression)
+  override fun setFilter(filter: Expression<BooleanValue>)
 
-  fun setLineCap(cap: EnumExpression<LineCap>)
+  fun setLineCap(cap: Expression<EnumValue<LineCap>>)
 
-  fun setLineJoin(join: EnumExpression<LineJoin>)
+  fun setLineJoin(join: Expression<EnumValue<LineJoin>>)
 
-  fun setLineMiterLimit(miterLimit: FloatExpression)
+  fun setLineMiterLimit(miterLimit: Expression<FloatValue>)
 
-  fun setLineRoundLimit(roundLimit: FloatExpression)
+  fun setLineRoundLimit(roundLimit: Expression<FloatValue>)
 
-  fun setLineSortKey(sortKey: FloatExpression)
+  fun setLineSortKey(sortKey: Expression<FloatValue>)
 
-  fun setLineOpacity(opacity: FloatExpression)
+  fun setLineOpacity(opacity: Expression<FloatValue>)
 
-  fun setLineColor(color: ColorExpression)
+  fun setLineColor(color: Expression<ColorValue>)
 
-  fun setLineTranslate(translate: DpOffsetExpression)
+  fun setLineTranslate(translate: Expression<DpOffsetValue>)
 
-  fun setLineTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>)
+  fun setLineTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>)
 
-  fun setLineWidth(width: DpExpression)
+  fun setLineWidth(width: Expression<DpValue>)
 
-  fun setLineGapWidth(gapWidth: DpExpression)
+  fun setLineGapWidth(gapWidth: Expression<DpValue>)
 
-  fun setLineOffset(offset: DpExpression)
+  fun setLineOffset(offset: Expression<DpValue>)
 
-  fun setLineBlur(blur: DpExpression)
+  fun setLineBlur(blur: Expression<DpValue>)
 
-  fun setLineDasharray(dasharray: VectorExpression)
+  fun setLineDasharray(dasharray: Expression<VectorValue<*>>)
 
-  fun setLinePattern(pattern: ImageExpression)
+  fun setLinePattern(pattern: Expression<ImageValue>)
 
-  fun setLineGradient(gradient: ColorExpression)
+  fun setLineGradient(gradient: Expression<ColorValue>)
 }

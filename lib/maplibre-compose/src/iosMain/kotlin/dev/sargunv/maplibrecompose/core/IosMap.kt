@@ -42,7 +42,8 @@ import cocoapods.MapLibre.MLNOrnamentPositionTopRight
 import cocoapods.MapLibre.MLNStyle
 import cocoapods.MapLibre.MLNZoomLevelForAltitude
 import cocoapods.MapLibre.allowsTilting
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.util.toBoundingBox
 import dev.sargunv.maplibrecompose.core.util.toCGPoint
 import dev.sargunv.maplibrecompose.core.util.toCGRect
@@ -432,7 +433,7 @@ internal class IosMap(
   override fun queryRenderedFeatures(
     offset: DpOffset,
     layerIds: Set<String>?,
-    predicate: BooleanExpression?,
+    predicate: Expression<BooleanValue>?,
   ): List<Feature> =
     mapView
       .visibleFeaturesAtPoint(
@@ -445,7 +446,7 @@ internal class IosMap(
   override fun queryRenderedFeatures(
     rect: DpRect,
     layerIds: Set<String>?,
-    predicate: BooleanExpression?,
+    predicate: Expression<BooleanValue>?,
   ): List<Feature> =
     mapView
       .visibleFeaturesInRect(

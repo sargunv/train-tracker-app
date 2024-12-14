@@ -3,11 +3,12 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.Expressions.const
 import dev.sargunv.maplibrecompose.core.expression.Expressions.nil
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.layer.BackgroundLayer
 
 /**
@@ -35,9 +36,9 @@ public inline fun BackgroundLayer(
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
   visible: Boolean = true,
-  opacity: FloatExpression = const(1f),
-  color: ColorExpression = const(Color.Black),
-  pattern: ImageExpression = nil(),
+  opacity: Expression<FloatValue> = const(1f),
+  color: Expression<ColorValue> = const(Color.Black),
+  pattern: Expression<ImageValue> = nil(),
 ) {
   key(id) {
     LayerNode(

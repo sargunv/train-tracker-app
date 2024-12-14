@@ -1,12 +1,13 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNFillStyleLayer
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -24,39 +25,39 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
       impl.sourceLayerIdentifier = value
     }
 
-  actual override fun setFilter(filter: BooleanExpression) {
+  actual override fun setFilter(filter: Expression<BooleanValue>) {
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setFillSortKey(sortKey: FloatExpression) {
+  actual fun setFillSortKey(sortKey: Expression<FloatValue>) {
     impl.fillSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setFillAntialias(antialias: BooleanExpression) {
+  actual fun setFillAntialias(antialias: Expression<BooleanValue>) {
     impl.fillAntialiased = antialias.toNSExpression()
   }
 
-  actual fun setFillOpacity(opacity: FloatExpression) {
+  actual fun setFillOpacity(opacity: Expression<FloatValue>) {
     impl.fillOpacity = opacity.toNSExpression()
   }
 
-  actual fun setFillColor(color: ColorExpression) {
+  actual fun setFillColor(color: Expression<ColorValue>) {
     impl.fillColor = color.toNSExpression()
   }
 
-  actual fun setFillOutlineColor(outlineColor: ColorExpression) {
+  actual fun setFillOutlineColor(outlineColor: Expression<ColorValue>) {
     impl.fillOutlineColor = outlineColor.toNSExpression()
   }
 
-  actual fun setFillTranslate(translate: DpOffsetExpression) {
+  actual fun setFillTranslate(translate: Expression<DpOffsetValue>) {
     impl.fillTranslation = translate.toNSExpression()
   }
 
-  actual fun setFillTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>) {
+  actual fun setFillTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>) {
     impl.fillTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setFillPattern(pattern: ImageExpression) {
+  actual fun setFillPattern(pattern: Expression<ImageValue>) {
     // TODO: figure out how to unset a pattern in iOS
     if (pattern.value != null) {
       impl.fillPattern = pattern.toNSExpression()

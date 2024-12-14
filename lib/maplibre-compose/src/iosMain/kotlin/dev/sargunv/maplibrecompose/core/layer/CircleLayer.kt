@@ -1,14 +1,15 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNCircleStyleLayer
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.CirclePitchScale
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -26,55 +27,55 @@ internal actual class CircleLayer actual constructor(id: String, source: Source)
       impl.sourceLayerIdentifier = value
     }
 
-  actual override fun setFilter(filter: BooleanExpression) {
+  actual override fun setFilter(filter: Expression<BooleanValue>) {
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setCircleSortKey(sortKey: FloatExpression) {
+  actual fun setCircleSortKey(sortKey: Expression<FloatValue>) {
     impl.circleSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setCircleRadius(radius: DpExpression) {
+  actual fun setCircleRadius(radius: Expression<DpValue>) {
     impl.circleRadius = radius.toNSExpression()
   }
 
-  actual fun setCircleColor(color: ColorExpression) {
+  actual fun setCircleColor(color: Expression<ColorValue>) {
     impl.circleColor = color.toNSExpression()
   }
 
-  actual fun setCircleBlur(blur: FloatExpression) {
+  actual fun setCircleBlur(blur: Expression<FloatValue>) {
     impl.circleBlur = blur.toNSExpression()
   }
 
-  actual fun setCircleOpacity(opacity: FloatExpression) {
+  actual fun setCircleOpacity(opacity: Expression<FloatValue>) {
     impl.circleOpacity = opacity.toNSExpression()
   }
 
-  actual fun setCircleTranslate(translate: DpOffsetExpression) {
+  actual fun setCircleTranslate(translate: Expression<DpOffsetValue>) {
     impl.circleTranslation = translate.toNSExpression()
   }
 
-  actual fun setCircleTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>) {
+  actual fun setCircleTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>) {
     impl.circleTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setCirclePitchScale(pitchScale: EnumExpression<CirclePitchScale>) {
+  actual fun setCirclePitchScale(pitchScale: Expression<EnumValue<CirclePitchScale>>) {
     impl.circleScaleAlignment = pitchScale.toNSExpression()
   }
 
-  actual fun setCirclePitchAlignment(pitchAlignment: EnumExpression<CirclePitchAlignment>) {
+  actual fun setCirclePitchAlignment(pitchAlignment: Expression<EnumValue<CirclePitchAlignment>>) {
     impl.circlePitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setCircleStrokeWidth(strokeWidth: DpExpression) {
+  actual fun setCircleStrokeWidth(strokeWidth: Expression<DpValue>) {
     impl.circleStrokeWidth = strokeWidth.toNSExpression()
   }
 
-  actual fun setCircleStrokeColor(strokeColor: ColorExpression) {
+  actual fun setCircleStrokeColor(strokeColor: Expression<ColorValue>) {
     impl.circleStrokeColor = strokeColor.toNSExpression()
   }
 
-  actual fun setCircleStrokeOpacity(strokeOpacity: FloatExpression) {
+  actual fun setCircleStrokeOpacity(strokeOpacity: Expression<FloatValue>) {
     impl.circleStrokeOpacity = strokeOpacity.toNSExpression()
   }
 }

@@ -1,7 +1,9 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
+import dev.sargunv.maplibrecompose.core.expression.DurationValue
+import dev.sargunv.maplibrecompose.core.expression.EnumValue
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -9,19 +11,19 @@ import dev.sargunv.maplibrecompose.core.source.Source
 internal expect class RasterLayer(id: String, source: Source) : Layer {
   val source: Source
 
-  fun setRasterOpacity(opacity: FloatExpression)
+  fun setRasterOpacity(opacity: Expression<FloatValue>)
 
-  fun setRasterHueRotate(hueRotate: FloatExpression)
+  fun setRasterHueRotate(hueRotate: Expression<FloatValue>)
 
-  fun setRasterBrightnessMin(brightnessMin: FloatExpression)
+  fun setRasterBrightnessMin(brightnessMin: Expression<FloatValue>)
 
-  fun setRasterBrightnessMax(brightnessMax: FloatExpression)
+  fun setRasterBrightnessMax(brightnessMax: Expression<FloatValue>)
 
-  fun setRasterSaturation(saturation: FloatExpression)
+  fun setRasterSaturation(saturation: Expression<FloatValue>)
 
-  fun setRasterContrast(contrast: FloatExpression)
+  fun setRasterContrast(contrast: Expression<FloatValue>)
 
-  fun setRasterResampling(resampling: EnumExpression<RasterResampling>)
+  fun setRasterResampling(resampling: Expression<EnumValue<RasterResampling>>)
 
-  fun setRasterFadeDuration(fadeDuration: FloatExpression)
+  fun setRasterFadeDuration(fadeDuration: Expression<DurationValue>)
 }

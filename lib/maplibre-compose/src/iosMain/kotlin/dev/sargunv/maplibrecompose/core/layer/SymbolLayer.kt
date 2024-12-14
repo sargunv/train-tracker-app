@@ -1,22 +1,21 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNSymbolStyleLayer
-import dev.sargunv.maplibrecompose.core.expression.BooleanExpression
-import dev.sargunv.maplibrecompose.core.expression.ColorExpression
-import dev.sargunv.maplibrecompose.core.expression.DpExpression
-import dev.sargunv.maplibrecompose.core.expression.DpOffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.EnumExpression
+import dev.sargunv.maplibrecompose.core.expression.BooleanValue
+import dev.sargunv.maplibrecompose.core.expression.ColorValue
+import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
-import dev.sargunv.maplibrecompose.core.expression.FloatExpression
-import dev.sargunv.maplibrecompose.core.expression.FormattedExpression
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
-import dev.sargunv.maplibrecompose.core.expression.ImageExpression
-import dev.sargunv.maplibrecompose.core.expression.ListExpression
-import dev.sargunv.maplibrecompose.core.expression.OffsetExpression
-import dev.sargunv.maplibrecompose.core.expression.PaddingExpression
-import dev.sargunv.maplibrecompose.core.expression.StringExpression
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ListValue
+import dev.sargunv.maplibrecompose.core.expression.OffsetValue
+import dev.sargunv.maplibrecompose.core.expression.PaddingValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -43,242 +42,246 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
       impl.sourceLayerIdentifier = value
     }
 
-  actual override fun setFilter(filter: BooleanExpression) {
+  actual override fun setFilter(filter: Expression<BooleanValue>) {
     impl.predicate = filter.toNSPredicate()
   }
 
-  actual fun setSymbolPlacement(placement: EnumExpression<SymbolPlacement>) {
+  actual fun setSymbolPlacement(placement: Expression<EnumValue<SymbolPlacement>>) {
     impl.symbolPlacement = placement.toNSExpression()
   }
 
-  actual fun setSymbolSpacing(spacing: DpExpression) {
+  actual fun setSymbolSpacing(spacing: Expression<DpValue>) {
     impl.symbolSpacing = spacing.toNSExpression()
   }
 
-  actual fun setSymbolAvoidEdges(avoidEdges: BooleanExpression) {
+  actual fun setSymbolAvoidEdges(avoidEdges: Expression<BooleanValue>) {
     impl.symbolAvoidsEdges = avoidEdges.toNSExpression()
   }
 
-  actual fun setSymbolSortKey(sortKey: FloatExpression) {
+  actual fun setSymbolSortKey(sortKey: Expression<FloatValue>) {
     impl.symbolSortKey = sortKey.toNSExpression()
   }
 
-  actual fun setSymbolZOrder(zOrder: EnumExpression<SymbolZOrder>) {
+  actual fun setSymbolZOrder(zOrder: Expression<EnumValue<SymbolZOrder>>) {
     impl.symbolZOrder = zOrder.toNSExpression()
   }
 
-  actual fun setIconAllowOverlap(allowOverlap: BooleanExpression) {
+  actual fun setIconAllowOverlap(allowOverlap: Expression<BooleanValue>) {
     impl.iconAllowsOverlap = allowOverlap.toNSExpression()
   }
 
-  actual fun setIconOverlap(overlap: StringExpression) {
+  actual fun setIconOverlap(overlap: Expression<StringValue>) {
     // not implemented by MapLibre-native iOS yet
     // impl.iconOverlap = overlap.toNSExpression()
   }
 
-  actual fun setIconIgnorePlacement(ignorePlacement: BooleanExpression) {
+  actual fun setIconIgnorePlacement(ignorePlacement: Expression<BooleanValue>) {
     impl.iconIgnoresPlacement = ignorePlacement.toNSExpression()
   }
 
-  actual fun setIconOptional(optional: BooleanExpression) {
+  actual fun setIconOptional(optional: Expression<BooleanValue>) {
     impl.iconOptional = optional.toNSExpression()
   }
 
-  actual fun setIconRotationAlignment(rotationAlignment: EnumExpression<IconRotationAlignment>) {
+  actual fun setIconRotationAlignment(
+    rotationAlignment: Expression<EnumValue<IconRotationAlignment>>
+  ) {
     impl.iconRotationAlignment = rotationAlignment.toNSExpression()
   }
 
-  actual fun setIconSize(size: FloatExpression) {
+  actual fun setIconSize(size: Expression<FloatValue>) {
     impl.iconScale = size.toNSExpression()
   }
 
-  actual fun setIconTextFit(textFit: EnumExpression<IconTextFit>) {
+  actual fun setIconTextFit(textFit: Expression<EnumValue<IconTextFit>>) {
     impl.iconTextFit = textFit.toNSExpression()
   }
 
-  actual fun setIconTextFitPadding(textFitPadding: PaddingExpression) {
+  actual fun setIconTextFitPadding(textFitPadding: Expression<PaddingValue>) {
     impl.iconTextFitPadding = textFitPadding.toNSExpression()
   }
 
-  actual fun setIconImage(image: ImageExpression) {
+  actual fun setIconImage(image: Expression<ImageValue>) {
     // TODO figure out how to unset an image
     if (image.value != null) impl.iconImageName = image.toNSExpression()
   }
 
-  actual fun setIconRotate(rotate: FloatExpression) {
+  actual fun setIconRotate(rotate: Expression<FloatValue>) {
     impl.iconRotation = rotate.toNSExpression()
   }
 
-  actual fun setIconPadding(padding: DpExpression) {
+  actual fun setIconPadding(padding: Expression<DpValue>) {
     impl.iconPadding = padding.toNSExpression()
   }
 
-  actual fun setIconKeepUpright(keepUpright: BooleanExpression) {
+  actual fun setIconKeepUpright(keepUpright: Expression<BooleanValue>) {
     impl.keepsIconUpright = keepUpright.toNSExpression()
   }
 
-  actual fun setIconOffset(offset: DpOffsetExpression) {
+  actual fun setIconOffset(offset: Expression<DpOffsetValue>) {
     impl.iconOffset = offset.toNSExpression()
   }
 
-  actual fun setIconAnchor(anchor: EnumExpression<SymbolAnchor>) {
+  actual fun setIconAnchor(anchor: Expression<EnumValue<SymbolAnchor>>) {
     impl.iconAnchor = anchor.toNSExpression()
   }
 
-  actual fun setIconPitchAlignment(pitchAlignment: EnumExpression<IconPitchAlignment>) {
+  actual fun setIconPitchAlignment(pitchAlignment: Expression<EnumValue<IconPitchAlignment>>) {
     impl.iconPitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setIconOpacity(opacity: FloatExpression) {
+  actual fun setIconOpacity(opacity: Expression<FloatValue>) {
     impl.iconOpacity = opacity.toNSExpression()
   }
 
-  actual fun setIconColor(color: ColorExpression) {
+  actual fun setIconColor(color: Expression<ColorValue>) {
     impl.iconColor = color.toNSExpression()
   }
 
-  actual fun setIconHaloColor(haloColor: ColorExpression) {
+  actual fun setIconHaloColor(haloColor: Expression<ColorValue>) {
     impl.iconHaloColor = haloColor.toNSExpression()
   }
 
-  actual fun setIconHaloWidth(haloWidth: DpExpression) {
+  actual fun setIconHaloWidth(haloWidth: Expression<DpValue>) {
     impl.iconHaloWidth = haloWidth.toNSExpression()
   }
 
-  actual fun setIconHaloBlur(haloBlur: DpExpression) {
+  actual fun setIconHaloBlur(haloBlur: Expression<DpValue>) {
     impl.iconHaloBlur = haloBlur.toNSExpression()
   }
 
-  actual fun setIconTranslate(translate: DpOffsetExpression) {
+  actual fun setIconTranslate(translate: Expression<DpOffsetValue>) {
     impl.iconTranslation = translate.toNSExpression()
   }
 
-  actual fun setIconTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>) {
+  actual fun setIconTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>) {
     impl.iconTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setTextPitchAlignment(pitchAlignment: EnumExpression<TextPitchAlignment>) {
+  actual fun setTextPitchAlignment(pitchAlignment: Expression<EnumValue<TextPitchAlignment>>) {
     impl.textPitchAlignment = pitchAlignment.toNSExpression()
   }
 
-  actual fun setTextRotationAlignment(rotationAlignment: EnumExpression<TextRotationAlignment>) {
+  actual fun setTextRotationAlignment(
+    rotationAlignment: Expression<EnumValue<TextRotationAlignment>>
+  ) {
     impl.textRotationAlignment = rotationAlignment.toNSExpression()
   }
 
-  actual fun setTextField(field: FormattedExpression) {
+  actual fun setTextField(field: Expression<FormattedValue>) {
     impl.text = field.toNSExpression()
   }
 
-  actual fun setTextFont(font: ListExpression<StringValue>) {
+  actual fun setTextFont(font: Expression<ListValue<StringValue>>) {
     impl.textFontNames = font.toNSExpression()
   }
 
-  actual fun setTextSize(size: DpExpression) {
+  actual fun setTextSize(size: Expression<DpValue>) {
     impl.textFontSize = size.toNSExpression()
   }
 
-  actual fun setTextMaxWidth(maxWidth: FloatExpression) {
+  actual fun setTextMaxWidth(maxWidth: Expression<FloatValue>) {
     impl.maximumTextWidth = maxWidth.toNSExpression()
   }
 
-  actual fun setTextLineHeight(lineHeight: FloatExpression) {
+  actual fun setTextLineHeight(lineHeight: Expression<FloatValue>) {
     impl.textLineHeight = lineHeight.toNSExpression()
   }
 
-  actual fun setTextLetterSpacing(letterSpacing: FloatExpression) {
+  actual fun setTextLetterSpacing(letterSpacing: Expression<FloatValue>) {
     impl.textLetterSpacing = letterSpacing.toNSExpression()
   }
 
-  actual fun setTextJustify(justify: EnumExpression<TextJustify>) {
+  actual fun setTextJustify(justify: Expression<EnumValue<TextJustify>>) {
     impl.textJustification = justify.toNSExpression()
   }
 
-  actual fun setTextRadialOffset(radialOffset: FloatExpression) {
+  actual fun setTextRadialOffset(radialOffset: Expression<FloatValue>) {
     impl.textRadialOffset = radialOffset.toNSExpression()
   }
 
-  actual fun setTextVariableAnchor(variableAnchor: ListExpression<EnumValue<SymbolAnchor>>) {
+  actual fun setTextVariableAnchor(variableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>>) {
     impl.textVariableAnchor = variableAnchor.toNSExpression()
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: ListExpression<*>) {
+  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>) {
     impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
   }
 
-  actual fun setTextAnchor(anchor: EnumExpression<SymbolAnchor>) {
+  actual fun setTextAnchor(anchor: Expression<EnumValue<SymbolAnchor>>) {
     impl.textAnchor = anchor.toNSExpression()
   }
 
-  actual fun setTextMaxAngle(maxAngle: FloatExpression) {
+  actual fun setTextMaxAngle(maxAngle: Expression<FloatValue>) {
     impl.maximumTextAngle = maxAngle.toNSExpression()
   }
 
-  actual fun setTextWritingMode(writingMode: ListExpression<EnumValue<TextWritingMode>>) {
+  actual fun setTextWritingMode(writingMode: Expression<ListValue<EnumValue<TextWritingMode>>>) {
     impl.textWritingModes = writingMode.toNSExpression()
   }
 
-  actual fun setTextRotate(rotate: FloatExpression) {
+  actual fun setTextRotate(rotate: Expression<FloatValue>) {
     impl.textRotation = rotate.toNSExpression()
   }
 
-  actual fun setTextPadding(padding: DpExpression) {
+  actual fun setTextPadding(padding: Expression<DpValue>) {
     impl.textPadding = padding.toNSExpression()
   }
 
-  actual fun setTextKeepUpright(keepUpright: BooleanExpression) {
+  actual fun setTextKeepUpright(keepUpright: Expression<BooleanValue>) {
     impl.keepsTextUpright = keepUpright.toNSExpression()
   }
 
-  actual fun setTextTransform(transform: EnumExpression<TextTransform>) {
+  actual fun setTextTransform(transform: Expression<EnumValue<TextTransform>>) {
     impl.textTransform = transform.toNSExpression()
   }
 
-  actual fun setTextOffset(offset: OffsetExpression) {
+  actual fun setTextOffset(offset: Expression<OffsetValue>) {
     impl.textOffset = offset.toNSExpression()
   }
 
-  actual fun setTextAllowOverlap(allowOverlap: BooleanExpression) {
+  actual fun setTextAllowOverlap(allowOverlap: Expression<BooleanValue>) {
     impl.textAllowsOverlap = allowOverlap.toNSExpression()
   }
 
-  actual fun setTextOverlap(overlap: StringExpression) {
+  actual fun setTextOverlap(overlap: Expression<StringValue>) {
     // not implemented by MapLibre-native iOS yet
     // impl.textOverlap = overlap.toNSExpression()
   }
 
-  actual fun setTextIgnorePlacement(ignorePlacement: BooleanExpression) {
+  actual fun setTextIgnorePlacement(ignorePlacement: Expression<BooleanValue>) {
     impl.textIgnoresPlacement = ignorePlacement.toNSExpression()
   }
 
-  actual fun setTextOptional(optional: BooleanExpression) {
+  actual fun setTextOptional(optional: Expression<BooleanValue>) {
     impl.textOptional = optional.toNSExpression()
   }
 
-  actual fun setTextOpacity(opacity: FloatExpression) {
+  actual fun setTextOpacity(opacity: Expression<FloatValue>) {
     impl.textOpacity = opacity.toNSExpression()
   }
 
-  actual fun setTextColor(color: ColorExpression) {
+  actual fun setTextColor(color: Expression<ColorValue>) {
     impl.textColor = color.toNSExpression()
   }
 
-  actual fun setTextHaloColor(haloColor: ColorExpression) {
+  actual fun setTextHaloColor(haloColor: Expression<ColorValue>) {
     impl.textHaloColor = haloColor.toNSExpression()
   }
 
-  actual fun setTextHaloWidth(haloWidth: DpExpression) {
+  actual fun setTextHaloWidth(haloWidth: Expression<DpValue>) {
     impl.textHaloWidth = haloWidth.toNSExpression()
   }
 
-  actual fun setTextHaloBlur(haloBlur: DpExpression) {
+  actual fun setTextHaloBlur(haloBlur: Expression<DpValue>) {
     impl.textHaloBlur = haloBlur.toNSExpression()
   }
 
-  actual fun setTextTranslate(translate: DpOffsetExpression) {
+  actual fun setTextTranslate(translate: Expression<DpOffsetValue>) {
     impl.textTranslation = translate.toNSExpression()
   }
 
-  actual fun setTextTranslateAnchor(translateAnchor: EnumExpression<TranslateAnchor>) {
+  actual fun setTextTranslateAnchor(translateAnchor: Expression<EnumValue<TranslateAnchor>>) {
     impl.textTranslationAnchor = translateAnchor.toNSExpression()
   }
 }

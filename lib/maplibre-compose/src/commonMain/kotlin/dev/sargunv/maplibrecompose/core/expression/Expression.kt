@@ -24,8 +24,8 @@ private constructor(
     private val ofTransparent = Expression<ColorValue>(Color.Transparent)
     private val ofBlack = Expression<ColorValue>(Color.Black)
     private val ofWhite = Expression<ColorValue>(Color.White)
-    private val ofEmptyMap = Expression<MapValue>(emptyMap<String, Any?>())
-    private val ofEmptyList = Expression<ListValue<*>>(emptyList<Any?>())
+    private val ofEmptyMap = Expression<MapValue>(emptyMap<String, Nothing>())
+    private val ofEmptyList = Expression<ListValue<Nothing>>(emptyList<Nothing>())
     private val ofZeroOffset = Expression<OffsetValue>(Offset.Zero)
     private val ofZeroPadding = Expression<PaddingValue>(ZeroPadding)
 
@@ -37,22 +37,20 @@ private constructor(
 
     private fun Int.isSmallInt() = this in 0..<NUM_SMALL_NUMBERS
 
-    fun <T : FloatScalarValue> ofFloat(float: Float): Expression<T> =
+    fun ofFloat(float: Float) =
       when {
         float.isSmallInt() -> constSmallInts[float.toInt()]
         (float / SMALL_FLOAT_RESOLUTION).isSmallInt() ->
           constSmallFloats[(float / SMALL_FLOAT_RESOLUTION).toInt()]
 
-        else -> Expression<FloatValue>(float)
-      }.cast()
+        else -> Expression(float)
+      }
 
-    fun <T : IntScalarValue> ofInt(int: Int): Expression<T> =
-      (if (int.isSmallInt()) constSmallInts[int] else Expression(int)).cast()
+    fun ofInt(int: Int) = if (int.isSmallInt()) constSmallInts[int] else Expression(int)
 
-    fun ofString(string: String): StringExpression =
-      if (string.isEmpty()) ofEmptyString else Expression(string)
+    fun ofString(string: String) = if (string.isEmpty()) ofEmptyString else Expression(string)
 
-    fun ofColor(color: Color): ColorExpression =
+    fun ofColor(color: Color) =
       when (color) {
         Color.Transparent -> ofTransparent
         Color.Black -> ofBlack
@@ -60,11 +58,11 @@ private constructor(
         else -> Expression(color)
       }
 
-    fun ofMap(map: Map<String, Expression<*>>): MapExpression =
+    fun ofMap(map: Map<String, Expression<*>>) =
       if (map.isEmpty()) ofEmptyMap else Expression(map.mapValues { it.value.value })
 
-    fun <T : ExpressionValue> ofList(list: List<Expression<T>>): ListExpression<T> =
-      if (list.isEmpty()) ofEmptyList.cast() else Expression(list.map { it.value })
+    fun <T : ExpressionValue> ofList(list: List<Expression<T>>): Expression<ListValue<T>> =
+      if (list.isEmpty()) ofEmptyList else Expression(list.map { it.value })
 
     fun ofOffset(offset: Offset) = if (offset == Offset.Zero) ofZeroOffset else Expression(offset)
 
@@ -72,54 +70,3 @@ private constructor(
       if (padding == ZeroPadding) ofZeroPadding else Expression(padding)
   }
 }
-
-// TODO inline these
-public typealias BooleanExpression = Expression<BooleanValue>
-
-public typealias ScalarExpression = Expression<ScalarValue>
-
-public typealias IntScalarExpression = Expression<IntScalarValue>
-
-public typealias FloatScalarExpression = Expression<FloatScalarValue>
-
-public typealias NumberExpression = Expression<NumberValue>
-
-public typealias FloatExpression = Expression<FloatValue>
-
-public typealias IntExpression = Expression<IntValue>
-
-public typealias DpExpression = Expression<DpValue>
-
-public typealias StringExpression = Expression<StringValue>
-
-public typealias EnumExpression<T> = Expression<EnumValue<T>>
-
-public typealias ColorExpression = Expression<ColorValue>
-
-public typealias MapExpression = Expression<MapValue>
-
-public typealias ListExpression<T> = Expression<ListValue<T>>
-
-public typealias VectorExpression = Expression<VectorValue>
-
-public typealias OffsetExpression = Expression<OffsetValue>
-
-public typealias DpOffsetExpression = Expression<DpOffsetValue>
-
-public typealias PaddingExpression = Expression<PaddingValue>
-
-public typealias CollatorExpression = Expression<CollatorValue>
-
-public typealias FormattedExpression = Expression<FormattedValue>
-
-public typealias GeoJsonExpression = Expression<GeoJsonValue>
-
-public typealias ImageExpression = Expression<ImageValue>
-
-public typealias Interpolation = Expression<InterpolationValue>
-
-public typealias MatchableExpression = Expression<MatchableValue>
-
-public typealias ComparableExpression = Expression<ComparableValue>
-
-public typealias InterpolateableExpression = Expression<InterpolateableValue>
