@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -60,8 +59,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun CircleLayer(
+public fun CircleLayer(
   id: String,
   source: Source,
   sourceLayer: String = "",
@@ -82,33 +80,31 @@ public inline fun CircleLayer(
   pitchScale: Expression<EnumValue<CirclePitchScale>> = const(CirclePitchScale.Map),
   pitchAlignment: Expression<EnumValue<CirclePitchAlignment>> =
     const(CirclePitchAlignment.Viewport),
-  noinline onClick: FeaturesClickHandler? = null,
-  noinline onLongClick: FeaturesClickHandler? = null,
+  onClick: FeaturesClickHandler? = null,
+  onLongClick: FeaturesClickHandler? = null,
 ) {
-  key(id) {
-    LayerNode(
-      factory = { CircleLayer(id = id, source = source) },
-      update = {
-        set(sourceLayer) { layer.sourceLayer = it }
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(filter) { layer.setFilter(it) }
-        set(visible) { layer.visible = it }
-        set(sortKey) { layer.setCircleSortKey(it) }
-        set(radius) { layer.setCircleRadius(it) }
-        set(color) { layer.setCircleColor(it) }
-        set(blur) { layer.setCircleBlur(it) }
-        set(opacity) { layer.setCircleOpacity(it) }
-        set(translate) { layer.setCircleTranslate(it) }
-        set(translateAnchor) { layer.setCircleTranslateAnchor(it) }
-        set(pitchScale) { layer.setCirclePitchScale(it) }
-        set(pitchAlignment) { layer.setCirclePitchAlignment(it) }
-        set(strokeWidth) { layer.setCircleStrokeWidth(it) }
-        set(strokeColor) { layer.setCircleStrokeColor(it) }
-        set(strokeOpacity) { layer.setCircleStrokeOpacity(it) }
-      },
-      onClick = onClick,
-      onLongClick = onLongClick,
-    )
-  }
+  LayerNode(
+    factory = { CircleLayer(id = id, source = source) },
+    update = {
+      set(sourceLayer) { layer.sourceLayer = it }
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(filter) { layer.setFilter(it) }
+      set(visible) { layer.visible = it }
+      set(sortKey) { layer.setCircleSortKey(it) }
+      set(radius) { layer.setCircleRadius(it) }
+      set(color) { layer.setCircleColor(it) }
+      set(blur) { layer.setCircleBlur(it) }
+      set(opacity) { layer.setCircleOpacity(it) }
+      set(translate) { layer.setCircleTranslate(it) }
+      set(translateAnchor) { layer.setCircleTranslateAnchor(it) }
+      set(pitchScale) { layer.setCirclePitchScale(it) }
+      set(pitchAlignment) { layer.setCirclePitchAlignment(it) }
+      set(strokeWidth) { layer.setCircleStrokeWidth(it) }
+      set(strokeColor) { layer.setCircleStrokeColor(it) }
+      set(strokeOpacity) { layer.setCircleStrokeOpacity(it) }
+    },
+    onClick = onClick,
+    onLongClick = onLongClick,
+  )
 }

@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import dev.sargunv.maplibrecompose.core.expression.DurationValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -37,8 +36,7 @@ import kotlin.time.Duration.Companion.milliseconds
  *   started or its coordinates are updated. A value in range `[0..infinity)`.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun RasterLayer(
+public fun RasterLayer(
   id: String,
   source: Source,
   minZoom: Float = 0.0f,
@@ -53,24 +51,22 @@ public inline fun RasterLayer(
   resampling: Expression<EnumValue<RasterResampling>> = const(RasterResampling.Linear),
   fadeDuration: Expression<DurationValue> = const(300.milliseconds),
 ) {
-  key(id) {
-    LayerNode(
-      factory = { RasterLayer(id = id, source = source) },
-      update = {
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(visible) { layer.visible = it }
-        set(opacity) { layer.setRasterOpacity(it) }
-        set(hueRotate) { layer.setRasterHueRotate(it) }
-        set(brightnessMin) { layer.setRasterBrightnessMin(it) }
-        set(brightnessMax) { layer.setRasterBrightnessMax(it) }
-        set(saturation) { layer.setRasterSaturation(it) }
-        set(contrast) { layer.setRasterContrast(it) }
-        set(resampling) { layer.setRasterResampling(it) }
-        set(fadeDuration) { layer.setRasterFadeDuration(it) }
-      },
-      onClick = null,
-      onLongClick = null,
-    )
-  }
+  LayerNode(
+    factory = { RasterLayer(id = id, source = source) },
+    update = {
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(visible) { layer.visible = it }
+      set(opacity) { layer.setRasterOpacity(it) }
+      set(hueRotate) { layer.setRasterHueRotate(it) }
+      set(brightnessMin) { layer.setRasterBrightnessMin(it) }
+      set(brightnessMax) { layer.setRasterBrightnessMax(it) }
+      set(saturation) { layer.setRasterSaturation(it) }
+      set(contrast) { layer.setRasterContrast(it) }
+      set(resampling) { layer.setRasterResampling(it) }
+      set(fadeDuration) { layer.setRasterFadeDuration(it) }
+    },
+    onClick = null,
+    onLongClick = null,
+  )
 }

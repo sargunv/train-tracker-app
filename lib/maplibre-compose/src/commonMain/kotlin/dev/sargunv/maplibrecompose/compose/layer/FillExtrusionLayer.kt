@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
@@ -61,8 +60,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun FillExtrusionLayer(
+public fun FillExtrusionLayer(
   id: String,
   source: Source,
   sourceLayer: String = "",
@@ -78,29 +76,27 @@ public inline fun FillExtrusionLayer(
   height: Expression<FloatValue> = const(0f),
   base: Expression<FloatValue> = const(0f),
   verticalGradient: Expression<BooleanValue> = const(true),
-  noinline onClick: FeaturesClickHandler? = null,
-  noinline onLongClick: FeaturesClickHandler? = null,
+  onClick: FeaturesClickHandler? = null,
+  onLongClick: FeaturesClickHandler? = null,
 ) {
-  key(id) {
-    LayerNode(
-      factory = { FillExtrusionLayer(id = id, source = source) },
-      update = {
-        set(sourceLayer) { layer.sourceLayer = it }
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(filter) { layer.setFilter(it) }
-        set(visible) { layer.visible = it }
-        set(opacity) { layer.setFillExtrusionOpacity(it) }
-        set(color) { layer.setFillExtrusionColor(it) }
-        set(translate) { layer.setFillExtrusionTranslate(it) }
-        set(translateAnchor) { layer.setFillExtrusionTranslateAnchor(it) }
-        set(pattern) { layer.setFillExtrusionPattern(it) }
-        set(height) { layer.setFillExtrusionHeight(it) }
-        set(base) { layer.setFillExtrusionBase(it) }
-        set(verticalGradient) { layer.setFillExtrusionVerticalGradient(it) }
-      },
-      onClick = onClick,
-      onLongClick = onLongClick,
-    )
-  }
+  LayerNode(
+    factory = { FillExtrusionLayer(id = id, source = source) },
+    update = {
+      set(sourceLayer) { layer.sourceLayer = it }
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(filter) { layer.setFilter(it) }
+      set(visible) { layer.visible = it }
+      set(opacity) { layer.setFillExtrusionOpacity(it) }
+      set(color) { layer.setFillExtrusionColor(it) }
+      set(translate) { layer.setFillExtrusionTranslate(it) }
+      set(translateAnchor) { layer.setFillExtrusionTranslateAnchor(it) }
+      set(pattern) { layer.setFillExtrusionPattern(it) }
+      set(height) { layer.setFillExtrusionHeight(it) }
+      set(base) { layer.setFillExtrusionBase(it) }
+      set(verticalGradient) { layer.setFillExtrusionVerticalGradient(it) }
+    },
+    onClick = onClick,
+    onLongClick = onLongClick,
+  )
 }

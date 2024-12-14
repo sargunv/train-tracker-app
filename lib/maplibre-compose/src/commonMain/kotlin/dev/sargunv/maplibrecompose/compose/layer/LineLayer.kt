@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -84,8 +83,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun LineLayer(
+public fun LineLayer(
   id: String,
   source: Source,
   sourceLayer: String = "",
@@ -109,37 +107,35 @@ public inline fun LineLayer(
   join: Expression<EnumValue<LineJoin>> = const(LineJoin.Miter),
   miterLimit: Expression<FloatValue> = const(2f),
   roundLimit: Expression<FloatValue> = const(1.05f),
-  noinline onClick: FeaturesClickHandler? = null,
-  noinline onLongClick: FeaturesClickHandler? = null,
+  onClick: FeaturesClickHandler? = null,
+  onLongClick: FeaturesClickHandler? = null,
 ) {
-  key(id) {
-    LayerNode(
-      factory = { LineLayer(id = id, source = source) },
-      update = {
-        set(sourceLayer) { layer.sourceLayer = it }
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(filter) { layer.setFilter(it) }
-        set(visible) { layer.visible = it }
-        set(cap) { layer.setLineCap(it) }
-        set(join) { layer.setLineJoin(it) }
-        set(miterLimit) { layer.setLineMiterLimit(it) }
-        set(roundLimit) { layer.setLineRoundLimit(it) }
-        set(sortKey) { layer.setLineSortKey(it) }
-        set(opacity) { layer.setLineOpacity(it) }
-        set(color) { layer.setLineColor(it) }
-        set(translate) { layer.setLineTranslate(it) }
-        set(translateAnchor) { layer.setLineTranslateAnchor(it) }
-        set(width) { layer.setLineWidth(it) }
-        set(gapWidth) { layer.setLineGapWidth(it) }
-        set(offset) { layer.setLineOffset(it) }
-        set(blur) { layer.setLineBlur(it) }
-        set(dasharray) { layer.setLineDasharray(it) }
-        set(pattern) { layer.setLinePattern(it) }
-        set(gradient) { layer.setLineGradient(it) }
-      },
-      onClick = onClick,
-      onLongClick = onLongClick,
-    )
-  }
+  LayerNode(
+    factory = { LineLayer(id = id, source = source) },
+    update = {
+      set(sourceLayer) { layer.sourceLayer = it }
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(filter) { layer.setFilter(it) }
+      set(visible) { layer.visible = it }
+      set(cap) { layer.setLineCap(it) }
+      set(join) { layer.setLineJoin(it) }
+      set(miterLimit) { layer.setLineMiterLimit(it) }
+      set(roundLimit) { layer.setLineRoundLimit(it) }
+      set(sortKey) { layer.setLineSortKey(it) }
+      set(opacity) { layer.setLineOpacity(it) }
+      set(color) { layer.setLineColor(it) }
+      set(translate) { layer.setLineTranslate(it) }
+      set(translateAnchor) { layer.setLineTranslateAnchor(it) }
+      set(width) { layer.setLineWidth(it) }
+      set(gapWidth) { layer.setLineGapWidth(it) }
+      set(offset) { layer.setLineOffset(it) }
+      set(blur) { layer.setLineBlur(it) }
+      set(dasharray) { layer.setLineDasharray(it) }
+      set(pattern) { layer.setLinePattern(it) }
+      set(gradient) { layer.setLineGradient(it) }
+    },
+    onClick = onClick,
+    onLongClick = onLongClick,
+  )
 }

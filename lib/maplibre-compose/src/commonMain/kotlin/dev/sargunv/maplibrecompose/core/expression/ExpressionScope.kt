@@ -1241,11 +1241,15 @@ public object ExpressionScope {
   private inline fun buildOptions(block: MutableMap<String, Expression<*>>.() -> Unit) =
     Expression.ofMap(mutableMapOf<String, Expression<*>>().apply(block).mapValues { it.value })
 
-  private fun <T> Array<T>.foldToArgs(block: MutableList<Expression<*>>.(element: T) -> Unit) =
+  private inline fun <T> Array<T>.foldToArgs(
+    block: MutableList<Expression<*>>.(element: T) -> Unit
+  ) =
     fold(mutableListOf<Expression<*>>()) { acc, element -> acc.apply { block(element) } }
       .toTypedArray()
 
-  private fun <T> List<T>.foldToArgs(block: MutableList<Expression<*>>.(element: T) -> Unit) =
+  private inline fun <T> List<T>.foldToArgs(
+    block: MutableList<Expression<*>>.(element: T) -> Unit
+  ) =
     fold(mutableListOf<Expression<*>>()) { acc, element -> acc.apply { block(element) } }
       .toTypedArray()
 

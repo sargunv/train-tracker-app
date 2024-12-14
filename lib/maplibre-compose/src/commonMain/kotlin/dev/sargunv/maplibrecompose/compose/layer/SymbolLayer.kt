@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
@@ -361,8 +360,7 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  */
 @OptIn(JsOnlyApi::class)
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun SymbolLayer(
+public fun SymbolLayer(
   id: String,
   source: Source,
   sourceLayer: String = "",
@@ -456,81 +454,79 @@ public inline fun SymbolLayer(
   // text translate
   textTranslate: Expression<DpOffsetValue> = const(DpOffset.Zero),
   textTranslateAnchor: Expression<EnumValue<TranslateAnchor>> = const(TranslateAnchor.Map),
-  noinline onClick: FeaturesClickHandler? = null,
-  noinline onLongClick: FeaturesClickHandler? = null,
+  onClick: FeaturesClickHandler? = null,
+  onLongClick: FeaturesClickHandler? = null,
 ) {
-  key(id) {
-    LayerNode(
-      factory = { SymbolLayer(id = id, source = source) },
-      update = {
-        set(sourceLayer) { layer.sourceLayer = it }
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(filter) { layer.setFilter(it) }
-        set(visible) { layer.visible = it }
-        set(placement) { layer.setSymbolPlacement(it) }
-        set(spacing) { layer.setSymbolSpacing(it) }
-        set(avoidEdges) { layer.setSymbolAvoidEdges(it) }
-        set(sortKey) { layer.setSymbolSortKey(it) }
-        set(zOrder) { layer.setSymbolZOrder(it) }
+  LayerNode(
+    factory = { SymbolLayer(id = id, source = source) },
+    update = {
+      set(sourceLayer) { layer.sourceLayer = it }
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(filter) { layer.setFilter(it) }
+      set(visible) { layer.visible = it }
+      set(placement) { layer.setSymbolPlacement(it) }
+      set(spacing) { layer.setSymbolSpacing(it) }
+      set(avoidEdges) { layer.setSymbolAvoidEdges(it) }
+      set(sortKey) { layer.setSymbolSortKey(it) }
+      set(zOrder) { layer.setSymbolZOrder(it) }
 
-        set(iconAllowOverlap) { layer.setIconAllowOverlap(it) }
-        set(iconOverlap) { layer.setIconOverlap(it) }
-        set(iconIgnorePlacement) { layer.setIconIgnorePlacement(it) }
-        set(iconOptional) { layer.setIconOptional(it) }
-        set(iconRotationAlignment) { layer.setIconRotationAlignment(it) }
-        set(iconSize) { layer.setIconSize(it) }
-        set(iconTextFit) { layer.setIconTextFit(it) }
-        set(iconTextFitPadding) { layer.setIconTextFitPadding(it) }
-        set(iconImage) { layer.setIconImage(it) }
-        set(iconRotate) { layer.setIconRotate(it) }
-        set(iconPadding) { layer.setIconPadding(it) }
-        set(iconKeepUpright) { layer.setIconKeepUpright(it) }
-        set(iconOffset) { layer.setIconOffset(it) }
-        set(iconAnchor) { layer.setIconAnchor(it) }
-        set(iconPitchAlignment) { layer.setIconPitchAlignment(it) }
-        set(iconOpacity) { layer.setIconOpacity(it) }
-        set(iconColor) { layer.setIconColor(it) }
-        set(iconHaloColor) { layer.setIconHaloColor(it) }
-        set(iconHaloWidth) { layer.setIconHaloWidth(it) }
-        set(iconHaloBlur) { layer.setIconHaloBlur(it) }
-        set(iconTranslate) { layer.setIconTranslate(it) }
-        set(iconTranslateAnchor) { layer.setIconTranslateAnchor(it) }
+      set(iconAllowOverlap) { layer.setIconAllowOverlap(it) }
+      set(iconOverlap) { layer.setIconOverlap(it) }
+      set(iconIgnorePlacement) { layer.setIconIgnorePlacement(it) }
+      set(iconOptional) { layer.setIconOptional(it) }
+      set(iconRotationAlignment) { layer.setIconRotationAlignment(it) }
+      set(iconSize) { layer.setIconSize(it) }
+      set(iconTextFit) { layer.setIconTextFit(it) }
+      set(iconTextFitPadding) { layer.setIconTextFitPadding(it) }
+      set(iconImage) { layer.setIconImage(it) }
+      set(iconRotate) { layer.setIconRotate(it) }
+      set(iconPadding) { layer.setIconPadding(it) }
+      set(iconKeepUpright) { layer.setIconKeepUpright(it) }
+      set(iconOffset) { layer.setIconOffset(it) }
+      set(iconAnchor) { layer.setIconAnchor(it) }
+      set(iconPitchAlignment) { layer.setIconPitchAlignment(it) }
+      set(iconOpacity) { layer.setIconOpacity(it) }
+      set(iconColor) { layer.setIconColor(it) }
+      set(iconHaloColor) { layer.setIconHaloColor(it) }
+      set(iconHaloWidth) { layer.setIconHaloWidth(it) }
+      set(iconHaloBlur) { layer.setIconHaloBlur(it) }
+      set(iconTranslate) { layer.setIconTranslate(it) }
+      set(iconTranslateAnchor) { layer.setIconTranslateAnchor(it) }
 
-        set(textPitchAlignment) { layer.setTextPitchAlignment(it) }
-        set(textRotationAlignment) { layer.setTextRotationAlignment(it) }
-        set(textField) { layer.setTextField(it) }
-        set(textFont) { layer.setTextFont(it) }
-        set(textSize) { layer.setTextSize(it) }
-        set(textMaxWidth) { layer.setTextMaxWidth(it) }
-        set(textLineHeight) { layer.setTextLineHeight(it) }
-        set(textLetterSpacing) { layer.setTextLetterSpacing(it) }
-        set(textJustify) { layer.setTextJustify(it) }
-        set(textRadialOffset) { layer.setTextRadialOffset(it) }
-        set(textVariableAnchor) { layer.setTextVariableAnchor(it) }
-        set(textVariableAnchorOffset) { layer.setTextVariableAnchorOffset(it) }
-        set(textAnchor) { layer.setTextAnchor(it) }
-        set(textMaxAngle) { layer.setTextMaxAngle(it) }
-        set(textWritingMode) { layer.setTextWritingMode(it) }
-        set(textRotate) { layer.setTextRotate(it) }
-        set(textPadding) { layer.setTextPadding(it) }
-        set(textKeepUpright) { layer.setTextKeepUpright(it) }
-        set(textTransform) { layer.setTextTransform(it) }
-        set(textOffset) { layer.setTextOffset(it) }
-        set(textAllowOverlap) { layer.setTextAllowOverlap(it) }
-        set(textOverlap) { layer.setTextOverlap(it) }
-        set(textIgnorePlacement) { layer.setTextIgnorePlacement(it) }
-        set(textOptional) { layer.setTextOptional(it) }
-        set(textOpacity) { layer.setTextOpacity(it) }
-        set(textColor) { layer.setTextColor(it) }
-        set(textHaloColor) { layer.setTextHaloColor(it) }
-        set(textHaloWidth) { layer.setTextHaloWidth(it) }
-        set(textHaloBlur) { layer.setTextHaloBlur(it) }
-        set(textTranslate) { layer.setTextTranslate(it) }
-        set(textTranslateAnchor) { layer.setTextTranslateAnchor(it) }
-      },
-      onClick = onClick,
-      onLongClick = onLongClick,
-    )
-  }
+      set(textPitchAlignment) { layer.setTextPitchAlignment(it) }
+      set(textRotationAlignment) { layer.setTextRotationAlignment(it) }
+      set(textField) { layer.setTextField(it) }
+      set(textFont) { layer.setTextFont(it) }
+      set(textSize) { layer.setTextSize(it) }
+      set(textMaxWidth) { layer.setTextMaxWidth(it) }
+      set(textLineHeight) { layer.setTextLineHeight(it) }
+      set(textLetterSpacing) { layer.setTextLetterSpacing(it) }
+      set(textJustify) { layer.setTextJustify(it) }
+      set(textRadialOffset) { layer.setTextRadialOffset(it) }
+      set(textVariableAnchor) { layer.setTextVariableAnchor(it) }
+      set(textVariableAnchorOffset) { layer.setTextVariableAnchorOffset(it) }
+      set(textAnchor) { layer.setTextAnchor(it) }
+      set(textMaxAngle) { layer.setTextMaxAngle(it) }
+      set(textWritingMode) { layer.setTextWritingMode(it) }
+      set(textRotate) { layer.setTextRotate(it) }
+      set(textPadding) { layer.setTextPadding(it) }
+      set(textKeepUpright) { layer.setTextKeepUpright(it) }
+      set(textTransform) { layer.setTextTransform(it) }
+      set(textOffset) { layer.setTextOffset(it) }
+      set(textAllowOverlap) { layer.setTextAllowOverlap(it) }
+      set(textOverlap) { layer.setTextOverlap(it) }
+      set(textIgnorePlacement) { layer.setTextIgnorePlacement(it) }
+      set(textOptional) { layer.setTextOptional(it) }
+      set(textOpacity) { layer.setTextOpacity(it) }
+      set(textColor) { layer.setTextColor(it) }
+      set(textHaloColor) { layer.setTextHaloColor(it) }
+      set(textHaloWidth) { layer.setTextHaloWidth(it) }
+      set(textHaloBlur) { layer.setTextHaloBlur(it) }
+      set(textTranslate) { layer.setTextTranslate(it) }
+      set(textTranslateAnchor) { layer.setTextTranslateAnchor(it) }
+    },
+    onClick = onClick,
+    onLongClick = onLongClick,
+  )
 }

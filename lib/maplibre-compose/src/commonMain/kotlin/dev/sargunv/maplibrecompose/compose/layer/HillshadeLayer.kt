@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
@@ -37,8 +36,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param exaggeration Intensity of the hillshade. A value in the range of `[0..1]`.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun HillshadeLayer(
+public fun HillshadeLayer(
   id: String,
   source: Source,
   minZoom: Float = 0.0f,
@@ -52,22 +50,20 @@ public inline fun HillshadeLayer(
     const(IlluminationAnchor.Viewport),
   exaggeration: Expression<FloatValue> = const(0.5f),
 ) {
-  key(id) {
-    LayerNode(
-      factory = { HillshadeLayer(id = id, source = source) },
-      update = {
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(visible) { layer.visible = it }
-        set(illuminationDirection) { layer.setHillshadeIlluminationDirection(it) }
-        set(illuminationAnchor) { layer.setHillshadeIlluminationAnchor(it) }
-        set(exaggeration) { layer.setHillshadeExaggeration(it) }
-        set(shadowColor) { layer.setHillshadeShadowColor(it) }
-        set(highlightColor) { layer.setHillshadeHighlightColor(it) }
-        set(accentColor) { layer.setHillshadeAccentColor(it) }
-      },
-      onClick = null,
-      onLongClick = null,
-    )
-  }
+  LayerNode(
+    factory = { HillshadeLayer(id = id, source = source) },
+    update = {
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(visible) { layer.visible = it }
+      set(illuminationDirection) { layer.setHillshadeIlluminationDirection(it) }
+      set(illuminationAnchor) { layer.setHillshadeIlluminationAnchor(it) }
+      set(exaggeration) { layer.setHillshadeExaggeration(it) }
+      set(shadowColor) { layer.setHillshadeShadowColor(it) }
+      set(highlightColor) { layer.setHillshadeHighlightColor(it) }
+      set(accentColor) { layer.setHillshadeAccentColor(it) }
+    },
+    onClick = null,
+    onLongClick = null,
+  )
 }

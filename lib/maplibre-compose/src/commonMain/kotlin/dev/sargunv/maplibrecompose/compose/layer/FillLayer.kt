@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
@@ -60,8 +59,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun FillLayer(
+public fun FillLayer(
   id: String,
   source: Source,
   sourceLayer: String = "",
@@ -77,29 +75,27 @@ public inline fun FillLayer(
   pattern: Expression<ImageValue> = nil(),
   antialias: Expression<BooleanValue> = const(true),
   outlineColor: Expression<ColorValue> = color,
-  noinline onClick: FeaturesClickHandler? = null,
-  noinline onLongClick: FeaturesClickHandler? = null,
+  onClick: FeaturesClickHandler? = null,
+  onLongClick: FeaturesClickHandler? = null,
 ) {
-  key(id) {
-    LayerNode(
-      factory = { FillLayer(id = id, source = source) },
-      update = {
-        set(sourceLayer) { layer.sourceLayer = it }
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(filter) { layer.setFilter(it) }
-        set(visible) { layer.visible = it }
-        set(sortKey) { layer.setFillSortKey(it) }
-        set(antialias) { layer.setFillAntialias(it) }
-        set(opacity) { layer.setFillOpacity(it) }
-        set(color) { layer.setFillColor(it) }
-        set(outlineColor) { layer.setFillOutlineColor(it) }
-        set(translate) { layer.setFillTranslate(it) }
-        set(translateAnchor) { layer.setFillTranslateAnchor(it) }
-        set(pattern) { layer.setFillPattern(it) }
-      },
-      onClick = onClick,
-      onLongClick = onLongClick,
-    )
-  }
+  LayerNode(
+    factory = { FillLayer(id = id, source = source) },
+    update = {
+      set(sourceLayer) { layer.sourceLayer = it }
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(filter) { layer.setFilter(it) }
+      set(visible) { layer.visible = it }
+      set(sortKey) { layer.setFillSortKey(it) }
+      set(antialias) { layer.setFillAntialias(it) }
+      set(opacity) { layer.setFillOpacity(it) }
+      set(color) { layer.setFillColor(it) }
+      set(outlineColor) { layer.setFillOutlineColor(it) }
+      set(translate) { layer.setFillTranslate(it) }
+      set(translateAnchor) { layer.setFillTranslateAnchor(it) }
+      set(pattern) { layer.setFillPattern(it) }
+    },
+    onClick = onClick,
+    onLongClick = onLongClick,
+  )
 }

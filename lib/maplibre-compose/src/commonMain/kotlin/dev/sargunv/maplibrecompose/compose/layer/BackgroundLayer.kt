@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -30,8 +29,7 @@ import dev.sargunv.maplibrecompose.core.layer.BackgroundLayer
  *   be evaluated only at integer zoom levels.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun BackgroundLayer(
+public fun BackgroundLayer(
   id: String,
   minZoom: Float = 0.0f,
   maxZoom: Float = 24.0f,
@@ -40,19 +38,17 @@ public inline fun BackgroundLayer(
   color: Expression<ColorValue> = const(Color.Black),
   pattern: Expression<ImageValue> = nil(),
 ) {
-  key(id) {
-    LayerNode(
-      factory = { BackgroundLayer(id = id) },
-      update = {
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(visible) { layer.visible = it }
-        set(color) { layer.setBackgroundColor(it) }
-        set(pattern) { layer.setBackgroundPattern(it) }
-        set(opacity) { layer.setBackgroundOpacity(it) }
-      },
-      onClick = null,
-      onLongClick = null,
-    )
-  }
+  LayerNode(
+    factory = { BackgroundLayer(id = id) },
+    update = {
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(visible) { layer.visible = it }
+      set(color) { layer.setBackgroundColor(it) }
+      set(pattern) { layer.setBackgroundPattern(it) }
+      set(opacity) { layer.setBackgroundOpacity(it) }
+    },
+    onClick = null,
+    onLongClick = null,
+  )
 }

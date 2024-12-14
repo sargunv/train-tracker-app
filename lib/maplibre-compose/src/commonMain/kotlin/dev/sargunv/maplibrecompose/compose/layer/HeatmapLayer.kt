@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
@@ -46,8 +45,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun HeatmapLayer(
+public fun HeatmapLayer(
   id: String,
   source: Source,
   sourceLayer: String = "",
@@ -60,26 +58,24 @@ public inline fun HeatmapLayer(
   radius: Expression<DpValue> = const(30.dp),
   weight: Expression<FloatValue> = const(1f),
   intensity: Expression<FloatValue> = const(1f),
-  noinline onClick: FeaturesClickHandler? = null,
-  noinline onLongClick: FeaturesClickHandler? = null,
+  onClick: FeaturesClickHandler? = null,
+  onLongClick: FeaturesClickHandler? = null,
 ) {
-  key(id) {
-    LayerNode(
-      factory = { HeatmapLayer(id = id, source = source) },
-      update = {
-        set(sourceLayer) { layer.sourceLayer = it }
-        set(minZoom) { layer.minZoom = it }
-        set(maxZoom) { layer.maxZoom = it }
-        set(filter) { layer.setFilter(it) }
-        set(visible) { layer.visible = it }
-        set(radius) { layer.setHeatmapRadius(it) }
-        set(weight) { layer.setHeatmapWeight(it) }
-        set(intensity) { layer.setHeatmapIntensity(it) }
-        set(color) { layer.setHeatmapColor(it) }
-        set(opacity) { layer.setHeatmapOpacity(it) }
-      },
-      onClick = onClick,
-      onLongClick = onLongClick,
-    )
-  }
+  LayerNode(
+    factory = { HeatmapLayer(id = id, source = source) },
+    update = {
+      set(sourceLayer) { layer.sourceLayer = it }
+      set(minZoom) { layer.minZoom = it }
+      set(maxZoom) { layer.maxZoom = it }
+      set(filter) { layer.setFilter(it) }
+      set(visible) { layer.visible = it }
+      set(radius) { layer.setHeatmapRadius(it) }
+      set(weight) { layer.setHeatmapWeight(it) }
+      set(intensity) { layer.setHeatmapIntensity(it) }
+      set(color) { layer.setHeatmapColor(it) }
+      set(opacity) { layer.setHeatmapOpacity(it) }
+    },
+    onClick = onClick,
+    onLongClick = onLongClick,
+  )
 }
