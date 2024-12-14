@@ -13,33 +13,50 @@ public interface ExpressionScope {
 
   // region Literals
 
+  /** Creates a literal expression for a [String] value. */
   public fun const(string: String): Expression<StringValue> = Expression.ofString(string)
 
+  /** Creates a literal expression for a [LayerPropertyEnum] value. */
   public fun <T : LayerPropertyEnum> const(value: T): Expression<EnumValue<T>> = value.expr.cast()
 
+  /** Creates a literal expression for a dimensionless [Float] value. */
   public fun const(float: Float): Expression<FloatValue> = Expression.ofFloat(float)
 
+  /** Creates a literal expression for an dimensionless [Int] value. */
   public fun const(int: Int): Expression<IntValue> = Expression.ofInt(int)
 
+  /** Creates a literal expression for a [Dp] value. */
   public fun const(dp: Dp): Expression<DpValue> = Expression.ofFloat(dp.value).cast()
 
+  /**
+   * Creates a literal expression for a [Duration] value.
+   *
+   * The duration will be rounded to the nearest whole milliseconds.
+   */
   public fun const(duration: Duration): Expression<DurationValue> =
     Expression.ofInt(duration.inWholeMilliseconds.toInt()).cast()
 
+  /** Creates a literal expression for a [Boolean] value. */
   public fun const(bool: Boolean): Expression<BooleanValue> =
     if (bool) Expression.ofTrue else Expression.ofFalse
 
+  /** Creates a literal expression for a [Color] value. */
   public fun const(color: Color): Expression<ColorValue> = Expression.ofColor(color)
 
+  /** Creates a literal expression for an [Offset] value. */
   public fun const(offset: Offset): Expression<OffsetValue> = Expression.ofOffset(offset)
 
+  /** Creates a literal expression for a [DpOffset] value. */
   public fun const(dpOffset: DpOffset): Expression<DpOffsetValue> =
     Expression.ofOffset(Offset(dpOffset.x.value, dpOffset.y.value)).cast()
 
+  /** Creates a literal expression for a [PaddingValues.Absolute] value. */
   public fun const(padding: PaddingValues.Absolute): Expression<PaddingValue> =
     Expression.ofPadding(padding)
 
   /**
+   * Creates a literal expression for a `null` value.
+   *
    * For simplicity, the expression type system does not encode nullability, so the return value of
    * this function is assignable to any kind of expression.
    */
@@ -49,12 +66,15 @@ public interface ExpressionScope {
 
   // region Conversion
 
+  /** Converts a numeric [Expression] to a [DpValue] expression. */
   public val Expression<FloatValue>.dp: Expression<DpValue>
     get() = this.cast()
 
+  /** Converts a numeric [Expression] in milliseconds to a [DurationValue] expression. */
   public val Expression<FloatValue>.milliseconds: Expression<DurationValue>
     get() = this.cast()
 
+  /** Converts a numeric [Expression] in seconds to a [DurationValue] expression. */
   public val Expression<FloatValue>.seconds: Expression<DurationValue>
     get() = (this * const(1000)).cast()
 

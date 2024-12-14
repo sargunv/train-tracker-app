@@ -1,6 +1,10 @@
 package dev.sargunv.maplibrecompose.core.expression
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import kotlin.time.Duration
 
 /**
@@ -47,8 +51,8 @@ public sealed interface IntValue : ScalarValue<Number>
 public typealias DpValue = ScalarValue<Dp>
 
 /**
- * Represents an [Expression] that resolves to an amount of time with millisecond precision. See
- * [ExpressionScope.const].
+ * Represents an [Expression] that resolves to an amount of time with millisecond precision
+ * ([Duration]). See [ExpressionScope.const].
  */
 public typealias DurationValue = ScalarValue<Duration>
 
@@ -64,7 +68,7 @@ public sealed interface StringValue :
  */
 public sealed interface EnumValue<out T : LayerPropertyEnum> : StringValue
 
-/** Represents an [Expression] that resolves to a color value. See [ExpressionScope.const]. */
+/** Represents an [Expression] that resolves to a [Color] value. See [ExpressionScope.const]. */
 public sealed interface ColorValue : ExpressionValue, InterpolateableValue<ColorValue>
 
 /**
@@ -88,20 +92,20 @@ public sealed interface VectorValue<U> :
   ListValue<ScalarValue<U>>, InterpolateableValue<VectorValue<U>>
 
 /**
- * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels. See
- * [ExpressionScope.const].
+ * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels
+ * ([Offset]). See [ExpressionScope.const].
  */
 public sealed interface OffsetValue : VectorValue<Number>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in device-independent
- * pixels. See [ExpressionScope.const].
+ * pixels ([DpOffset]). See [ExpressionScope.const].
  */
 public sealed interface DpOffsetValue : VectorValue<Dp>
 
 /**
  * Represents an [Expression] that resolves to an absolute (layout direction unaware) padding
- * applied along the edges inside a box. See [ExpressionScope.const].
+ * applied along the edges inside a box ([PaddingValues.Absolute]). See [ExpressionScope.const].
  */
 public sealed interface PaddingValue : VectorValue<Dp>
 
