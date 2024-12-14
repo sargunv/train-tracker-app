@@ -3,103 +3,154 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.ui.unit.Dp
 import kotlin.time.Duration
 
-/** Represents a value that an expression can resolve to. */
+/**
+ * Represents a value that an [Expression] can resolve to. These types are never actually
+ * instantiated at runtime; they're only used as type parameters to hint at the type of an
+ * [Expression]
+ */
 public sealed interface ExpressionValue
 
-/** Represents an expression that resolves to a true or false value. */
-public sealed interface BooleanValue : ExpressionValue
+/**
+ * Represents an [Expression] that resolves to a true or false value. See [ExpressionScope.const].
+ */
+public sealed interface BooleanValue : ExpressionValue, EquatableValue
 
 /**
- * Represents an expression that resolves to a numeric quantity. Corresponds to numbers in the JSON
- * style spec.
+ * Represents an [Expression] that resolves to a numeric quantity. Corresponds to numbers in the
+ * JSON style spec. Use [ExpressionScope.const] to create a literal [ScalarValue].
  *
  * @param U the unit type of the scalar value. For dimensionless quantities, use [Number].
  */
 public sealed interface ScalarValue<U> :
-  ExpressionValue, MatchableValue, InterpolateableValue<U>, ComparableValue<ScalarValue<U>>
+  ExpressionValue,
+  MatchableValue,
+  InterpolateableValue<U>,
+  ComparableValue<ScalarValue<U>>,
+  EquatableValue
 
-/** Represents an expression that resolves to a dimensionless quantity. */
+/**
+ * Represents an [Expression] that resolves to a dimensionless quantity. See
+ * [ExpressionScope.const].
+ */
 public typealias FloatValue = ScalarValue<Number>
 
-/** Represents an expression that resolves to an integer dimensionless quantity. */
+/**
+ * Represents an [Expression] that resolves to an integer dimensionless quantity. See
+ * [ExpressionScope.const].
+ */
 public sealed interface IntValue : ScalarValue<Number>
 
-/** Represents an expression that resolves to device-independent pixels (see [Dp]). */
+/**
+ * Represents an [Expression] that resolves to device-independent pixels ([Dp]). See
+ * [ExpressionScope.const].
+ */
 public typealias DpValue = ScalarValue<Dp>
 
-/** Represents an expression that resolves to an amount of time with millisecond precision. */
+/**
+ * Represents an [Expression] that resolves to an amount of time with millisecond precision. See
+ * [ExpressionScope.const].
+ */
 public typealias DurationValue = ScalarValue<Duration>
 
-/** Represents an expression that resolves to a string value. */
-public sealed interface StringValue : ExpressionValue, MatchableValue, ComparableValue<StringValue>
+/** Represents an [Expression] that resolves to a string value. See [ExpressionScope.const]. */
+public sealed interface StringValue :
+  ExpressionValue, MatchableValue, ComparableValue<StringValue>, EquatableValue
 
-/** Represents an expression that resolves to an enum value of type [T]. */
+/**
+ * Represents an [Expression] that resolves to a [LayerPropertyEnum] value of type [T]. See
+ * [ExpressionScope.const].
+ *
+ * @param T The [LayerPropertyEnum] type that this value represents.
+ */
 public sealed interface EnumValue<out T : LayerPropertyEnum> : StringValue
 
-/** Represents an expression that resolves to a color value. */
+/** Represents an [Expression] that resolves to a color value. See [ExpressionScope.const]. */
 public sealed interface ColorValue : ExpressionValue, InterpolateableValue<ColorValue>
 
-/** Represents an expression that resolves to a map value (corresponds to a JSON object). */
+/**
+ * Represents an [Expression] that resolves to a map value (corresponds to a JSON object). See
+ * [ExpressionScope.literal].
+ */
 public sealed interface MapValue : ExpressionValue
 
-/** Represents an expression that resolves to a list value (corresponds to a JSON array). */
+/**
+ * Represents an [Expression] that resolves to a list value (corresponds to a JSON array). See
+ * [ExpressionScope.literal].
+ */
 public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
 
 /**
- * Represents an expression that resolves to a list of scalar values.
+ * Represents an [Expression] that resolves to a list of scalar values.
  *
  * @param U the unit type of the scalar values. For dimensionless quantities, use [Number].
  */
 public sealed interface VectorValue<U> :
   ListValue<ScalarValue<U>>, InterpolateableValue<VectorValue<U>>
 
-/** Represents an expression that resolves to a 2D floating point offset in physical pixels. */
+/**
+ * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels. See
+ * [ExpressionScope.const].
+ */
 public sealed interface OffsetValue : VectorValue<Number>
 
 /**
- * Represents an expression that resolves to a 2D floating point offset in device-independent
- * pixels.
+ * Represents an [Expression] that resolves to a 2D floating point offset in device-independent
+ * pixels. See [ExpressionScope.const].
  */
 public sealed interface DpOffsetValue : VectorValue<Dp>
 
 /**
- * Represents an expression that resolves to an absolute (layout direction unaware) padding applied
- * along the edges inside a box.
+ * Represents an [Expression] that resolves to an absolute (layout direction unaware) padding
+ * applied along the edges inside a box. See [ExpressionScope.const].
  */
 public sealed interface PaddingValue : VectorValue<Dp>
 
 /**
- * Represents an expression that resolves to a collator object for use in locale-dependent
+ * Represents an [Expression] that resolves to a collator object for use in locale-dependent
  * comparison operations. See [ExpressionScope.collator].
  */
 public sealed interface CollatorValue : ExpressionValue
 
-/** Represents an expression that resolves to a formatted string. See [ExpressionScope.format]. */
+/** Represents an [Expression] that resolves to a formatted string. See [ExpressionScope.format]. */
 public sealed interface FormattedValue : ExpressionValue
 
-/** Represents an expression that resolves to a geometry object. */
+/** Represents an [Expression] that resolves to a geometry object. */
 public sealed interface GeoJsonValue : ExpressionValue
 
-/** Represents an expression that resolves to an image. See [ExpressionScope.image]. */
+/** Represents an [Expression] that resolves to an image. See [ExpressionScope.image]. */
 public sealed interface ImageValue : ExpressionValue
 
-/** Represents an expression that resolves to an interpolation type. */
+/**
+ * Represents an [Expression] that resolves to an interpolation type. See [ExpressionScope.linear],
+ * [ExpressionScope.exponential], and [ExpressionScope.cubicBezier].
+ */
 public sealed interface InterpolationValue : ExpressionValue
 
 /**
- * Represents an expression that resolves to a value that can be matched. See
+ * Represents an [Expression] that resolves to a value that can be compared for equality. See
+ * [ExpressionScope.eq] and [ExpressionScope.neq].
+ */
+public sealed interface EquatableValue : ExpressionValue
+
+/**
+ * Union type for an [Expression] that resolves to a value that can be matched. See
  * [ExpressionScope.match].
  */
 public sealed interface MatchableValue : ExpressionValue
 
 /**
- * Represents an expression that resolves to a value that can be ordered with other values of its
- * type.
+ * Union type for an [Expression] that resolves to a value that can be ordered with other values of
+ * its type. See [ExpressionScope.gt], [ExpressionScope.lt], [ExpressionScope.gte], and
+ * [ExpressionScope.lte].
+ *
+ * @param T the type of the value that can be compared against for ordering.
  */
 public sealed interface ComparableValue<T> : ExpressionValue
 
 /**
- * Represents an expression that resolves to a value that can be interpolated. See
+ * Union type for an [Expression] that resolves to a value that can be interpolated. See
  * [ExpressionScope.interpolate].
+ *
+ * @param T the type of values that can be interpolated between.
  */
 public sealed interface InterpolateableValue<T> : ExpressionValue

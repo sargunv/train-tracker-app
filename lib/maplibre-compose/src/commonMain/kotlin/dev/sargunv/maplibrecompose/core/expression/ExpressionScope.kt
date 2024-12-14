@@ -544,8 +544,9 @@ public interface ExpressionScope {
     callFn("coalesce", *values)
 
   /** Returns whether this expression is equal to [other]. */
-  public infix fun Expression<*>.eq(other: Expression<*>): Expression<BooleanValue> =
-    callFn("==", this, other)
+  public infix fun Expression<EquatableValue>.eq(
+    other: Expression<EquatableValue>
+  ): Expression<BooleanValue> = callFn("==", this, other)
 
   /**
    * Returns whether the [left] string expression is equal to the [right] string expression. An
@@ -559,8 +560,9 @@ public interface ExpressionScope {
   ): Expression<BooleanValue> = callFn("==", left, right, collator)
 
   /** Returns whether this expression is not equal to [other]. */
-  public infix fun Expression<*>.neq(other: Expression<*>): Expression<BooleanValue> =
-    callFn("!=", this, other)
+  public infix fun Expression<EquatableValue>.neq(
+    other: Expression<EquatableValue>
+  ): Expression<BooleanValue> = callFn("!=", this, other)
 
   /**
    * Returns whether the [left] string expression is not equal to the [right] string expression. An
