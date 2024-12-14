@@ -86,19 +86,21 @@ public object ExpressionScope {
   @JvmInline
   public value class Variable<@Suppress("unused") T : ExpressionValue>(public val name: String)
 
-  /**
-   * Binds expressions to named variables, which can then be referenced in the result expression
-   * using [useVariable].
-   */
-  public fun <T : ExpressionValue> withVariable(
-    variable: Variable<T>,
-    value: Expression<*>,
-    expression: Expression<T>,
-  ): Expression<T> = callFn("let", const(variable.name), value, expression).cast()
+  /** Declares a named variable for use in [bind] and [use]. */
+  public fun <T : ExpressionValue> declare(name: String): Variable<T> = Variable(name)
 
-  /** References variable bound using [withVariable]. */
-  public fun <T : ExpressionValue> useVariable(variable: Variable<T>): Expression<T> =
-    callFn("var", const(variable.name)).cast()
+  /**
+   * Binds expressions to variables declared by [declare], which can then be referenced with [use]
+   * in the [expression].
+   */
+  public fun <T : ExpressionValue> Variable<T>.bind(
+    value: Expression<T>,
+    expression: Expression<T>,
+  ): Expression<T> = callFn("let", const(name), value, expression).cast()
+
+  /** References variable bound using [bind]. */
+  public fun <T : ExpressionValue> Variable<T>.use(): Expression<T> =
+    callFn("var", const(name)).cast()
 
   // endregion
 
