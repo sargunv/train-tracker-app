@@ -898,6 +898,7 @@ public interface ExpressionScope {
     callFn("-", this)
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
+  @JvmName("divUnitBoth")
   public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
     divisor: Expression<V>
   ): Expression<FloatValue> = callFn("/", this, divisor)
@@ -906,7 +907,12 @@ public interface ExpressionScope {
   @JvmName("divUnitLeftOnly")
   public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
     divisor: Expression<FloatValue>
-  ): Expression<ScalarValue<U>> = callFn("/", this, divisor)
+  ): Expression<V> = callFn("/", this, divisor)
+
+  /** Returns the result of floating point division of this number expression by [divisor]. */
+  public operator fun Expression<FloatValue>.div(
+    divisor: Expression<FloatValue>
+  ): Expression<FloatValue> = callFn("/", this, divisor)
 
   /** Returns the remainder after integer division of this number expression by [divisor]. */
   public operator fun <U, V : ScalarValue<U>> Expression<V>.rem(
@@ -1124,7 +1130,7 @@ public interface ExpressionScope {
 
   // region Utils
 
-  private fun <T : ExpressionValue> callFn(
+  public fun <T : ExpressionValue> callFn(
     function: String,
     vararg args: Expression<*>,
   ): Expression<T> =
