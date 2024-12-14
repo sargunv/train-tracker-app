@@ -5,6 +5,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
 import kotlin.enums.enumEntries
 import kotlin.jvm.JvmName
 import kotlin.time.Duration
@@ -870,7 +871,7 @@ public object ExpressionScope {
    * Example:
    * ```
    * interpolateHcl(
-   *   Interpolation.Linear,
+   *   linear(),
    *   zoom(),
    *   1 to const(Color.Red),
    *   5 to const(Color.Blue),
@@ -882,6 +883,7 @@ public object ExpressionScope {
    * linearly from blue to green in zoom levels 5 to 10, which it where it remains until maximum
    * zoom.
    */
+  @JsOnlyApi
   public fun interpolateHcl(
     type: Expression<InterpolationValue>,
     input: Expression<FloatValue>,
@@ -893,6 +895,7 @@ public object ExpressionScope {
    * ([stops]), given the [input] value. Works like [interpolate], but the interpolation is
    * performed in the [CIELAB color space](https://en.wikipedia.org/wiki/CIELAB_color_space).
    */
+  @JsOnlyApi
   public fun interpolateLab(
     type: Expression<InterpolationValue>,
     input: Expression<FloatValue>,
@@ -1121,8 +1124,8 @@ public object ExpressionScope {
      * string, or any primitive data type. Note that [state] can only be used with layer properties
      * that support data-driven styling.
      */
-    // TODO: latest when featureState is supported on native platforms, should document which layer
-    //   properties support data-driven styling, i.e. featureState expressions.
+    // TODO:  document which layer properties support feature state expressions on which platforms
+    @JsOnlyApi
     public fun <T : ExpressionValue> state(key: Expression<StringValue>): Expression<T> =
       callFn("feature-state", key).cast()
 

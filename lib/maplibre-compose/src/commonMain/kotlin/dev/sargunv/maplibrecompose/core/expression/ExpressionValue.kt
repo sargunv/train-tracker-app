@@ -469,7 +469,7 @@ public enum class TextRotationAlignment(override val stringConst: Expression<Str
    * For [SymbolPlacement.Point], this is equivalent to [TextRotationAlignment.Viewport]. Otherwise,
    * aligns glyphs to the x-axis of the viewport and places them along the line.
    *
-   * **Note**: This value not supported on native platforms, yet, see
+   * **Note**: This value not supported on native platforms yet, see
    * [maplibre-native#250](https://github.com/maplibre/maplibre-native/issues/250)**
    */
   ViewportGlyph(Expression.ofString("viewport-glyph")),

@@ -26,6 +26,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextTransform
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
+import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
 
 @PublishedApi
 internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
@@ -45,7 +46,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconAllowOverlap(allowOverlap: Expression<BooleanValue>)
 
-  fun setIconOverlap(overlap: Expression<StringValue>)
+  @JsOnlyApi fun setIconOverlap(overlap: Expression<StringValue>)
 
   fun setIconIgnorePlacement(ignorePlacement: Expression<BooleanValue>)
 
@@ -109,8 +110,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextVariableAnchor(variableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>>)
 
-  // TODO: this is a list of alternating SymbolAnchor and Offset
-  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>)
+  @JsOnlyApi fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>)
 
   fun setTextAnchor(anchor: Expression<EnumValue<SymbolAnchor>>)
 
@@ -130,7 +130,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextAllowOverlap(allowOverlap: Expression<BooleanValue>)
 
-  fun setTextOverlap(overlap: Expression<StringValue>)
+  @JsOnlyApi fun setTextOverlap(overlap: Expression<StringValue>)
 
   fun setTextIgnorePlacement(ignorePlacement: Expression<BooleanValue>)
 

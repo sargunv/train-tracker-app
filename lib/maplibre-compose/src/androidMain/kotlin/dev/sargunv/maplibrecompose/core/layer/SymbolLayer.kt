@@ -67,7 +67,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
   }
 
   actual fun setIconOverlap(overlap: Expression<StringValue>) {
-    // not implemented by MapLibre-native Android yet
+    // TODO: warn not implemented by MapLibre-native Android yet
     // impl.setProperties(PropertyFactory.iconOverlap(overlap.toMLNExpression()))
   }
 

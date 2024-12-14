@@ -38,6 +38,7 @@ import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.ZeroPadding
 import dev.sargunv.maplibrecompose.core.layer.SymbolLayer
 import dev.sargunv.maplibrecompose.core.source.Source
+import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
 
 /**
  * A symbol layer draws data from the [sourceLayer] in the given [source] as icons and/or text
@@ -154,7 +155,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  *
  *   Ignored if [iconImage] is not specified.
  *
- *   **Note**: This property is not supported on native platforms, yet, see
+ *   **Note**: This property is not supported on native platforms yet, see
  *   [maplibre-native#251](https://github.com/maplibre/maplibre-native/issues/251)**
  *
  * @param iconIgnorePlacement If true, other symbols can be visible even if they collide with the
@@ -358,6 +359,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param onClick Function to call when any feature in this layer has been clicked.
  * @param onLongClick Function to call when any feature in this layer has been long-clicked.
  */
+@OptIn(JsOnlyApi::class)
 @Composable
 @Suppress("NOTHING_TO_INLINE")
 public inline fun SymbolLayer(
