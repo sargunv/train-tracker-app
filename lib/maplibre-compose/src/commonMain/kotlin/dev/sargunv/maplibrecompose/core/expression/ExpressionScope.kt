@@ -899,6 +899,11 @@ public interface ExpressionScope {
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
   public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
+    divisor: Expression<V>
+  ): Expression<FloatValue> = callFn("/", this, divisor)
+
+  /** Returns the result of floating point division of this number expression by [divisor]. */
+  public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
     divisor: Expression<FloatValue>
   ): Expression<ScalarValue<U>> = callFn("/", this, divisor)
 

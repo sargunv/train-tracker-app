@@ -23,7 +23,7 @@ public sealed interface BooleanValue : ExpressionValue, EquatableValue
  * Represents an [Expression] that resolves to a numeric quantity. Corresponds to numbers in the
  * JSON style spec. Use [ExpressionScope.const] to create a literal [ScalarValue].
  *
- * @param U the unit type of the scalar value. For dimensionless quantities, use [Number].
+ * @param U the unit type of the scalar value. For dimensionless quantities, use [Unit].
  */
 public sealed interface ScalarValue<U> :
   ExpressionValue,
@@ -36,13 +36,13 @@ public sealed interface ScalarValue<U> :
  * Represents an [Expression] that resolves to a dimensionless quantity. See
  * [ExpressionScope.const].
  */
-public typealias FloatValue = ScalarValue<Number>
+public typealias FloatValue = ScalarValue<Unit>
 
 /**
  * Represents an [Expression] that resolves to an integer dimensionless quantity. See
  * [ExpressionScope.const].
  */
-public sealed interface IntValue : ScalarValue<Number>
+public sealed interface IntValue : ScalarValue<Unit>
 
 /**
  * Represents an [Expression] that resolves to device-independent pixels ([Dp]). See
@@ -86,7 +86,7 @@ public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
 /**
  * Represents an [Expression] that resolves to a list of scalar values.
  *
- * @param U the unit type of the scalar values. For dimensionless quantities, use [Number].
+ * @param U the unit type of the scalar values. For dimensionless quantities, use [Unit].
  */
 public sealed interface VectorValue<U> :
   ListValue<ScalarValue<U>>, InterpolateableValue<VectorValue<U>>
@@ -95,7 +95,7 @@ public sealed interface VectorValue<U> :
  * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels
  * ([Offset]). See [ExpressionScope.const].
  */
-public sealed interface OffsetValue : VectorValue<Number>
+public sealed interface OffsetValue : VectorValue<Unit>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in device-independent
