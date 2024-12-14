@@ -111,8 +111,9 @@ public object ExpressionScope {
     callFn("literal", Expression.ofList(values)).cast()
 
   /** Produces a literal map value. */
-  public fun literal(values: Map<String, Expression<*>>): Expression<MapValue> =
-    callFn("literal", Expression.ofMap(values)).cast()
+  public fun <T : ExpressionValue> literal(
+    values: Map<String, Expression<T>>
+  ): Expression<MapValue<T>> = callFn("literal", Expression.ofMap(values)).cast()
 
   /** Returns a string describing the type of this expression. */
   public fun Expression<*>.type(): Expression<ExpressionType> = callFn("typeof", this).cast()
@@ -217,7 +218,7 @@ public object ExpressionScope {
    * In case this expression is not a map, each of the [fallbacks] is evaluated in order until a map
    * is obtained. If none of the inputs are maps, the expression is an error.
    */
-  public fun Expression<*>.asMap(vararg fallbacks: Expression<*>): Expression<MapValue> =
+  public fun Expression<*>.asMap(vararg fallbacks: Expression<*>): Expression<MapValue<*>> =
     callFn("object", this, *fallbacks).cast()
 
   /**
@@ -480,11 +481,12 @@ public object ExpressionScope {
   public fun has(key: Expression<StringValue>): Expression<BooleanValue> = callFn("has", key).cast()
 
   /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
-  public operator fun Expression<MapValue>.get(key: Expression<StringValue>): Expression<*> =
-    callFn("get", key, this)
+  public operator fun <T : ExpressionValue> Expression<MapValue<T>>.get(
+    key: Expression<StringValue>
+  ): Expression<T> = callFn("get", key, this).cast()
 
   /** Returns whether the given [key] is in this map. */
-  public fun Expression<MapValue>.has(key: Expression<StringValue>): Expression<BooleanValue> =
+  public fun Expression<MapValue<*>>.has(key: Expression<StringValue>): Expression<BooleanValue> =
     callFn("has", key, this).cast()
 
   /**
@@ -1110,7 +1112,7 @@ public object ExpressionScope {
      * Gets the feature properties object. Note that in some cases, it may be more efficient to use
      * `get("property_name")` directly.
      */
-    public fun properties(): Expression<MapValue> = callFn("properties").cast()
+    public fun properties(): Expression<MapValue<*>> = callFn("properties").cast()
 
     /**
      * **Note: Not supported on native platforms. See

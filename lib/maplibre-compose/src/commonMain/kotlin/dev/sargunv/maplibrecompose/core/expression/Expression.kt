@@ -21,7 +21,7 @@ private constructor(
     private val ofTransparent = Expression<ColorValue>(Color.Transparent)
     private val ofBlack = Expression<ColorValue>(Color.Black)
     private val ofWhite = Expression<ColorValue>(Color.White)
-    private val ofEmptyMap = Expression<MapValue>(emptyMap<String, Nothing>())
+    private val ofEmptyMap = Expression<MapValue<Nothing>>(emptyMap<String, Nothing>())
     private val ofEmptyList = Expression<ListValue<Nothing>>(emptyList<Nothing>())
     private val ofZeroOffset = Expression<OffsetValue>(Offset.Zero)
     private val ofZeroPadding = Expression<PaddingValue>(ZeroPadding)
@@ -55,7 +55,7 @@ private constructor(
         else -> Expression(color)
       }
 
-    fun ofMap(map: Map<String, Expression<*>>) =
+    fun <T : ExpressionValue> ofMap(map: Map<String, Expression<T>>): Expression<MapValue<T>> =
       if (map.isEmpty()) ofEmptyMap else Expression(map.mapValues { it.value.value })
 
     fun <T : ExpressionValue> ofList(list: List<Expression<T>>): Expression<ListValue<T>> =

@@ -77,7 +77,7 @@ public sealed interface ColorValue : ExpressionValue, InterpolateableValue<Color
  * Represents an [Expression] that resolves to a map value (corresponds to a JSON object). See
  * [ExpressionScope.literal].
  */
-public sealed interface MapValue : ExpressionValue
+public sealed interface MapValue<out T : ExpressionValue> : ExpressionValue
 
 /**
  * Represents an [Expression] that resolves to a list value (corresponds to a JSON array). See
