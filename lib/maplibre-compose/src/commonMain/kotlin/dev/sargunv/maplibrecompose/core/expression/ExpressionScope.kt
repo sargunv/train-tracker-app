@@ -5,19 +5,19 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import kotlin.enums.enumEntries
 import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
-@Suppress("INAPPLICABLE_JVM_NAME")
-public interface ExpressionScope {
-
+// TODO make this use context parameters when available
+public object ExpressionScope {
   // region Literals
 
   /** Creates a literal expression for a [String] value. */
   public fun const(string: String): Expression<StringValue> = Expression.ofString(string)
 
   /** Creates a literal expression for an enum value implementing [EnumValue]. */
-  public fun <T : EnumValue<T>> const(value: T): Expression<EnumValue<T>> = value.expr.cast()
+  public fun <T : EnumValue<T>> const(value: T): Expression<T> = value.stringConst.cast()
 
   /** Creates a literal expression for a dimensionless [Float] value. */
   public fun const(float: Float): Expression<FloatValue> = Expression.ofFloat(float)
@@ -108,10 +108,7 @@ public interface ExpressionScope {
   public fun literal(values: Map<String, Expression<*>>): Expression<MapValue> =
     callFn("literal", Expression.ofMap(values))
 
-  /**
-   * Returns a string describing the type of this expression. Either "boolean", "string", "number",
-   * "color" or "array".
-   */
+  /** Returns a string describing the type of this expression. */
   public fun Expression<*>.type(): Expression<ExpressionType> = callFn("typeof", this)
 
   /**
@@ -121,7 +118,7 @@ public interface ExpressionScope {
    * will cause the whole expression to be aborted.
    */
   public fun Expression<*>.asList(
-    type: Expression<StringValue>? = null,
+    type: Expression<ExpressionType>? = null,
     length: Expression<IntValue>? = null,
   ): Expression<ListValue<*>> {
     val args = buildList {
@@ -132,6 +129,43 @@ public interface ExpressionScope {
   }
 
   /**
+   * Asserts that this is a list of numbers, optionally with a specific [length].
+   *
+   * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
+   * will cause the whole expression to be aborted.
+   */
+  public fun <U, V : ScalarValue<V>> Expression<*>.asVector(
+    length: Expression<IntValue>? = null
+  ): Expression<V> = asList(const(ExpressionType.Number), length).cast()
+
+  /**
+   * Asserts that this is a list of numbers of length 2.
+   *
+   * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
+   * will cause the whole expression to be aborted.
+   */
+  public fun Expression<*>.asOffset(): Expression<OffsetValue> =
+    asList(const(ExpressionType.Number), const(2)).cast()
+
+  /**
+   * Asserts that this is a list of numbers of length 2.
+   *
+   * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
+   * will cause the whole expression to be aborted.
+   */
+  public fun Expression<*>.asDpOffset(): Expression<DpOffsetValue> =
+    asList(const(ExpressionType.Number), const(2)).cast()
+
+  /**
+   * Asserts that this is a list of numbers of length 4.
+   *
+   * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
+   * will cause the whole expression to be aborted.
+   */
+  public fun Expression<*>.asPadding(): Expression<PaddingValue> =
+    asList(const(ExpressionType.Number), const(2)).cast()
+
+  /**
    * Asserts that this value is a string.
    *
    * In case this expression is not a string, each of the [fallbacks] is evaluated in order until a
@@ -139,6 +173,25 @@ public interface ExpressionScope {
    */
   public fun Expression<*>.asString(vararg fallbacks: Expression<*>): Expression<StringValue> =
     callFn("string", this, *fallbacks)
+
+  /**
+   * Asserts that this value is an entry of the enum specified by [T].
+   *
+   * In case this expression is not an entry of the enum, each of the [fallbacks] is evaluated in
+   * order until a match is obtained. If none of the inputs match, the expression is an error.
+   */
+  public inline fun <reified T> Expression<*>.asEnum(
+    vararg fallbacks: Expression<*>
+  ): Expression<T> where T : Enum<T>, T : EnumValue<T> {
+    val entries = literal(enumEntries<T>().map { const(it) })
+    return case(
+        entries.contains(this) then this,
+        *fallbacks.map { entries.contains(it) then it }.toTypedArray(),
+        fallback = nil(), // should always error .asString(), which is what we want as per kdoc
+      )
+      .asString()
+      .cast()
+  }
 
   /**
    * Asserts that this value is a number.
@@ -1123,7 +1176,7 @@ public interface ExpressionScope {
 
   // region Utils
 
-  public fun <T : ExpressionValue> callFn(
+  private fun <T : ExpressionValue> callFn(
     function: String,
     vararg args: Expression<*>,
   ): Expression<T> =
@@ -1148,9 +1201,3 @@ public interface ExpressionScope {
 
   // endregion
 }
-
-/**
- * Helper object implementing [ExpressionScope] to help with importing individual functions from the
- * expressions DSL, or to provide a receiver for functions providing the DSL.
- */
-public object Expressions : ExpressionScope

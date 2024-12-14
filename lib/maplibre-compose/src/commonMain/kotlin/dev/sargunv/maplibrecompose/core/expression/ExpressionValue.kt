@@ -66,7 +66,8 @@ public sealed interface StringValue :
  * @param T The [EnumValue] descendent type that this value represents.
  */
 public sealed interface EnumValue<out T> : StringValue {
-  public val expr: Expression<StringValue>
+  /** The string expression representing this enum value. You probably don't need this. */
+  public val stringConst: Expression<StringValue>
 }
 
 /** Represents an [Expression] that resolves to a [Color] value. See [ExpressionScope.const]. */
@@ -161,7 +162,7 @@ public sealed interface ComparableValue<T> : ExpressionValue
 public sealed interface InterpolateableValue<T> : ExpressionValue
 
 /** The type of value resolved from an expression, as returned by [ExpressionScope.type]. */
-public enum class ExpressionType(override val expr: Expression<StringValue>) :
+public enum class ExpressionType(override val stringConst: Expression<StringValue>) :
   EnumValue<ExpressionType> {
   Number(Expression.ofString("number")),
   String(Expression.ofString("string")),
@@ -172,7 +173,7 @@ public enum class ExpressionType(override val expr: Expression<StringValue>) :
 }
 
 /** Type of a GeoJson feature, as returned by [ExpressionScope.geometryType]. */
-public enum class GeometryType(override val expr: Expression<StringValue>) :
+public enum class GeometryType(override val stringConst: Expression<StringValue>) :
   EnumValue<GeometryType> {
   Point(Expression.ofString("Point")),
   LineString(Expression.ofString("LineString")),
@@ -183,7 +184,7 @@ public enum class GeometryType(override val expr: Expression<StringValue>) :
 }
 
 /** Frame of reference for offsetting geometry. */
-public enum class TranslateAnchor(override val expr: Expression<StringValue>) :
+public enum class TranslateAnchor(override val stringConst: Expression<StringValue>) :
   EnumValue<TranslateAnchor> {
   /** Offset is relative to the map */
   Map(Expression.ofString("map")),
@@ -193,7 +194,7 @@ public enum class TranslateAnchor(override val expr: Expression<StringValue>) :
 }
 
 /** Scaling behavior of circles when the map is pitched. */
-public enum class CirclePitchScale(override val expr: Expression<StringValue>) :
+public enum class CirclePitchScale(override val stringConst: Expression<StringValue>) :
   EnumValue<CirclePitchScale> {
   /**
    * Circles are scaled according to their apparent distance to the camera, i.e. as if they are on
@@ -206,7 +207,7 @@ public enum class CirclePitchScale(override val expr: Expression<StringValue>) :
 }
 
 /** Orientation of circles when the map is pitched. */
-public enum class CirclePitchAlignment(override val expr: Expression<StringValue>) :
+public enum class CirclePitchAlignment(override val stringConst: Expression<StringValue>) :
   EnumValue<CirclePitchAlignment> {
   /** Circles are aligned to the plane of the map, i.e. flat on top of the map. */
   Map(Expression.ofString("map")),
@@ -216,7 +217,7 @@ public enum class CirclePitchAlignment(override val expr: Expression<StringValue
 }
 
 /** Direction of light source when map is rotated. */
-public enum class IlluminationAnchor(override val expr: Expression<StringValue>) :
+public enum class IlluminationAnchor(override val stringConst: Expression<StringValue>) :
   EnumValue<IlluminationAnchor> {
 
   /** The hillshade illumination is relative to the north direction. */
@@ -227,7 +228,8 @@ public enum class IlluminationAnchor(override val expr: Expression<StringValue>)
 }
 
 /** Display of joined lines */
-public enum class LineJoin(override val expr: Expression<StringValue>) : EnumValue<LineJoin> {
+public enum class LineJoin(override val stringConst: Expression<StringValue>) :
+  EnumValue<LineJoin> {
   /**
    * A join with a squared-off end which is drawn beyond the endpoint of the line at a distance of
    * one-half of the line's width.
@@ -248,7 +250,7 @@ public enum class LineJoin(override val expr: Expression<StringValue>) : EnumVal
 }
 
 /** Display of line endings */
-public enum class LineCap(override val expr: Expression<StringValue>) : EnumValue<LineCap> {
+public enum class LineCap(override val stringConst: Expression<StringValue>) : EnumValue<LineCap> {
   /** A cap with a squared-off end which is drawn to the exact endpoint of the line. */
   Butt(Expression.ofString("butt")),
 
@@ -269,7 +271,7 @@ public enum class LineCap(override val expr: Expression<StringValue>) : EnumValu
  * The resampling/interpolation method to use for overscaling, also known as texture magnification
  * filter
  */
-public enum class RasterResampling(override val expr: Expression<StringValue>) :
+public enum class RasterResampling(override val stringConst: Expression<StringValue>) :
   EnumValue<RasterResampling> {
   /**
    * (Bi)linear filtering interpolates pixel values using the weighted average of the four closest
@@ -285,7 +287,7 @@ public enum class RasterResampling(override val expr: Expression<StringValue>) :
 }
 
 /** Symbol placement relative to its geometry. */
-public enum class SymbolPlacement(override val expr: Expression<StringValue>) :
+public enum class SymbolPlacement(override val stringConst: Expression<StringValue>) :
   EnumValue<SymbolPlacement> {
   /** The label is placed at the point where the geometry is located. */
   Point(Expression.ofString("point")),
@@ -309,7 +311,7 @@ public enum class SymbolPlacement(override val expr: Expression<StringValue>) :
  * appear in the data source or by their y-position relative to the viewport. To control the order
  * and prioritization of symbols otherwise, use `sortKey`.
  */
-public enum class SymbolZOrder(override val expr: Expression<StringValue>) :
+public enum class SymbolZOrder(override val stringConst: Expression<StringValue>) :
   EnumValue<SymbolZOrder> {
   /**
    * Sorts symbols by `sortKey` if set. Otherwise, sorts symbols by their y-position relative to the
@@ -333,7 +335,7 @@ public enum class SymbolZOrder(override val expr: Expression<StringValue>) :
 }
 
 /** Part of the icon/text placed closest to the anchor. */
-public enum class SymbolAnchor(override val expr: Expression<StringValue>) :
+public enum class SymbolAnchor(override val stringConst: Expression<StringValue>) :
   EnumValue<SymbolAnchor> {
   /** The center of the icon is placed closest to the anchor. */
   Center(Expression.ofString("center")),
@@ -364,7 +366,7 @@ public enum class SymbolAnchor(override val expr: Expression<StringValue>) :
 }
 
 /** Controls whether to show an icon/text when it overlaps other symbols on the map. */
-public enum class SymbolOverlap(override val expr: Expression<StringValue>) :
+public enum class SymbolOverlap(override val stringConst: Expression<StringValue>) :
   EnumValue<SymbolOverlap> {
   /** The icon/text will be hidden if it collides with any other previously drawn symbol. */
   Never(Expression.ofString("never")),
@@ -382,7 +384,7 @@ public enum class SymbolOverlap(override val expr: Expression<StringValue>) :
 }
 
 /** In combination with [SymbolPlacement], determines the rotation behavior of icons. */
-public enum class IconRotationAlignment(override val expr: Expression<StringValue>) :
+public enum class IconRotationAlignment(override val stringConst: Expression<StringValue>) :
   EnumValue<IconRotationAlignment> {
   /**
    * For [SymbolPlacement.Point], aligns icons east-west. Otherwise, aligns icon x-axes with the
@@ -404,7 +406,8 @@ public enum class IconRotationAlignment(override val expr: Expression<StringValu
 }
 
 /** Scales the icon to fit around the associated text. */
-public enum class IconTextFit(override val expr: Expression<StringValue>) : EnumValue<IconTextFit> {
+public enum class IconTextFit(override val stringConst: Expression<StringValue>) :
+  EnumValue<IconTextFit> {
   /** The icon is displayed at its intrinsic aspect ratio. */
   None(Expression.ofString("none")),
 
@@ -419,7 +422,7 @@ public enum class IconTextFit(override val expr: Expression<StringValue>) : Enum
 }
 
 /** Orientation of icon when map is pitched. */
-public enum class IconPitchAlignment(override val expr: Expression<StringValue>) :
+public enum class IconPitchAlignment(override val stringConst: Expression<StringValue>) :
   EnumValue<IconPitchAlignment> {
   /** The icon is aligned to the plane of the map. */
   Map(Expression.ofString("map")),
@@ -432,7 +435,7 @@ public enum class IconPitchAlignment(override val expr: Expression<StringValue>)
 }
 
 /** Orientation of text when map is pitched. */
-public enum class TextPitchAlignment(override val expr: Expression<StringValue>) :
+public enum class TextPitchAlignment(override val stringConst: Expression<StringValue>) :
   EnumValue<TextPitchAlignment> {
   /** The text is aligned to the plane of the map. */
   Map(Expression.ofString("map")),
@@ -448,7 +451,7 @@ public enum class TextPitchAlignment(override val expr: Expression<StringValue>)
  * In combination with [SymbolPlacement], determines the rotation behavior of the individual glyphs
  * forming the text.
  */
-public enum class TextRotationAlignment(override val expr: Expression<StringValue>) :
+public enum class TextRotationAlignment(override val stringConst: Expression<StringValue>) :
   EnumValue<TextRotationAlignment> {
   /**
    * For [SymbolPlacement.Point], aligns text east-west. Otherwise, aligns text x-axes with the
@@ -479,7 +482,7 @@ public enum class TextRotationAlignment(override val expr: Expression<StringValu
 }
 
 /** How the text will be laid out. */
-public enum class TextWritingMode(override val expr: Expression<StringValue>) :
+public enum class TextWritingMode(override val stringConst: Expression<StringValue>) :
   EnumValue<TextWritingMode> {
   /**
    * If a text's language supports horizontal writing mode, symbols with point placement would be
@@ -495,7 +498,8 @@ public enum class TextWritingMode(override val expr: Expression<StringValue>) :
 }
 
 /** Text justification options. */
-public enum class TextJustify(override val expr: Expression<StringValue>) : EnumValue<TextJustify> {
+public enum class TextJustify(override val stringConst: Expression<StringValue>) :
+  EnumValue<TextJustify> {
   /** The text is aligned towards the anchor position. */
   Auto(Expression.ofString("auto")),
 
@@ -510,7 +514,7 @@ public enum class TextJustify(override val expr: Expression<StringValue>) : Enum
 }
 
 /** Specifies how to capitalize text, similar to the CSS text-transform property. */
-public enum class TextTransform(override val expr: Expression<StringValue>) :
+public enum class TextTransform(override val stringConst: Expression<StringValue>) :
   EnumValue<TextTransform> {
   /** The text is not altered. */
   None(Expression.ofString("none")),

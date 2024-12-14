@@ -12,7 +12,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.core.Style
 import dev.sargunv.maplibrecompose.core.expression.ExpressionScope
-import dev.sargunv.maplibrecompose.core.expression.Expressions
 import kotlinx.coroutines.awaitCancellation
 
 @Composable
@@ -33,7 +32,7 @@ internal fun rememberStyleComposition(
 
     composition.setContent {
       CompositionLocalProvider(LocalStyleManager provides rootNode.styleManager) {
-        content(Expressions)
+        content(ExpressionScope)
       }
     }
 

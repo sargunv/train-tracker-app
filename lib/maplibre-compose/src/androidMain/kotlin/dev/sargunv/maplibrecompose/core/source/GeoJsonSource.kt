@@ -1,6 +1,6 @@
 package dev.sargunv.maplibrecompose.core.source
 
-import dev.sargunv.maplibrecompose.core.expression.Expressions.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.const
 import dev.sargunv.maplibrecompose.core.util.correctedAndroidUri
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
 import io.github.dellisd.spatialk.geojson.GeoJson

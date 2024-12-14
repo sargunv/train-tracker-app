@@ -3,11 +3,11 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.sargunv.maplibrecompose.core.expression.Expressions.const
-import dev.sargunv.maplibrecompose.core.expression.Expressions.heatmapDensity
-import dev.sargunv.maplibrecompose.core.expression.Expressions.interpolate
-import dev.sargunv.maplibrecompose.core.expression.Expressions.linear
-import dev.sargunv.maplibrecompose.core.expression.Expressions.literal
+import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.heatmapDensity
+import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.interpolate
+import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.linear
+import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.literal
 
 // helpers for default expression values
 
