@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.viewinterop.AndroidView
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.core.AndroidMap
+import dev.sargunv.maplibrecompose.core.AndroidScaleBar
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import org.maplibre.android.MapLibre
 import org.maplibre.android.maps.MapView
@@ -64,6 +65,7 @@ internal fun AndroidMapView(
             AndroidMap(
               mapView = mapView,
               map = map,
+              scaleBar = AndroidScaleBar(context, mapView, map),
               layoutDir = layoutDir,
               density = density,
               callbacks = callbacks,

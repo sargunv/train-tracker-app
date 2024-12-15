@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.CameraPosition
-import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoAppBar
@@ -29,7 +28,6 @@ object EdgeToEdgeDemo : Demo {
           modifier = Modifier.consumeWindowInsets(padding),
           styleUri = DEFAULT_STYLE,
           cameraState = rememberCameraState(CameraPosition(target = PORTLAND, zoom = 13.0)),
-          ornamentSettings = OrnamentSettings(padding = padding),
         )
       },
     )

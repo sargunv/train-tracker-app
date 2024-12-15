@@ -54,7 +54,10 @@ kotlin {
       api(libs.spatialk.geojson)
     }
 
-    androidMain.dependencies { api(libs.maplibre.android) }
+    androidMain.dependencies {
+      api(libs.maplibre.android)
+      implementation(libs.maplibre.android.scalebar)
+    }
 
     commonTest.dependencies {
       implementation(kotlin("test"))

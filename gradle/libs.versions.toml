@@ -6,7 +6,8 @@ androidx-composeUi = "1.7.5"
 androidx-navigation = "2.8.0-alpha10"
 kermit = "2.0.5"
 ktor = "3.0.2"
-maplibre-android = "11.7.0"
+maplibre-android-sdk = "11.7.0"
+maplibre-android-plugins = "3.0.2"
 maplibre-ios = "6.8.1"
 spatialk = "0.3.0"
 
@@ -29,7 +30,8 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinxJson = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-maplibre-android = { module = "org.maplibre.gl:android-sdk", version.ref = "maplibre-android" }
+maplibre-android = { module = "org.maplibre.gl:android-sdk", version.ref = "maplibre-android-sdk" }
+maplibre-android-scalebar = { module = "org.maplibre.gl:android-plugin-scalebar-v9", version.ref = "maplibre-android-plugins" }
 spatialk-geojson = { group = "io.github.dellisd.spatialk", name = "geojson", version.ref = "spatialk" }
 
 [plugins]

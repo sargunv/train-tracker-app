@@ -49,12 +49,27 @@ import org.maplibre.geojson.Feature as MLNFeature
 internal class AndroidMap(
   private val mapView: MapView,
   private val map: MapLibreMap,
-  internal var layoutDir: LayoutDirection,
-  internal var density: Density,
+  private val scaleBar: AndroidScaleBar,
+  layoutDir: LayoutDirection,
+  density: Density,
   internal var callbacks: MaplibreMap.Callbacks,
   logger: Logger?,
   styleUri: String,
 ) : MaplibreMap {
+
+  internal var layoutDir: LayoutDirection = layoutDir
+    set(value) {
+      field = value
+      scaleBar.layoutDir = value
+      scaleBar.updateLayout()
+    }
+
+  internal var density: Density = density
+    set(value) {
+      field = value
+      scaleBar.density = value
+      scaleBar.updateLayout()
+    }
 
   internal var logger: Logger? = logger
     set(value) {
@@ -202,6 +217,11 @@ internal class AndroidMap(
 
     map.uiSettings.isCompassEnabled = value.isCompassEnabled
     map.uiSettings.compassGravity = value.compassAlignment.toGravity(layoutDir)
+
+    scaleBar.enabled = value.isScaleBarEnabled
+    scaleBar.alignment = value.scaleBarAlignment
+    scaleBar.padding = value.padding
+    scaleBar.updateLayout()
 
     with(density) {
       val left =
