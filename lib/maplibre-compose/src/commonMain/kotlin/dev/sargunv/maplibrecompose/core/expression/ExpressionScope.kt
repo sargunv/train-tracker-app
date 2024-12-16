@@ -540,15 +540,6 @@ public object ExpressionScope {
 
   // endregion
 
-  /**
-   * Returns the value corresponding to the given [key] in the current feature's properties or
-   * `null` if it is not present.
-   */
-  public fun get(key: Expression<StringValue>): Expression<*> = callFn("get", key)
-
-  /** Tests for the presence of a property value [key] in the current feature's properties. */
-  public fun has(key: Expression<StringValue>): Expression<BooleanValue> = callFn("has", key).cast()
-
   // region Decision
 
   /**
