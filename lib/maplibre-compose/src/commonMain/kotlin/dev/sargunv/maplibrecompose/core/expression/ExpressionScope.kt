@@ -383,7 +383,7 @@ public object ExpressionScope {
 
   // endregion
 
-  // region Lookup
+  // region List
 
   /** Returns the item at [index]. */
   @JvmName("getAt")
@@ -396,6 +396,60 @@ public object ExpressionScope {
   public fun <T : ExpressionValue> Expression<ListValue<T>>.contains(
     item: Expression<T>
   ): Expression<BooleanValue> = callFn("in", item, this).cast()
+
+  /**
+   * Returns the first index at which the [item] is located in this list, or `-1` if it cannot be
+   * found. Accepts an optional [startIndex] from where to begin the search.
+   */
+  @JvmName("indexOfList")
+  public fun <T : ExpressionValue> Expression<ListValue<T>>.indexOf(
+    item: Expression<T>,
+    startIndex: Expression<IntValue>? = null,
+  ): Expression<IntValue> {
+    val args = buildList {
+      add(item)
+      add(this@indexOf)
+      startIndex?.let { add(it) }
+    }
+    return callFn("index-of", *args.toTypedArray()).cast()
+  }
+
+  /**
+   * Returns the items in this list from the [startIndex] (inclusive) to the end of this list if
+   * [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
+   */
+  public fun <T : ExpressionValue> Expression<ListValue<T>>.slice(
+    startIndex: Expression<IntValue>,
+    endIndex: Expression<IntValue>? = null,
+  ): Expression<ListValue<T>> {
+    val args = buildList {
+      add(this@slice)
+      add(startIndex)
+      endIndex?.let { add(it) }
+    }
+    return callFn("slice", *args.toTypedArray()).cast()
+  }
+
+  /** Gets the length of a this list. */
+  @JvmName("lengthOfList")
+  public fun Expression<ListValue<*>>.length(): Expression<IntValue> = callFn("length", this).cast()
+
+  // endregion
+
+  // region Map
+
+  /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
+  public operator fun <T : ExpressionValue> Expression<MapValue<T>>.get(
+    key: Expression<StringValue>
+  ): Expression<T> = callFn("get", key, this).cast()
+
+  /** Returns whether the given [key] is in this map. */
+  public fun Expression<MapValue<*>>.has(key: Expression<StringValue>): Expression<BooleanValue> =
+    callFn("has", key, this).cast()
+
+  // endregion
+
+  // region String
 
   /** Returns whether this string contains the [substring]. */
   @JvmName("containsString")
@@ -421,23 +475,6 @@ public object ExpressionScope {
   }
 
   /**
-   * Returns the first index at which the [item] is located in this list, or `-1` if it cannot be
-   * found. Accepts an optional [startIndex] from where to begin the search.
-   */
-  @JvmName("indexOfList")
-  public fun <T : ExpressionValue> Expression<ListValue<T>>.indexOf(
-    item: Expression<T>,
-    startIndex: Expression<IntValue>? = null,
-  ): Expression<IntValue> {
-    val args = buildList {
-      add(item)
-      add(this@indexOf)
-      startIndex?.let { add(it) }
-    }
-    return callFn("index-of", *args.toTypedArray()).cast()
-  }
-
-  /**
    * Returns a substring from this string from the [startIndex] (inclusive) to the end of the string
    * if [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
    *
@@ -456,20 +493,50 @@ public object ExpressionScope {
   }
 
   /**
-   * Returns the items in this list from the [startIndex] (inclusive) to the end of this list if
-   * [endIndex] is not specified or `null`, otherwise to [endIndex] (exclusive).
+   * Gets the length of this string.
+   *
+   * A UTF-16 surrogate pair counts as a single position.
    */
-  public fun <T : ExpressionValue> Expression<ListValue<T>>.slice(
-    startIndex: Expression<IntValue>,
-    endIndex: Expression<IntValue>? = null,
-  ): Expression<ListValue<T>> {
-    val args = buildList {
-      add(this@slice)
-      add(startIndex)
-      endIndex?.let { add(it) }
-    }
-    return callFn("slice", *args.toTypedArray()).cast()
-  }
+  @JvmName("lengthOfString")
+  public fun Expression<StringValue>.length(): Expression<IntValue> = callFn("length", this).cast()
+
+  /**
+   * Returns `true` if this string is expected to render legibly. Returns `false` if this string
+   * contains sections that cannot be rendered without potential loss of meaning (e.g. Indic scripts
+   * that require complex text shaping).
+   */
+  public fun Expression<StringValue>.isScriptSupported(): Expression<BooleanValue> =
+    callFn("is-supported-script", this).cast()
+
+  /**
+   * Returns this string converted to uppercase. Follows the Unicode Default Case Conversion
+   * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
+   */
+  public fun Expression<StringValue>.uppercase(): Expression<StringValue> =
+    callFn("upcase", this).cast()
+
+  /**
+   * Returns this string converted to lowercase. Follows the Unicode Default Case Conversion
+   * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
+   */
+  public fun Expression<StringValue>.lowercase(): Expression<StringValue> =
+    callFn("downcase", this).cast()
+
+  /** Concatenates this string expression with [other]. */
+  @JvmName("concat")
+  public operator fun Expression<StringValue>.plus(
+    other: Expression<StringValue>
+  ): Expression<StringValue> = callFn("concat", this, other).cast()
+
+  /**
+   * Returns the IETF language tag of the locale being used by the provided [collator]. This can be
+   * used to determine the default system locale, or to determine if a requested locale was
+   * successfully loaded.
+   */
+  public fun resolvedLocale(collator: Expression<CollatorValue>): Expression<StringValue> =
+    callFn("resolved-locale", collator).cast()
+
+  // endregion
 
   /**
    * Returns the value corresponding to the given [key] in the current feature's properties or
@@ -479,29 +546,6 @@ public object ExpressionScope {
 
   /** Tests for the presence of a property value [key] in the current feature's properties. */
   public fun has(key: Expression<StringValue>): Expression<BooleanValue> = callFn("has", key).cast()
-
-  /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
-  public operator fun <T : ExpressionValue> Expression<MapValue<T>>.get(
-    key: Expression<StringValue>
-  ): Expression<T> = callFn("get", key, this).cast()
-
-  /** Returns whether the given [key] is in this map. */
-  public fun Expression<MapValue<*>>.has(key: Expression<StringValue>): Expression<BooleanValue> =
-    callFn("has", key, this).cast()
-
-  /**
-   * Gets the length of this string.
-   *
-   * A UTF-16 surrogate pair counts as a single position.
-   */
-  @JvmName("lengthOfString")
-  public fun Expression<StringValue>.length(): Expression<IntValue> = callFn("length", this).cast()
-
-  /** Gets the length of a this list. */
-  @JvmName("lengthOfList")
-  public fun Expression<ListValue<*>>.length(): Expression<IntValue> = callFn("length", this).cast()
-
-  // endregion
 
   // region Decision
 
@@ -1181,46 +1225,6 @@ public object ExpressionScope {
    * [HeatmapLayer][dev.sargunv.maplibrecompose.compose.layer.HeatmapLayer].
    */
   public fun heatmapDensity(): Expression<FloatValue> = callFn("heatmap-density").cast()
-
-  // endregion
-
-  // region String
-
-  /**
-   * Returns `true` if this string is expected to render legibly. Returns `false` if this string
-   * contains sections that cannot be rendered without potential loss of meaning (e.g. Indic scripts
-   * that require complex text shaping).
-   */
-  public fun Expression<StringValue>.isScriptSupported(): Expression<BooleanValue> =
-    callFn("is-supported-script", this).cast()
-
-  /**
-   * Returns this string converted to uppercase. Follows the Unicode Default Case Conversion
-   * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
-   */
-  public fun Expression<StringValue>.uppercase(): Expression<StringValue> =
-    callFn("upcase", this).cast()
-
-  /**
-   * Returns this string converted to lowercase. Follows the Unicode Default Case Conversion
-   * algorithm and the locale-insensitive case mappings in the Unicode Character Database.
-   */
-  public fun Expression<StringValue>.lowercase(): Expression<StringValue> =
-    callFn("downcase", this).cast()
-
-  /** Concatenates this string expression with [other]. */
-  @JvmName("concat")
-  public operator fun Expression<StringValue>.plus(
-    other: Expression<StringValue>
-  ): Expression<StringValue> = callFn("concat", this, other).cast()
-
-  /**
-   * Returns the IETF language tag of the locale being used by the provided [collator]. This can be
-   * used to determine the default system locale, or to determine if a requested locale was
-   * successfully loaded.
-   */
-  public fun resolvedLocale(collator: Expression<CollatorValue>): Expression<StringValue> =
-    callFn("resolved-locale", collator).cast()
 
   // endregion
 
