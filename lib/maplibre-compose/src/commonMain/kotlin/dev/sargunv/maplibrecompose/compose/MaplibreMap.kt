@@ -39,7 +39,8 @@ import kotlin.math.roundToInt
  *   always called first and can thus prevent subsequent callbacks to be invoked by consuming the
  *   event.
  * @param onMapLongClick Invoked when the map is long-clicked. See [onMapClick].
- * @param onFpsChanged Invoked when the frames per second changed
+ * @param onFpsChanged Invoked when the frames per second changed. This will usually be called on
+ *   every rendered frame.
  * @param isDebugEnabled Whether the map debug information is shown.
  * @param maximumFps The maximum frame rate at which the map view is rendered, but it can't excess
  *   the ability of device hardware.
