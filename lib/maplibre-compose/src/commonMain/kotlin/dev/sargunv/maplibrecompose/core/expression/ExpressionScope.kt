@@ -471,15 +471,6 @@ public object ExpressionScope {
     return callFn("slice", *args.toTypedArray()).cast()
   }
 
-  /**
-   * Returns the value corresponding to the given [key] in the current feature's properties or
-   * `null` if it is not present.
-   */
-  public fun get(key: Expression<StringValue>): Expression<*> = callFn("get", key)
-
-  /** Tests for the presence of a property value [key] in the current feature's properties. */
-  public fun has(key: Expression<StringValue>): Expression<BooleanValue> = callFn("has", key).cast()
-
   /** Returns the value corresponding the given [key] or `null` if it is not present in this map. */
   public operator fun <T : ExpressionValue> Expression<MapValue<T>>.get(
     key: Expression<StringValue>
@@ -1108,6 +1099,16 @@ public object ExpressionScope {
   // region Feature data
 
   public object FeatureScope {
+    /**
+     * Returns the value corresponding to the given [key] in the current feature's properties or
+     * `null` if it is not present.
+     */
+    public fun get(key: Expression<StringValue>): Expression<*> = callFn("get", key)
+
+    /** Tests for the presence of a property value [key] in the current feature's properties. */
+    public fun has(key: Expression<StringValue>): Expression<BooleanValue> =
+      callFn("has", key).cast()
+
     /**
      * Gets the feature properties object. Note that in some cases, it may be more efficient to use
      * `get("property_name")` directly.
