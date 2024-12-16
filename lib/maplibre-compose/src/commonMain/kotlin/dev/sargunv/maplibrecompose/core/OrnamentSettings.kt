@@ -58,7 +58,7 @@ public data class OrnamentSettings(
   val attributionAlignment: Alignment = Alignment.BottomEnd,
   val isCompassEnabled: Boolean = true,
   val compassAlignment: Alignment = Alignment.TopEnd,
-  val isScaleBarEnabled: Boolean = false,
+  val isScaleBarEnabled: Boolean = true,
   val scaleBarAlignment: Alignment = Alignment.TopStart,
 ) {
   public companion object {
