@@ -29,12 +29,13 @@ private val REMOTE_STYLE_URIS =
     "Dark" to "https://tiles.openfreemap.org/styles/dark",
   )
 
-private val LOCAL_STYLE_PATHS = listOf(
-  // from https://tiles.versatiles.org/assets/styles/colorful.json
-  "Colorful" to "files/data/colorful.json",
-  // from https://tiles.versatiles.org/assets/styles/eclipse.json
-  "Eclipse" to "files/data/eclipse.json"
-)
+private val LOCAL_STYLE_PATHS =
+  listOf(
+    // from https://tiles.versatiles.org/assets/styles/colorful.json
+    "Colorful" to "files/data/colorful.json",
+    // from https://tiles.versatiles.org/assets/styles/eclipse.json
+    "Eclipse" to "files/data/eclipse.json",
+  )
 
 val DEFAULT_STYLE = REMOTE_STYLE_URIS[0].second
 
