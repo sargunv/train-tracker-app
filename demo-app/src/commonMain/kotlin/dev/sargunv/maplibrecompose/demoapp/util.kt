@@ -64,8 +64,8 @@ internal class FrameRateState(private val spinner: String = "◐◓◑◒") {
   private var rollingAverage by mutableStateOf(0.0)
   private var spinnerIndex by mutableStateOf(0)
 
-  fun recordFps(fps: Double) {
-    rollingAverage = (rollingAverage * 0.9) + (fps * 0.1)
+  fun recordFps(framesPerSecond: Double) {
+    rollingAverage = (rollingAverage * 0.9) + (framesPerSecond * 0.1)
     spinnerIndex = (spinnerIndex + 1) % spinner.length
   }
 

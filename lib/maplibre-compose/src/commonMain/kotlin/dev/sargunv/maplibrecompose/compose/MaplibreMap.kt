@@ -39,8 +39,7 @@ import kotlin.math.roundToInt
  *   always called first and can thus prevent subsequent callbacks to be invoked by consuming the
  *   event.
  * @param onMapLongClick Invoked when the map is long-clicked. See [onMapClick].
- * @param onFpsChanged Invoked when the frames per second changed. This will usually be called on
- *   every rendered frame.
+ * @param onFrame Invoked on every rendered frame.
  * @param isDebugEnabled Whether the map debug information is shown.
  * @param maximumFps The maximum frame rate at which the map view is rendered, but it can't excess
  *   the ability of device hardware.
@@ -93,7 +92,7 @@ public fun MaplibreMap(
   cameraState: CameraState = rememberCameraState(),
   onMapClick: MapClickHandler = { _, _ -> ClickResult.Pass },
   onMapLongClick: MapClickHandler = { _, _ -> ClickResult.Pass },
-  onFpsChanged: (Double) -> Unit = {},
+  onFrame: (framesPerSecond: Double) -> Unit = {},
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   logger: Logger? = remember { Logger.withTag("maplibre-compose") },
@@ -164,7 +163,7 @@ public fun MaplibreMap(
       styleUri = styleUri,
       update = { map ->
         cameraState.map = map
-        map.onFpsChanged = onFpsChanged
+        map.onFpsChanged = onFrame
         map.isDebugEnabled = isDebugEnabled
         map.setGestureSettings(gestureSettings)
         map.setOrnamentSettings(ornamentSettings)

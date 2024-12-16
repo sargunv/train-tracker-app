@@ -36,7 +36,7 @@ object FrameRateDemo : Demo {
           modifier = Modifier.weight(1f),
           styleUri = DEFAULT_STYLE,
           maximumFps = maximumFps,
-          onFpsChanged = fpsState::recordFps,
+          onFrame = fpsState::recordFps,
         )
 
         Column(modifier = Modifier.padding(16.dp)) {
