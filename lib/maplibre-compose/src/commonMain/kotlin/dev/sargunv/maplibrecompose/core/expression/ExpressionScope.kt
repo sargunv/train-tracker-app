@@ -251,8 +251,10 @@ public object ExpressionScope {
    * Example:
    * ```
    * format(
-   *   get("name").asString().substring(const(0), const(1)).uppercase() to FormatStyle(textScale = const(1.5)),
-   *   get("name").asString().substring(const(1)) to FormatStyle(),
+   *   feature.get("name").asString().substring(const(0), const(1)).uppercase()
+   *     to FormatStyle(textScale = const(1.5)),
+   *   feature.get("name").asString().substring(const(1))
+   *     to FormatStyle(),
    * )
    * ```
    *
@@ -504,17 +506,17 @@ public object ExpressionScope {
    * ```
    * switch(
    *   condition(
-   *     test = has(const("color1")) and has(const("color2")),
+   *     test = feature.has(const("color1")) and feature.has(const("color2")),
    *     output = interpolate(
    *       linear(),
    *       zoom(),
-   *       1 to get(const("color1")).convertToColor(),
-   *       20 to get(const("color2")).convertToColor()
+   *       1 to feature.get(const("color1")).convertToColor(),
+   *       20 to feature.get(const("color2")).convertToColor()
    *     ),
    *   ),
    *   condition(
-   *     test = has(const("color")),
-   *     output = get(const("color")).convertToColor(),
+   *     test = feature.has(const("color")),
+   *     output = feature.get(const("color")).convertToColor(),
    *   ),
    *   fallback = const(Color.Red),
    * )
@@ -561,7 +563,7 @@ public object ExpressionScope {
    * Example:
    * ```
    * switch(
-   *   input = get(const("building_type")).asString(),
+   *   input = feature.get(const("building_type")).asString(),
    *   case(
    *     label = "residential",
    *     output = const(Color.Cyan),
@@ -1098,6 +1100,7 @@ public object ExpressionScope {
 
   // region Feature data
 
+  /** Object to access feature-related data, see [feature] */
   public object FeatureScope {
     /**
      * Returns the value corresponding to the given [key] in the current feature's properties or
@@ -1111,7 +1114,7 @@ public object ExpressionScope {
 
     /**
      * Gets the feature properties object. Note that in some cases, it may be more efficient to use
-     * `get("property_name")` directly.
+     * [get]`("property_name")` directly.
      */
     public fun properties(): Expression<MapValue<*>> = callFn("properties").cast()
 
@@ -1158,6 +1161,7 @@ public object ExpressionScope {
       callFn("accumulated", key).cast()
   }
 
+  /** Accesses to feature-related data */
   public val feature: FeatureScope = FeatureScope
 
   // endregion
