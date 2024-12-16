@@ -1,5 +1,8 @@
 package dev.sargunv.maplibrecompose.compose
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +36,7 @@ public fun MaplibreMap(
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   logger: Logger? = remember { Logger.withTag("maplibre-compose") },
+  overlay: @Composable BoxScope.() -> Unit = {},
   content: @Composable ExpressionScope.() -> Unit = {},
 ) {
   var rememberedStyle by remember { mutableStateOf<Style?>(null) }
@@ -93,22 +97,25 @@ public fun MaplibreMap(
       }
     }
 
-  ComposableMapView(
-    modifier = modifier,
-    styleUri = styleUri,
-    update = { map ->
-      cameraState.map = map
-      map.onFpsChanged = onFpsChanged
-      map.isDebugEnabled = isDebugEnabled
-      map.setGestureSettings(gestureSettings)
-      map.setOrnamentSettings(ornamentSettings)
-      map.setMaximumFps(maximumFps)
-    },
-    onReset = {
-      cameraState.map = null
-      rememberedStyle = null
-    },
-    logger = logger,
-    callbacks = callbacks,
-  )
+  Box(modifier = modifier) {
+    ComposableMapView(
+      modifier = Modifier.fillMaxSize(),
+      styleUri = styleUri,
+      update = { map ->
+        cameraState.map = map
+        map.onFpsChanged = onFpsChanged
+        map.isDebugEnabled = isDebugEnabled
+        map.setGestureSettings(gestureSettings)
+        map.setOrnamentSettings(ornamentSettings)
+        map.setMaximumFps(maximumFps)
+      },
+      onReset = {
+        cameraState.map = null
+        rememberedStyle = null
+      },
+      logger = logger,
+      callbacks = callbacks,
+    )
+    overlay()
+  }
 }

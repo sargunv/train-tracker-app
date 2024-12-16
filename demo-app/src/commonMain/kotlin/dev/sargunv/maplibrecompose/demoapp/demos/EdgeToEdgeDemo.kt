@@ -1,12 +1,19 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
+import dev.sargunv.maplibrecompose.compose.controls.CompassButton
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.core.CameraPosition
+import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoAppBar
@@ -21,13 +28,20 @@ object EdgeToEdgeDemo : Demo {
 
   @Composable
   override fun Component(navigateUp: () -> Unit) {
+    val camera = rememberCameraState(CameraPosition(target = PORTLAND, zoom = 13.0))
     Scaffold(
       topBar = { DemoAppBar(this, navigateUp, alpha = 0.5f) },
       content = { padding ->
         MaplibreMap(
           modifier = Modifier.consumeWindowInsets(padding),
           styleUri = DEFAULT_STYLE,
-          cameraState = rememberCameraState(CameraPosition(target = PORTLAND, zoom = 13.0)),
+          cameraState = camera,
+          ornamentSettings = OrnamentSettings(padding = padding, isCompassEnabled = false),
+          overlay = {
+            Box(modifier = Modifier.fillMaxSize().padding(padding).padding(8.dp)) {
+              CompassButton(modifier = Modifier.align(Alignment.TopEnd), cameraState = camera)
+            }
+          },
         )
       },
     )

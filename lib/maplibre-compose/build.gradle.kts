@@ -47,9 +47,11 @@ kotlin {
     }
 
     commonMain.dependencies {
-      api(compose.runtime)
-      api(compose.foundation)
-      api(compose.ui)
+      implementation(compose.components.resources)
+      implementation(compose.material3)
+      implementation(compose.runtime)
+      implementation(compose.foundation)
+      implementation(compose.ui)
       api(libs.kermit)
       api(libs.spatialk.geojson)
     }
@@ -75,3 +77,5 @@ kotlin {
     }
   }
 }
+
+compose.resources { packageOfResClass = "dev.sargunv.maplibrecompose.generated" }
