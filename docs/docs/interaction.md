@@ -11,12 +11,14 @@ enabled or disabled individually:
 
 1. Includes pinch, double-tap, and double-tap-and-drag.
 
-## Ornaments
+## Overlays
 
-Ornaments are UI elements that are displayed on the map, such as a compass or
-attribution button. They're implemented by the underlying MapLibre SDK, so may
-render differently on different platforms. You can control the visibility and
-position of these ornaments:
+### Ornaments
+
+Ornaments are built in UI elements that are displayed on the map, such as a
+compass or attribution button. They're implemented by the underlying MapLibre
+SDK, so may render differently on different platforms. You can control the
+visibility and position of these ornaments:
 
 ```kotlin
 -8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Interaction.kt:ornament-settings"
@@ -29,6 +31,17 @@ position of these ornaments:
    are supported across platforms.
 4. Displays attribution defined in the map style.
 5. Displays a compass control when the map is rotated away from north.
+6. Displays a scale control showing the distance represented by the map's zoom
+   level.
+
+### Material 3 Controls
+
+We also provide reimplementations of certain ornaments using Material 3. These
+are regular Compose UI components, so you can position them arbitrarily, style
+them, animate them, etc. To use them, disable the corresponding built-in
+ornament and add the Material control to the map's `overlay`:
+
+TODO add example
 
 ## Camera
 

@@ -41,6 +41,8 @@ fun Interaction() {
         attributionAlignment = Alignment.BottomEnd,
         isCompassEnabled = true, // (5)!
         compassAlignment = Alignment.TopEnd,
+        isScaleBarEnabled = true, // (6)!
+        scaleBarAlignment = Alignment.TopStart,
       )
   )
   // -8<- [end:ornament-settings]
