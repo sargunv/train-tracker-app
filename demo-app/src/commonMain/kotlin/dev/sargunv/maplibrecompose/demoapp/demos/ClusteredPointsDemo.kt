@@ -69,12 +69,12 @@ object ClusteredPointsDemo : Demo {
         CircleLayer(
           id = "clustered-bikes",
           source = bikeSource,
-          filter = has(const("point_count")),
+          filter = feature.has(const("point_count")),
           color = const(LIME_GREEN),
           opacity = const(0.5f),
           radius =
             step(
-              input = get(const("point_count")).asNumber(),
+              input = feature.get(const("point_count")).asNumber(),
               fallback = const(15.dp),
               25 to const(20.dp),
               100 to const(30.dp),
@@ -100,8 +100,8 @@ object ClusteredPointsDemo : Demo {
         SymbolLayer(
           id = "clustered-bikes-count",
           source = bikeSource,
-          filter = has(const("point_count")),
-          textField = format(get(const("point_count_abbreviated")).asString()),
+          filter = feature.has(const("point_count")),
+          textField = format(feature.get(const("point_count_abbreviated")).asString()),
           textFont = literal(listOf(const("Noto Sans Regular"))),
           textColor = const(MaterialTheme.colorScheme.onBackground),
         )
@@ -109,7 +109,7 @@ object ClusteredPointsDemo : Demo {
         CircleLayer(
           id = "unclustered-bikes-shadow",
           source = bikeSource,
-          filter = !has(const("point_count")),
+          filter = !feature.has(const("point_count")),
           radius = const(13.dp),
           color = const(Color.Black),
           blur = const(1f),
@@ -119,7 +119,7 @@ object ClusteredPointsDemo : Demo {
         CircleLayer(
           id = "unclustered-bikes",
           source = bikeSource,
-          filter = !has(const("point_count")),
+          filter = !feature.has(const("point_count")),
           color = const(LIME_GREEN),
           radius = const(7.dp),
           strokeWidth = const(3.dp),
