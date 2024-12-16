@@ -34,11 +34,9 @@ import androidx.compose.ui.unit.dp
  *
  * @param compassAlignment where to place the compass.
  *
- * On Android, any alignment is supported, but the bar always grows right, so looks best when
- * aligned to the left.
+ * On Android, the four corners are supported.
  *
- * On iOS, the four corners, centers along the edges, and the center are supported. The bar grows
- * according to the alignment, so looks best on either side.
+ * On iOS, the four corners, centers along the edges, and the center are supported.
  *
  * @param isScaleBarEnabled whether to display a scale bar that shows the scale of the map.
  * @param scaleBarAlignment where to place the scale bar.
