@@ -83,12 +83,17 @@ public object ExpressionsDsl {
 
   // region Variable binding
 
+  /**
+   * Binds expression [value] to a [Variable] with the given [name], which can then be referenced
+   * inside the block using [use].
+   */
   public inline fun <V : ExpressionValue, R : ExpressionValue> withVariable(
     name: String,
     value: Expression<V>,
     block: (Variable<V>) -> Expression<R>,
   ): Expression<R> = Variable<V>(name).let { it.bind(value, block(it)) }
 
+  /** Represents a variable bound with [withVariable]. Reference the bound expression with [use]. */
   @JvmInline
   public value class Variable<@Suppress("unused") T : ExpressionValue>
   @PublishedApi
@@ -100,6 +105,7 @@ public object ExpressionsDsl {
     expression: Expression<T>,
   ): Expression<T> = callFn("let", const(name), value, expression).cast()
 
+  /** References a [Variable] bound in [withVariable]. */
   public fun <T : ExpressionValue> Variable<T>.use(): Expression<T> =
     callFn("var", const(name)).cast()
 
