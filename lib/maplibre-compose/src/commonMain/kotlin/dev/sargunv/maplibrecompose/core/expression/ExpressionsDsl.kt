@@ -83,15 +83,22 @@ public object ExpressionsDsl {
 
   // region Variable binding
 
-  @JvmInline
-  public value class Variable<@Suppress("unused") T : ExpressionValue>
-  internal constructor(public val name: String)
-
-  public fun <V : ExpressionValue, R : ExpressionValue> withVariable(
+  public inline fun <V : ExpressionValue, R : ExpressionValue> withVariable(
     name: String,
     value: Expression<V>,
     block: (Variable<V>) -> Expression<R>,
-  ): Expression<R> = callFn("let", const(name), value, block(Variable(name))).cast()
+  ): Expression<R> = Variable<V>(name).let { it.bind(value, block(it)) }
+
+  @JvmInline
+  public value class Variable<@Suppress("unused") T : ExpressionValue>
+  @PublishedApi
+  internal constructor(public val name: String)
+
+  @PublishedApi
+  internal fun <V : ExpressionValue, T : ExpressionValue> Variable<V>.bind(
+    value: Expression<V>,
+    expression: Expression<T>,
+  ): Expression<T> = callFn("let", const(name), value, expression).cast()
 
   public fun <T : ExpressionValue> Variable<T>.use(): Expression<T> =
     callFn("var", const(name)).cast()
