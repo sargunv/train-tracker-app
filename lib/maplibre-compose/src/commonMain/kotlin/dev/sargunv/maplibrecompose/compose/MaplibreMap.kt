@@ -18,7 +18,6 @@ import dev.sargunv.maplibrecompose.core.GestureSettings
 import dev.sargunv.maplibrecompose.core.MaplibreMap
 import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.core.Style
-import dev.sargunv.maplibrecompose.core.expression.ExpressionScope
 import dev.sargunv.maplibrecompose.core.util.PlatformUtils
 import io.github.dellisd.spatialk.geojson.Position
 import kotlin.math.roundToInt
@@ -97,7 +96,7 @@ public fun MaplibreMap(
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   logger: Logger? = remember { Logger.withTag("maplibre-compose") },
-  mapContent: @Composable ExpressionScope.() -> Unit = {},
+  mapContent: @Composable @MapComposable () -> Unit = {},
   content: @Composable BoxScope.() -> Unit = {},
 ) {
   var rememberedStyle by remember { mutableStateOf<Style?>(null) }

@@ -19,6 +19,14 @@ import dev.sargunv.maplibrecompose.compose.layer.SymbolLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.CameraPosition
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asNumber
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asString
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.feature
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.format
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.literal
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.not
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.step
 import dev.sargunv.maplibrecompose.core.source.GeoJsonOptions
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo

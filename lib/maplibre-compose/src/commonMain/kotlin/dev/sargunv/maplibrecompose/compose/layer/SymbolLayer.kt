@@ -13,8 +13,8 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.const
-import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.nil
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.nil
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -53,7 +53,7 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  * @param filter An expression specifying conditions on source features. Only features that match
  *   the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom
  *   levels. The
- *   [featureState][dev.sargunv.maplibrecompose.core.expression.ExpressionScope.featureState]
+ *   [featureState][dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.featureState]
  *   expression is not supported in filter expressions.
  * @param visible Whether the layer should be displayed.
  * @param sortKey Sorts features within this layer in ascending order based on this value. Features
@@ -180,7 +180,7 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  *   the plain string "My label".
  *
  *   The text can also be formatted, employing different colors, fonts, etc., see
- *   [format][dev.sargunv.maplibrecompose.core.expression.ExpressionScope.format].
+ *   [format][dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.format].
  *
  * @param textOpacity The opacity at which the text will be drawn.
  *

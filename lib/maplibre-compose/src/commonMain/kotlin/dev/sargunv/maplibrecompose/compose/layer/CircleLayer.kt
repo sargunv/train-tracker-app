@@ -13,8 +13,8 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
-import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.const
-import dev.sargunv.maplibrecompose.core.expression.ExpressionScope.nil
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.nil
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.layer.CircleLayer
@@ -34,7 +34,7 @@ import dev.sargunv.maplibrecompose.core.source.Source
  * @param filter An expression specifying conditions on source features. Only features that match
  *   the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom
  *   levels. The
- *   [featureState][dev.sargunv.maplibrecompose.core.expression.ExpressionScope.featureState]
+ *   [featureState][dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.featureState]
  *   expression is not supported in filter expressions.
  * @param visible Whether the layer should be displayed.
  * @param sortKey Sorts features within this layer in ascending order based on this value. Features

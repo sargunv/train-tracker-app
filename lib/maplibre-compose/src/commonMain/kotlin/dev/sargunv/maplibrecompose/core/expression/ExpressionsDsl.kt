@@ -11,7 +11,7 @@ import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
-public object ExpressionScope {
+public object ExpressionsDsl {
   // region Literals
 
   /** Creates a literal expression for a [String] value. */
@@ -84,21 +84,15 @@ public object ExpressionScope {
   // region Variable binding
 
   @JvmInline
-  public value class Variable<@Suppress("unused") T : ExpressionValue>(public val name: String)
+  public value class Variable<@Suppress("unused") T : ExpressionValue>
+  internal constructor(public val name: String)
 
-  /** Declares a named variable for use in [bind] and [use]. */
-  public fun <T : ExpressionValue> declare(name: String): Variable<T> = Variable(name)
+  public fun <V : ExpressionValue, R : ExpressionValue> withVariable(
+    name: String,
+    value: Expression<V>,
+    block: (Variable<V>) -> Expression<R>,
+  ): Expression<R> = callFn("let", const(name), value, block(Variable(name))).cast()
 
-  /**
-   * Binds expressions to variables declared by [declare], which can then be referenced with [use]
-   * in the [expression].
-   */
-  public fun <T : ExpressionValue> Variable<T>.bind(
-    value: Expression<T>,
-    expression: Expression<T>,
-  ): Expression<T> = callFn("let", const(name), value, expression).cast()
-
-  /** References variable bound using [bind]. */
   public fun <T : ExpressionValue> Variable<T>.use(): Expression<T> =
     callFn("var", const(name)).cast()
 
@@ -681,7 +675,7 @@ public object ExpressionScope {
 
   /**
    * Returns whether the [left] string expression is equal to the [right] string expression. An
-   * optional [collator] (see [ExpressionScope.collator] function) can be specified to control
+   * optional [collator] (see [ExpressionsDsl.collator] function) can be specified to control
    * locale-dependent string comparisons.
    */
   public fun eq(
@@ -697,7 +691,7 @@ public object ExpressionScope {
 
   /**
    * Returns whether the [left] string expression is not equal to the [right] string expression. An
-   * optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * optional [collator] (see [ExpressionsDsl.collator]) can be specified to control
    * locale-dependent string comparisons.
    */
   public fun neq(
@@ -717,7 +711,7 @@ public object ExpressionScope {
 
   /**
    * Returns whether the [left] string expression is strictly greater than the [right] string
-   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * expression. An optional [collator] (see [ExpressionsDsl.collator]) can be specified to control
    * locale-dependent string comparisons.
    *
    * Strings are compared lexicographically (`"b" > "a"`).
@@ -739,7 +733,7 @@ public object ExpressionScope {
 
   /**
    * Returns whether the [left] string expression is strictly less than the [right] string
-   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * expression. An optional [collator] (see [ExpressionsDsl.collator]) can be specified to control
    * locale-dependent string comparisons.
    *
    * Strings are compared lexicographically (`"a" < "b"`).
@@ -761,7 +755,7 @@ public object ExpressionScope {
 
   /**
    * Returns whether the [left] string expression is greater than or equal to the [right] string
-   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * expression. An optional [collator] (see [ExpressionsDsl.collator]) can be specified to control
    * locale-dependent string comparisons.
    *
    * Strings are compared lexicographically (`"b" >= "a"`).
@@ -783,7 +777,7 @@ public object ExpressionScope {
 
   /**
    * Returns whether the [left] string expression is less than or equal to the [right] string
-   * expression. An optional [collator] (see [ExpressionScope.collator]) can be specified to control
+   * expression. An optional [collator] (see [ExpressionsDsl.collator]) can be specified to control
    * locale-dependent string comparisons.
    *
    * Strings are compared lexicographically (`"a" < "b"`).
