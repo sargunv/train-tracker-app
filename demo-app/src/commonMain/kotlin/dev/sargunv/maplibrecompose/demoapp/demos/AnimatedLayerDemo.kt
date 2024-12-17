@@ -38,41 +38,43 @@ object AnimatedLayerDemo : Demo {
       MaplibreMap(
         styleUri = DEFAULT_STYLE,
         cameraState = rememberCameraState(firstPosition = CameraPosition(target = US, zoom = 2.0)),
-      ) {
-        val routeSource = rememberGeoJsonSource(id = "amtrak-routes", uri = Res.getUri(ROUTES_FILE))
+        mapContent = {
+          val routeSource =
+            rememberGeoJsonSource(id = "amtrak-routes", uri = Res.getUri(ROUTES_FILE))
 
-        val infiniteTransition = rememberInfiniteTransition()
-        val animatedColor by
-          infiniteTransition.animateColor(
-            Color.hsl(0f, 1f, 0.5f),
-            Color.hsl(0f, 1f, 0.5f),
-            animationSpec =
-              infiniteRepeatable(
-                animation =
-                  keyframes {
-                    durationMillis = 10000
-                    for (i in 1..9) Color.hsl(i * 36f, 1f, 0.5f) at (i * 1000)
-                  }
-              ),
-          )
+          val infiniteTransition = rememberInfiniteTransition()
+          val animatedColor by
+            infiniteTransition.animateColor(
+              Color.hsl(0f, 1f, 0.5f),
+              Color.hsl(0f, 1f, 0.5f),
+              animationSpec =
+                infiniteRepeatable(
+                  animation =
+                    keyframes {
+                      durationMillis = 10000
+                      for (i in 1..9) Color.hsl(i * 36f, 1f, 0.5f) at (i * 1000)
+                    }
+                ),
+            )
 
-        Anchor.Below("waterway_line_label") {
-          LineLayer(
-            id = "amtrak-routes",
-            source = routeSource,
-            color = const(animatedColor),
-            cap = const(LineCap.Round),
-            join = const(LineJoin.Round),
-            width =
-              interpolate(
-                type = exponential(const(1.2f)),
-                input = zoom(),
-                7 to const(1.75.dp),
-                20 to const(22.dp),
-              ),
-          )
-        }
-      }
+          Anchor.Below("waterway_line_label") {
+            LineLayer(
+              id = "amtrak-routes",
+              source = routeSource,
+              color = const(animatedColor),
+              cap = const(LineCap.Round),
+              join = const(LineJoin.Round),
+              width =
+                interpolate(
+                  type = exponential(const(1.2f)),
+                  input = zoom(),
+                  7 to const(1.75.dp),
+                  20 to const(22.dp),
+                ),
+            )
+          }
+        },
+      )
     }
   }
 }

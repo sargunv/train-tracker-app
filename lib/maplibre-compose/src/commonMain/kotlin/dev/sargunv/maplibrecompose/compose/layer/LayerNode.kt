@@ -5,12 +5,14 @@ import androidx.compose.runtime.ComposeNode
 import androidx.compose.runtime.Updater
 import androidx.compose.runtime.key
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
+import dev.sargunv.maplibrecompose.compose.MapComposable
 import dev.sargunv.maplibrecompose.compose.engine.LayerNode
 import dev.sargunv.maplibrecompose.compose.engine.MapNodeApplier
 import dev.sargunv.maplibrecompose.core.layer.Layer
 
 @PublishedApi
 @Composable
+@MapComposable
 internal fun <T : Layer> LayerNode(
   factory: () -> T,
   update: Updater<LayerNode<T>>.() -> Unit,

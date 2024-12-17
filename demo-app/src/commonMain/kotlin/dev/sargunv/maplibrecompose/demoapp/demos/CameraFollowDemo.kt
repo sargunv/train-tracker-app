@@ -76,9 +76,10 @@ object CameraFollowDemo : Demo {
           modifier = Modifier.weight(1f),
           styleUri = DEFAULT_STYLE,
           cameraState = camera,
-        ) {
-          LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
-        }
+          mapContent = {
+            LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
+          },
+        )
 
         Text(
           text = "Move reason: ${camera.moveReason.name}",

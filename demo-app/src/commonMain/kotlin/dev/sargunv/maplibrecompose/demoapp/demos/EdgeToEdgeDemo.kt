@@ -48,7 +48,7 @@ object EdgeToEdgeDemo : Demo {
               isLogoEnabled = false,
               isAttributionEnabled = false,
             ),
-          overlay = {
+          content = {
             Box(modifier = Modifier.fillMaxSize().padding(padding).padding(8.dp)) {
               AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
               CompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
