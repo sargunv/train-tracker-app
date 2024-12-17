@@ -45,7 +45,7 @@ public fun MaplibreMap(
 
   val callbacks =
     remember(cameraState, styleState, styleComposition) {
-      class Callbacks : MaplibreMap.Callbacks {
+      object : MaplibreMap.Callbacks {
         override fun onStyleChanged(map: MaplibreMap, style: Style?) {
           styleState.attach(style)
           rememberedStyle = style
@@ -97,8 +97,6 @@ public fun MaplibreMap(
           }
         }
       }
-
-      Callbacks()
     }
 
   Box(modifier = modifier) {
