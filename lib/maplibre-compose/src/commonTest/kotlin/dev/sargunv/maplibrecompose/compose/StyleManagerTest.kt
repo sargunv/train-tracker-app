@@ -10,7 +10,11 @@ import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.GeoJsonOptions
 import dev.sargunv.maplibrecompose.core.source.GeoJsonSource
 import io.github.dellisd.spatialk.geojson.FeatureCollection
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertNull
 
 @OptIn(ExperimentalTestApi::class)
 abstract class StyleManagerTest {

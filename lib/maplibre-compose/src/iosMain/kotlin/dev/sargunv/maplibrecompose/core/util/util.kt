@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import cocoapods.MapLibre.MLNAttributionInfo
 import cocoapods.MapLibre.MLNCoordinateBounds
 import cocoapods.MapLibre.MLNFeatureProtocol
 import cocoapods.MapLibre.MLNOrnamentPosition
@@ -162,4 +163,9 @@ internal fun Alignment.toMLNOrnamentPosition(layoutDir: LayoutDirection): MLNOrn
     IntOffset(1, 1) -> MLNOrnamentPositionBottomRight
     else -> error("Invalid alignment")
   }
+}
+
+internal fun MLNAttributionInfo.toHtmlString(): String {
+  // TODO escape HTML in the title and URL?
+  return if (URL == null) title.string else """<a href="$URL" target="_blank">${title.string}</a>"""
 }

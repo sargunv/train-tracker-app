@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,16 +31,19 @@ public fun CompassButton(
       cameraState.animateTo(cameraState.position.copy(bearing = 0.0, tilt = 0.0))
     }
   },
+  colors: ButtonColors = ButtonDefaults.elevatedButtonColors(),
+  contentDescription: String = "Compass",
 ) {
   ElevatedButton(
     modifier = modifier.size(48.dp).aspectRatio(1f),
     onClick = onClick,
     shape = CircleShape,
+    colors = colors,
     contentPadding = PaddingValues(8.dp),
   ) {
     Image(
       painter = painterResource(Res.drawable.compass_needle),
-      contentDescription = "Compass",
+      contentDescription = contentDescription,
       modifier =
         Modifier.fillMaxSize()
           .graphicsLayer(

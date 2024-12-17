@@ -141,7 +141,7 @@ fun DemoAppBar(demo: Demo, navigateUp: () -> Unit, alpha: Float = 1f) {
             Text(text = demo.description)
             Spacer(modifier = Modifier.height(24.dp))
             TextButton(onClick = { showInfo = false }, modifier = Modifier.align(Alignment.End)) {
-              Text("Dismiss")
+              Text("OK")
             }
           }
         }

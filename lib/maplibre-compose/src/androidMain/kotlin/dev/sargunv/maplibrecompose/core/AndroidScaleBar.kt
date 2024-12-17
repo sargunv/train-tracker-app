@@ -36,9 +36,6 @@ internal class AndroidScaleBar(ctx: Context, private val mapView: MapView, map: 
       val right = (padding.calculateRightPadding(layoutDir).coerceAtLeast(0.dp) + 8.dp).roundToPx()
       val bottom = (padding.calculateBottomPadding().coerceAtLeast(0.dp) + 8.dp).roundToPx()
 
-      println("mapView width: ${mapView.width}, height: ${mapView.height}")
-      println("scaleBar width: ${scaleBar.width}, height: ${scaleBar.height}")
-
       scaleBar.barHeight
 
       val offset =
