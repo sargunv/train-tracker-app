@@ -93,6 +93,10 @@ public object ExpressionsDsl {
     block: (Variable<V>) -> Expression<R>,
   ): Expression<R> = Variable<V>(name).let { it.bind(value, block(it)) }
 
+  /** References a [Variable] bound in [withVariable]. */
+  public fun <T : ExpressionValue> Variable<T>.use(): Expression<T> =
+    callFn("var", const(name)).cast()
+
   /** Represents a variable bound with [withVariable]. Reference the bound expression with [use]. */
   @JvmInline
   public value class Variable<@Suppress("unused") T : ExpressionValue>
@@ -104,10 +108,6 @@ public object ExpressionsDsl {
     value: Expression<V>,
     expression: Expression<T>,
   ): Expression<T> = callFn("let", const(name), value, expression).cast()
-
-  /** References a [Variable] bound in [withVariable]. */
-  public fun <T : ExpressionValue> Variable<T>.use(): Expression<T> =
-    callFn("var", const(name)).cast()
 
   // endregion
 
