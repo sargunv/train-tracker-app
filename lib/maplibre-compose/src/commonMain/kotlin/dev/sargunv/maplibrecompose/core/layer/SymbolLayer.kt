@@ -28,7 +28,6 @@ import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
 
-@PublishedApi
 internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 

@@ -5,7 +5,6 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.ImageValue
 
-@PublishedApi
 internal expect class BackgroundLayer(id: String) : Layer {
   fun setBackgroundColor(color: Expression<ColorValue>)
 

@@ -15,7 +15,6 @@ import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
 import dev.sargunv.maplibrecompose.core.util.toNSPredicate
 
-@PublishedApi
 internal actual class CircleLayer actual constructor(id: String, source: Source) :
   FeatureLayer(source) {
 

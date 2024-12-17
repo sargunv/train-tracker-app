@@ -10,7 +10,6 @@ import dev.sargunv.maplibrecompose.core.util.toMLNExpression
 import org.maplibre.android.style.layers.PropertyFactory
 import org.maplibre.android.style.layers.RasterLayer as MLNRasterLayer
 
-@PublishedApi
 internal actual class RasterLayer actual constructor(id: String, actual val source: Source) :
   Layer() {
   override val impl = MLNRasterLayer(id, source.id)

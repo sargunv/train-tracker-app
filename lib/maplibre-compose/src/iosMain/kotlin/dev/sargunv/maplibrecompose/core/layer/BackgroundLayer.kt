@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
 
-@PublishedApi
 internal actual class BackgroundLayer actual constructor(id: String) : Layer() {
   override val impl = MLNBackgroundStyleLayer(id)
 

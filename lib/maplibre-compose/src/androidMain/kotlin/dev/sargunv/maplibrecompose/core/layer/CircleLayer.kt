@@ -16,7 +16,6 @@ import org.maplibre.android.style.expressions.Expression as MLNExpression
 import org.maplibre.android.style.layers.CircleLayer as MLNCircleLayer
 import org.maplibre.android.style.layers.PropertyFactory
 
-@PublishedApi
 internal actual class CircleLayer actual constructor(id: String, source: Source) :
   FeatureLayer(source) {
   override val impl = MLNCircleLayer(id, source.id)

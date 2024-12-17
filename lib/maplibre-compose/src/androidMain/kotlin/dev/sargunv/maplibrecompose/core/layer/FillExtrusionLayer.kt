@@ -14,7 +14,6 @@ import org.maplibre.android.style.expressions.Expression as MLNExpression
 import org.maplibre.android.style.layers.FillExtrusionLayer as MLNFillExtrusionLayer
 import org.maplibre.android.style.layers.PropertyFactory
 
-@PublishedApi
 internal actual class FillExtrusionLayer actual constructor(id: String, source: Source) :
   FeatureLayer(source) {
   override val impl = MLNFillExtrusionLayer(id, source.id)

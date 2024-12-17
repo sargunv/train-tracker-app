@@ -11,8 +11,7 @@ import dev.sargunv.maplibrecompose.core.source.RasterSource
  * @throws IllegalArgumentException if a layer with the given [id] already exists.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun rememberRasterSource(
+public fun rememberRasterSource(
   id: String,
   uri: String,
   tileSize: Int = DEFAULT_RASTER_TILE_SIZE,

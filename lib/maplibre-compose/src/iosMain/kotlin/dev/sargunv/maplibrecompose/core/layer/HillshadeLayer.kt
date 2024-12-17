@@ -9,7 +9,6 @@ import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
 
-@PublishedApi
 internal actual class HillshadeLayer actual constructor(id: String, actual val source: Source) :
   Layer() {
 

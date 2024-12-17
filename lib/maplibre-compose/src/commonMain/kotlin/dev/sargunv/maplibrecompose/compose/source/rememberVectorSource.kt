@@ -10,8 +10,7 @@ import dev.sargunv.maplibrecompose.core.source.VectorSource
  * @throws IllegalArgumentException if a layer with the given [id] already exists.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun rememberVectorSource(id: String, uri: String): VectorSource =
+public fun rememberVectorSource(id: String, uri: String): VectorSource =
   composeKey(id, uri) {
     rememberUserSource(factory = { VectorSource(id = id, uri = uri) }, update = {})
   }

@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.source.Source
 
-@PublishedApi
 internal expect class HeatmapLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 

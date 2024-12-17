@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.compose.engine.LocalStyleManager
 import dev.sargunv.maplibrecompose.core.source.Source
 
 @Composable
-@PublishedApi
 internal fun <T : Source> rememberUserSource(factory: () -> T, update: T.() -> Unit): T {
   val styleManager = LocalStyleManager.current
   val source = remember(styleManager) { factory().also { styleManager.addSource(it) } }

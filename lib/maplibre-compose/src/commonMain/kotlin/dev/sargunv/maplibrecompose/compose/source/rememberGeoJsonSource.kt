@@ -13,8 +13,7 @@ import io.github.dellisd.spatialk.geojson.GeoJson
  * @throws IllegalArgumentException if a layer with the given [id] already exists.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun rememberGeoJsonSource(
+public fun rememberGeoJsonSource(
   id: String,
   uri: String,
   options: GeoJsonOptions = GeoJsonOptions(),
@@ -32,8 +31,7 @@ public inline fun rememberGeoJsonSource(
  * @throws IllegalArgumentException if a layer with the given [id] already exists.
  */
 @Composable
-@Suppress("NOTHING_TO_INLINE")
-public inline fun rememberGeoJsonSource(
+public fun rememberGeoJsonSource(
   id: String,
   data: GeoJson,
   options: GeoJsonOptions = GeoJsonOptions(),

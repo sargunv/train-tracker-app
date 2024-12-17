@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.IlluminationAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
-@PublishedApi
 internal expect class HillshadeLayer(id: String, source: Source) : Layer {
   val source: Source
 

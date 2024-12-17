@@ -4,7 +4,6 @@ import org.maplibre.android.style.layers.Layer as MlnLayer
 import org.maplibre.android.style.layers.Property
 import org.maplibre.android.style.layers.PropertyFactory
 
-@PublishedApi
 internal actual sealed class Layer {
   abstract val impl: MlnLayer
   actual val id: String

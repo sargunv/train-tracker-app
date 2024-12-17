@@ -10,7 +10,6 @@ import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
-@PublishedApi
 internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLayer {
   override var sourceLayer: String
 

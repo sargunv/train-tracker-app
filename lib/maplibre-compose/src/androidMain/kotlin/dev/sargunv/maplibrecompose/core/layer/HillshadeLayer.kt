@@ -10,7 +10,6 @@ import dev.sargunv.maplibrecompose.core.util.toMLNExpression
 import org.maplibre.android.style.layers.HillshadeLayer as MLNHillshadeLayer
 import org.maplibre.android.style.layers.PropertyFactory
 
-@PublishedApi
 internal actual class HillshadeLayer actual constructor(id: String, actual val source: Source) :
   Layer() {
   override val impl = MLNHillshadeLayer(id, source.id)

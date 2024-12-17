@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 
-@PublishedApi
 internal expect class RasterLayer(id: String, source: Source) : Layer {
   val source: Source
 

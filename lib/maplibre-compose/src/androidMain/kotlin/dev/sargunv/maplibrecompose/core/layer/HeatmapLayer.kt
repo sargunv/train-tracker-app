@@ -11,7 +11,6 @@ import org.maplibre.android.style.expressions.Expression as MLNExpression
 import org.maplibre.android.style.layers.HeatmapLayer as MLNHeatmapLayer
 import org.maplibre.android.style.layers.PropertyFactory
 
-@PublishedApi
 internal actual class HeatmapLayer actual constructor(id: String, source: Source) :
   FeatureLayer(source) {
   override val impl = MLNHeatmapLayer(id, source.id)

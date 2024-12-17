@@ -10,7 +10,6 @@ import dev.sargunv.maplibrecompose.compose.engine.LayerNode
 import dev.sargunv.maplibrecompose.compose.engine.MapNodeApplier
 import dev.sargunv.maplibrecompose.core.layer.Layer
 
-@PublishedApi
 @Composable
 @MaplibreComposable
 internal fun <T : Layer> LayerNode(

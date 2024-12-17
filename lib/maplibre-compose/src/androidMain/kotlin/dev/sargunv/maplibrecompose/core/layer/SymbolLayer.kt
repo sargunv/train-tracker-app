@@ -31,7 +31,6 @@ import org.maplibre.android.style.expressions.Expression as MLNExpression
 import org.maplibre.android.style.layers.PropertyFactory
 import org.maplibre.android.style.layers.SymbolLayer as MLNSymbolLayer
 
-@PublishedApi
 internal actual class SymbolLayer actual constructor(id: String, source: Source) :
   FeatureLayer(source) {
   override val impl = MLNSymbolLayer(id, source.id)
