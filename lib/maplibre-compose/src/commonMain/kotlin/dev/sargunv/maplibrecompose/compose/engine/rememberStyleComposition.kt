@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.staticCompositionLocalOf
 import co.touchlab.kermit.Logger
-import dev.sargunv.maplibrecompose.compose.MapComposable
+import dev.sargunv.maplibrecompose.compose.MaplibreComposable
 import dev.sargunv.maplibrecompose.core.Style
 import kotlinx.coroutines.awaitCancellation
 
@@ -18,7 +18,7 @@ import kotlinx.coroutines.awaitCancellation
 internal fun rememberStyleComposition(
   maybeStyle: Style?,
   logger: Logger?,
-  content: @Composable @MapComposable () -> Unit,
+  content: @Composable @MaplibreComposable () -> Unit,
 ): State<StyleNode?> {
   val ret = remember { mutableStateOf<StyleNode?>(null) }
   val compositionContext = rememberCompositionContext()

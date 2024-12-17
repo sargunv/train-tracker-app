@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
+import dev.sargunv.maplibrecompose.compose.MaplibreComposable
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Defaults
@@ -360,6 +361,7 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  */
 @OptIn(JsOnlyApi::class)
 @Composable
+@MaplibreComposable
 public fun SymbolLayer(
   id: String,
   source: Source,

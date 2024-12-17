@@ -96,7 +96,7 @@ public fun MaplibreMap(
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   logger: Logger? = remember { Logger.withTag("maplibre-compose") },
-  mapContent: @Composable @MapComposable () -> Unit = {},
+  mapContent: @Composable @MaplibreComposable () -> Unit = {},
   content: @Composable BoxScope.() -> Unit = {},
 ) {
   var rememberedStyle by remember { mutableStateOf<Style?>(null) }

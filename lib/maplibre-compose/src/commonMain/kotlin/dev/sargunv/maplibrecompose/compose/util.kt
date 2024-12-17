@@ -1,6 +1,6 @@
 package dev.sargunv.maplibrecompose.compose
 
-import androidx.compose.runtime.ComposableTarget
+import androidx.compose.runtime.ComposableTargetMarker
 import androidx.compose.ui.unit.DpOffset
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.Position
@@ -31,7 +31,7 @@ public enum class ClickResult(internal val consumed: Boolean) {
 }
 
 @Retention(AnnotationRetention.BINARY)
-@ComposableTarget(applier = "dev.sargunv.maplibrecompose.compose.engine.MapNodeApplier")
+@ComposableTargetMarker(description = "MapLibre Composable")
 @Target(
   AnnotationTarget.FILE,
   AnnotationTarget.FUNCTION,
@@ -39,4 +39,4 @@ public enum class ClickResult(internal val consumed: Boolean) {
   AnnotationTarget.TYPE,
   AnnotationTarget.TYPE_PARAMETER,
 )
-public annotation class MapComposable
+public annotation class MaplibreComposable

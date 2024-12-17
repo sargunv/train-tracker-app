@@ -5,6 +5,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
+import dev.sargunv.maplibrecompose.compose.MaplibreComposable
 
 internal val LocalAnchor: ProvidableCompositionLocal<Anchor> = compositionLocalOf { Anchor.Top }
 
@@ -51,16 +52,21 @@ public sealed interface Anchor {
 
   public companion object {
     /** The layers specified in [block] are put at the top, i.e. in front of all other layers. */
-    @Composable public fun Top(block: @Composable () -> Unit): Unit = At(Top, block)
+    @Composable
+    @MaplibreComposable
+    public fun Top(block: @Composable () -> Unit): Unit = At(Top, block)
 
     /** The layers specified in [block] are put at the bottom, i.e. behind of all other layers. */
-    @Composable public fun Bottom(block: @Composable () -> Unit): Unit = At(Bottom, block)
+    @Composable
+    @MaplibreComposable
+    public fun Bottom(block: @Composable () -> Unit): Unit = At(Bottom, block)
 
     /**
      * The layers specified in [block] are put above the layer with the given [layerId], i.e. in
      * front of it.
      */
     @Composable
+    @MaplibreComposable
     public fun Above(layerId: String, block: @Composable () -> Unit): Unit =
       At(Above(layerId), block)
 
@@ -69,6 +75,7 @@ public sealed interface Anchor {
      * it.
      */
     @Composable
+    @MaplibreComposable
     public fun Below(layerId: String, block: @Composable () -> Unit): Unit =
       At(Below(layerId), block)
 
@@ -77,11 +84,13 @@ public sealed interface Anchor {
      * instead of it.
      */
     @Composable
+    @MaplibreComposable
     public fun Replace(layerId: String, block: @Composable () -> Unit): Unit =
       At(Replace(layerId), block)
 
     /** The layers specified in [block] are put at the given [Anchor]. */
     @Composable
+    @MaplibreComposable
     public fun At(anchor: Anchor, block: @Composable () -> Unit) {
       CompositionLocalProvider(LocalAnchor provides anchor) { block() }
     }
