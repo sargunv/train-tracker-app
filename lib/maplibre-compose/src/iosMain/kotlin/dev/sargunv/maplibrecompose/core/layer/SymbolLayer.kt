@@ -24,6 +24,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -175,7 +176,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textFontNames = font.toNSExpression()
   }
 
-  actual fun setTextSize(size: Expression<DpValue>) {
+  actual fun setTextSize(size: Expression<TextUnitValue>) {
     impl.textFontSize = size.toNSExpression()
   }
 

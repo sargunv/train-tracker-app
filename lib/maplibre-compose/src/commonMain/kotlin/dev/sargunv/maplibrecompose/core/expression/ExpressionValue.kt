@@ -5,6 +5,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.TextUnit
 import kotlin.time.Duration
 
 /**
@@ -23,7 +24,7 @@ public sealed interface BooleanValue : ExpressionValue, EquatableValue
  * Represents an [Expression] that resolves to a numeric quantity. Corresponds to numbers in the
  * JSON style spec. Use [ExpressionsDsl.const] to create a literal [ScalarValue].
  *
- * @param U the unit type of the scalar value. For dimensionless quantities, use [Unit].
+ * @param U the unit type of the scalar value. For dimensionless quantities, use [Number].
  */
 public sealed interface ScalarValue<U> :
   ExpressionValue,
@@ -35,19 +36,25 @@ public sealed interface ScalarValue<U> :
 /**
  * Represents an [Expression] that resolves to a dimensionless quantity. See [ExpressionsDsl.const].
  */
-public typealias FloatValue = ScalarValue<Unit>
+public typealias FloatValue = ScalarValue<Number>
 
 /**
  * Represents an [Expression] that resolves to an integer dimensionless quantity. See
  * [ExpressionsDsl.const].
  */
-public sealed interface IntValue : ScalarValue<Unit>
+public sealed interface IntValue : ScalarValue<Number>
 
 /**
  * Represents an [Expression] that resolves to device-independent pixels ([Dp]). See
  * [ExpressionsDsl.const].
  */
 public typealias DpValue = ScalarValue<Dp>
+
+/**
+ * Represents an [Expression] that resolves to a text related dimension ([TextUnit]). See
+ * [ExpressionsDsl.const].
+ */
+public typealias TextUnitValue = ScalarValue<TextUnit>
 
 /**
  * Represents an [Expression] that resolves to an amount of time with millisecond precision
@@ -87,7 +94,7 @@ public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
 /**
  * Represents an [Expression] that resolves to a list of scalar values.
  *
- * @param U the unit type of the scalar values. For dimensionless quantities, use [Unit].
+ * @param U the unit type of the scalar values. For dimensionless quantities, use [Number].
  */
 public sealed interface VectorValue<U> :
   ListValue<ScalarValue<U>>, InterpolateableValue<VectorValue<U>>
@@ -96,7 +103,7 @@ public sealed interface VectorValue<U> :
  * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels
  * ([Offset]). See [ExpressionsDsl.const].
  */
-public sealed interface OffsetValue : VectorValue<Unit>
+public sealed interface OffsetValue : VectorValue<Number>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in device-independent
