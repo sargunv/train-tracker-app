@@ -1178,7 +1178,7 @@ public object ExpressionsDsl {
   // region Feature data
 
   /** Object to access feature-related data, see [feature] */
-  public object FeatureScope {
+  public object Feature {
     /**
      * Returns the value corresponding to the given [key] in the current feature's properties or
      * `null` if it is not present.
@@ -1239,7 +1239,7 @@ public object ExpressionsDsl {
   }
 
   /** Accesses to feature-related data */
-  public val feature: FeatureScope = FeatureScope
+  public val feature: Feature = Feature
 
   // endregion
 
