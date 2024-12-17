@@ -13,7 +13,7 @@ spatialk = "0.3.0"
 
 gradle-android = "8.7.3"
 gradle-compose = "1.7.1"
-gradle-dokka = "2.0.0-Beta"
+gradle-dokka = "2.0.0"
 gradle-jgitver = "0.10.0-rc03"
 gradle-kotlin = "2.1.0"
 gradle-mavenPublish = "0.30.0"
