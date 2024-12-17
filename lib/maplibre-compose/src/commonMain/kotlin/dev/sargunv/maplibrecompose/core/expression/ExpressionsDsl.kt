@@ -19,6 +19,11 @@ import kotlin.time.Duration
 public object ExpressionsDsl {
   // region Literals
 
+  /**
+   * The standard font size of a MapLibre map style. Used in [const] and [em] for scaling EM units.
+   */
+  public const val STANDARD_FONT_SIZE_SP: Float = 16f
+
   /** Creates a literal expression for a [String] value. */
   public fun const(string: String): Expression<StringValue> = Expression.ofString(string)
 
@@ -36,12 +41,12 @@ public object ExpressionsDsl {
 
   /**
    * Creates a literal expression for a specified [TextUnit] value. If [textUnit] is in `em`, it is
-   * considered relative to `16.sp`.
+   * considered relative to [STANDARD_FONT_SIZE_SP].
    */
   public fun const(textUnit: TextUnit, fontScale: Float): Expression<TextUnitValue> =
     when (textUnit.type) {
       TextUnitType.Sp -> const(textUnit.value * fontScale).cast()
-      TextUnitType.Em -> const(textUnit.value * fontScale * 16f).cast()
+      TextUnitType.Em -> const(textUnit.value * fontScale * STANDARD_FONT_SIZE_SP).cast()
       else -> error("Unsupported TextUnit type: ${textUnit.type}")
     }
 
@@ -104,6 +109,25 @@ public object ExpressionsDsl {
   /** Converts a numeric [Expression] in seconds to a [DurationValue] expression. */
   public val Expression<FloatValue>.seconds: Expression<DurationValue>
     get() = (this * const(1000)).cast()
+
+  /** Converts a numeric [Expression] to a [TextUnitValue] expression in SP units. */
+  @Composable
+  public fun Expression<FloatValue>.sp(
+    fontScale: Float = LocalDensity.current.fontScale
+  ): Expression<DpValue> {
+    return (this * const(fontScale)).cast()
+  }
+
+  /**
+   * Converts a numeric [Expression] to a [TextUnitValue] expression in EM units relative to
+   * [STANDARD_FONT_SIZE_SP]
+   */
+  @Composable
+  public fun Expression<FloatValue>.em(
+    fontScale: Float = LocalDensity.current.fontScale
+  ): Expression<DpValue> {
+    return (this * const(fontScale * STANDARD_FONT_SIZE_SP)).cast()
+  }
 
   // endregion
 
