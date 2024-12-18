@@ -2,7 +2,6 @@ package dev.sargunv.maplibrecompose.compose.controls
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -12,7 +11,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import dev.sargunv.maplibrecompose.compose.StyleState
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 public fun AttributionDialog(
   styleState: StyleState,
   onDismiss: () -> Unit,
