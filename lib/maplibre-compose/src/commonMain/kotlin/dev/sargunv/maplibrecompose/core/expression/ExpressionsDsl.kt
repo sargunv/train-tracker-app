@@ -32,18 +32,16 @@ public object ExpressionsDsl {
   public fun const(dp: Dp): Expression<DpValue> = Expression.ofFloat(dp.value).cast()
 
   /**
-   * Creates a literal expression for a specified [TextUnit] value. If [textUnit] is in `em`, it is
-   * converted to SP relative to [STANDARD_MAP_TEXT_SIZE_SP].
+   * Creates a literal expression for a specified [TextUnit] value in SP or EM. It can be provided
+   * in either unit, and will resolve to one at runtime depending on the property it is used in.
    */
-  public fun const(textUnit: TextUnit): Expression<SpValue> =
+  public fun const(textUnit: TextUnit): Expression<TextUnitValue> =
     when (textUnit.type) {
-      TextUnitType.Sp -> const(textUnit.value).cast()
-      TextUnitType.Em -> const(textUnit.value * STANDARD_MAP_TEXT_SIZE_SP).cast()
-      else -> error("Unsupported TextUnit type: ${textUnit.type}")
+      TextUnitType.Sp -> const(textUnit.value).sp
+      TextUnitType.Em -> const(textUnit.value).em
+      TextUnitType.Unspecified -> unspecifiedValueVar.use()
+      else -> error("Unrecognized TextUnitType: ${textUnit.type}")
     }
-
-  /** The standard text size in SP used for converting `em` values to `sp`. */
-  public const val STANDARD_MAP_TEXT_SIZE_SP: Float = 16f
 
   /**
    * Creates a literal expression for a [Duration] value.
@@ -87,17 +85,6 @@ public object ExpressionsDsl {
   public val Expression<FloatValue>.dp: Expression<DpValue>
     get() = this.cast()
 
-  /** Converts a numeric [Expression] to an [SpValue] expression. */
-  public val Expression<FloatValue>.sp: Expression<SpValue>
-    get() = this.cast()
-
-  /**
-   * Converts a numeric [Expression] to an [SpValue] expression relative to
-   * [STANDARD_MAP_TEXT_SIZE_SP].
-   */
-  public val Expression<FloatValue>.em: Expression<SpValue>
-    get() = (this * const(STANDARD_MAP_TEXT_SIZE_SP)).cast()
-
   /** Converts a numeric [Expression] in milliseconds to a [MillisecondsValue] expression. */
   public val Expression<FloatValue>.milliseconds: Expression<MillisecondsValue>
     get() = this.cast()
@@ -105,6 +92,28 @@ public object ExpressionsDsl {
   /** Converts a numeric [Expression] in seconds to a [MillisecondsValue] expression. */
   public val Expression<FloatValue>.seconds: Expression<MillisecondsValue>
     get() = (this * const(1000)).cast()
+
+  /** Converts a numeric [Expression] to an [TextUnitValue] expression in SP. */
+  public val Expression<FloatValue>.sp: Expression<TextUnitValue>
+    get() = this.cast<TextUnitValue>() * spMultiplierVar.use()
+
+  /** Converts a numeric [Expression] to an [TextUnitValue] expression in EM */
+  public val Expression<FloatValue>.em: Expression<TextUnitValue>
+    get() = this.cast<TextUnitValue>() * emMultiplierVar.use()
+
+  internal val spMultiplierVar = Variable<FloatValue>("__SP_MULTIPLIER")
+  internal val emMultiplierVar = Variable<FloatValue>("__EM_MULTIPLIER")
+  internal val unspecifiedValueVar = Variable<TextUnitValue>("__UNSPECIFIED_VALUE")
+
+  internal fun Expression<*>.resolveTextUnits(
+    spMultiplier: Expression<FloatValue>,
+    emMultiplier: Expression<FloatValue>,
+    unspecifiedValue: Expression<TextUnitValue>,
+  ): Expression<*> =
+    spMultiplierVar.bind(
+      spMultiplier,
+      emMultiplierVar.bind(emMultiplier, unspecifiedValueVar.bind(unspecifiedValue, this)),
+    )
 
   // endregion
 

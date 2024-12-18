@@ -51,10 +51,12 @@ public sealed interface IntValue : NumberValue<Number>
 public typealias DpValue = NumberValue<Dp>
 
 /**
- * Represents an [Expression] that resolves to scalable pixels ([TextUnit] in SP). See
+ * Represents an [Expression] that resolves to scalable pixels or em ([TextUnit]). See
  * [ExpressionsDsl.const].
+ *
+ * Which unit it resolves to is determined by the style property it's used in.
  */
-public typealias SpValue = NumberValue<TextUnit>
+public typealias TextUnitValue = NumberValue<TextUnit>
 
 /**
  * Represents an [Expression] that resolves to an amount of time with millisecond precision
@@ -110,6 +112,12 @@ public sealed interface OffsetValue : VectorValue<Number>
  * pixels ([DpOffset]). See [ExpressionsDsl.const].
  */
 public sealed interface DpOffsetValue : VectorValue<Dp>
+
+/**
+ * Represents an [Expression] that resolves to a 2D floating point offset in scalable pixels or em
+ * ([TextUnit]). See [ExpressionsDsl.textOffset].
+ */
+public sealed interface TextOffsetValue : VectorValue<TextUnit>
 
 /**
  * Represents an [Expression] that resolves to an absolute (layout direction unaware) padding

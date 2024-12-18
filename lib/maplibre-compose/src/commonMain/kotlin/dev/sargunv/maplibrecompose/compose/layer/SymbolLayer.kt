@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -18,6 +19,7 @@ import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.dp
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.nil
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.times
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
@@ -29,7 +31,6 @@ import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.ListValue
 import dev.sargunv.maplibrecompose.core.expression.OffsetValue
 import dev.sargunv.maplibrecompose.core.expression.PaddingValue
-import dev.sargunv.maplibrecompose.core.expression.SpValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -38,6 +39,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.ZeroPadding
@@ -213,12 +215,12 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textSize Font size.
+ * @param textSize Font size in SP or EM relative to 16sp.
  *
  *   Ignored if [textField] is not specified.
  *
  * @param textTransform Specifies how to capitalize text.
- * @param textLetterSpacing Text tracking amount in ems.
+ * @param textLetterSpacing Text tracking amount.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -237,11 +239,11 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textMaxWidth The maximum line width in ems for text wrapping.
+ * @param textMaxWidth The maximum line width for text wrapping.
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textLineHeight Text leading value in ems for multi-line text.
+ * @param textLineHeight Text leading value for multi-line text.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -294,9 +296,9 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  *
  *   Ignored if [textField] is not specified.
  *
- * @param textRadialOffset Radial offset of text in ems, in the direction of the symbol's anchor.
- *   Useful in combination with [textVariableAnchor], which defaults to using the two-dimensional
- *   [textOffset] if present.
+ * @param textRadialOffset Radial offset of text, in the direction of the symbol's anchor. Useful in
+ *   combination with [textVariableAnchor], which defaults to using the two-dimensional [textOffset]
+ *   if present.
  *
  *   Ignored if [textField] is not specified.
  *
@@ -428,17 +430,17 @@ public fun SymbolLayer(
 
   // text glyph properties
   textFont: Expression<ListValue<StringValue>> = Defaults.FontNames,
-  textSize: Expression<SpValue> = const(1.em),
+  textSize: Expression<TextUnitValue> = const(1.em),
   textTransform: Expression<EnumValue<TextTransform>> = const(TextTransform.None),
-  textLetterSpacing: Expression<FloatValue> = const(0f),
+  textLetterSpacing: Expression<TextUnitValue> = const(0f.em),
   textRotationAlignment: Expression<EnumValue<TextRotationAlignment>> =
     const(TextRotationAlignment.Auto),
   textPitchAlignment: Expression<EnumValue<TextPitchAlignment>> = const(TextPitchAlignment.Auto),
   textMaxAngle: Expression<FloatValue> = const(45f),
 
   // text paragraph layout
-  textMaxWidth: Expression<FloatValue> = const(10f),
-  textLineHeight: Expression<FloatValue> = const(1.2f),
+  textMaxWidth: Expression<TextUnitValue> = const(10f.em),
+  textLineHeight: Expression<TextUnitValue> = const(1.2f.em),
   textJustify: Expression<EnumValue<TextJustify>> = const(TextJustify.Center),
   textWritingMode: Expression<ListValue<EnumValue<TextWritingMode>>> = nil(),
   textKeepUpright: Expression<BooleanValue> = const(true),
@@ -446,9 +448,9 @@ public fun SymbolLayer(
 
   // text anchoring
   textAnchor: Expression<EnumValue<SymbolAnchor>> = const(SymbolAnchor.Center),
-  textOffset: Expression<OffsetValue> = const(Offset.Zero),
+  textOffset: Expression<OffsetValue> = const(Offset.Zero), // TODO text unit type
   textVariableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>> = nil(),
-  textRadialOffset: Expression<FloatValue> = const(0f),
+  textRadialOffset: Expression<TextUnitValue> = const(0f.em),
   textVariableAnchorOffset: Expression<ListValue<*>> = nil(), // TODO proper type
 
   // text collision
@@ -464,9 +466,20 @@ public fun SymbolLayer(
   onClick: FeaturesClickHandler? = null,
   onLongClick: FeaturesClickHandler? = null,
 ) {
+  val textSizeSp = textSize.rememberTextUnitsAsSp(const(16f), 1f.em).cast<FloatValue>()
+  val textLetterSpacingEm =
+    textLetterSpacing.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<FloatValue>()
+  val textMaxWidthEm = textMaxWidth.rememberTextUnitsAsEm(textSizeSp, 10f.em).cast<FloatValue>()
+  val textLineHeightEm =
+    textLineHeight.rememberTextUnitsAsEm(textSizeSp, 1.2f.em).cast<FloatValue>()
+  val textRadialOffsetEm =
+    textRadialOffset.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<FloatValue>()
+
   // used for scaling textSize from sp (api) to dp (core)
   // TODO needs changes after https://github.com/maplibre/maplibre-native/issues/3057
-  val textScale = LocalDensity.current.fontScale
+  val fontScale = LocalDensity.current.fontScale
+  val textSizeDp = remember(textSizeSp, fontScale) { (textSizeSp * const(fontScale)).dp }
+
   LayerNode(
     factory = { SymbolLayer(id = id, source = source) },
     update = {
@@ -508,13 +521,12 @@ public fun SymbolLayer(
       set(textRotationAlignment) { layer.setTextRotationAlignment(it) }
       set(textField) { layer.setTextField(it) }
       set(textFont) { layer.setTextFont(it) }
-      set(textSize) { layer.setTextSize((it * const(textScale)).cast()) }
-      set(textScale) { layer.setTextSize((textSize * const(it)).cast()) }
-      set(textMaxWidth) { layer.setTextMaxWidth(it) }
-      set(textLineHeight) { layer.setTextLineHeight(it) }
-      set(textLetterSpacing) { layer.setTextLetterSpacing(it) }
+      set(textSizeDp) { layer.setTextSize(it) }
+      set(textMaxWidthEm) { layer.setTextMaxWidth(it) }
+      set(textLineHeightEm) { layer.setTextLineHeight(it) }
+      set(textLetterSpacingEm) { layer.setTextLetterSpacing(it) }
       set(textJustify) { layer.setTextJustify(it) }
-      set(textRadialOffset) { layer.setTextRadialOffset(it) }
+      set(textRadialOffsetEm) { layer.setTextRadialOffset(it) }
       set(textVariableAnchor) { layer.setTextVariableAnchor(it) }
       set(textVariableAnchorOffset) { layer.setTextVariableAnchorOffset(it) }
       set(textAnchor) { layer.setTextAnchor(it) }
