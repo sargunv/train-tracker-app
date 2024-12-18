@@ -94,7 +94,7 @@ public object ExpressionsDsl {
             TextUnitType.Sp -> spMultiplierVar
             TextUnitType.Em -> emMultiplierVar
             TextUnitType.Unspecified -> unspecifiedValueVar
-            else -> error("Unrecognized TextUnitType: ${type}")
+            else -> error("Unrecognized TextUnitType: $type")
           }
           .use()
           .cast(),
