@@ -24,7 +24,6 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asString
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.feature
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.format
-import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.literal
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.not
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.step
 import dev.sargunv.maplibrecompose.core.source.GeoJsonOptions
@@ -34,7 +33,6 @@ import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.generated.Res
 import io.github.dellisd.spatialk.geojson.Feature
 import io.github.dellisd.spatialk.geojson.FeatureCollection
-import io.github.dellisd.spatialk.geojson.Geometry
 import io.github.dellisd.spatialk.geojson.Point
 import io.github.dellisd.spatialk.geojson.Position
 import kotlinx.coroutines.launch
@@ -95,7 +93,7 @@ object ClusteredPointsDemo : Demo {
                 5000 to const(60.dp),
               ),
             onClick = { features ->
-              features.firstOrNull<Feature>()?.geometry?.let<Geometry, ClickResult> {
+              features.firstOrNull()?.geometry?.let {
                 coroutineScope.launch {
                   cameraState.animateTo(
                     cameraState.position.copy(
@@ -114,7 +112,7 @@ object ClusteredPointsDemo : Demo {
             source = bikeSource,
             filter = feature.has(const("point_count")),
             textField = format(feature.get(const("point_count_abbreviated")).asString()),
-            textFont = literal(listOf(const("Noto Sans Regular"))),
+            textFont = const(listOf("Noto Sans Regular")),
             textColor = const(MaterialTheme.colorScheme.onBackground),
           )
 

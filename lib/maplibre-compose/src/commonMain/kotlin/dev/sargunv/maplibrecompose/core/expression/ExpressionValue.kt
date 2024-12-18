@@ -115,7 +115,7 @@ public sealed interface DpOffsetValue : VectorValue<Dp>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in scalable pixels or em
- * ([TextUnit]). See [ExpressionsDsl.textOffset].
+ * ([TextUnit]). See (TODO).
  */
 public sealed interface TextOffsetValue : VectorValue<TextUnit>
 

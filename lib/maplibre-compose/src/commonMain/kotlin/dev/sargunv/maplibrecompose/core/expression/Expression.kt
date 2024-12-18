@@ -58,8 +58,8 @@ private constructor(
     fun <T : ExpressionValue> ofMap(map: Map<String, Expression<T>>): Expression<MapValue<T>> =
       if (map.isEmpty()) ofEmptyMap else Expression(map.mapValues { it.value.value })
 
-    fun <T : ExpressionValue> ofList(list: List<Expression<T>>): Expression<ListValue<T>> =
-      if (list.isEmpty()) ofEmptyList else Expression(list.map { it.value })
+    fun ofList(list: List<*>): Expression<ListValue<*>> =
+      if (list.isEmpty()) ofEmptyList else Expression(list)
 
     fun ofOffset(offset: Offset) = if (offset == Offset.Zero) ofZeroOffset else Expression(offset)
 

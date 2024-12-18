@@ -7,7 +7,6 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.heatmapDensity
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.interpolate
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.linear
-import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.literal
 
 // helpers for default expression values
 
@@ -27,5 +26,5 @@ public object Defaults {
     )
 
   public val FontNames: Expression<ListValue<StringValue>> =
-    literal(listOf(const("Open Sans Regular"), const("Arial Unicode MS Regular")))
+    const(listOf("Open Sans Regular", "Arial Unicode MS Regular"))
 }

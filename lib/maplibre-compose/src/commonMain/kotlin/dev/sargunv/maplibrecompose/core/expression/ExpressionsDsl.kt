@@ -69,6 +69,11 @@ public object ExpressionsDsl {
   public fun const(padding: PaddingValues.Absolute): Expression<PaddingValue> =
     Expression.ofPadding(padding)
 
+  /** Creates a literal expression for a list of strings. */
+  @JvmName("constStringList")
+  public fun const(list: List<String>): Expression<ListValue<StringValue>> =
+    Expression.ofList(listOf("literal", list)).cast()
+
   /**
    * Creates a literal expression for a `null` value.
    *
@@ -154,15 +159,6 @@ public object ExpressionsDsl {
 
   // region Types
 
-  /** Produces a literal list value. */
-  public fun <T : ExpressionValue> literal(values: List<Expression<T>>): Expression<ListValue<T>> =
-    callFn("literal", Expression.ofList(values)).cast()
-
-  /** Produces a literal map value. */
-  public fun <T : ExpressionValue> literal(
-    values: Map<String, Expression<T>>
-  ): Expression<MapValue<T>> = callFn("literal", Expression.ofMap(values)).cast()
-
   /** Returns a string describing the type of this expression. */
   public fun Expression<*>.type(): Expression<ExpressionType> = callFn("typeof", this).cast()
 
@@ -232,7 +228,7 @@ public object ExpressionsDsl {
   public inline fun <reified T> Expression<*>.asEnum(
     vararg fallbacks: Expression<*>
   ): Expression<T> where T : Enum<T>, T : EnumValue<T> {
-    val entries = literal(enumEntries<T>().map { const(it) })
+    val entries = const(enumEntries<T>().map { it.name })
     return switch(
         condition(entries.contains(this), this),
         *fallbacks.map { condition(entries.contains(it), it) }.toTypedArray(),
@@ -706,14 +702,14 @@ public object ExpressionsDsl {
   public fun <O : ExpressionValue> case(
     label: List<String>,
     output: Expression<O>,
-  ): Case<StringValue, O> = Case(Expression.ofList(label.map(::const)), output)
+  ): Case<StringValue, O> = Case(Expression.ofList(label), output)
 
   /** Create a [Case], see [switch] */
   @JvmName("numbersCase")
   public fun <O : ExpressionValue> case(
     label: List<Number>,
     output: Expression<O>,
-  ): Case<FloatValue, O> = Case(Expression.ofList(label.map { const(it.toFloat()) }), output)
+  ): Case<FloatValue, O> = Case(Expression.ofList(label), output)
 
   /**
    * Evaluates each expression in [values] in turn until the first non-null value is obtained, and
@@ -1290,8 +1286,8 @@ public object ExpressionsDsl {
   private fun callFn(function: String, vararg args: Expression<*>): Expression<*> =
     Expression.ofList(
       buildList {
-        add(const(function))
-        args.forEach { add(it) }
+        add(function)
+        args.forEach { add(it.value) }
       }
     )
 
