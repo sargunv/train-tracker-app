@@ -23,7 +23,6 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
-import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -96,7 +95,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextFont(font: Expression<ListValue<StringValue>>)
 
-  fun setTextSize(size: Expression<TextUnitValue>)
+  fun setTextSize(size: Expression<DpValue>)
 
   fun setTextMaxWidth(maxWidth: Expression<FloatValue>)
 

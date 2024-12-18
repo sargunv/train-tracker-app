@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -15,8 +16,10 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.nil
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.times
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -26,6 +29,7 @@ import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.ListValue
 import dev.sargunv.maplibrecompose.core.expression.OffsetValue
 import dev.sargunv.maplibrecompose.core.expression.PaddingValue
+import dev.sargunv.maplibrecompose.core.expression.SpValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -34,7 +38,6 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
-import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.ZeroPadding
@@ -425,7 +428,7 @@ public fun SymbolLayer(
 
   // text glyph properties
   textFont: Expression<ListValue<StringValue>> = Defaults.FontNames,
-  textSize: Expression<TextUnitValue> = const(1.em),
+  textSize: Expression<SpValue> = const(1.em),
   textTransform: Expression<EnumValue<TextTransform>> = const(TextTransform.None),
   textLetterSpacing: Expression<FloatValue> = const(0f),
   textRotationAlignment: Expression<EnumValue<TextRotationAlignment>> =
@@ -461,6 +464,7 @@ public fun SymbolLayer(
   onClick: FeaturesClickHandler? = null,
   onLongClick: FeaturesClickHandler? = null,
 ) {
+  val textScale = LocalDensity.current.fontScale
   LayerNode(
     factory = { SymbolLayer(id = id, source = source) },
     update = {
@@ -502,7 +506,8 @@ public fun SymbolLayer(
       set(textRotationAlignment) { layer.setTextRotationAlignment(it) }
       set(textField) { layer.setTextField(it) }
       set(textFont) { layer.setTextFont(it) }
-      set(textSize) { layer.setTextSize(it) }
+      set(textSize) { layer.setTextSize((it * const(textScale)).cast()) }
+      set(textScale) { layer.setTextSize((textSize * const(it)).cast()) }
       set(textMaxWidth) { layer.setTextMaxWidth(it) }
       set(textLineHeight) { layer.setTextLineHeight(it) }
       set(textLetterSpacing) { layer.setTextLetterSpacing(it) }

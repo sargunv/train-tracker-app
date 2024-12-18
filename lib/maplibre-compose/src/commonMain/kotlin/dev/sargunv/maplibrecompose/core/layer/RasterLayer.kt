@@ -1,9 +1,9 @@
 package dev.sargunv.maplibrecompose.core.layer
 
-import dev.sargunv.maplibrecompose.core.expression.DurationValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.MillisecondsValue
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -24,5 +24,5 @@ internal expect class RasterLayer(id: String, source: Source) : Layer {
 
   fun setRasterResampling(resampling: Expression<EnumValue<RasterResampling>>)
 
-  fun setRasterFadeDuration(fadeDuration: Expression<DurationValue>)
+  fun setRasterFadeDuration(fadeDuration: Expression<MillisecondsValue>)
 }

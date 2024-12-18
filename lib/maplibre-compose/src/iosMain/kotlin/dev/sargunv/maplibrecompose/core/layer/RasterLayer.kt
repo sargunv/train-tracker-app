@@ -1,10 +1,10 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNRasterStyleLayer
-import dev.sargunv.maplibrecompose.core.expression.DurationValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.MillisecondsValue
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -42,7 +42,7 @@ internal actual class RasterLayer actual constructor(id: String, actual val sour
     impl.rasterResamplingMode = resampling.toNSExpression()
   }
 
-  actual fun setRasterFadeDuration(fadeDuration: Expression<DurationValue>) {
+  actual fun setRasterFadeDuration(fadeDuration: Expression<MillisecondsValue>) {
     impl.rasterFadeDuration = fadeDuration.toNSExpression()
   }
 }

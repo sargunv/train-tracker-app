@@ -2,11 +2,11 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
 import dev.sargunv.maplibrecompose.compose.MaplibreComposable
-import dev.sargunv.maplibrecompose.core.expression.DurationValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.MillisecondsValue
 import dev.sargunv.maplibrecompose.core.expression.RasterResampling
 import dev.sargunv.maplibrecompose.core.layer.RasterLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -51,7 +51,7 @@ public fun RasterLayer(
   saturation: Expression<FloatValue> = const(0f),
   contrast: Expression<FloatValue> = const(0f),
   resampling: Expression<EnumValue<RasterResampling>> = const(RasterResampling.Linear),
-  fadeDuration: Expression<DurationValue> = const(300.milliseconds),
+  fadeDuration: Expression<MillisecondsValue> = const(300.milliseconds),
 ) {
   LayerNode(
     factory = { RasterLayer(id = id, source = source) },

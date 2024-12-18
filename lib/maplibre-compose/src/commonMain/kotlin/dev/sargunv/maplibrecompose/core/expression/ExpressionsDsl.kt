@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.TextUnit
@@ -36,31 +35,32 @@ public object ExpressionsDsl {
 
   /**
    * Creates a literal expression for a specified [TextUnit] value. If [textUnit] is in `em`, it is
-   * considered relative to `16.sp`.
+   * converted to SP relative to [STANDARD_MAP_TEXT_SIZE_SP].
    */
-  public fun const(textUnit: TextUnit, fontScale: Float): Expression<TextUnitValue> =
+  public fun const(textUnit: TextUnit, fontScale: Float): Expression<SpValue> =
     when (textUnit.type) {
       TextUnitType.Sp -> const(textUnit.value * fontScale).cast()
-      TextUnitType.Em -> const(textUnit.value * fontScale * 16f).cast()
+      TextUnitType.Em -> const(textUnit.value * fontScale * STANDARD_MAP_TEXT_SIZE_SP).cast()
       else -> error("Unsupported TextUnit type: ${textUnit.type}")
     }
 
   /**
    * Creates a literal expression for a specified [TextUnit] value. If [textUnit] is in `em`, it is
-   * considered relative to `16.sp` (the default symbol layer text size).
+   * considered relative to [STANDARD_MAP_TEXT_SIZE_SP].
    */
   @Composable
-  public fun const(
-    textUnit: TextUnit,
-    density: Density = LocalDensity.current,
-  ): Expression<TextUnitValue> = const(textUnit, density.fontScale)
+  public fun const(textUnit: TextUnit): Expression<SpValue> =
+    const(textUnit, LocalDensity.current.fontScale)
+
+  /** The standard text size in SP used for converting `em` values to `sp`. */
+  public const val STANDARD_MAP_TEXT_SIZE_SP: Float = 16f
 
   /**
    * Creates a literal expression for a [Duration] value.
    *
    * The duration will be rounded to the nearest whole milliseconds.
    */
-  public fun const(duration: Duration): Expression<DurationValue> =
+  public fun const(duration: Duration): Expression<MillisecondsValue> =
     Expression.ofInt(duration.inWholeMilliseconds.toInt()).cast()
 
   /** Creates a literal expression for a [Boolean] value. */
@@ -97,12 +97,23 @@ public object ExpressionsDsl {
   public val Expression<FloatValue>.dp: Expression<DpValue>
     get() = this.cast()
 
-  /** Converts a numeric [Expression] in milliseconds to a [DurationValue] expression. */
-  public val Expression<FloatValue>.milliseconds: Expression<DurationValue>
+  /** Converts a numeric [Expression] to an [SpValue] expression. */
+  public val Expression<FloatValue>.sp: Expression<SpValue>
     get() = this.cast()
 
-  /** Converts a numeric [Expression] in seconds to a [DurationValue] expression. */
-  public val Expression<FloatValue>.seconds: Expression<DurationValue>
+  /**
+   * Converts a numeric [Expression] to an [SpValue] expression relative to
+   * [STANDARD_MAP_TEXT_SIZE_SP].
+   */
+  public val Expression<FloatValue>.em: Expression<SpValue>
+    get() = (this * const(STANDARD_MAP_TEXT_SIZE_SP)).cast()
+
+  /** Converts a numeric [Expression] in milliseconds to a [MillisecondsValue] expression. */
+  public val Expression<FloatValue>.milliseconds: Expression<MillisecondsValue>
+    get() = this.cast()
+
+  /** Converts a numeric [Expression] in seconds to a [MillisecondsValue] expression. */
+  public val Expression<FloatValue>.seconds: Expression<MillisecondsValue>
     get() = (this * const(1000)).cast()
 
   // endregion

@@ -51,16 +51,16 @@ public sealed interface IntValue : ScalarValue<Number>
 public typealias DpValue = ScalarValue<Dp>
 
 /**
- * Represents an [Expression] that resolves to a text related dimension ([TextUnit]). See
+ * Represents an [Expression] that resolves to scalable pixels ([TextUnit] in SP). See
  * [ExpressionsDsl.const].
  */
-public typealias TextUnitValue = ScalarValue<TextUnit>
+public typealias SpValue = ScalarValue<TextUnit>
 
 /**
  * Represents an [Expression] that resolves to an amount of time with millisecond precision
  * ([Duration]). See [ExpressionsDsl.const].
  */
-public typealias DurationValue = ScalarValue<Duration>
+public typealias MillisecondsValue = ScalarValue<Duration>
 
 /** Represents an [Expression] that resolves to a string value. See [ExpressionsDsl.const]. */
 public sealed interface StringValue :
