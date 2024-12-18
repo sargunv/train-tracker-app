@@ -1,10 +1,8 @@
 package dev.sargunv.maplibrecompose.core.expression
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.TextUnit
@@ -37,20 +35,12 @@ public object ExpressionsDsl {
    * Creates a literal expression for a specified [TextUnit] value. If [textUnit] is in `em`, it is
    * converted to SP relative to [STANDARD_MAP_TEXT_SIZE_SP].
    */
-  public fun const(textUnit: TextUnit, fontScale: Float): Expression<SpValue> =
+  public fun const(textUnit: TextUnit): Expression<SpValue> =
     when (textUnit.type) {
-      TextUnitType.Sp -> const(textUnit.value * fontScale).cast()
-      TextUnitType.Em -> const(textUnit.value * fontScale * STANDARD_MAP_TEXT_SIZE_SP).cast()
+      TextUnitType.Sp -> const(textUnit.value).cast()
+      TextUnitType.Em -> const(textUnit.value * STANDARD_MAP_TEXT_SIZE_SP).cast()
       else -> error("Unsupported TextUnit type: ${textUnit.type}")
     }
-
-  /**
-   * Creates a literal expression for a specified [TextUnit] value. If [textUnit] is in `em`, it is
-   * considered relative to [STANDARD_MAP_TEXT_SIZE_SP].
-   */
-  @Composable
-  public fun const(textUnit: TextUnit): Expression<SpValue> =
-    const(textUnit, LocalDensity.current.fontScale)
 
   /** The standard text size in SP used for converting `em` values to `sp`. */
   public const val STANDARD_MAP_TEXT_SIZE_SP: Float = 16f
