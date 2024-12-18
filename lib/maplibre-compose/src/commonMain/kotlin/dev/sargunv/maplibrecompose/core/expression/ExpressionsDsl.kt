@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
+import androidx.compose.ui.unit.isSpecified
 import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
 import kotlin.enums.enumEntries
 import kotlin.jvm.JvmInline
@@ -74,6 +75,37 @@ public object ExpressionsDsl {
   public fun const(list: List<String>): Expression<ListValue<StringValue>> =
     Expression.ofList(listOf("literal", list)).cast()
 
+  /** Creates a literal expression for a list of numbers. */
+  @JvmName("constNumberList")
+  public fun const(list: List<Number>): Expression<VectorValue<FloatValue>> =
+    Expression.ofList(listOf("literal", list)).cast()
+
+  public fun textOffset(x: TextUnit, y: TextUnit): Expression<TextOffsetValue> {
+    require(x.type == y.type) { "x and y must have the same TextUnitType" }
+
+    val reasonablyLargeMultiplier = 1000f
+    val type = x.type
+    val xVal = if (x.isSpecified) x.value else 1f
+    val yVal = if (y.isSpecified) y.value else 1f
+
+    return interpolate(
+        linear(),
+        when (type) {
+            TextUnitType.Sp -> spMultiplierVar
+            TextUnitType.Em -> emMultiplierVar
+            TextUnitType.Unspecified -> unspecifiedValueVar
+            else -> error("Unrecognized TextUnitType: ${type}")
+          }
+          .use()
+          .cast(),
+        0f to const(listOf(0, 0)),
+        1f to const(listOf(xVal, yVal)),
+        reasonablyLargeMultiplier to
+          const(listOf(xVal * reasonablyLargeMultiplier, yVal * reasonablyLargeMultiplier)),
+      )
+      .cast()
+  }
+
   /**
    * Creates a literal expression for a `null` value.
    *
@@ -96,7 +128,7 @@ public object ExpressionsDsl {
 
   /** Converts a numeric [Expression] in seconds to a [MillisecondsValue] expression. */
   public val Expression<FloatValue>.seconds: Expression<MillisecondsValue>
-    get() = (this * const(1000)).cast()
+    get() = (this * const(1000f)).cast()
 
   /** Converts a numeric [Expression] to an [TextUnitValue] expression in SP. */
   public val Expression<FloatValue>.sp: Expression<TextUnitValue>

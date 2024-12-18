@@ -2,7 +2,6 @@ package dev.sargunv.maplibrecompose.compose.layer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpOffset
@@ -21,6 +20,7 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.dp
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.nil
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.textOffset
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.times
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.FormattedValue
@@ -36,6 +36,7 @@ import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
 import dev.sargunv.maplibrecompose.core.expression.TextJustify
+import dev.sargunv.maplibrecompose.core.expression.TextOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
@@ -448,7 +449,7 @@ public fun SymbolLayer(
 
   // text anchoring
   textAnchor: Expression<EnumValue<SymbolAnchor>> = const(SymbolAnchor.Center),
-  textOffset: Expression<OffsetValue> = const(Offset.Zero), // TODO text unit type
+  textOffset: Expression<TextOffsetValue> = textOffset(0f.em, 0f.em),
   textVariableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>> = nil(),
   textRadialOffset: Expression<TextUnitValue> = const(0f.em),
   textVariableAnchorOffset: Expression<ListValue<*>> = nil(), // TODO proper type
@@ -474,6 +475,7 @@ public fun SymbolLayer(
     textLineHeight.rememberTextUnitsAsEm(textSizeSp, 1.2f.em).cast<FloatValue>()
   val textRadialOffsetEm =
     textRadialOffset.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<FloatValue>()
+  val textOffsetEm = textOffset.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<OffsetValue>()
 
   // used for scaling textSize from sp (api) to dp (core)
   // TODO needs changes after https://github.com/maplibre/maplibre-native/issues/3057
@@ -536,7 +538,7 @@ public fun SymbolLayer(
       set(textPadding) { layer.setTextPadding(it) }
       set(textKeepUpright) { layer.setTextKeepUpright(it) }
       set(textTransform) { layer.setTextTransform(it) }
-      set(textOffset) { layer.setTextOffset(it) }
+      set(textOffsetEm) { layer.setTextOffset(it) }
       set(textAllowOverlap) { layer.setTextAllowOverlap(it) }
       set(textOverlap) { layer.setTextOverlap(it) }
       set(textIgnorePlacement) { layer.setTextIgnorePlacement(it) }
