@@ -464,6 +464,8 @@ public fun SymbolLayer(
   onClick: FeaturesClickHandler? = null,
   onLongClick: FeaturesClickHandler? = null,
 ) {
+  // used for scaling textSize from sp (api) to dp (core)
+  // TODO needs changes after https://github.com/maplibre/maplibre-native/issues/3057
   val textScale = LocalDensity.current.fontScale
   LayerNode(
     factory = { SymbolLayer(id = id, source = source) },

@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core.expression
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -89,7 +90,7 @@ public object ExpressionsDsl {
 
   /** Converts a numeric [Expression] to an [SpValue] expression. */
   public val Expression<FloatValue>.sp: Expression<SpValue>
-    get() = this.cast()
+    get() = this.cast().run { LocalTextStyle }
 
   /**
    * Converts a numeric [Expression] to an [SpValue] expression relative to
