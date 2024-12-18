@@ -174,7 +174,7 @@ public object ExpressionsDsl {
    * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
    * will cause the whole expression to be aborted.
    */
-  public fun <U, V : ScalarValue<U>> Expression<*>.asVector(
+  public fun <U, V : NumberValue<U>> Expression<*>.asVector(
     length: Expression<IntValue> = nil()
   ): Expression<V> = asList(const(ExpressionType.Number), length).cast()
 
@@ -353,7 +353,7 @@ public object ExpressionsDsl {
    * @param minFractionDigits minimum fractional digits to include
    * @param maxFractionDigits maximum fractional digits to include
    */
-  public fun Expression<ScalarValue<*>>.formatToString(
+  public fun Expression<NumberValue<*>>.formatToString(
     locale: Expression<StringValue>? = null,
     currency: Expression<StringValue>? = null,
     minFractionDigits: Expression<IntValue>? = null,
@@ -1022,19 +1022,19 @@ public object ExpressionsDsl {
   public fun e(): Expression<FloatValue> = callFn("e").cast()
 
   /** Returns the sum of this number expression with [other]. */
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.plus(
+  public operator fun <U, V : NumberValue<U>> Expression<V>.plus(
     other: Expression<V>
   ): Expression<V> = callFn("+", this, other).cast()
 
   /** Returns the product of this number expression with [other]. */
   @JvmName("timesUnitLeft")
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.times(
+  public operator fun <U, V : NumberValue<U>> Expression<V>.times(
     other: Expression<FloatValue>
   ): Expression<V> = callFn("*", this, other).cast()
 
   /** Returns the product of this number expression with [other]. */
   @JvmName("timesUnitRight")
-  public operator fun <U, V : ScalarValue<U>> Expression<FloatValue>.times(
+  public operator fun <U, V : NumberValue<U>> Expression<FloatValue>.times(
     other: Expression<V>
   ): Expression<V> = callFn("*", this, other).cast()
 
@@ -1044,23 +1044,23 @@ public object ExpressionsDsl {
   ): Expression<FloatValue> = callFn("*", this, other).cast()
 
   /** Returns the result of subtracting [other] from this number expression. */
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.minus(
-    other: Expression<ScalarValue<U>>
+  public operator fun <U, V : NumberValue<U>> Expression<V>.minus(
+    other: Expression<NumberValue<U>>
   ): Expression<V> = callFn("-", this, other).cast()
 
   /** Negates this number expression. */
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.unaryMinus(): Expression<V> =
+  public operator fun <U, V : NumberValue<U>> Expression<V>.unaryMinus(): Expression<V> =
     callFn("-", this).cast()
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
   @JvmName("divUnitBoth")
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
+  public operator fun <U, V : NumberValue<U>> Expression<V>.div(
     divisor: Expression<V>
   ): Expression<FloatValue> = callFn("/", this, divisor).cast()
 
   /** Returns the result of floating point division of this number expression by [divisor]. */
   @JvmName("divUnitLeftOnly")
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.div(
+  public operator fun <U, V : NumberValue<U>> Expression<V>.div(
     divisor: Expression<FloatValue>
   ): Expression<V> = callFn("/", this, divisor).cast()
 
@@ -1070,7 +1070,7 @@ public object ExpressionsDsl {
   ): Expression<FloatValue> = callFn("/", this, divisor).cast()
 
   /** Returns the remainder after integer division of this number expression by [divisor]. */
-  public operator fun <U, V : ScalarValue<U>> Expression<V>.rem(
+  public operator fun <U, V : NumberValue<U>> Expression<V>.rem(
     divisor: Expression<IntValue>
   ): Expression<V> = callFn("%", this, divisor).cast()
 
@@ -1118,15 +1118,15 @@ public object ExpressionsDsl {
     callFn("atan", value).cast()
 
   /** Returns the smallest of all given [numbers]. */
-  public fun <U, V : ScalarValue<U>> min(vararg numbers: Expression<V>): Expression<V> =
+  public fun <U, V : NumberValue<U>> min(vararg numbers: Expression<V>): Expression<V> =
     callFn("min", *numbers).cast()
 
   /** Returns the greatest of all given [numbers]. */
-  public fun <U, V : ScalarValue<U>> max(vararg numbers: Expression<V>): Expression<V> =
+  public fun <U, V : NumberValue<U>> max(vararg numbers: Expression<V>): Expression<V> =
     callFn("max", *numbers).cast()
 
   /** Returns the absolute value of [value], i.e. always a positive value. */
-  public fun <U, V : ScalarValue<U>> abs(value: Expression<V>): Expression<V> =
+  public fun <U, V : NumberValue<U>> abs(value: Expression<V>): Expression<V> =
     callFn("abs", value).cast()
 
   /**

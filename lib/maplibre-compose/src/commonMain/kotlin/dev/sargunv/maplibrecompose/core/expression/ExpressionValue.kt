@@ -22,45 +22,45 @@ public sealed interface BooleanValue : ExpressionValue, EquatableValue
 
 /**
  * Represents an [Expression] that resolves to a numeric quantity. Corresponds to numbers in the
- * JSON style spec. Use [ExpressionsDsl.const] to create a literal [ScalarValue].
+ * JSON style spec. Use [ExpressionsDsl.const] to create a literal [NumberValue].
  *
- * @param U the unit type of the scalar value. For dimensionless quantities, use [Number].
+ * @param U the unit type of the number. For dimensionless quantities, use [Number].
  */
-public sealed interface ScalarValue<U> :
+public sealed interface NumberValue<U> :
   ExpressionValue,
   MatchableValue,
   InterpolateableValue<U>,
-  ComparableValue<ScalarValue<U>>,
+  ComparableValue<NumberValue<U>>,
   EquatableValue
 
 /**
  * Represents an [Expression] that resolves to a dimensionless quantity. See [ExpressionsDsl.const].
  */
-public typealias FloatValue = ScalarValue<Number>
+public typealias FloatValue = NumberValue<Number>
 
 /**
  * Represents an [Expression] that resolves to an integer dimensionless quantity. See
  * [ExpressionsDsl.const].
  */
-public sealed interface IntValue : ScalarValue<Number>
+public sealed interface IntValue : NumberValue<Number>
 
 /**
  * Represents an [Expression] that resolves to device-independent pixels ([Dp]). See
  * [ExpressionsDsl.const].
  */
-public typealias DpValue = ScalarValue<Dp>
+public typealias DpValue = NumberValue<Dp>
 
 /**
  * Represents an [Expression] that resolves to scalable pixels ([TextUnit] in SP). See
  * [ExpressionsDsl.const].
  */
-public typealias SpValue = ScalarValue<TextUnit>
+public typealias SpValue = NumberValue<TextUnit>
 
 /**
  * Represents an [Expression] that resolves to an amount of time with millisecond precision
  * ([Duration]). See [ExpressionsDsl.const].
  */
-public typealias MillisecondsValue = ScalarValue<Duration>
+public typealias MillisecondsValue = NumberValue<Duration>
 
 /** Represents an [Expression] that resolves to a string value. See [ExpressionsDsl.const]. */
 public sealed interface StringValue :
@@ -92,12 +92,12 @@ public sealed interface MapValue<out T : ExpressionValue> : ExpressionValue
 public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
 
 /**
- * Represents an [Expression] that resolves to a list of scalar values.
+ * Represents an [Expression] that resolves to a list of numbers.
  *
- * @param U the unit type of the scalar values. For dimensionless quantities, use [Number].
+ * @param U the unit type of the number. For dimensionless quantities, use [Number].
  */
 public sealed interface VectorValue<U> :
-  ListValue<ScalarValue<U>>, InterpolateableValue<VectorValue<U>>
+  ListValue<NumberValue<U>>, InterpolateableValue<VectorValue<U>>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels
