@@ -44,8 +44,8 @@ import kotlin.math.roundToInt
  *   the ability of device hardware.
  * @param logger kermit logger to use
  * @param mapContent The map content additional to what is already part of the map as defined in the
- * @param content The composable content shown on top of the map. base map style linked in
- *   [styleUri].
+ *   base map style linked in [styleUri].
+ * @param content The composable content shown on top of the map.
  *
  * Additional [sources](https://maplibre.org/maplibre-style-spec/sources/) can be added via:
  * - [rememberGeoJsonSource][dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource] (see

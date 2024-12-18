@@ -111,7 +111,12 @@ public object ExpressionsDsl {
 
   /**
    * Binds expression [value] to a [Variable] with the given [name], which can then be referenced
-   * inside the block using [use].
+   * inside the block using [use]. For example:
+   * ```kt
+   * val result = withVariable("x", const(5)) { x ->
+   *   x.use() + const(3)
+   * }
+   * ```
    */
   public inline fun <V : ExpressionValue, R : ExpressionValue> withVariable(
     name: String,
