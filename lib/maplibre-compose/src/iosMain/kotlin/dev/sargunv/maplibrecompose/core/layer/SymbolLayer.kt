@@ -1,7 +1,6 @@
 package dev.sargunv.maplibrecompose.core.layer
 
 import cocoapods.MapLibre.MLNSymbolStyleLayer
-import cocoapods.MapLibre.expressionWithMLNJSONObject
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
@@ -30,10 +29,6 @@ import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
 import dev.sargunv.maplibrecompose.core.util.toNSPredicate
-import platform.CoreGraphics.CGVectorMake
-import platform.Foundation.NSExpression
-import platform.Foundation.NSValue
-import platform.UIKit.valueWithCGVector
 
 internal actual class SymbolLayer actual constructor(id: String, source: Source) :
   FeatureLayer(source) {
@@ -209,19 +204,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
   }
 
   actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>) {
-    impl.textVariableAnchorOffset =
-      NSExpression.expressionWithMLNJSONObject(
-        listOf(
-          "literal",
-          listOf(
-            "top",
-            NSValue.valueWithCGVector(CGVectorMake(0.0, -1.0)),
-            "bottom",
-            NSValue.valueWithCGVector(CGVectorMake(0.0, 2.0)),
-          ),
-        )
-      )
-    //    impl.textVariableAnchorOffset = variableAnchorOffset.toNSExpression()
+    impl.textVariableAnchorOffset = variableAnchorOffset.toNSExpression()
   }
 
   actual fun setTextAnchor(anchor: Expression<EnumValue<SymbolAnchor>>) {
