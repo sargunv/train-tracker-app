@@ -1,14 +1,12 @@
 [versions]
-ios-deploymentTarget = "15.3"
-
 androidx-activity = "1.9.3"
-androidx-composeUi = "1.7.5"
-androidx-navigation = "2.8.0-alpha10"
+androidx-composeUi = "1.7.6"
+androidx-navigation = "2.8.0-alpha11"
 kermit = "2.0.5"
 ktor = "3.0.2"
-maplibre-android-sdk = "11.7.0"
+maplibre-android-sdk = "11.7.1"
 maplibre-android-plugins = "3.0.2"
-maplibre-ios = "6.8.1"
+maplibre-ios = "6.9.0"
 spatialk = "0.3.0"
 
 gradle-android = "8.7.3"

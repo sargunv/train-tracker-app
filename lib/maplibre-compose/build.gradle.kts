@@ -37,7 +37,7 @@ kotlin {
 
   cocoapods {
     noPodspec()
-    ios.deploymentTarget = "12.0"
+    ios.deploymentTarget = project.properties["iosDeploymentTarget"]!!.toString()
     pod("MapLibre", libs.versions.maplibre.ios.get())
   }
 

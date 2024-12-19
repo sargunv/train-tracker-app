@@ -47,13 +47,13 @@ kotlin {
   iosX64()
 
   cocoapods {
-    summary = "PLACEHOLDER SUMMARY"
-    homepage = "PLACEHOLDER HOMEPAGE"
-    ios.deploymentTarget = libs.versions.ios.deploymentTarget.get()
+    summary = "MapLibre Compose demo app"
+    homepage = "https://github.com/sargunv/maplibre-compose"
+    ios.deploymentTarget = "15.3" // TODO reduce this to same as library target?
     podfile = project.file("../iosApp/Podfile")
     framework {
       baseName = "DemoApp"
-      version = "0.0.0"
+      version = "0.0.0" // not using real version here because it'll pollute the git diff
     }
     pod("MapLibre", libs.versions.maplibre.ios.get())
   }
