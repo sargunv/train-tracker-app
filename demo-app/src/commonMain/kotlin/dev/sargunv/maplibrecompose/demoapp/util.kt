@@ -32,9 +32,9 @@ private val REMOTE_STYLE_URIS =
 private val LOCAL_STYLE_PATHS =
   listOf(
     // from https://tiles.versatiles.org/assets/styles/colorful.json
-    "Colorful" to "files/data/colorful.json",
+    "Colorful" to "files/styles/colorful.json",
     // from https://tiles.versatiles.org/assets/styles/eclipse.json
-    "Eclipse" to "files/data/eclipse.json",
+    "Eclipse" to "files/styles/eclipse.json",
   )
 
 val DEFAULT_STYLE = REMOTE_STYLE_URIS[0].second
