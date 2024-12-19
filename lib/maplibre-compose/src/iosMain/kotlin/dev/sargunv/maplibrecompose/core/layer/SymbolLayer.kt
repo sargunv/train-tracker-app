@@ -204,7 +204,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
   }
 
   actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>) {
-    impl.textVariableAnchor = variableAnchorOffset.toNSExpression()
+    impl.textVariableAnchorOffset = variableAnchorOffset.toNSExpression()
   }
 
   actual fun setTextAnchor(anchor: Expression<EnumValue<SymbolAnchor>>) {
