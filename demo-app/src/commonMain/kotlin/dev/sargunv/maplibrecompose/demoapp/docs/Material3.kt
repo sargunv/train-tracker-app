@@ -15,6 +15,8 @@ import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.material3.controls.AttributionButton
 import dev.sargunv.maplibrecompose.material3.controls.CompassButton
+import dev.sargunv.maplibrecompose.material3.controls.DisappearingCompassButton
+import dev.sargunv.maplibrecompose.material3.controls.DisappearingScaleBar
 import dev.sargunv.maplibrecompose.material3.controls.ScaleBar
 
 @Composable
@@ -35,4 +37,18 @@ fun Material3() {
     }
   }
   // -8<- [end:controls]
+
+  // -8<- [start:disappearing-controls]
+  MaplibreMap(
+    cameraState = cameraState,
+    styleState = styleState,
+    ornamentSettings = OrnamentSettings.AllDisabled,
+  ) {
+    Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+      DisappearingScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart)) // (1)!
+      DisappearingCompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd)) // (2)!
+      AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
+    }
+  }
+  // -8<- [end:disappearing-controls]
 }
