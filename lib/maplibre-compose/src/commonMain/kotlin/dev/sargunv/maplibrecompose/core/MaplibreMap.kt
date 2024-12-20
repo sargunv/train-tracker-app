@@ -43,6 +43,8 @@ internal interface MaplibreMap {
     predicate: Expression<BooleanValue>? = null,
   ): List<Feature>
 
+  fun metersPerDpAtLatitude(latitude: Double): Double
+
   interface Callbacks {
     fun onStyleChanged(map: MaplibreMap, style: Style?)
 

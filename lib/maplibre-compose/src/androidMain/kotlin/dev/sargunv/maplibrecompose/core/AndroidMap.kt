@@ -317,6 +317,9 @@ internal class AndroidMap(
     return query(rect.toRectF(density), predicate?.toMLNExpression(), layerIds?.toTypedArray())
       .map { Feature.fromJson(it.toJson()) }
   }
+
+  override fun metersPerDpAtLatitude(latitude: Double) =
+    map.projection.getMetersPerPixelAtLatitude(latitude) / density.density
 }
 
 private fun MLNVisibleRegion.toVisibleRegion() =

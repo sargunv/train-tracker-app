@@ -40,6 +40,7 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
 
   internal val positionState = mutableStateOf(firstPosition)
   internal val moveReasonState = mutableStateOf(CameraMoveReason.NONE)
+  internal val metersPerDpAtTargetState = mutableStateOf(0.0)
 
   /** how the camera is oriented towards the map */
   // if the map is not yet initialized, we store the value to apply it later
@@ -53,6 +54,10 @@ public class CameraState internal constructor(firstPosition: CameraPosition) {
   /** reason why the camera moved, last time it moved */
   public val moveReason: CameraMoveReason
     get() = moveReasonState.value
+
+  /** meters per dp at the target position */
+  public val metersPerDpAtTarget: Double
+    get() = metersPerDpAtTargetState.value
 
   /** suspends until the map has been initialized */
   public suspend fun awaitInitialized() {

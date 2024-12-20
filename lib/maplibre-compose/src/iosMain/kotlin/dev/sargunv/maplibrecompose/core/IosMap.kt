@@ -458,4 +458,6 @@ internal class IosMap(
         predicate = predicate?.toNSPredicate(),
       )
       .map { (it as MLNFeatureProtocol).toFeature() }
+
+  override fun metersPerDpAtLatitude(latitude: Double) = mapView.metersPerPointAtLatitude(latitude)
 }
