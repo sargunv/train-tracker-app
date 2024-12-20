@@ -23,8 +23,8 @@ private constructor(
     private val ofWhite = Expression<ColorValue>(Color.White)
     private val ofEmptyMap = Expression<MapValue<Nothing>>(emptyMap<String, Nothing>())
     private val ofEmptyList = Expression<ListValue<Nothing>>(emptyList<Nothing>())
-    private val ofZeroOffset = Expression<OffsetValue>(Offset.Zero)
-    private val ofZeroPadding = Expression<PaddingValue>(ZeroPadding)
+    private val ofZeroOffset = Expression<FloatOffsetValue>(Offset.Zero)
+    private val ofZeroPadding = Expression<DpPaddingValue>(ZeroPadding)
 
     val ofNull = Expression<ExpressionValue>(null)
     val ofTrue = Expression<BooleanValue>(true)

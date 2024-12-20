@@ -84,7 +84,6 @@ public fun DisappearingCompassButton(
   val shouldBeVisible by derivedStateOf {
     val tilt = abs(cameraState.position.tilt) % 360
     val bearing = abs(cameraState.position.bearing) % 360
-    println("tilt: $tilt, bearing: $bearing")
     tilt in 0.5..359.5 || bearing in 0.5..359.5
   }
 

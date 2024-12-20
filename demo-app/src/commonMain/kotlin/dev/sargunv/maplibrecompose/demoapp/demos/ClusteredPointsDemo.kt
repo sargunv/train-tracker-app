@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
@@ -28,6 +27,7 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.feature
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.format
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.not
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.offset
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.step
 import dev.sargunv.maplibrecompose.core.source.GeoJsonOptions
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
@@ -131,7 +131,7 @@ object ClusteredPointsDemo : Demo {
             radius = const(13.dp),
             color = const(Color.Black),
             blur = const(1f),
-            translate = const(DpOffset(0.dp, 1.dp)),
+            translate = offset(0.dp, 1.dp),
           )
 
           CircleLayer(

@@ -60,14 +60,14 @@ public object ExpressionsDsl {
   public fun const(color: Color): Expression<ColorValue> = Expression.ofColor(color)
 
   /** Creates a literal expression for an [Offset] value. */
-  public fun const(offset: Offset): Expression<OffsetValue> = Expression.ofOffset(offset)
+  public fun const(offset: Offset): Expression<FloatOffsetValue> = Expression.ofOffset(offset)
 
   /** Creates a literal expression for a [DpOffset] value. */
   public fun const(dpOffset: DpOffset): Expression<DpOffsetValue> =
     Expression.ofOffset(Offset(dpOffset.x.value, dpOffset.y.value)).cast()
 
   /** Creates a literal expression for a [PaddingValues.Absolute] value. */
-  public fun const(padding: PaddingValues.Absolute): Expression<PaddingValue> =
+  public fun const(padding: PaddingValues.Absolute): Expression<DpPaddingValue> =
     Expression.ofPadding(padding)
 
   internal fun literal(list: List<Any?>): Expression<ListValue<*>> =
@@ -87,7 +87,7 @@ public object ExpressionsDsl {
    * `textVariableAnchorOffset` parameter.
    *
    * The offset is measured in a multipler of the text size (EM). It's in [Offset] instead of
-   * [textOffset] because of technical limitations in MapLibre.
+   * [offset] because of technical limitations in MapLibre.
    */
   public fun textVariableAnchorOffset(
     vararg pairs: Pair<SymbolAnchor, Offset>
@@ -103,8 +103,18 @@ public object ExpressionsDsl {
       .cast()
   }
 
-  /** Creates a literal expression for 2D [TextUnit] offset. */
-  public fun textOffset(x: TextUnit, y: TextUnit): Expression<TextOffsetValue> {
+  /** Creates a literal expression for a 2D [Offset]. */
+  public fun offset(x: Float, y: Float): Expression<FloatOffsetValue> = const(Offset(x, y))
+
+  /** Creates a literal expression for a 2D [DpOffset]. */
+  public fun offset(x: Dp, y: Dp): Expression<DpOffsetValue> = const(DpOffset(x, y))
+
+  /**
+   * Creates a literal expression for a 2D [TextUnit] offset.
+   *
+   * Both [x] and [y] must have the same [TextUnitType].
+   */
+  public fun offset(x: TextUnit, y: TextUnit): Expression<TextUnitOffsetValue> {
     require(x.type == y.type) { "x and y must have the same TextUnitType" }
 
     val reasonablyLargeMultiplier = 1000f
@@ -250,7 +260,7 @@ public object ExpressionsDsl {
    * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
    * will cause the whole expression to be aborted.
    */
-  public fun Expression<*>.asOffset(): Expression<OffsetValue> =
+  public fun Expression<*>.asOffset(): Expression<FloatOffsetValue> =
     asList(const(ExpressionType.Number), const(2)).cast()
 
   /**
@@ -268,7 +278,7 @@ public object ExpressionsDsl {
    * If, when the input expression is evaluated, it is not of the asserted type, then this assertion
    * will cause the whole expression to be aborted.
    */
-  public fun Expression<*>.asPadding(): Expression<PaddingValue> =
+  public fun Expression<*>.asPadding(): Expression<DpPaddingValue> =
     asList(const(ExpressionType.Number), const(2)).cast()
 
   /**

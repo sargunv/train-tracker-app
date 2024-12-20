@@ -13,6 +13,7 @@ import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Defaults
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpPaddingValue
 import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
@@ -20,8 +21,9 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.dp
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.nil
-import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.textOffset
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.offset
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.times
+import dev.sargunv.maplibrecompose.core.expression.FloatOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -29,17 +31,15 @@ import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.ListValue
-import dev.sargunv.maplibrecompose.core.expression.OffsetValue
-import dev.sargunv.maplibrecompose.core.expression.PaddingValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
 import dev.sargunv.maplibrecompose.core.expression.SymbolZOrder
 import dev.sargunv.maplibrecompose.core.expression.TextJustify
-import dev.sargunv.maplibrecompose.core.expression.TextOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextUnitOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
 import dev.sargunv.maplibrecompose.core.expression.TextVariableAnchorOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
@@ -401,7 +401,7 @@ public fun SymbolLayer(
     const(IconRotationAlignment.Auto),
   iconPitchAlignment: Expression<EnumValue<IconPitchAlignment>> = const(IconPitchAlignment.Auto),
   iconTextFit: Expression<EnumValue<IconTextFit>> = const(IconTextFit.None),
-  iconTextFitPadding: Expression<PaddingValue> = const(ZeroPadding),
+  iconTextFitPadding: Expression<DpPaddingValue> = const(ZeroPadding),
   iconKeepUpright: Expression<BooleanValue> = const(false),
   iconRotate: Expression<FloatValue> = const(0f),
 
@@ -450,7 +450,7 @@ public fun SymbolLayer(
 
   // text anchoring
   textAnchor: Expression<EnumValue<SymbolAnchor>> = const(SymbolAnchor.Center),
-  textOffset: Expression<TextOffsetValue> = textOffset(0f.em, 0f.em),
+  textOffset: Expression<TextUnitOffsetValue> = offset(0f.em, 0f.em),
   textVariableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>> = nil(),
   textRadialOffset: Expression<TextUnitValue> = const(0f.em),
   textVariableAnchorOffset: Expression<TextVariableAnchorOffsetValue> = nil(),
@@ -476,7 +476,7 @@ public fun SymbolLayer(
     textLineHeight.rememberTextUnitsAsEm(textSizeSp, 1.2f.em).cast<FloatValue>()
   val textRadialOffsetEm =
     textRadialOffset.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<FloatValue>()
-  val textOffsetEm = textOffset.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<OffsetValue>()
+  val textOffsetEm = textOffset.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<FloatOffsetValue>()
 
   // used for scaling textSize from sp (api) to dp (core)
   // TODO needs changes after https://github.com/maplibre/maplibre-native/issues/3057

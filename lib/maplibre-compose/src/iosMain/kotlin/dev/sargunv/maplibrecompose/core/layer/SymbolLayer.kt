@@ -4,9 +4,11 @@ import cocoapods.MapLibre.MLNSymbolStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpPaddingValue
 import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -14,8 +16,6 @@ import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.ListValue
-import dev.sargunv.maplibrecompose.core.expression.OffsetValue
-import dev.sargunv.maplibrecompose.core.expression.PaddingValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -97,7 +97,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconTextFit = textFit.toNSExpression()
   }
 
-  actual fun setIconTextFitPadding(textFitPadding: Expression<PaddingValue>) {
+  actual fun setIconTextFitPadding(textFitPadding: Expression<DpPaddingValue>) {
     impl.iconTextFitPadding = textFitPadding.toNSExpression()
   }
 
@@ -238,7 +238,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textTransform = transform.toNSExpression()
   }
 
-  actual fun setTextOffset(offset: Expression<OffsetValue>) {
+  actual fun setTextOffset(offset: Expression<FloatOffsetValue>) {
     impl.textOffset = offset.toNSExpression()
   }
 

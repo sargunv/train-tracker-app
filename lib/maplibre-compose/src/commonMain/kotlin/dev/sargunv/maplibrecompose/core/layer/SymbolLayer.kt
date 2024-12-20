@@ -3,9 +3,11 @@ package dev.sargunv.maplibrecompose.core.layer
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
+import dev.sargunv.maplibrecompose.core.expression.DpPaddingValue
 import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.FloatOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
 import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
@@ -13,8 +15,6 @@ import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
 import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.ListValue
-import dev.sargunv.maplibrecompose.core.expression.OffsetValue
-import dev.sargunv.maplibrecompose.core.expression.PaddingValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -58,7 +58,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setIconTextFit(textFit: Expression<EnumValue<IconTextFit>>)
 
-  fun setIconTextFitPadding(textFitPadding: Expression<PaddingValue>)
+  fun setIconTextFitPadding(textFitPadding: Expression<DpPaddingValue>)
 
   fun setIconImage(image: Expression<ImageValue>)
 
@@ -126,7 +126,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextTransform(transform: Expression<EnumValue<TextTransform>>)
 
-  fun setTextOffset(offset: Expression<OffsetValue>)
+  fun setTextOffset(offset: Expression<FloatOffsetValue>)
 
   fun setTextAllowOverlap(allowOverlap: Expression<BooleanValue>)
 

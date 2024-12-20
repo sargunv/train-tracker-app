@@ -97,16 +97,17 @@ public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
  * Represents an [Expression] that resolves to a list value (corresponds to a JSON array) of
  * alternating types.
  */
-public sealed interface TupleListValue<out T1 : ExpressionValue, out T2 : ExpressionValue> :
+public sealed interface AlternatingListValue<out T1 : ExpressionValue, out T2 : ExpressionValue> :
   ListValue<ExpressionValue>
 
 /**
  * Represents an [Expression] that resolves to an alternating list of [SymbolAnchor] and
- * [OffsetValue].
+ * [FloatOffsetValue].
  *
  * See [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer].
  */
-public typealias TextVariableAnchorOffsetValue = TupleListValue<SymbolAnchor, OffsetValue>
+public typealias TextVariableAnchorOffsetValue =
+  AlternatingListValue<SymbolAnchor, FloatOffsetValue>
 
 /**
  * Represents an [Expression] that resolves to a list of numbers.
@@ -117,28 +118,35 @@ public sealed interface VectorValue<U> :
   ListValue<NumberValue<U>>, InterpolateableValue<VectorValue<U>>
 
 /**
- * Represents an [Expression] that resolves to a 2D floating point offset in physical pixels
- * ([Offset]). See [ExpressionsDsl.const].
+ * Represents an [Expression] that reoslves to a 2D vector in some unit.
+ *
+ * @param U the unit type of the offset. For dimensionless quantities, use [Number].
  */
-public sealed interface OffsetValue : VectorValue<Number>
+public sealed interface OffsetValue<U> : VectorValue<U>
+
+/**
+ * Represents an [Expression] that resolves to a 2D floating point offset without a particular unit.
+ * ([Offset]). See [ExpressionsDsl.offset].
+ */
+public typealias FloatOffsetValue = OffsetValue<Number>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in device-independent
- * pixels ([DpOffset]). See [ExpressionsDsl.const].
+ * pixels ([DpOffset]). See [ExpressionsDsl.offset].
  */
-public sealed interface DpOffsetValue : VectorValue<Dp>
+public typealias DpOffsetValue = OffsetValue<Dp>
 
 /**
  * Represents an [Expression] that resolves to a 2D floating point offset in scalable pixels or em
- * ([TextUnit]). See (TODO).
+ * ([TextUnit]). See [ExpressionsDsl.offset].
  */
-public sealed interface TextOffsetValue : VectorValue<TextUnit>
+public typealias TextUnitOffsetValue = OffsetValue<TextUnit>
 
 /**
  * Represents an [Expression] that resolves to an absolute (layout direction unaware) padding
  * applied along the edges inside a box ([PaddingValues.Absolute]). See [ExpressionsDsl.const].
  */
-public sealed interface PaddingValue : VectorValue<Dp>
+public sealed interface DpPaddingValue : VectorValue<Dp>
 
 /**
  * Represents an [Expression] that resolves to a collator object for use in locale-dependent
