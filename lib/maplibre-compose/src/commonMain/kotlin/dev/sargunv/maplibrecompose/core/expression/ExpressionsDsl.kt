@@ -188,6 +188,8 @@ public object ExpressionsDsl {
    *   x.use() + const(3)
    * }
    * ```
+   *
+   * Variable names starting with `$` are reserved.
    */
   public inline fun <V : ExpressionValue, R : ExpressionValue> withVariable(
     name: String,
