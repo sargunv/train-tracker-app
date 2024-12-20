@@ -63,7 +63,7 @@ private val DEMOS =
 
 @Composable
 fun DemoApp(navController: NavHostController = rememberNavController()) {
-  MaterialTheme {
+  MaterialTheme(colorScheme = getDefaultColorScheme()) {
     NavHost(
       navController = navController,
       startDestination = "start",
@@ -84,28 +84,23 @@ fun DemoApp(navController: NavHostController = rememberNavController()) {
 
 @Composable
 private fun DemoMenu(navigate: (demo: Demo) -> Unit) {
-  Scaffold(
-    topBar = { TopAppBar(title = { Text("MapLibre Compose Demos") }) },
-    content = { padding ->
-      Column(
-        modifier =
-          Modifier.consumeWindowInsets(padding)
-            .padding(padding)
-            .verticalScroll(rememberScrollState())
-      ) {
-        DEMOS.forEach { demo ->
-          Column {
-            ListItem(
-              modifier = Modifier.clickable(onClick = { navigate(demo) }),
-              headlineContent = { Text(text = demo.name) },
-              supportingContent = { Text(text = demo.description) },
-            )
-            HorizontalDivider()
-          }
+  Scaffold(topBar = { TopAppBar(title = { Text("MapLibre Compose Demos") }) }) { padding ->
+    Column(
+      modifier =
+        Modifier.consumeWindowInsets(padding).padding(padding).verticalScroll(rememberScrollState())
+    ) {
+      DEMOS.forEach { demo ->
+        Column {
+          ListItem(
+            modifier = Modifier.clickable(onClick = { navigate(demo) }),
+            headlineContent = { Text(text = demo.name) },
+            supportingContent = { Text(text = demo.description) },
+          )
+          HorizontalDivider()
         }
       }
-    },
-  )
+    }
+  }
 }
 
 @Composable
@@ -142,12 +137,9 @@ fun DemoAppBar(demo: Demo, navigateUp: () -> Unit, alpha: Float = 1f) {
 
 @Composable
 fun DemoScaffold(demo: Demo, navigateUp: () -> Unit, content: @Composable () -> Unit) {
-  Scaffold(
-    topBar = { DemoAppBar(demo, navigateUp) },
-    content = { padding ->
-      Box(modifier = Modifier.consumeWindowInsets(padding).padding(padding)) { content() }
-    },
-  )
+  Scaffold(topBar = { DemoAppBar(demo, navigateUp) }) { padding ->
+    Box(modifier = Modifier.consumeWindowInsets(padding).padding(padding)) { content() }
+  }
 }
 
 @Composable

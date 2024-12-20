@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
-import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.compose.layer.LineLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.rememberStyleState
@@ -73,22 +72,20 @@ object AnimatedLayerDemo : Demo {
                 ),
             )
 
-          Anchor.Below("waterway_line_label") {
-            LineLayer(
-              id = "amtrak-routes",
-              source = routeSource,
-              color = const(animatedColor),
-              cap = const(LineCap.Round),
-              join = const(LineJoin.Round),
-              width =
-                interpolate(
-                  type = exponential(const(1.2f)),
-                  input = zoom(),
-                  7 to const(1.75.dp),
-                  20 to const(22.dp),
-                ),
-            )
-          }
+          LineLayer(
+            id = "amtrak-routes",
+            source = routeSource,
+            color = const(animatedColor),
+            cap = const(LineCap.Round),
+            join = const(LineJoin.Round),
+            width =
+              interpolate(
+                type = exponential(const(1.2f)),
+                input = zoom(),
+                7 to const(1.75.dp),
+                20 to const(22.dp),
+              ),
+          )
         }
         DemoMapControls(cameraState, styleState)
       }

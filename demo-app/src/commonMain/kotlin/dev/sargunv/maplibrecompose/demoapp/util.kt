@@ -2,6 +2,7 @@ package dev.sargunv.maplibrecompose.demoapp
 
 import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.TwoWayConverter
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,28 +21,21 @@ interface Demo {
   @Composable fun Component(navigateUp: () -> Unit)
 }
 
-private val REMOTE_STYLE_URIS =
-  listOf(
-    "Bright" to "https://tiles.openfreemap.org/styles/bright",
-    "Liberty" to "https://tiles.openfreemap.org/styles/liberty",
-    "Positron" to "https://tiles.openfreemap.org/styles/positron",
-    "Fiord" to "https://tiles.openfreemap.org/styles/fiord",
-    "Dark" to "https://tiles.openfreemap.org/styles/dark",
-  )
-
-private val LOCAL_STYLE_PATHS =
-  listOf(
-    // from https://tiles.versatiles.org/assets/styles/colorful.json
-    "Colorful" to "files/styles/colorful.json",
-    // from https://tiles.versatiles.org/assets/styles/eclipse.json
-    "Eclipse" to "files/styles/eclipse.json",
-  )
-
-val DEFAULT_STYLE = REMOTE_STYLE_URIS[0].second
+data class StyleInfo(val name: String, val uri: String, val isDark: Boolean)
 
 @OptIn(ExperimentalResourceApi::class)
-fun getAllStyleUris() =
-  REMOTE_STYLE_URIS + LOCAL_STYLE_PATHS.map { it.first to Res.getUri(it.second) }
+val ALL_STYLES =
+  listOf(
+    StyleInfo("Bright", "https://tiles.openfreemap.org/styles/bright", false),
+    StyleInfo("Liberty", "https://tiles.openfreemap.org/styles/liberty", false),
+    StyleInfo("Positron", "https://tiles.openfreemap.org/styles/positron", false),
+    StyleInfo("Fiord", "https://tiles.openfreemap.org/styles/fiord", true),
+    StyleInfo("Dark", "https://tiles.openfreemap.org/styles/dark", true),
+    StyleInfo("Colorful", Res.getUri("files/styles/colorful.json"), false),
+    StyleInfo("Eclipse", Res.getUri("files/styles/eclipse.json"), true),
+  )
+
+val DEFAULT_STYLE = ALL_STYLES[0].uri
 
 /** Caution: this converter results in a loss of precision far from the origin. */
 class PositionVectorConverter(private val origin: Position) :
@@ -80,3 +74,5 @@ internal class FrameRateState(private val spinner: String = "◐◓◑◒") {
   val avgFps: Int
     get() = rollingAverage.roundToInt()
 }
+
+@Composable expect fun getDefaultColorScheme(isDark: Boolean = false): ColorScheme

@@ -32,19 +32,16 @@ object EdgeToEdgeDemo : Demo {
     val cameraState = rememberCameraState(CameraPosition(target = PORTLAND, zoom = 13.0))
     val styleState = rememberStyleState()
 
-    Scaffold(
-      topBar = { DemoAppBar(this, navigateUp, alpha = 0.5f) },
-      content = { padding ->
-        Box(modifier = Modifier.consumeWindowInsets(WindowInsets.safeContent).fillMaxSize()) {
-          MaplibreMap(
-            styleUri = DEFAULT_STYLE,
-            cameraState = cameraState,
-            styleState = styleState,
-            ornamentSettings = DemoOrnamentSettings(padding),
-          )
-          DemoMapControls(cameraState, styleState, modifier = Modifier.padding(padding))
-        }
-      },
-    )
+    Scaffold(topBar = { DemoAppBar(this, navigateUp, alpha = 0.5f) }) { padding ->
+      Box(modifier = Modifier.consumeWindowInsets(WindowInsets.safeContent).fillMaxSize()) {
+        MaplibreMap(
+          styleUri = DEFAULT_STYLE,
+          cameraState = cameraState,
+          styleState = styleState,
+          ornamentSettings = DemoOrnamentSettings(padding),
+        )
+        DemoMapControls(cameraState, styleState, modifier = Modifier.padding(padding))
+      }
+    }
   }
 }
