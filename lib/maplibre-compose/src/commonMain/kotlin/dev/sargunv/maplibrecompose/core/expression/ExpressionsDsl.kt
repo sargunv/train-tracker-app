@@ -70,16 +70,40 @@ public object ExpressionsDsl {
   public fun const(padding: PaddingValues.Absolute): Expression<PaddingValue> =
     Expression.ofPadding(padding)
 
+  internal fun literal(list: List<Any?>): Expression<ListValue<*>> =
+    Expression.ofList(listOf("literal", list)).cast()
+
   /** Creates a literal expression for a list of strings. */
   @JvmName("constStringList")
-  public fun const(list: List<String>): Expression<ListValue<StringValue>> =
-    Expression.ofList(listOf("literal", list)).cast()
+  public fun const(list: List<String>): Expression<ListValue<StringValue>> = literal(list).cast()
 
   /** Creates a literal expression for a list of numbers. */
   @JvmName("constNumberList")
-  public fun const(list: List<Number>): Expression<VectorValue<FloatValue>> =
-    Expression.ofList(listOf("literal", list)).cast()
+  public fun const(list: List<Number>): Expression<VectorValue<FloatValue>> = literal(list).cast()
 
+  /**
+   * Creates a literal expression for [TextVariableAnchorOffsetValue], used by
+   * [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer]'s
+   * `textVariableAnchorOffset` parameter.
+   *
+   * The offset is measured in a multipler of the text size (EM). It's in [Offset] instead of
+   * [textOffset] because of technical limitations in MapLibre.
+   */
+  public fun textVariableAnchorOffset(
+    vararg pairs: Pair<SymbolAnchor, Offset>
+  ): Expression<TextVariableAnchorOffsetValue> {
+    return literal(
+        buildList {
+          pairs.forEach { (anchor, offset) ->
+            add(anchor.stringConst)
+            add(offset)
+          }
+        }
+      )
+      .cast()
+  }
+
+  /** Creates a literal expression for 2D [TextUnit] offset. */
   public fun textOffset(x: TextUnit, y: TextUnit): Expression<TextOffsetValue> {
     require(x.type == y.type) { "x and y must have the same TextUnitType" }
 

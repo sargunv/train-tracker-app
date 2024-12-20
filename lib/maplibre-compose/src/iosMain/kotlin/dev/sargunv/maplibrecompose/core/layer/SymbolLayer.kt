@@ -24,6 +24,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextVariableAnchorOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -203,7 +204,9 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textVariableAnchor = variableAnchor.toNSExpression()
   }
 
-  actual fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>) {
+  actual fun setTextVariableAnchorOffset(
+    variableAnchorOffset: Expression<TextVariableAnchorOffsetValue>
+  ) {
     impl.textVariableAnchorOffset = variableAnchorOffset.toNSExpression()
   }
 

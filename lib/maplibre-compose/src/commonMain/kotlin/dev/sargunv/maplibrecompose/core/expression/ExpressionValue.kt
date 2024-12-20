@@ -83,15 +83,30 @@ public sealed interface ColorValue : ExpressionValue, InterpolateableValue<Color
 
 /**
  * Represents an [Expression] that resolves to a map value (corresponds to a JSON object). See
- * [ExpressionsDsl.literal].
+ * [ExpressionsDsl.const].
  */
 public sealed interface MapValue<out T : ExpressionValue> : ExpressionValue
 
 /**
  * Represents an [Expression] that resolves to a list value (corresponds to a JSON array). See
- * [ExpressionsDsl.literal].
+ * [ExpressionsDsl.const].
  */
 public sealed interface ListValue<out T : ExpressionValue> : ExpressionValue
+
+/**
+ * Represents an [Expression] that resolves to a list value (corresponds to a JSON array) of
+ * alternating types.
+ */
+public sealed interface TupleListValue<out T1 : ExpressionValue, out T2 : ExpressionValue> :
+  ListValue<ExpressionValue>
+
+/**
+ * Represents an [Expression] that resolves to an alternating list of [SymbolAnchor] and
+ * [OffsetValue].
+ *
+ * See [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer].
+ */
+public typealias TextVariableAnchorOffsetValue = TupleListValue<SymbolAnchor, OffsetValue>
 
 /**
  * Represents an [Expression] that resolves to a list of numbers.

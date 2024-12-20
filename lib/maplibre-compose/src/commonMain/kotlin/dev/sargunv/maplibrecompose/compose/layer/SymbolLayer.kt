@@ -41,6 +41,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
 import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
+import dev.sargunv.maplibrecompose.core.expression.TextVariableAnchorOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.ZeroPadding
@@ -452,7 +453,7 @@ public fun SymbolLayer(
   textOffset: Expression<TextOffsetValue> = textOffset(0f.em, 0f.em),
   textVariableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>> = nil(),
   textRadialOffset: Expression<TextUnitValue> = const(0f.em),
-  textVariableAnchorOffset: Expression<ListValue<*>> = nil(), // TODO proper type
+  textVariableAnchorOffset: Expression<TextVariableAnchorOffsetValue> = nil(),
 
   // text collision
   textPadding: Expression<DpValue> = const(2.dp),

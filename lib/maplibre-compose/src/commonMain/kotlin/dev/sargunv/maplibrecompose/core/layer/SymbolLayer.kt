@@ -23,6 +23,7 @@ import dev.sargunv.maplibrecompose.core.expression.TextJustify
 import dev.sargunv.maplibrecompose.core.expression.TextPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
+import dev.sargunv.maplibrecompose.core.expression.TextVariableAnchorOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -109,7 +110,7 @@ internal expect class SymbolLayer(id: String, source: Source) : FeatureLayer {
 
   fun setTextVariableAnchor(variableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>>)
 
-  @JsOnlyApi fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<ListValue<*>>)
+  fun setTextVariableAnchorOffset(variableAnchorOffset: Expression<TextVariableAnchorOffsetValue>)
 
   fun setTextAnchor(anchor: Expression<EnumValue<SymbolAnchor>>)
 
