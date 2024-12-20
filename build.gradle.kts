@@ -44,7 +44,10 @@ tasks.register("generateDocs") {
   }
 }
 
-dependencies { dokka(project(":lib:maplibre-compose:")) }
+dependencies {
+  dokka(project(":lib:maplibre-compose:"))
+  dokka(project(":lib:maplibre-compose-material3:"))
+}
 
 spotless {
   kotlinGradle {
