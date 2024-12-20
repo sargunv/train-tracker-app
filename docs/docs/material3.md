@@ -4,8 +4,9 @@
 
 We provide reimplementations of certain ornaments using Material 3. These are
 regular Compose UI components, so you can position them arbitrarily, style them,
-animate them, etc. To use them, disable the default ornaments and add the
-Material controls to the map's `content`.
+animate them, etc.
+
+To get started, add the dependency to your project:
 
 ```toml title="libs.versions.toml"
 [libraries]
@@ -17,6 +18,9 @@ commonMain.dependencies {
   implementation(libs.maplibre.composeMaterial3)
 }
 ```
+
+Then, disable the default ornaments and add the Material controls after the
+`MaplibreMap` in a shared `Box`.
 
 ```kotlin title="App.kt"
 -8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Material3.kt:controls"

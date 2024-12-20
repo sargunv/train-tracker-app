@@ -26,7 +26,6 @@ public fun AttributionButton(
   modifier: Modifier = Modifier,
   colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
   contentDescription: String = "Attribution",
-  confirmText: String = "OK",
 ) {
   var showDialog by remember { mutableStateOf(false) }
 
@@ -40,11 +39,7 @@ public fun AttributionButton(
 
     AlertDialog(
       onDismissRequest = { showDialog = false },
-      confirmButton = {
-        TextButton(onClick = { showDialog = false }) {
-          Text(text = confirmText, style = MaterialTheme.typography.labelLarge)
-        }
-      },
+      confirmButton = {},
       title = { Text(text = "MapLibre Compose", style = MaterialTheme.typography.headlineSmall) },
       text = {
         Column {

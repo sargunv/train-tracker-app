@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,12 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.sargunv.maplibrecompose.compose.ClickResult
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
+import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.format
 import io.github.dellisd.spatialk.geojson.Position
@@ -36,16 +39,17 @@ object CameraStateDemo : Demo {
       Column {
         val cameraState =
           rememberCameraState(firstPosition = CameraPosition(target = CHICAGO, zoom = 12.0))
+        val styleState = rememberStyleState()
 
-        MaplibreMap(
-          modifier = Modifier.weight(1f),
-          styleUri = DEFAULT_STYLE,
-          cameraState = cameraState,
-          onMapClick = { _, _ ->
-            println(cameraState.queryVisibleBoundingBox())
-            ClickResult.Pass
-          },
-        )
+        Box(modifier = Modifier.weight(1f)) {
+          MaplibreMap(
+            styleUri = DEFAULT_STYLE,
+            cameraState = cameraState,
+            styleState = styleState,
+            ornamentSettings = DemoOrnamentSettings(),
+          )
+          DemoMapControls(cameraState, styleState)
+        }
 
         Row(modifier = Modifier.safeDrawingPadding().wrapContentSize(Alignment.Center)) {
           val pos = cameraState.position

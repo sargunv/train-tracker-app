@@ -4,7 +4,9 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,11 +29,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.sargunv.maplibrecompose.compose.CameraState
+import dev.sargunv.maplibrecompose.compose.StyleState
+import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.demos.AnimatedLayerDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.CameraFollowDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.CameraStateDemo
@@ -39,6 +46,9 @@ import dev.sargunv.maplibrecompose.demoapp.demos.ClusteredPointsDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.EdgeToEdgeDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.FrameRateDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.StyleSwitcherDemo
+import dev.sargunv.maplibrecompose.material3.controls.AttributionButton
+import dev.sargunv.maplibrecompose.material3.controls.DisappearingCompassButton
+import dev.sargunv.maplibrecompose.material3.controls.DisappearingScaleBar
 
 private val DEMOS =
   listOf(
@@ -139,3 +149,23 @@ fun DemoScaffold(demo: Demo, navigateUp: () -> Unit, content: @Composable () -> 
     },
   )
 }
+
+@Composable
+fun DemoMapControls(
+  cameraState: CameraState,
+  styleState: StyleState,
+  modifier: Modifier = Modifier,
+) {
+  Box(modifier = modifier.fillMaxSize().padding(8.dp)) {
+    DisappearingScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
+    DisappearingCompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
+    AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
+  }
+}
+
+fun DemoOrnamentSettings(padding: PaddingValues = PaddingValues(0.dp)) =
+  OrnamentSettings.AllDisabled.copy(
+    padding = padding,
+    isLogoEnabled = true,
+    logoAlignment = Alignment.BottomStart,
+  )

@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -13,9 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
+import dev.sargunv.maplibrecompose.compose.rememberCameraState
+import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.core.util.PlatformUtils
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.FrameRateState
 import kotlin.math.roundToInt
@@ -32,12 +37,20 @@ object FrameRateDemo : Demo {
         var maximumFps by remember { mutableStateOf(systemRefreshRate) }
         val fpsState = remember { FrameRateState() }
 
-        MaplibreMap(
-          modifier = Modifier.weight(1f),
-          styleUri = DEFAULT_STYLE,
-          maximumFps = maximumFps,
-          onFrame = fpsState::recordFps,
-        )
+        val cameraState = rememberCameraState()
+        val styleState = rememberStyleState()
+
+        Box(modifier = Modifier.weight(1f)) {
+          MaplibreMap(
+            styleUri = DEFAULT_STYLE,
+            maximumFps = maximumFps,
+            onFrame = fpsState::recordFps,
+            cameraState = cameraState,
+            styleState = styleState,
+            ornamentSettings = DemoOrnamentSettings(),
+          )
+          DemoMapControls(cameraState, styleState)
+        }
 
         Column(modifier = Modifier.padding(16.dp)) {
           Slider(

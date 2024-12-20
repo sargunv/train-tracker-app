@@ -4,14 +4,18 @@ import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.compose.layer.LineLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
+import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
@@ -22,6 +26,8 @@ import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.generated.Res
 import io.github.dellisd.spatialk.geojson.Position
@@ -39,10 +45,16 @@ object AnimatedLayerDemo : Demo {
   @OptIn(ExperimentalResourceApi::class)
   override fun Component(navigateUp: () -> Unit) {
     DemoScaffold(this, navigateUp) {
-      MaplibreMap(
-        styleUri = DEFAULT_STYLE,
-        cameraState = rememberCameraState(firstPosition = CameraPosition(target = US, zoom = 2.0)),
-        mapContent = {
+      val cameraState = rememberCameraState(firstPosition = CameraPosition(target = US, zoom = 2.0))
+      val styleState = rememberStyleState()
+
+      Box(modifier = Modifier.fillMaxSize()) {
+        MaplibreMap(
+          styleUri = DEFAULT_STYLE,
+          cameraState = cameraState,
+          styleState = styleState,
+          ornamentSettings = DemoOrnamentSettings(),
+        ) {
           val routeSource =
             rememberGeoJsonSource(id = "amtrak-routes", uri = Res.getUri(ROUTES_FILE))
 
@@ -77,8 +89,9 @@ object AnimatedLayerDemo : Demo {
                 ),
             )
           }
-        },
-      )
+        }
+        DemoMapControls(cameraState, styleState)
+      }
     }
   }
 }

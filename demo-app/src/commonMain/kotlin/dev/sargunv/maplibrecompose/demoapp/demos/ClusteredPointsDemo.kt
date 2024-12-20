@@ -1,5 +1,7 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +19,7 @@ import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.layer.CircleLayer
 import dev.sargunv.maplibrecompose.compose.layer.SymbolLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
+import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asNumber
@@ -29,6 +32,8 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.step
 import dev.sargunv.maplibrecompose.core.source.GeoJsonOptions
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.generated.Res
 import io.github.dellisd.spatialk.geojson.Feature
@@ -59,14 +64,17 @@ object ClusteredPointsDemo : Demo {
     DemoScaffold(this, navigateUp) {
       val cameraState =
         rememberCameraState(firstPosition = CameraPosition(target = SEATTLE, zoom = 10.0))
+      val styleState = rememberStyleState()
 
       val coroutineScope = rememberCoroutineScope()
 
-      MaplibreMap(
-        modifier = Modifier,
-        styleUri = DEFAULT_STYLE,
-        cameraState = cameraState,
-        mapContent = {
+      Box(modifier = Modifier.fillMaxSize()) {
+        MaplibreMap(
+          styleUri = DEFAULT_STYLE,
+          cameraState = cameraState,
+          styleState = styleState,
+          ornamentSettings = DemoOrnamentSettings(),
+        ) {
           val gbfsData by rememberGbfsFeatureState(GBFS_FILE)
 
           val bikeSource =
@@ -135,8 +143,9 @@ object ClusteredPointsDemo : Demo {
             strokeWidth = const(3.dp),
             strokeColor = const(Color.White),
           )
-        },
-      )
+        }
+        DemoMapControls(cameraState, styleState)
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
@@ -13,8 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
+import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.getAllStyleUris
 import io.github.dellisd.spatialk.geojson.Position
@@ -34,12 +38,16 @@ object StyleSwitcherDemo : Demo {
 
         val cameraState =
           rememberCameraState(CameraPosition(target = NEW_YORK, zoom = 15.0, tilt = 30.0))
+        val styleState = rememberStyleState()
 
-        MaplibreMap(
-          modifier = Modifier.weight(1f),
-          styleUri = styles[selectedIndex].second,
-          cameraState = cameraState,
-        )
+        Box(modifier = Modifier.weight(1f)) {
+          MaplibreMap(
+            styleUri = styles[selectedIndex].second,
+            cameraState = cameraState,
+            ornamentSettings = DemoOrnamentSettings(),
+          )
+          DemoMapControls(cameraState, styleState)
+        }
 
         SecondaryScrollableTabRow(selectedTabIndex = selectedIndex) {
           styles.forEachIndexed { index, pair ->

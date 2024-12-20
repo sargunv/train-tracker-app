@@ -25,11 +25,13 @@ fun Material3() {
   val cameraState = rememberCameraState()
   val styleState = rememberStyleState()
 
-  MaplibreMap(
-    cameraState = cameraState,
-    styleState = styleState,
-    ornamentSettings = OrnamentSettings.AllDisabled,
-  ) {
+  Box(Modifier.fillMaxSize()) {
+    MaplibreMap(
+      cameraState = cameraState,
+      styleState = styleState,
+      ornamentSettings = OrnamentSettings.AllDisabled,
+    )
+
     Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
       ScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
       CompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
@@ -39,11 +41,13 @@ fun Material3() {
   // -8<- [end:controls]
 
   // -8<- [start:disappearing-controls]
-  MaplibreMap(
-    cameraState = cameraState,
-    styleState = styleState,
-    ornamentSettings = OrnamentSettings.AllDisabled,
-  ) {
+  Box(modifier = Modifier.fillMaxSize()) {
+    MaplibreMap(
+      cameraState = cameraState,
+      styleState = styleState,
+      ornamentSettings = OrnamentSettings.AllDisabled,
+    )
+
     Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
       DisappearingScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart)) // (1)!
       DisappearingCompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd)) // (2)!

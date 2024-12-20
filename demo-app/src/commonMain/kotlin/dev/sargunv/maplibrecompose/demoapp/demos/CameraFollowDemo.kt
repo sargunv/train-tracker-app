@@ -6,6 +6,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,7 @@ import dev.sargunv.maplibrecompose.compose.CameraState
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.layer.CircleLayer
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
+import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource
 import dev.sargunv.maplibrecompose.core.CameraMoveReason
 import dev.sargunv.maplibrecompose.core.CameraPosition
@@ -36,6 +38,8 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DemoScaffold
 import dev.sargunv.maplibrecompose.demoapp.PositionVectorConverter
 import io.github.dellisd.spatialk.geojson.Point
@@ -58,31 +62,36 @@ object CameraFollowDemo : Demo {
         val animatedPosition by animateTestPosition(START_POINT, END_POINT)
         var followAtZoom by remember { mutableStateOf((MIN_ZOOM + MAX_ZOOM) / 2) }
         var isFollowing by remember { mutableStateOf(true) }
-        val camera =
+
+        val cameraState =
           rememberAnimatedFollowCamera(
             targetPos = animatedPosition,
             targetZoom = followAtZoom.toFloat(),
             isFollowing = isFollowing,
           )
+        val styleState = rememberStyleState()
 
-        LaunchedEffect(camera.moveReason) {
-          if (camera.moveReason == CameraMoveReason.GESTURE) {
+        LaunchedEffect(cameraState.moveReason) {
+          if (cameraState.moveReason == CameraMoveReason.GESTURE) {
             isFollowing = false
-            camera.position = camera.position.copy()
+            cameraState.position = cameraState.position.copy()
           }
         }
 
-        MaplibreMap(
-          modifier = Modifier.weight(1f),
-          styleUri = DEFAULT_STYLE,
-          cameraState = camera,
-          mapContent = {
+        Box(modifier = Modifier.weight(1f)) {
+          MaplibreMap(
+            styleUri = DEFAULT_STYLE,
+            cameraState = cameraState,
+            styleState = styleState,
+            ornamentSettings = DemoOrnamentSettings(),
+          ) {
             LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
-          },
-        )
+          }
+          DemoMapControls(cameraState, styleState)
+        }
 
         Text(
-          text = "Move reason: ${camera.moveReason.name}",
+          text = "Move reason: ${cameraState.moveReason.name}",
           textAlign = TextAlign.Center,
           modifier = Modifier.fillMaxWidth(),
         )
@@ -93,7 +102,7 @@ object CameraFollowDemo : Demo {
           onZoomChange = { followAtZoom = it },
           onStartFollowing = {
             isFollowing = true
-            followAtZoom = camera.position.zoom.roundToInt().coerceIn(MIN_ZOOM, MAX_ZOOM)
+            followAtZoom = cameraState.position.zoom.roundToInt().coerceIn(MIN_ZOOM, MAX_ZOOM)
           },
         )
       }

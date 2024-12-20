@@ -1,25 +1,23 @@
 package dev.sargunv.maplibrecompose.demoapp.demos
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.MaplibreMap
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.core.CameraPosition
-import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoAppBar
-import dev.sargunv.maplibrecompose.material3.controls.AttributionButton
-import dev.sargunv.maplibrecompose.material3.controls.DisappearingCompassButton
-import dev.sargunv.maplibrecompose.material3.controls.DisappearingScaleBar
+import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
+import dev.sargunv.maplibrecompose.demoapp.DemoOrnamentSettings
 import io.github.dellisd.spatialk.geojson.Position
 
 private val PORTLAND = Position(latitude = 45.521, longitude = -122.675)
@@ -37,19 +35,14 @@ object EdgeToEdgeDemo : Demo {
     Scaffold(
       topBar = { DemoAppBar(this, navigateUp, alpha = 0.5f) },
       content = { padding ->
-        MaplibreMap(
-          modifier = Modifier.consumeWindowInsets(padding),
-          styleUri = DEFAULT_STYLE,
-          cameraState = cameraState,
-          styleState = styleState,
-          ornamentSettings =
-            OrnamentSettings.AllDisabled.copy(isLogoEnabled = true, padding = padding),
-        ) {
-          Box(modifier = Modifier.fillMaxSize().padding(padding).padding(8.dp)) {
-            DisappearingScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
-            DisappearingCompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
-            AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
-          }
+        Box(modifier = Modifier.consumeWindowInsets(WindowInsets.safeContent).fillMaxSize()) {
+          MaplibreMap(
+            styleUri = DEFAULT_STYLE,
+            cameraState = cameraState,
+            styleState = styleState,
+            ornamentSettings = DemoOrnamentSettings(padding),
+          )
+          DemoMapControls(cameraState, styleState, modifier = Modifier.padding(padding))
         }
       },
     )

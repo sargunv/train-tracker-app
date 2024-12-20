@@ -1,7 +1,5 @@
 package dev.sargunv.maplibrecompose.compose
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,9 +41,8 @@ import kotlin.math.roundToInt
  * @param maximumFps The maximum frame rate at which the map view is rendered, but it can't exceed
  *   the ability of device hardware.
  * @param logger kermit logger to use
- * @param mapContent The map content additional to what is already part of the map as defined in the
+ * @param content The map content additional to what is already part of the map as defined in the
  *   base map style linked in [styleUri].
- * @param content The composable content shown on top of the map.
  *
  * Additional [sources](https://maplibre.org/maplibre-style-spec/sources/) can be added via:
  * - [rememberGeoJsonSource][dev.sargunv.maplibrecompose.compose.source.rememberGeoJsonSource] (see
@@ -96,11 +93,10 @@ public fun MaplibreMap(
   isDebugEnabled: Boolean = false,
   maximumFps: Int = PlatformUtils.getSystemRefreshRate().roundToInt(),
   logger: Logger? = remember { Logger.withTag("maplibre-compose") },
-  mapContent: @Composable @MaplibreComposable () -> Unit = {},
-  content: @Composable BoxScope.() -> Unit = {},
+  content: @Composable @MaplibreComposable () -> Unit = {},
 ) {
   var rememberedStyle by remember { mutableStateOf<Style?>(null) }
-  val styleComposition by rememberStyleComposition(rememberedStyle, logger, mapContent)
+  val styleComposition by rememberStyleComposition(rememberedStyle, logger, content)
 
   val callbacks =
     remember(cameraState, styleState, styleComposition) {
@@ -162,25 +158,22 @@ public fun MaplibreMap(
       }
     }
 
-  Box(modifier = modifier) {
-    ComposableMapView(
-      modifier = Modifier.fillMaxSize(),
-      styleUri = styleUri,
-      update = { map ->
-        cameraState.map = map
-        map.onFpsChanged = onFrame
-        map.isDebugEnabled = isDebugEnabled
-        map.setGestureSettings(gestureSettings)
-        map.setOrnamentSettings(ornamentSettings)
-        map.setMaximumFps(maximumFps)
-      },
-      onReset = {
-        cameraState.map = null
-        rememberedStyle = null
-      },
-      logger = logger,
-      callbacks = callbacks,
-    )
-    content()
-  }
+  ComposableMapView(
+    modifier = modifier.fillMaxSize(),
+    styleUri = styleUri,
+    update = { map ->
+      cameraState.map = map
+      map.onFpsChanged = onFrame
+      map.isDebugEnabled = isDebugEnabled
+      map.setGestureSettings(gestureSettings)
+      map.setOrnamentSettings(ornamentSettings)
+      map.setMaximumFps(maximumFps)
+    },
+    onReset = {
+      cameraState.map = null
+      rememberedStyle = null
+    },
+    logger = logger,
+    callbacks = callbacks,
+  )
 }
