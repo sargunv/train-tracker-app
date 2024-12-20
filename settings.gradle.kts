@@ -31,4 +31,4 @@ dependencyResolutionManagement {
   }
 }
 
-include(":lib:maplibre-compose", ":lib", ":demo-app", ":")
+include(":lib:maplibre-compose", ":lib:maplibre-compose-material3", ":lib", ":demo-app", ":")

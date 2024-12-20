@@ -1,4 +1,4 @@
-package dev.sargunv.maplibrecompose.compose.controls
+package dev.sargunv.maplibrecompose.material3.controls
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.CameraState
-import dev.sargunv.maplibrecompose.generated.Res
-import dev.sargunv.maplibrecompose.generated.compass_needle
+import dev.sargunv.maplibrecompose.material3.generated.Res
+import dev.sargunv.maplibrecompose.material3.generated.compass_needle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource

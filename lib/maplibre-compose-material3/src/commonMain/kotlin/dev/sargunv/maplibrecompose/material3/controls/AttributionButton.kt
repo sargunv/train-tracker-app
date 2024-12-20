@@ -1,4 +1,4 @@
-package dev.sargunv.maplibrecompose.compose.controls
+package dev.sargunv.maplibrecompose.material3.controls
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons

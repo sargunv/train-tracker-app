@@ -77,6 +77,7 @@ kotlin {
       implementation(libs.ktor.client.contentNegotiation)
       implementation(libs.ktor.serialization.kotlinxJson)
       implementation(project(":lib:maplibre-compose"))
+      implementation(project(":lib:maplibre-compose-material3"))
     }
 
     androidMain.dependencies {

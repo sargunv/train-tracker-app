@@ -15,12 +15,12 @@ plugins {
   id(libs.plugins.mavenPublish.get().pluginId)
 }
 
-android { namespace = "dev.sargunv.maplibrecompose" }
+android { namespace = "dev.sargunv.maplibrecompose.material3" }
 
 mavenPublishing {
   pom {
-    name = "MapLibre Compose"
-    description = "Add interactive vector tile maps to your Compose app"
+    name = "MapLibre Compose Material 3"
+    description = "Material 3 extensions for MapLibre Compose."
     url = "https://github.com/sargunv/maplibre-compose"
   }
 }
@@ -42,26 +42,16 @@ kotlin {
   }
 
   sourceSets {
-    listOf(iosMain, iosArm64Main, iosSimulatorArm64Main, iosX64Main).forEach {
-      it { languageSettings { optIn("kotlinx.cinterop.ExperimentalForeignApi") } }
-    }
-
     commonMain.dependencies {
-      implementation(compose.foundation)
-      api(libs.kermit)
-      api(libs.spatialk.geojson)
-    }
-
-    androidMain.dependencies {
-      api(libs.maplibre.android)
-      implementation(libs.maplibre.android.scalebar)
+      implementation(compose.material3)
+      implementation(compose.components.resources)
+      api(project(":lib:maplibre-compose"))
     }
 
     commonTest.dependencies {
       implementation(kotlin("test"))
       implementation(kotlin("test-common"))
       implementation(kotlin("test-annotations-common"))
-
       @OptIn(ExperimentalComposeLibrary::class) implementation(compose.uiTest)
     }
 
@@ -73,3 +63,5 @@ kotlin {
     }
   }
 }
+
+compose.resources { packageOfResClass = "dev.sargunv.maplibrecompose.material3.generated" }
