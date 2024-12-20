@@ -38,10 +38,23 @@ visibility and position of these ornaments:
 
 We also provide reimplementations of certain ornaments using Material 3. These
 are regular Compose UI components, so you can position them arbitrarily, style
-them, animate them, etc. To use them, disable the corresponding built-in
-ornament and add the Material control to the map's `overlay`:
+them, animate them, etc. To use them, disable the built-in ornaments and add the
+Material controls to the map's `content`:
 
-TODO add example
+```toml title="libs.versions.toml"
+[libraries]
+maplibre-composeMaterial3 = { module = "dev.sargunv.maplibre-compose:maplibre-compose-material3", version = "{{ gradle.release_version }}" }
+```
+
+```kotlin title="build.gradle.kts"
+commonMain.dependencies {
+  implementation(libs.maplibre.composeMaterial3)
+}
+```
+
+```kotlin
+-8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Interaction.kt:material3"
+```
 
 ## Camera
 
