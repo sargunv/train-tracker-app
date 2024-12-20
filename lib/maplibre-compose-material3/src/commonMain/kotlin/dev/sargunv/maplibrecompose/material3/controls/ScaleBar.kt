@@ -1,7 +1,7 @@
 package dev.sargunv.maplibrecompose.material3.controls
 
 // Based on the scale bar from Google Maps Compose.
-//
+
 // Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.End
@@ -48,13 +48,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import dev.sargunv.maplibrecompose.compose.CameraState
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 
-private val DarkGray: Color = Color(0xFF3a3c3b)
-private val defaultWidth: Dp = 65.dp
-private val defaultHeight: Dp = 50.dp
+public data class ScaleBarColors(
+  val textColor: Color,
+  val lineColor: Color,
+  val shadowColor: Color,
+)
+
+public object ScaleBarDefaults {
+  public val width: Dp = 65.dp
+  public val height: Dp = 50.dp
+
+  @Composable
+  public fun colors(): ScaleBarColors =
+    ScaleBarColors(
+      textColor = MaterialTheme.colorScheme.onSurface,
+      lineColor = MaterialTheme.colorScheme.onSurface,
+      shadowColor = MaterialTheme.colorScheme.surface,
+    )
+}
 
 /**
  * A scale bar composable that shows the current scale of the map in feet and meters when zoomed in
@@ -64,24 +80,18 @@ private val defaultHeight: Dp = 50.dp
 public fun ScaleBar(
   cameraState: CameraState,
   modifier: Modifier = Modifier,
-  width: Dp = defaultWidth,
-  height: Dp = defaultHeight,
-  textColor: Color = DarkGray,
-  lineColor: Color = DarkGray,
-  shadowColor: Color = Color.White,
+  width: Dp = ScaleBarDefaults.width,
+  height: Dp = ScaleBarDefaults.height,
+  colors: ScaleBarColors = ScaleBarDefaults.colors(),
 ) {
   Box(modifier = modifier.size(width = width, height = height)) {
-    var horizontalLineWidthMeters by remember { mutableIntStateOf(0) }
+    var horizontalLineWidthMeters by remember { mutableDoubleStateOf(0.0) }
 
     Canvas(
       modifier = Modifier.fillMaxSize(),
       onDraw = {
-        val canvasWidthMeters = cameraState.metersPerDpAtTarget * size.width.toDp().value
-        val eightNinthsCanvasMeters = (canvasWidthMeters * 8 / 9).toInt()
+        horizontalLineWidthMeters = cameraState.metersPerDpAtTarget * size.width.toDp().value
 
-        horizontalLineWidthMeters = eightNinthsCanvasMeters
-
-        val oneNinthWidth = size.width / 9
         val midHeight = size.height / 2
         val oneThirdHeight = size.height / 3
         val twoThirdsHeight = size.height * 2 / 3
@@ -90,50 +100,50 @@ public fun ScaleBar(
 
         // Middle horizontal line shadow (drawn under main lines)
         drawLine(
-          color = shadowColor,
-          start = Offset(oneNinthWidth, midHeight),
+          color = colors.shadowColor,
+          start = Offset(0f, midHeight),
           end = Offset(size.width, midHeight),
           strokeWidth = shadowStrokeWidth,
           cap = StrokeCap.Round,
         )
         // Top vertical line shadow (drawn under main lines)
         drawLine(
-          color = shadowColor,
-          start = Offset(oneNinthWidth, oneThirdHeight),
-          end = Offset(oneNinthWidth, midHeight),
+          color = colors.shadowColor,
+          start = Offset(0f, oneThirdHeight),
+          end = Offset(0f, midHeight),
           strokeWidth = shadowStrokeWidth,
           cap = StrokeCap.Round,
         )
         // Bottom vertical line shadow (drawn under main lines)
         drawLine(
-          color = shadowColor,
-          start = Offset(oneNinthWidth, midHeight),
-          end = Offset(oneNinthWidth, twoThirdsHeight),
+          color = colors.shadowColor,
+          start = Offset(0f, midHeight),
+          end = Offset(0f, twoThirdsHeight),
           strokeWidth = shadowStrokeWidth,
           cap = StrokeCap.Round,
         )
 
         // Middle horizontal line
         drawLine(
-          color = lineColor,
-          start = Offset(oneNinthWidth, midHeight),
+          color = colors.lineColor,
+          start = Offset(0f, midHeight),
           end = Offset(size.width, midHeight),
           strokeWidth = strokeWidth,
           cap = StrokeCap.Round,
         )
         // Top vertical line
         drawLine(
-          color = lineColor,
-          start = Offset(oneNinthWidth, oneThirdHeight),
-          end = Offset(oneNinthWidth, midHeight),
+          color = colors.lineColor,
+          start = Offset(0f, oneThirdHeight),
+          end = Offset(0f, midHeight),
           strokeWidth = strokeWidth,
           cap = StrokeCap.Round,
         )
         // Bottom vertical line
         drawLine(
-          color = lineColor,
-          start = Offset(oneNinthWidth, midHeight),
-          end = Offset(oneNinthWidth, twoThirdsHeight),
+          color = colors.lineColor,
+          start = Offset(0f, midHeight),
+          end = Offset(0f, twoThirdsHeight),
           strokeWidth = strokeWidth,
           cap = StrokeCap.Round,
         )
@@ -149,7 +159,7 @@ public fun ScaleBar(
       }
 
       var imperialUnits = "ft"
-      var imperialDistance = horizontalLineWidthMeters.toDouble().toFeet()
+      var imperialDistance = horizontalLineWidthMeters.toFeet()
       if (imperialDistance > FEET_IN_MILE) {
         // Switch from ft to miles as unit
         imperialUnits = "mi"
@@ -157,16 +167,16 @@ public fun ScaleBar(
       }
 
       ScaleText(
+        text = "${imperialDistance.roundToInt()} $imperialUnits",
         modifier = Modifier.align(End),
-        textColor = textColor,
-        shadowColor = shadowColor,
-        text = "${imperialDistance.toInt()} $imperialUnits",
+        textColor = colors.textColor,
+        shadowColor = colors.shadowColor,
       )
       ScaleText(
+        text = "${metricDistance.roundToInt()} $metricUnits",
         modifier = Modifier.align(End),
-        textColor = textColor,
-        shadowColor = shadowColor,
-        text = "$metricDistance $metricUnits",
+        textColor = colors.textColor,
+        shadowColor = colors.shadowColor,
       )
     }
   }
@@ -180,11 +190,9 @@ public fun ScaleBar(
 public fun DisappearingScaleBar(
   cameraState: CameraState,
   modifier: Modifier = Modifier,
-  width: Dp = defaultWidth,
-  height: Dp = defaultHeight,
-  textColor: Color = DarkGray,
-  lineColor: Color = DarkGray,
-  shadowColor: Color = Color.White,
+  width: Dp = ScaleBarDefaults.width,
+  height: Dp = ScaleBarDefaults.height,
+  colors: ScaleBarColors = ScaleBarDefaults.colors(),
   visibilityDuration: Duration = 3.seconds,
   enterTransition: EnterTransition = fadeIn(),
   exitTransition: ExitTransition = fadeOut(),
@@ -205,24 +213,12 @@ public fun DisappearingScaleBar(
     enter = enterTransition,
     exit = exitTransition,
   ) {
-    ScaleBar(
-      width = width,
-      height = height,
-      cameraState = cameraState,
-      textColor = textColor,
-      lineColor = lineColor,
-      shadowColor = shadowColor,
-    )
+    ScaleBar(width = width, height = height, cameraState = cameraState, colors = colors)
   }
 }
 
 @Composable
-private fun ScaleText(
-  text: String,
-  modifier: Modifier = Modifier,
-  textColor: Color = DarkGray,
-  shadowColor: Color = Color.White,
-) {
+private fun ScaleText(text: String, modifier: Modifier, textColor: Color, shadowColor: Color) {
   Text(
     text = text,
     fontSize = 12.sp,
