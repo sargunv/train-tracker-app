@@ -15,6 +15,7 @@ import dev.sargunv.maplibrecompose.compose.rememberStyleState
 import dev.sargunv.maplibrecompose.core.OrnamentSettings
 import dev.sargunv.maplibrecompose.material3.controls.AttributionButton
 import dev.sargunv.maplibrecompose.material3.controls.CompassButton
+import dev.sargunv.maplibrecompose.material3.controls.ScaleBar
 
 @Composable
 fun Material3() {
@@ -28,8 +29,9 @@ fun Material3() {
     ornamentSettings = OrnamentSettings.AllDisabled,
   ) {
     Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
-      AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
+      ScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
       CompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
+      AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
     }
   }
   // -8<- [end:controls]
