@@ -22,9 +22,9 @@ This library is published via [Maven Central][maven], and snapshot builds of
 
     !!! warning
 
-        Note that the published documentation is for the latest release, and may not match the
-        snapshot version. If using snapshots, always refer to the [latest source code][repo] for the
-        most accurate information.
+        The published documentation is for the latest release, and may not match the snapshot
+        version. If using snapshots, always refer to the [latest source code][repo] for the most
+        accurate information.
 
     First, follow [GitHub's guide][gh-packages-guide] for authenticating to GitHub Packages. Your
     settings.gradle.kts should have something like this:

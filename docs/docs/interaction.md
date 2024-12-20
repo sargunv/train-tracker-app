@@ -15,6 +15,11 @@ enabled or disabled individually:
 
 ### Ornaments
 
+!!! info
+
+    We provide Material 3 alternatives to the default ornaments. See the [Material 3 extensions
+    section](./material3.md) for more information.
+
 Ornaments are built in UI elements that are displayed on the map, such as a
 compass or attribution button. They're implemented by the underlying MapLibre
 SDK, so may render differently on different platforms. You can control the
@@ -33,28 +38,6 @@ visibility and position of these ornaments:
 5. Displays a compass control when the map is rotated away from north.
 6. Displays a scale control showing the distance represented by the map's zoom
    level.
-
-### Material 3 Controls
-
-We also provide reimplementations of certain ornaments using Material 3. These
-are regular Compose UI components, so you can position them arbitrarily, style
-them, animate them, etc. To use them, disable the built-in ornaments and add the
-Material controls to the map's `content`:
-
-```toml title="libs.versions.toml"
-[libraries]
-maplibre-composeMaterial3 = { module = "dev.sargunv.maplibre-compose:maplibre-compose-material3", version = "{{ gradle.release_version }}" }
-```
-
-```kotlin title="build.gradle.kts"
-commonMain.dependencies {
-  implementation(libs.maplibre.composeMaterial3)
-}
-```
-
-```kotlin
--8<- "demo-app/src/commonMain/kotlin/dev/sargunv/maplibrecompose/demoapp/docs/Interaction.kt:material3"
-```
 
 ## Camera
 
