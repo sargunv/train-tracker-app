@@ -202,7 +202,7 @@ public fun DisappearingScaleBar(
   LaunchedEffect(key1 = cameraState.position.zoom) {
     // Show ScaleBar
     visible.targetState = true
-    delay(visibilityDuration.inWholeMilliseconds)
+    delay(visibilityDuration)
     // Hide ScaleBar after timeout period
     visible.targetState = false
   }

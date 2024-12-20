@@ -18,8 +18,8 @@ import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoAppBar
 import dev.sargunv.maplibrecompose.material3.controls.AttributionButton
-import dev.sargunv.maplibrecompose.material3.controls.CompassButton
-import dev.sargunv.maplibrecompose.material3.controls.ScaleBar
+import dev.sargunv.maplibrecompose.material3.controls.DisappearingCompassButton
+import dev.sargunv.maplibrecompose.material3.controls.DisappearingScaleBar
 import io.github.dellisd.spatialk.geojson.Position
 
 private val PORTLAND = Position(latitude = 45.521, longitude = -122.675)
@@ -46,8 +46,8 @@ object EdgeToEdgeDemo : Demo {
             OrnamentSettings.AllDisabled.copy(isLogoEnabled = true, padding = padding),
         ) {
           Box(modifier = Modifier.fillMaxSize().padding(padding).padding(8.dp)) {
-            ScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
-            CompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
+            DisappearingScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
+            DisappearingCompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
             AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
           }
         }
