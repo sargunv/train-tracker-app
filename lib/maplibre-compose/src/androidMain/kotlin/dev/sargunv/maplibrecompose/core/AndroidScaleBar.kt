@@ -1,6 +1,7 @@
 package dev.sargunv.maplibrecompose.core
 
 import android.content.Context
+import android.view.View
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.Density
@@ -22,6 +23,7 @@ internal class AndroidScaleBar(ctx: Context, private val mapView: MapView, map: 
     get() = scaleBar.isEnabled
     set(value) {
       scaleBar.isEnabled = value
+      scaleBar.visibility = if (value) View.VISIBLE else View.GONE
     }
 
   internal var layoutDir: LayoutDirection = LayoutDirection.Ltr
