@@ -319,7 +319,7 @@ internal class AndroidMap(
   }
 
   override fun metersPerDpAtLatitude(latitude: Double) =
-    map.projection.getMetersPerPixelAtLatitude(latitude) / density.density
+    map.projection.getMetersPerPixelAtLatitude(latitude)
 }
 
 private fun MLNVisibleRegion.toVisibleRegion() =
