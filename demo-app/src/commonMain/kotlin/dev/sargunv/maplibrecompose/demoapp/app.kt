@@ -45,6 +45,7 @@ import dev.sargunv.maplibrecompose.demoapp.demos.CameraStateDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.ClusteredPointsDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.EdgeToEdgeDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.FrameRateDemo
+import dev.sargunv.maplibrecompose.demoapp.demos.MarkersDemo
 import dev.sargunv.maplibrecompose.demoapp.demos.StyleSwitcherDemo
 import dev.sargunv.maplibrecompose.material3.controls.AttributionButton
 import dev.sargunv.maplibrecompose.material3.controls.DisappearingCompassButton
@@ -52,6 +53,7 @@ import dev.sargunv.maplibrecompose.material3.controls.DisappearingScaleBar
 
 private val DEMOS =
   listOf(
+    MarkersDemo,
     EdgeToEdgeDemo,
     StyleSwitcherDemo,
     ClusteredPointsDemo,

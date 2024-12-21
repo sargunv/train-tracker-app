@@ -4,6 +4,12 @@ import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.source.Source
 
 internal interface Style {
+  fun getImage(id: String): Image?
+
+  fun addImage(image: Image)
+
+  fun removeImage(image: Image)
+
   fun getSource(id: String): Source?
 
   fun getSources(): List<Source>
@@ -27,6 +33,12 @@ internal interface Style {
   fun removeLayer(layer: Layer)
 
   object Null : Style {
+    override fun getImage(id: String): Image? = null
+
+    override fun addImage(image: Image) {}
+
+    override fun removeImage(image: Image) {}
+
     override fun getSource(id: String): Source? = null
 
     override fun getSources(): List<Source> = emptyList()

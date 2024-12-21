@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.IntOffset
@@ -29,6 +30,7 @@ import io.github.dellisd.spatialk.geojson.GeoJson
 import io.github.dellisd.spatialk.geojson.Position
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.refTo
 import kotlinx.cinterop.useContents
 import kotlinx.cinterop.usePinned
 import kotlinx.serialization.json.JsonArray
@@ -36,6 +38,10 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import platform.CoreGraphics.CGBitmapContextCreate
+import platform.CoreGraphics.CGBitmapContextCreateImage
+import platform.CoreGraphics.CGColorSpaceCreateDeviceRGB
+import platform.CoreGraphics.CGImageAlphaInfo
 import platform.CoreGraphics.CGPoint
 import platform.CoreGraphics.CGPointMake
 import platform.CoreGraphics.CGRect
@@ -51,6 +57,7 @@ import platform.Foundation.NSValue
 import platform.Foundation.dataWithBytes
 import platform.UIKit.UIColor
 import platform.UIKit.UIEdgeInsetsMake
+import platform.UIKit.UIImage
 import platform.UIKit.valueWithCGVector
 import platform.UIKit.valueWithUIEdgeInsets
 
@@ -168,4 +175,23 @@ internal fun Alignment.toMLNOrnamentPosition(layoutDir: LayoutDirection): MLNOrn
 internal fun MLNAttributionInfo.toHtmlString(): String {
   // TODO escape HTML in the title and URL?
   return if (URL == null) title.string else """<a href="$URL" target="_blank">${title.string}</a>"""
+}
+
+internal fun ImageBitmap.toUIImage(): UIImage {
+  val width = this.width
+  val height = this.height
+  val buffer = IntArray(width * height).also { readPixels(it) }
+
+  val context =
+    CGBitmapContextCreate(
+      data = buffer.refTo(0),
+      width = width.toULong(),
+      height = height.toULong(),
+      bitsPerComponent = 8u,
+      bytesPerRow = (4 * width).toULong(),
+      space = CGColorSpaceCreateDeviceRGB(),
+      bitmapInfo = CGImageAlphaInfo.kCGImageAlphaPremultipliedLast.value,
+    )
+
+  return UIImage.imageWithCGImage(CGBitmapContextCreateImage(context)!!)
 }

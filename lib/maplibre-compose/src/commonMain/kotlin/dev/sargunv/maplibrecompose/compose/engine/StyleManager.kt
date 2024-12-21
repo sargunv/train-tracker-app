@@ -2,6 +2,7 @@ package dev.sargunv.maplibrecompose.compose.engine
 
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
+import dev.sargunv.maplibrecompose.core.Image
 import dev.sargunv.maplibrecompose.core.Style
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -12,6 +13,7 @@ internal class StyleManager(var style: Style, private var logger: Logger?) {
 
   // we queue up additions, but instantly execute removals
   // this way if an id is added and removed in the same frame, it will be removed before it's added
+  private val imagesToAdd = mutableListOf<Image>()
   private val sourcesToAdd = mutableListOf<Source>()
   private val userLayers = mutableListOf<LayerNode<*>>()
 

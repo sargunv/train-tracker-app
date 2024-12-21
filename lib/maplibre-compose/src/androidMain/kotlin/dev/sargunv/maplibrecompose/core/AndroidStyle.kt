@@ -9,6 +9,18 @@ import org.maplibre.android.maps.Style as MLNStyle
 internal class AndroidStyle(style: MLNStyle) : Style {
   private var impl: MLNStyle = style
 
+  override fun getImage(id: String): Image? {
+    return impl.getImage(id)?.let { Image(id, it) }
+  }
+
+  override fun addImage(image: Image) {
+    impl.addImage(image.id, image.impl)
+  }
+
+  override fun removeImage(image: Image) {
+    impl.removeImage(image.id)
+  }
+
   override fun getSource(id: String): Source? {
     return impl.getSource(id)?.let { UnknownSource(it) }
   }

@@ -11,6 +11,20 @@ import dev.sargunv.maplibrecompose.core.source.UnknownSource
 internal class IosStyle(style: MLNStyle) : Style {
   private var impl: MLNStyle = style
 
+  override fun getImage(id: String): Image? {
+    return impl.imageForName(id)?.let {
+      return Image(id, it)
+    }
+  }
+
+  override fun addImage(image: Image) {
+    impl.setImage(image.impl, forName = image.id)
+  }
+
+  override fun removeImage(image: Image) {
+    impl.removeImageForName(image.id)
+  }
+
   override fun getSource(id: String): Source? {
     return impl.sourceWithIdentifier(id)?.let { UnknownSource(it) }
   }
