@@ -172,9 +172,9 @@ public object ExpressionsDsl {
   public val Expression<FloatValue>.em: Expression<TextUnitValue>
     get() = this.cast<TextUnitValue>() * emMultiplierVar.use()
 
-  internal val spMultiplierVar = Variable<FloatValue>("\$sp_multiplier")
-  internal val emMultiplierVar = Variable<FloatValue>("\$em_multiplier")
-  internal val unspecifiedValueVar = Variable<TextUnitValue>("\$unspecified_value")
+  internal val spMultiplierVar = Variable<FloatValue>("__sp_multiplier")
+  internal val emMultiplierVar = Variable<FloatValue>("__em_multiplier")
+  internal val unspecifiedValueVar = Variable<TextUnitValue>("__unspecified_value")
 
   internal fun Expression<*>.resolveTextUnits(
     spMultiplier: Expression<FloatValue>,
@@ -199,14 +199,14 @@ public object ExpressionsDsl {
    * }
    * ```
    *
-   * Variable names starting with `$` are reserved.
+   * Variable names starting with `__` are reserved for internal use by the library.
    */
   public inline fun <V : ExpressionValue, R : ExpressionValue> withVariable(
     name: String,
     value: Expression<V>,
     block: (Variable<V>) -> Expression<R>,
   ): Expression<R> {
-    require(!name.startsWith("\$")) { "Variable names starting with '\$' are reserved." }
+    require(!name.startsWith("__")) { "Variable names starting with '__' are reserved." }
     return Variable<V>(name).let { it.bind(value, block(it)) }
   }
 
