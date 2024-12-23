@@ -68,7 +68,7 @@ fun DemoApp(navController: NavHostController = rememberNavController()) {
   MaterialTheme(colorScheme = getDefaultColorScheme()) {
     NavHost(
       navController = navController,
-      startDestination = MarkersDemo.name, // "start",
+      startDestination = "start",
       enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start) },
       exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start) },
       popEnterTransition = {
