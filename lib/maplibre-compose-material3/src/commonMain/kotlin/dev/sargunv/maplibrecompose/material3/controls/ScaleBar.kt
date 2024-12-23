@@ -101,8 +101,8 @@ public fun ScaleBar(
         val midHeight = size.height / 2
         val oneThirdHeight = size.height / 3
         val twoThirdsHeight = size.height * 2 / 3
-        val strokeWidth = 4f
-        val shadowStrokeWidth = strokeWidth + 3
+        val strokeWidth = 2f * density
+        val shadowStrokeWidth = strokeWidth + 2f * density
 
         // Middle horizontal line shadow (drawn under main lines)
         drawLine(
