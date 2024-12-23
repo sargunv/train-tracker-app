@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
     spec.vendored_frameworks      = 'build/cocoapods/framework/DemoApp.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '15.3'
-    spec.dependency 'MapLibre', '6.9.0'
+    spec.dependency 'MapLibre', '6.8.1'
                 
     if !Dir.exist?('build/cocoapods/framework/DemoApp.framework') || Dir.empty?('build/cocoapods/framework/DemoApp.framework')
         raise "
