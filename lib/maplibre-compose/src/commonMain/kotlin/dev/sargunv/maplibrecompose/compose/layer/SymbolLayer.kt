@@ -421,7 +421,7 @@ public fun SymbolLayer(
   iconTranslateAnchor: Expression<EnumValue<TranslateAnchor>> = const(TranslateAnchor.Map),
 
   // text content
-  textField: Expression<FormattedValue> = nil(),
+  textField: Expression<FormattedValue> = const("").cast(),
 
   // text glyph colors
   textOpacity: Expression<FloatValue> = const(1f),
