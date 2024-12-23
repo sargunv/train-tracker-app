@@ -1,0 +1,4 @@
+<resources>
+  <string name="meters_abbreviation">m</string><!-- 米 not used since 1952 -->
+  <string name="kilometers_abbreviation">km</string><!-- 粁 not used since 1951 -->
+</resources>

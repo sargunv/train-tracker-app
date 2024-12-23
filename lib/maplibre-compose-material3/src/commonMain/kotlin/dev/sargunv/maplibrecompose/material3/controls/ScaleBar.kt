@@ -48,10 +48,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import dev.sargunv.maplibrecompose.compose.CameraState
+import dev.sargunv.maplibrecompose.material3.generated.Res
+import dev.sargunv.maplibrecompose.material3.generated.feet_abbreviation
+import dev.sargunv.maplibrecompose.material3.generated.kilometers_abbreviation
+import dev.sargunv.maplibrecompose.material3.generated.meters_abbreviation
+import dev.sargunv.maplibrecompose.material3.generated.miles_abbreviation
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.stringResource
 
 public data class ScaleBarColors(
   val textColor: Color,
@@ -150,19 +156,19 @@ public fun ScaleBar(
       },
     )
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceAround) {
-      var metricUnits = "m"
+      var metricUnits = stringResource(Res.string.meters_abbreviation)
       var metricDistance = horizontalLineWidthMeters
       if (horizontalLineWidthMeters > METERS_IN_KILOMETER) {
         // Switch from meters to kilometers as unit
-        metricUnits = "km"
+        metricUnits = stringResource(Res.string.kilometers_abbreviation)
         metricDistance /= METERS_IN_KILOMETER.toInt()
       }
 
-      var imperialUnits = "ft"
+      var imperialUnits = stringResource(Res.string.feet_abbreviation)
       var imperialDistance = horizontalLineWidthMeters.toFeet()
       if (imperialDistance > FEET_IN_MILE) {
         // Switch from ft to miles as unit
-        imperialUnits = "mi"
+        imperialUnits = stringResource(Res.string.miles_abbreviation)
         imperialDistance = imperialDistance.toMiles()
       }
 

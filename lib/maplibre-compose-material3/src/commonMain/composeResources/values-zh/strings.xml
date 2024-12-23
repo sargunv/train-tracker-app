@@ -1,0 +1,4 @@
+<resources>
+  <string name="meters_abbreviation">米</string>
+  <string name="kilometers_abbreviation">千米</string>
+</resources>
