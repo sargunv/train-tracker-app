@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -98,6 +99,10 @@ public fun ScaleBar(
       onDraw = {
         horizontalLineWidthMeters = cameraState.metersPerDpAtTarget * size.width.toDp().value
 
+        val start = when (layoutDirection) {
+          LayoutDirection.Ltr -> 0f
+          LayoutDirection.Rtl -> size.width
+        }
         val midHeight = size.height / 2
         val oneThirdHeight = size.height / 3
         val twoThirdsHeight = size.height * 2 / 3
@@ -115,16 +120,16 @@ public fun ScaleBar(
         // Top vertical line shadow (drawn under main lines)
         drawLine(
           color = colors.shadowColor,
-          start = Offset(0f, oneThirdHeight),
-          end = Offset(0f, midHeight),
+          start = Offset(start, oneThirdHeight),
+          end = Offset(start, midHeight),
           strokeWidth = shadowStrokeWidth,
           cap = StrokeCap.Round,
         )
         // Bottom vertical line shadow (drawn under main lines)
         drawLine(
           color = colors.shadowColor,
-          start = Offset(0f, midHeight),
-          end = Offset(0f, twoThirdsHeight),
+          start = Offset(start, midHeight),
+          end = Offset(start, twoThirdsHeight),
           strokeWidth = shadowStrokeWidth,
           cap = StrokeCap.Round,
         )
@@ -140,16 +145,16 @@ public fun ScaleBar(
         // Top vertical line
         drawLine(
           color = colors.lineColor,
-          start = Offset(0f, oneThirdHeight),
-          end = Offset(0f, midHeight),
+          start = Offset(start, oneThirdHeight),
+          end = Offset(start, midHeight),
           strokeWidth = strokeWidth,
           cap = StrokeCap.Round,
         )
         // Bottom vertical line
         drawLine(
           color = colors.lineColor,
-          start = Offset(0f, midHeight),
-          end = Offset(0f, twoThirdsHeight),
+          start = Offset(start, midHeight),
+          end = Offset(start, twoThirdsHeight),
           strokeWidth = strokeWidth,
           cap = StrokeCap.Round,
         )
