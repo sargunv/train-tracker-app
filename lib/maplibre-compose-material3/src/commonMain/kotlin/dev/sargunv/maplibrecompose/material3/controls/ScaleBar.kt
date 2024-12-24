@@ -29,25 +29,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.End
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
 import dev.sargunv.maplibrecompose.compose.CameraState
 import dev.sargunv.maplibrecompose.material3.generated.Res
 import dev.sargunv.maplibrecompose.material3.generated.feet_symbol
@@ -160,7 +155,11 @@ public fun ScaleBar(
         )
       },
     )
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceAround) {
+    Column(
+      modifier = Modifier.fillMaxSize(),
+      horizontalAlignment = Alignment.End,
+      verticalArrangement = Arrangement.SpaceAround
+    ) {
       var metricUnits = stringResource(Res.string.meters_symbol)
       var metricDistance = horizontalLineWidthMeters
       if (horizontalLineWidthMeters > METERS_IN_KILOMETER) {
@@ -177,17 +176,17 @@ public fun ScaleBar(
         imperialDistance = imperialDistance.toMiles()
       }
 
-      ScaleText(
+      TextWithHalo(
         text = "${imperialDistance.roundToInt()} $imperialUnits",
-        modifier = Modifier.align(End),
-        textColor = colors.textColor,
-        shadowColor = colors.shadowColor,
+        haloColor = colors.shadowColor,
+        color = colors.textColor,
+        style = MaterialTheme.typography.labelMedium,
       )
-      ScaleText(
+      TextWithHalo(
         text = "${metricDistance.roundToInt()} $metricUnits",
-        modifier = Modifier.align(End),
-        textColor = colors.textColor,
-        shadowColor = colors.shadowColor,
+        haloColor = colors.shadowColor,
+        color = colors.textColor,
+        style = MaterialTheme.typography.labelMedium,
       )
     }
   }
@@ -226,22 +225,6 @@ public fun DisappearingScaleBar(
   ) {
     ScaleBar(width = width, height = height, cameraState = cameraState, colors = colors)
   }
-}
-
-@Composable
-private fun ScaleText(text: String, modifier: Modifier, textColor: Color, shadowColor: Color) {
-  Text(
-    text = text,
-    fontSize = 12.sp,
-    color = textColor,
-    textAlign = TextAlign.End,
-    lineHeight = 1.em,
-    modifier = modifier,
-    style =
-      MaterialTheme.typography.headlineSmall.copy(
-        shadow = Shadow(color = shadowColor, offset = Offset(2f, 2f), blurRadius = 1f)
-      ),
-  )
 }
 
 /**
