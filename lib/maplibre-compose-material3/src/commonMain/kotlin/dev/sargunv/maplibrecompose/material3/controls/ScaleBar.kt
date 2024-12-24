@@ -49,10 +49,10 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import dev.sargunv.maplibrecompose.compose.CameraState
 import dev.sargunv.maplibrecompose.material3.generated.Res
-import dev.sargunv.maplibrecompose.material3.generated.feet_abbreviation
-import dev.sargunv.maplibrecompose.material3.generated.kilometers_abbreviation
-import dev.sargunv.maplibrecompose.material3.generated.meters_abbreviation
-import dev.sargunv.maplibrecompose.material3.generated.miles_abbreviation
+import dev.sargunv.maplibrecompose.material3.generated.feet_symbol
+import dev.sargunv.maplibrecompose.material3.generated.kilometers_symbol
+import dev.sargunv.maplibrecompose.material3.generated.meters_symbol
+import dev.sargunv.maplibrecompose.material3.generated.miles_symbol
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -156,19 +156,19 @@ public fun ScaleBar(
       },
     )
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceAround) {
-      var metricUnits = stringResource(Res.string.meters_abbreviation)
+      var metricUnits = stringResource(Res.string.meters_symbol)
       var metricDistance = horizontalLineWidthMeters
       if (horizontalLineWidthMeters > METERS_IN_KILOMETER) {
         // Switch from meters to kilometers as unit
-        metricUnits = stringResource(Res.string.kilometers_abbreviation)
+        metricUnits = stringResource(Res.string.kilometers_symbol)
         metricDistance /= METERS_IN_KILOMETER.toInt()
       }
 
-      var imperialUnits = stringResource(Res.string.feet_abbreviation)
+      var imperialUnits = stringResource(Res.string.feet_symbol)
       var imperialDistance = horizontalLineWidthMeters.toFeet()
       if (imperialDistance > FEET_IN_MILE) {
         // Switch from ft to miles as unit
-        imperialUnits = stringResource(Res.string.miles_abbreviation)
+        imperialUnits = stringResource(Res.string.miles_symbol)
         imperialDistance = imperialDistance.toMiles()
       }
 

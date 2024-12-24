@@ -1,4 +1,4 @@
 <resources>
-  <string name="meters_abbreviation">ม</string>
-  <string name="kilometers_abbreviation">กม</string>
+  <string name="meters_symbol">ม</string>
+  <string name="kilometers_symbol">กม</string>
 </resources>
