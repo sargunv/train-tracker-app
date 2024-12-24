@@ -2,7 +2,7 @@ package dev.sargunv.maplibrecompose.compose.engine
 
 import dev.sargunv.maplibrecompose.core.source.Source
 
-internal class SourceManager(private val styleManager: StyleManager) {
+internal class SourceManager(private val styleManager: StyleNode) {
   private val baseSources = styleManager.style.getSources().associateBy { it.id }
 
   private val sourcesToAdd = mutableListOf<Source>()

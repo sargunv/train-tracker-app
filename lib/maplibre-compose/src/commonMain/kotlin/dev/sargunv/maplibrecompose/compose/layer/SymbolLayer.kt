@@ -481,8 +481,8 @@ public fun SymbolLayer(
   onLongClick: FeaturesClickHandler? = null,
 ) {
   val styleManager = LocalStyleManager.current
-  val resolvedIconImage = styleManager.rememberResolved(iconImage)
-  val resolvedTextField = styleManager.rememberResolved(textField)
+  val resolvedIconImage = styleManager.imageManager.resolveImages(iconImage)
+  val resolvedTextField = styleManager.imageManager.resolveImages(textField)
 
   val textSizeSp = textSize.rememberTextUnitsAsSp(const(16f), 1f.em).cast<FloatValue>()
   val textLetterSpacingEm =

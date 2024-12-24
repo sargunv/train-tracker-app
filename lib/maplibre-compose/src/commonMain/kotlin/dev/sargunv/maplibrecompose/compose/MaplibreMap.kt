@@ -124,7 +124,7 @@ public fun MaplibreMap(
           val layerNodes =
             (styleComposition?.children?.filterIsInstance<LayerNode<*>>() ?: emptyList())
               .associateBy { node -> node.layer.id }
-          val layers = styleComposition?.styleManager?.style?.getLayers() ?: emptyList()
+          val layers = styleComposition?.style?.getLayers() ?: emptyList()
           return layers.asReversed().mapNotNull { layer -> layerNodes[layer.id] }
         }
 

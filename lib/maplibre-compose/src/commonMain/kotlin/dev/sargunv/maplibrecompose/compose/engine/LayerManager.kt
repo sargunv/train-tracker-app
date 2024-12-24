@@ -3,7 +3,7 @@ package dev.sargunv.maplibrecompose.compose.engine
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.core.layer.Layer
 
-internal class LayerManager(private val styleManager: StyleManager) {
+internal class LayerManager(private val styleManager: StyleNode) {
   private val baseLayers = styleManager.style.getLayers().associateBy { it.id }
 
   private val userLayers = mutableListOf<LayerNode<*>>()

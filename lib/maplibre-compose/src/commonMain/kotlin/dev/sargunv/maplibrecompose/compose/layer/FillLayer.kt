@@ -82,7 +82,7 @@ public fun FillLayer(
   onLongClick: FeaturesClickHandler? = null,
 ) {
   val styleManager = LocalStyleManager.current
-  val resolvedPattern = styleManager.rememberResolved(pattern)
+  val resolvedPattern = styleManager.imageManager.resolveImages(pattern)
 
   LayerNode(
     factory = { FillLayer(id = id, source = source) },

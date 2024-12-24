@@ -83,7 +83,7 @@ public fun FillExtrusionLayer(
   onLongClick: FeaturesClickHandler? = null,
 ) {
   val styleManager = LocalStyleManager.current
-  val resolvedPattern = styleManager.rememberResolved(pattern)
+  val resolvedPattern = styleManager.imageManager.resolveImages(pattern)
 
   LayerNode(
     factory = { FillExtrusionLayer(id = id, source = source) },

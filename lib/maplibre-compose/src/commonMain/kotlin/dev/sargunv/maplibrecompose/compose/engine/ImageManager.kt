@@ -1,8 +1,15 @@
 package dev.sargunv.maplibrecompose.compose.engine
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.ImageBitmap
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.ExpressionValue
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
+import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 
-internal class ImageManager(private val styleManager: StyleManager) {
+internal class ImageManager(private val styleManager: StyleNode) {
   private val idMap = IncrementingIdMap<ImageBitmap>("image")
 
   private val counter =
@@ -19,12 +26,31 @@ internal class ImageManager(private val styleManager: StyleManager) {
       },
     )
 
-  fun addReference(image: ImageBitmap): String {
+  private fun addReference(image: ImageBitmap): String {
     counter.increment(image)
     return idMap.getId(image)
   }
 
-  fun removeReference(image: ImageBitmap) {
+  private fun removeReference(image: ImageBitmap) {
     counter.decrement(image)
+  }
+
+  @Composable
+  internal fun <T : ExpressionValue> resolveImages(
+    expr: Expression<T>
+  ): Expression<ResolvedValue<T>> {
+    DisposableEffect(expr) {
+      onDispose { expr.visitLeaves { if (it is ImageBitmap) removeReference(it) } }
+    }
+    return remember(expr) {
+      expr
+        .mapLeaves {
+          when (it) {
+            is ImageBitmap -> addReference(it)
+            else -> it
+          }
+        }
+        .cast()
+    }
   }
 }

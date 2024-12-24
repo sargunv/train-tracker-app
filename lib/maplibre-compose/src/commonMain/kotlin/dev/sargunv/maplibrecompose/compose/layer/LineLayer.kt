@@ -114,7 +114,7 @@ public fun LineLayer(
   onLongClick: FeaturesClickHandler? = null,
 ) {
   val styleManager = LocalStyleManager.current
-  val resolvedPattern = styleManager.rememberResolved(pattern)
+  val resolvedPattern = styleManager.imageManager.resolveImages(pattern)
 
   LayerNode(
     factory = { LineLayer(id = id, source = source) },

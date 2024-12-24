@@ -42,7 +42,7 @@ public fun BackgroundLayer(
   pattern: Expression<ImageValue> = nil(),
 ) {
   val styleManager = LocalStyleManager.current
-  val resolvedPattern = styleManager.rememberResolved(pattern)
+  val resolvedPattern = styleManager.imageManager.resolveImages(pattern)
 
   LayerNode(
     factory = { BackgroundLayer(id = id) },
