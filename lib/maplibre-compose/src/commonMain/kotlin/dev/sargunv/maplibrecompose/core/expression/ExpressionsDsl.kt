@@ -362,7 +362,7 @@ public object ExpressionsDsl {
   /**
    * Returns a formatted string for displaying mixed-format text in the `textField` property (see
    * [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer]). The input may contain a
-   * string literal or expression, including an 'image' expression.
+   * string literal or expression, including an [image] expression.
    *
    * Example:
    * ```
@@ -377,9 +377,8 @@ public object ExpressionsDsl {
    * Capitalizes the first letter of the features' property "name" and formats it to be extra-large,
    * the rest of the name is written normally.
    */
-  // TODO support images
   public fun format(
-    vararg sections: Pair<Expression<StringValue>, FormatStyle>
+    vararg sections: Pair<Expression<FormattableValue>, FormatStyle>
   ): Expression<FormattedValue> =
     callFn(
         "format",
@@ -395,10 +394,6 @@ public object ExpressionsDsl {
         },
       )
       .cast()
-
-  /** Use a string as a formatted value without any extra formatting */
-  public fun format(value: Expression<StringValue>): Expression<FormattedValue> =
-    callFn("format", value, buildOptions {}).cast()
 
   public data class FormatStyle(
     val textFont: Expression<StringValue>? = null,
@@ -420,7 +415,7 @@ public object ExpressionsDsl {
    * currently in the style. This validation process is synchronous and requires the image to have
    * been added to the style before requesting it in the image argument.
    */
-  public fun image(value: Expression<StringValue>): Expression<ResolvedImageValue> =
+  public fun image(value: Expression<StringValue>): Expression<ImageValue> =
     callFn("image", value).cast()
 
   /**

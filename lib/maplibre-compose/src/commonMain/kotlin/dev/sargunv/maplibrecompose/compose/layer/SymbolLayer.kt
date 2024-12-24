@@ -471,6 +471,7 @@ public fun SymbolLayer(
 ) {
   val styleManager = LocalStyleManager.current
   val resolvedIconImage = styleManager.rememberResolved(iconImage)
+  val resolvedTextField = styleManager.rememberResolved(textField)
 
   val textSizeSp = textSize.rememberTextUnitsAsSp(const(16f), 1f.em).cast<FloatValue>()
   val textLetterSpacingEm =
@@ -526,7 +527,7 @@ public fun SymbolLayer(
 
       set(textPitchAlignment) { layer.setTextPitchAlignment(it) }
       set(textRotationAlignment) { layer.setTextRotationAlignment(it) }
-      set(textField) { layer.setTextField(it) }
+      set(resolvedTextField) { layer.setTextField(it) }
       set(textFont) { layer.setTextFont(it) }
       set(textSizeDp) { layer.setTextSize(it) }
       set(textMaxWidthEm) { layer.setTextMaxWidth(it) }

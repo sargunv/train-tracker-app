@@ -6,7 +6,8 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
-import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
@@ -52,7 +53,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.setProperties(PropertyFactory.fillTranslateAnchor(translateAnchor.toMLNExpression()))
   }
 
-  actual fun setFillPattern(pattern: Expression<ResolvedImageValue>) {
+  actual fun setFillPattern(pattern: Expression<ResolvedValue<ImageValue>>) {
     impl.setProperties(PropertyFactory.fillPattern(pattern.toMLNExpression()))
   }
 }

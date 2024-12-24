@@ -7,9 +7,10 @@ import dev.sargunv.maplibrecompose.core.expression.DpValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.LineCap
 import dev.sargunv.maplibrecompose.core.expression.LineJoin
-import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.VectorValue
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -85,7 +86,7 @@ internal actual class LineLayer actual constructor(id: String, source: Source) :
     impl.setProperties(PropertyFactory.lineDasharray(dasharray.toMLNExpression()))
   }
 
-  actual fun setLinePattern(pattern: Expression<ResolvedImageValue>) {
+  actual fun setLinePattern(pattern: Expression<ResolvedValue<ImageValue>>) {
     impl.setProperties(PropertyFactory.linePattern(pattern.toMLNExpression()))
   }
 

@@ -25,7 +25,6 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asNumber
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asString
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.feature
-import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.format
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.not
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.offset
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.step
@@ -119,7 +118,7 @@ object ClusteredPointsDemo : Demo {
             id = "clustered-bikes-count",
             source = bikeSource,
             filter = feature.has(const("point_count")),
-            textField = format(feature.get(const("point_count_abbreviated")).asString()),
+            textField = feature.get(const("point_count_abbreviated")).asString(),
             textFont = const(listOf("Noto Sans Regular")),
             textColor = const(MaterialTheme.colorScheme.onBackground),
           )

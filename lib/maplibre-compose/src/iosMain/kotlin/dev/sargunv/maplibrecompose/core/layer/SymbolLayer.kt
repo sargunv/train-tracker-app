@@ -14,8 +14,9 @@ import dev.sargunv.maplibrecompose.core.expression.FormattedValue
 import dev.sargunv.maplibrecompose.core.expression.IconPitchAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.IconTextFit
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
 import dev.sargunv.maplibrecompose.core.expression.ListValue
-import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 import dev.sargunv.maplibrecompose.core.expression.StringValue
 import dev.sargunv.maplibrecompose.core.expression.SymbolAnchor
 import dev.sargunv.maplibrecompose.core.expression.SymbolPlacement
@@ -101,7 +102,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.iconTextFitPadding = textFitPadding.toNSExpression()
   }
 
-  actual fun setIconImage(image: Expression<ResolvedImageValue>) {
+  actual fun setIconImage(image: Expression<ResolvedValue<ImageValue>>) {
     // TODO figure out how to unset an image
     if (image.value != null) impl.iconImageName = image.toNSExpression()
   }
@@ -168,7 +169,7 @@ internal actual class SymbolLayer actual constructor(id: String, source: Source)
     impl.textRotationAlignment = rotationAlignment.toNSExpression()
   }
 
-  actual fun setTextField(field: Expression<FormattedValue>) {
+  actual fun setTextField(field: Expression<ResolvedValue<FormattedValue>>) {
     impl.text = field.toNSExpression()
   }
 

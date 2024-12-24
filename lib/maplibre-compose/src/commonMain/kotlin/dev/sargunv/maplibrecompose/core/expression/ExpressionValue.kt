@@ -66,7 +66,12 @@ public typealias MillisecondsValue = NumberValue<Duration>
 
 /** Represents an [Expression] that resolves to a string value. See [ExpressionsDsl.const]. */
 public sealed interface StringValue :
-  ExpressionValue, MatchableValue, ComparableValue<StringValue>, EquatableValue
+  ExpressionValue,
+  MatchableValue,
+  ComparableValue<StringValue>,
+  EquatableValue,
+  FormattableValue,
+  FormattedValue
 
 /**
  * Represents an [Expression] that resolves to an enum string. See [ExpressionsDsl.const].
@@ -161,18 +166,19 @@ public sealed interface FormattedValue : ExpressionValue
 public sealed interface GeoJsonValue : ExpressionValue
 
 /** Represents an [Expression] that resolves to an image. See [ExpressionsDsl.image] */
-public sealed interface ImageValue : ExpressionValue
-
-/**
- * Represents an [Expression] that resolves to an image referenced by ID. See [ExpressionsDsl.image]
- */
-public sealed interface ResolvedImageValue : ImageValue
+public sealed interface ImageValue : ExpressionValue, FormattableValue
 
 /**
  * Represents an [Expression] that resolves to an interpolation type. See [ExpressionsDsl.linear],
  * [ExpressionsDsl.exponential], and [ExpressionsDsl.cubicBezier].
  */
 public sealed interface InterpolationValue : ExpressionValue
+
+/**
+ * Represents and [Expression] that resolves to a value that can be an input to
+ * [ExpressionsDsl.format].
+ */
+public sealed interface FormattableValue : ExpressionValue
 
 /**
  * Represents an [Expression] that resolves to a value that can be compared for equality. See
@@ -202,6 +208,8 @@ public sealed interface ComparableValue<T> : ExpressionValue
  * @param T the type of values that can be interpolated between.
  */
 public sealed interface InterpolateableValue<T> : ExpressionValue
+
+internal sealed interface ResolvedValue<T : ExpressionValue> : ExpressionValue
 
 /** The type of value resolved from an expression, as returned by [ExpressionsDsl.type]. */
 public enum class ExpressionType(override val stringConst: Expression<StringValue>) :

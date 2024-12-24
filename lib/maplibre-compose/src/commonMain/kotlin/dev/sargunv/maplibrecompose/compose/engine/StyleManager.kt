@@ -8,9 +8,9 @@ import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.core.Style
 import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.ExpressionValue
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
-import dev.sargunv.maplibrecompose.core.expression.ImageValue
-import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -177,9 +177,10 @@ internal class StyleManager(var style: Style, internal var logger: Logger?) {
         else -> null
       }
 
-  // TODO move this to ImageManager when the rest of StyleManager is refactored
   @Composable
-  internal fun rememberResolved(expr: Expression<ImageValue>): Expression<ResolvedImageValue> {
+  internal fun <T : ExpressionValue> rememberResolved(
+    expr: Expression<T>
+  ): Expression<ResolvedValue<T>> {
     DisposableEffect(expr) {
       onDispose { expr.visitLeaves { if (it is ImageBitmap) imageManager.removeReference(it) } }
     }

@@ -3,7 +3,8 @@ package dev.sargunv.maplibrecompose.core.layer
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
-import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 import dev.sargunv.maplibrecompose.core.util.toMLNExpression
 import org.maplibre.android.style.layers.BackgroundLayer as MLNBackgroundLayer
 import org.maplibre.android.style.layers.PropertyFactory
@@ -16,7 +17,7 @@ internal actual class BackgroundLayer actual constructor(id: String) : Layer() {
     impl.setProperties(PropertyFactory.backgroundColor(color.toMLNExpression()))
   }
 
-  actual fun setBackgroundPattern(pattern: Expression<ResolvedImageValue>) {
+  actual fun setBackgroundPattern(pattern: Expression<ResolvedValue<ImageValue>>) {
     impl.setProperties(PropertyFactory.backgroundPattern(pattern.toMLNExpression()))
   }
 
