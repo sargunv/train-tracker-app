@@ -367,39 +367,49 @@ public object ExpressionsDsl {
    * Example:
    * ```
    * format(
-   *   feature.get("name").asString().substring(const(0), const(1)).uppercase()
-   *     to FormatStyle(textScale = const(1.5)),
-   *   feature.get("name").asString().substring(const(1))
-   *     to FormatStyle(),
+   *   span(
+   *     feature.get("name").asString().substring(const(0), const(1)).uppercase(),
+   *     textScale = const(1.5f),
+   *   ),
+   *   span(feature.get("name").asString().substring(const(1)))
    * )
    * ```
    *
    * Capitalizes the first letter of the features' property "name" and formats it to be extra-large,
    * the rest of the name is written normally.
    */
-  public fun format(
-    vararg sections: Pair<Expression<FormattableValue>, FormatStyle>
-  ): Expression<FormattedValue> =
+  public fun format(vararg spans: FormatSpan): Expression<FormattedValue> =
     callFn(
         "format",
-        *sections.foldToArgs { (value, style) ->
-          add(value)
-          add(
-            buildOptions {
-              style.textFont?.let { put("text-font", it) }
-              style.textColor?.let { put("text-color", it) }
-              style.fontScale?.let { put("font-scale", it) }
-            }
-          )
+        *spans.foldToArgs { span ->
+          add(span.value)
+          add(span.options)
         },
       )
       .cast()
 
-  public data class FormatStyle(
-    val textFont: Expression<StringValue>? = null,
-    val textColor: Expression<StringValue>? = null,
-    val fontScale: Expression<FloatValue>? = null,
-  )
+  public fun span(
+    value: Expression<FormattableValue>,
+    textFont: Expression<StringValue>? = null,
+    textColor: Expression<StringValue>? = null,
+    fontScale: Expression<FloatValue>? = null,
+  ): FormatSpan =
+    FormatSpan(value = value, textFont = textFont, textColor = textColor, fontScale = fontScale)
+
+  public data class FormatSpan
+  internal constructor(
+    val value: Expression<FormattableValue>,
+    val textFont: Expression<StringValue>?,
+    val textColor: Expression<StringValue>?,
+    val fontScale: Expression<FloatValue>?,
+  ) {
+    internal val options
+      get() = buildOptions {
+        textFont?.let { put("text-font", it) }
+        textColor?.let { put("text-color", it) }
+        fontScale?.let { put("font-scale", it) }
+      }
+  }
 
   /**
    * Returns an image type for use in `iconImage` (see

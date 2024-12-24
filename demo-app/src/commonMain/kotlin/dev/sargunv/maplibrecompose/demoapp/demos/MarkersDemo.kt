@@ -29,8 +29,10 @@ import dev.sargunv.maplibrecompose.core.CameraPosition
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.Feature.get
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.asString
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.format
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.image
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.offset
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.span
 import dev.sargunv.maplibrecompose.demoapp.DEFAULT_STYLE
 import dev.sargunv.maplibrecompose.demoapp.Demo
 import dev.sargunv.maplibrecompose.demoapp.DemoMapControls
@@ -56,8 +58,8 @@ private fun Painter.rememberAsBitmap(): ImageBitmap {
 private val CHICAGO = Position(latitude = 41.878, longitude = -87.626)
 
 object MarkersDemo : Demo {
-  override val name = "Markers"
-  override val description = "Add and interact with markers"
+  override val name = "Markers, images, and formatting"
+  override val description = "Add images to the style and intermingle it with text."
 
   @Composable
   override fun Component(navigateUp: () -> Unit) {
@@ -89,7 +91,12 @@ object MarkersDemo : Demo {
               ClickResult.Consume
             },
             iconImage = image(marker),
-            textField = get(const("STNCODE")).asString(),
+            textField =
+              format(
+                span(image(const("railway"))),
+                span(const(" ")),
+                span(get(const("STNCODE")).asString(), fontScale = const(1.2f)),
+              ),
             textFont = const(listOf("Noto Sans Regular")),
             textColor = const(MaterialTheme.colorScheme.onBackground),
             textOffset = offset(0.em, 0.6.em),
