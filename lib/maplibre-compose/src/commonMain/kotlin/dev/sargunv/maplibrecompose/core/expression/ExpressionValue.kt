@@ -166,7 +166,7 @@ public sealed interface ImageValue : ExpressionValue
 /**
  * Represents an [Expression] that resolves to an image referenced by ID. See [ExpressionsDsl.image]
  */
-public sealed interface ResolvedImageValue : ExpressionValue
+public sealed interface ResolvedImageValue : ImageValue
 
 /**
  * Represents an [Expression] that resolves to an interpolation type. See [ExpressionsDsl.linear],

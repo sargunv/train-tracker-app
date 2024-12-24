@@ -177,8 +177,7 @@ internal class StyleManager(var style: Style, internal var logger: Logger?) {
         else -> null
       }
 
-  // TODO move these below to ImageManager
-
+  // TODO move this to ImageManager when the rest of StyleManager is refactored
   @Composable
   internal fun rememberResolved(expr: Expression<ImageValue>): Expression<ResolvedImageValue> {
     DisposableEffect(expr) {

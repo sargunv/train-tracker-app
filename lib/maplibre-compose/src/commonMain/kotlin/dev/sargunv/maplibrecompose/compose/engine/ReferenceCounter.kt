@@ -1,9 +1,5 @@
 package dev.sargunv.maplibrecompose.compose.engine
 
-/**
- * takes two function params, one for when the item is first incremented, the other when the
- * reference goes to zero
- */
 internal class ReferenceCounter<in T>(
   private val onZeroToOne: (T) -> Unit = {},
   private val onOneToZero: (T) -> Unit = {},
