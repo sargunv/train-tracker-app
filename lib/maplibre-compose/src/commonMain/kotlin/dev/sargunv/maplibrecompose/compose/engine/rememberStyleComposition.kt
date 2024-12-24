@@ -20,31 +20,28 @@ internal fun rememberStyleComposition(
   logger: Logger?,
   content: @Composable @MaplibreComposable () -> Unit,
 ): State<StyleNode?> {
-  val ret = remember { mutableStateOf<StyleNode?>(null) }
+  val nodeState = remember { mutableStateOf<StyleNode?>(null) }
   val compositionContext = rememberCompositionContext()
 
   LaunchedEffect(maybeStyle, compositionContext) {
-    val rootNode =
-      StyleNode(maybeStyle?.let { StyleManager(it, logger) } ?: return@LaunchedEffect).also {
-        ret.value = it
-      }
+    val style = maybeStyle ?: return@LaunchedEffect
+    val rootNode = StyleNode(style, logger).also { nodeState.value = it }
     val composition = Composition(MapNodeApplier(rootNode), compositionContext)
 
     composition.setContent {
-      CompositionLocalProvider(LocalStyleManager provides rootNode.styleManager) { content() }
+      CompositionLocalProvider(LocalStyleNode provides rootNode) { content() }
     }
 
     try {
       awaitCancellation()
     } finally {
-      ret.value = null
-      rootNode.styleManager.style = Style.Null
+      nodeState.value = null
+      rootNode.style = Style.Null
       composition.dispose()
     }
   }
 
-  return ret
+  return nodeState
 }
 
-internal val LocalStyleManager =
-  staticCompositionLocalOf<StyleManager> { throw IllegalStateException() }
+internal val LocalStyleNode = staticCompositionLocalOf<StyleNode> { throw IllegalStateException() }

@@ -2,20 +2,20 @@ package dev.sargunv.maplibrecompose.compose.engine
 
 import dev.sargunv.maplibrecompose.core.source.Source
 
-internal class SourceManager(private val styleManager: StyleManager) {
-  private val baseSources = styleManager.style.getSources().associateBy { it.id }
+internal class SourceManager(private val node: StyleNode) {
+  private val baseSources = node.style.getSources().associateBy { it.id }
 
   private val sourcesToAdd = mutableListOf<Source>()
 
   private val counter =
     ReferenceCounter<Source>(
       onZeroToOne = { source ->
-        styleManager.logger?.i { "Queuing source ${source.id} for addition" }
+        node.logger?.i { "Queuing source ${source.id} for addition" }
         sourcesToAdd.add(source)
       },
       onOneToZero = { source ->
-        styleManager.logger?.i { "Removing source ${source.id}" }
-        styleManager.style.removeSource(source)
+        node.logger?.i { "Removing source ${source.id}" }
+        node.style.removeSource(source)
       },
     )
 
@@ -38,8 +38,8 @@ internal class SourceManager(private val styleManager: StyleManager) {
   internal fun applyChanges() {
     sourcesToAdd
       .onEach {
-        styleManager.logger?.i { "Adding source ${it.id}" }
-        styleManager.style.addSource(it)
+        node.logger?.i { "Adding source ${it.id}" }
+        node.style.addSource(it)
       }
       .clear()
   }

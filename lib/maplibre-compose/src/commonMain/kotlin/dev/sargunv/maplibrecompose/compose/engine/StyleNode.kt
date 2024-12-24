@@ -1,25 +1,33 @@
 package dev.sargunv.maplibrecompose.compose.engine
 
-internal class StyleNode(internal val styleManager: StyleManager) : MapNode() {
+import co.touchlab.kermit.Logger
+import dev.sargunv.maplibrecompose.core.Style
+
+internal class StyleNode(var style: Style, internal var logger: Logger?) : MapNode() {
+
+  internal val sourceManager = SourceManager(this)
+  internal val layerManager = LayerManager(this)
+  internal val imageManager = ImageManager(this)
 
   override fun allowsChild(node: MapNode) = node is LayerNode<*>
 
   override fun onChildRemoved(oldIndex: Int, node: MapNode) {
     node as LayerNode<*>
-    styleManager.removeLayer(node, oldIndex)
+    layerManager.removeLayer(node, oldIndex)
   }
 
   override fun onChildInserted(index: Int, node: MapNode) {
     node as LayerNode<*>
-    styleManager.addLayer(node, index)
+    layerManager.addLayer(node, index)
   }
 
   override fun onChildMoved(oldIndex: Int, index: Int, node: MapNode) {
     node as LayerNode<*>
-    styleManager.moveLayer(node, oldIndex, index)
+    layerManager.moveLayer(node, oldIndex, index)
   }
 
   override fun onEndChanges() {
-    styleManager.applyChanges()
+    sourceManager.applyChanges()
+    layerManager.applyChanges()
   }
 }
