@@ -9,8 +9,11 @@ import dev.sargunv.maplibrecompose.core.source.Source
 @Composable
 internal fun <T : Source> rememberUserSource(factory: () -> T, update: T.() -> Unit): T {
   val styleManager = LocalStyleManager.current
-  val source = remember(styleManager) { factory().also { styleManager.addSource(it) } }
+  val source =
+    remember(styleManager) { factory().also { styleManager.sourceManager.addReference(it) } }
   remember(source, update) { source.update() }
-  DisposableEffect(styleManager, source) { onDispose { styleManager.removeSource(source) } }
+  DisposableEffect(styleManager, source) {
+    onDispose { styleManager.sourceManager.removeReference(source) }
+  }
   return source
 }

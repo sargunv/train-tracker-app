@@ -12,42 +12,20 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionValue
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
 import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 import dev.sargunv.maplibrecompose.core.layer.Layer
-import dev.sargunv.maplibrecompose.core.source.Source
 
-// TODO I think StyleManager should split into individual SourceManager, LayerManager, ImageManager
-// and StyleNode holds references the style and its managers
 internal class StyleManager(var style: Style, internal var logger: Logger?) {
-  private val baseSources = style.getSources().associateBy { it.id }
   private val baseLayers = style.getLayers().associateBy { it.id }
 
   // we queue up additions, but instantly execute removals
   // this way if an id is added and removed in the same frame, it will be removed before it's added
-  private val sourcesToAdd = mutableListOf<Source>()
   private val userLayers = mutableListOf<LayerNode<*>>()
 
   // special handling for Replace anchors
   private val replacedLayers = mutableMapOf<Anchor.Replace, Layer>()
   private val replacementCounters = mutableMapOf<Anchor.Replace, Int>()
 
-  private val imageManager = ImageManager(this)
-
-  internal fun getBaseSource(id: String): Source {
-    return baseSources[id] ?: error("Source ID '$id' not found in base style")
-  }
-
-  internal fun addSource(source: Source) {
-    require(source.id !in baseSources) { "Source ID '${source.id}' already exists in base style" }
-    logger?.i { "Queuing source ${source.id} for addition" }
-    sourcesToAdd.add(source)
-  }
-
-  internal fun removeSource(source: Source) {
-    require(source.id !in baseSources) {
-      "Source ID '${source.id}' is part of the base style and can't be removed here"
-    }
-    logger?.i { "Removing source ${source.id}" }
-    style.removeSource(source)
-  }
+  internal val sourceManager = SourceManager(this)
+  internal val imageManager = ImageManager(this)
 
   internal fun addLayer(node: LayerNode<*>, index: Int) {
     require(node.layer.id !in baseLayers) {
@@ -89,12 +67,7 @@ internal class StyleManager(var style: Style, internal var logger: Logger?) {
   }
 
   internal fun applyChanges() {
-    sourcesToAdd
-      .onEach {
-        logger?.i { "Adding source ${it.id}" }
-        style.addSource(it)
-      }
-      .clear()
+    sourceManager.applyChanges()
 
     val tailLayerIds = mutableMapOf<Anchor, String>()
     val missedLayers = mutableMapOf<Anchor, MutableList<LayerNode<*>>>()
