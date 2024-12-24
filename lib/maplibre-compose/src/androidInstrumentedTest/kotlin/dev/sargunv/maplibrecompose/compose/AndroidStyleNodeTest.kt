@@ -6,7 +6,7 @@ import androidx.compose.ui.test.runAndroidComposeUiTest
 import org.maplibre.android.MapLibre
 
 @OptIn(ExperimentalTestApi::class)
-class AndroidStyleManagerTest : StyleManagerTest() {
+class AndroidStyleNodeTest : StyleNodeTest() {
   override fun platformSetup() =
     runAndroidComposeUiTest<ComponentActivity> {
       activity!!.runOnUiThread { MapLibre.getInstance(activity!!) }

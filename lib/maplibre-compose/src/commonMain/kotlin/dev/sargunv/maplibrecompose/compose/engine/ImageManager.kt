@@ -9,20 +9,20 @@ import dev.sargunv.maplibrecompose.core.expression.ExpressionValue
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
 import dev.sargunv.maplibrecompose.core.expression.ResolvedValue
 
-internal class ImageManager(private val styleManager: StyleNode) {
+internal class ImageManager(private val node: StyleNode) {
   private val idMap = IncrementingIdMap<ImageBitmap>("image")
 
   private val counter =
     ReferenceCounter<ImageBitmap>(
       onZeroToOne = { image ->
         val id = idMap.addId(image)
-        styleManager.logger?.i { "Adding image $id" }
-        styleManager.style.addImage(id, image)
+        node.logger?.i { "Adding image $id" }
+        node.style.addImage(id, image)
       },
       onOneToZero = { image ->
         val id = idMap.removeId(image)
-        styleManager.logger?.i { "Removing image $id" }
-        styleManager.style.removeImage(id)
+        node.logger?.i { "Removing image $id" }
+        node.style.removeImage(id)
       },
     )
 

@@ -29,7 +29,7 @@ internal fun rememberStyleComposition(
     val composition = Composition(MapNodeApplier(rootNode), compositionContext)
 
     composition.setContent {
-      CompositionLocalProvider(LocalStyleManager provides rootNode) { content() }
+      CompositionLocalProvider(LocalStyleNode provides rootNode) { content() }
     }
 
     try {
@@ -44,5 +44,4 @@ internal fun rememberStyleComposition(
   return nodeState
 }
 
-internal val LocalStyleManager =
-  staticCompositionLocalOf<StyleNode> { throw IllegalStateException() }
+internal val LocalStyleNode = staticCompositionLocalOf<StyleNode> { throw IllegalStateException() }
