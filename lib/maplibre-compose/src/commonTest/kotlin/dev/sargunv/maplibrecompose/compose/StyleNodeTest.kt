@@ -3,7 +3,7 @@ package dev.sargunv.maplibrecompose.compose
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.runComposeUiTest
 import dev.sargunv.maplibrecompose.compose.engine.LayerNode
-import dev.sargunv.maplibrecompose.compose.engine.StyleManager
+import dev.sargunv.maplibrecompose.compose.engine.StyleNode
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
@@ -17,7 +17,7 @@ import kotlin.test.assertFails
 import kotlin.test.assertNull
 
 @OptIn(ExperimentalTestApi::class)
-abstract class StyleManagerTest {
+abstract class StyleNodeTest {
   private val testSources by lazy {
     listOf(
       GeoJsonSource("foo", FeatureCollection(), GeoJsonOptions()),
@@ -34,8 +34,8 @@ abstract class StyleManagerTest {
     )
   }
 
-  private fun makeStyleManager(): StyleManager {
-    return StyleManager(FakeStyle(emptyList(), testSources, testLayers), null)
+  private fun makeStyleNode(): StyleNode {
+    return StyleNode(FakeStyle(emptyList(), testSources, testLayers), null)
   }
 
   @BeforeTest open fun platformSetup() {}
@@ -43,83 +43,85 @@ abstract class StyleManagerTest {
   @Test
   fun shoudGetBaseSource() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
-      assertEquals(testSources[1], sm.getBaseSource("bar"))
-      assertFails { sm.getBaseSource("BAR") }
+      val s = makeStyleNode()
+      assertEquals(testSources[1], s.sourceManager.getBaseSource("bar"))
+      assertFails { s.sourceManager.getBaseSource("BAR") }
     }
   }
 
   @Test
   fun shouldAddUserSource() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val newSource = GeoJsonSource("new", FeatureCollection(), GeoJsonOptions())
-      sm.addSource(newSource)
-      sm.applyChanges()
-      assertEquals(4, sm.style.getSources().size)
-      assertEquals(newSource, sm.style.getSource("new"))
+      s.sourceManager.addReference(newSource)
+      s.onEndChanges()
+      assertEquals(4, s.style.getSources().size)
+      assertEquals(newSource, s.style.getSource("new"))
     }
   }
 
   @Test
   fun shouldRemoveUserSource() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val newSource = GeoJsonSource("new", FeatureCollection(), GeoJsonOptions())
-      sm.addSource(newSource)
-      sm.applyChanges()
-      sm.removeSource(newSource)
-      assertEquals(3, sm.style.getSources().size)
-      assertNull(sm.style.getSource("new"))
+      s.sourceManager.addReference(newSource)
+      s.onEndChanges()
+      s.sourceManager.removeReference(newSource)
+      assertEquals(3, s.style.getSources().size)
+      assertNull(s.style.getSource("new"))
     }
   }
 
   @Test
   fun shouldNotReplaceBaseSource() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
-      assertFails { sm.addSource(GeoJsonSource("foo", FeatureCollection(), GeoJsonOptions())) }
+      val s = makeStyleNode()
+      assertFails {
+        s.sourceManager.addReference(GeoJsonSource("foo", FeatureCollection(), GeoJsonOptions()))
+      }
     }
   }
 
   @Test
   fun shouldNotRemoveBaseSource() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
-      assertFails { sm.removeSource(testSources[1]) }
+      val s = makeStyleNode()
+      assertFails { s.sourceManager.removeReference(testSources[1]) }
     }
   }
 
   @Test
   fun shouldAllowAddSourceBeforeRemove() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val s1 = GeoJsonSource("new", FeatureCollection(), GeoJsonOptions())
       val s2 = GeoJsonSource("new", FeatureCollection(), GeoJsonOptions())
 
-      sm.addSource(s1)
-      sm.applyChanges()
+      s.sourceManager.addReference(s1)
+      s.onEndChanges()
 
-      assertEquals(s1, sm.style.getSource("new"))
+      assertEquals(s1, s.style.getSource("new"))
 
-      sm.addSource(s2)
-      sm.removeSource(s1)
-      sm.applyChanges()
+      s.sourceManager.addReference(s2)
+      s.sourceManager.removeReference(s1)
+      s.onEndChanges()
 
-      assertEquals(s2, sm.style.getSource("new"))
+      assertEquals(s2, s.style.getSource("new"))
     }
   }
 
   @Test
   fun shouldAnchorTop() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val nodes = (0..2).map { LayerNode(LineLayer("new$it", testSources[0]), Anchor.Top) }
-      nodes.forEachIndexed { i, node -> sm.addLayer(node, i) }
-      sm.applyChanges()
+      nodes.forEachIndexed { i, node -> s.layerManager.addLayer(node, i) }
+      s.onEndChanges()
       assertEquals(
         listOf("foo", "bar", "baz", "new0", "new1", "new2"),
-        sm.style.getLayers().map(Layer::id),
+        s.style.getLayers().map(Layer::id),
       )
     }
   }
@@ -127,13 +129,13 @@ abstract class StyleManagerTest {
   @Test
   fun shouldAnchorBottom() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val nodes = (0..2).map { LayerNode(LineLayer("new$it", testSources[0]), Anchor.Bottom) }
-      nodes.forEachIndexed { i, node -> sm.addLayer(node, i) }
-      sm.applyChanges()
+      nodes.forEachIndexed { i, node -> s.layerManager.addLayer(node, i) }
+      s.onEndChanges()
       assertEquals(
         listOf("new0", "new1", "new2", "foo", "bar", "baz"),
-        sm.style.getLayers().map(Layer::id),
+        s.style.getLayers().map(Layer::id),
       )
     }
   }
@@ -141,13 +143,13 @@ abstract class StyleManagerTest {
   @Test
   fun shouldAnchorAbove() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val nodes = (0..2).map { LayerNode(LineLayer("new$it", testSources[0]), Anchor.Above("foo")) }
-      nodes.forEachIndexed { i, node -> sm.addLayer(node, i) }
-      sm.applyChanges()
+      nodes.forEachIndexed { i, node -> s.layerManager.addLayer(node, i) }
+      s.onEndChanges()
       assertEquals(
         listOf("foo", "new0", "new1", "new2", "bar", "baz"),
-        sm.style.getLayers().map(Layer::id),
+        s.style.getLayers().map(Layer::id),
       )
     }
   }
@@ -155,13 +157,13 @@ abstract class StyleManagerTest {
   @Test
   fun shouldAnchorBelow() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val nodes = (0..2).map { LayerNode(LineLayer("new$it", testSources[0]), Anchor.Below("baz")) }
-      nodes.forEachIndexed { i, node -> sm.addLayer(node, i) }
-      sm.applyChanges()
+      nodes.forEachIndexed { i, node -> s.layerManager.addLayer(node, i) }
+      s.onEndChanges()
       assertEquals(
         listOf("foo", "bar", "new0", "new1", "new2", "baz"),
-        sm.style.getLayers().map(Layer::id),
+        s.style.getLayers().map(Layer::id),
       )
     }
   }
@@ -169,78 +171,72 @@ abstract class StyleManagerTest {
   @Test
   fun shouldAnchorReplace() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val nodes =
         (0..2).map { LayerNode(LineLayer("new$it", testSources[0]), Anchor.Replace("bar")) }
-      nodes.forEachIndexed { i, node -> sm.addLayer(node, i) }
-      sm.applyChanges()
-      assertEquals(
-        listOf("foo", "new0", "new1", "new2", "baz"),
-        sm.style.getLayers().map(Layer::id),
-      )
+      nodes.forEachIndexed { i, node -> s.layerManager.addLayer(node, i) }
+      s.onEndChanges()
+      assertEquals(listOf("foo", "new0", "new1", "new2", "baz"), s.style.getLayers().map(Layer::id))
     }
   }
 
   @Test
   fun shouldRestoreAfterReplace() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val nodes =
         (0..2).map { LayerNode(LineLayer("new$it", testSources[0]), Anchor.Replace("bar")) }
 
-      nodes.forEachIndexed { i, node -> sm.addLayer(node, i) }
-      sm.applyChanges()
+      nodes.forEachIndexed { i, node -> s.layerManager.addLayer(node, i) }
+      s.onEndChanges()
 
-      assertEquals(
-        listOf("foo", "new0", "new1", "new2", "baz"),
-        sm.style.getLayers().map(Layer::id),
-      )
+      assertEquals(listOf("foo", "new0", "new1", "new2", "baz"), s.style.getLayers().map(Layer::id))
 
-      nodes.forEach { node -> sm.removeLayer(node, 0) }
-      sm.applyChanges()
+      nodes.forEach { node -> s.layerManager.removeLayer(node, 0) }
+      s.onEndChanges()
 
-      assertEquals(listOf("foo", "bar", "baz"), sm.style.getLayers().map(Layer::id))
+      assertEquals(listOf("foo", "bar", "baz"), s.style.getLayers().map(Layer::id))
     }
   }
 
   @Test
   fun shouldAllowAddLayerBeforeRemove() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
       val l1 = LayerNode(LineLayer("new", testSources[0]), Anchor.Top)
       val l2 = LayerNode(LineLayer("new", testSources[1]), Anchor.Top)
 
-      sm.addLayer(l1, 0)
-      sm.applyChanges()
+      s.layerManager.addLayer(l1, 0)
+      s.onEndChanges()
 
-      assertEquals(l1.layer, sm.style.getLayer("new"))
+      assertEquals(l1.layer, s.style.getLayer("new"))
 
-      sm.addLayer(l2, 0)
-      sm.removeLayer(l1, 1)
-      sm.applyChanges()
+      s.layerManager.addLayer(l2, 0)
+      s.layerManager.removeLayer(l1, 1)
+      s.onEndChanges()
 
-      assertEquals(l2.layer, sm.style.getLayer("new"))
+      assertEquals(l2.layer, s.style.getLayer("new"))
     }
   }
 
   @Test
   fun shouldMergeAnchors() = runComposeUiTest {
     runOnUiThread {
-      val sm = makeStyleManager()
+      val s = makeStyleNode()
 
-      sm.addLayer(LayerNode(LineLayer("b1", testSources[0]), Anchor.Bottom), 0)
-      sm.addLayer(LayerNode(LineLayer("t1", testSources[0]), Anchor.Top), 0)
-      sm.applyChanges()
+      s.layerManager.addLayer(LayerNode(LineLayer("b1", testSources[0]), Anchor.Bottom), 0)
+      s.layerManager.addLayer(LayerNode(LineLayer("t1", testSources[0]), Anchor.Top), 0)
+      s.onEndChanges()
 
-      assertEquals(listOf("b1", "foo", "bar", "baz", "t1"), sm.style.getLayers().map(Layer::id))
+      assertEquals(listOf("b1", "foo", "bar", "baz", "t1"), s.style.getLayers().map(Layer::id))
 
-      sm.addLayer(LayerNode(LineLayer("b2", testSources[0]), Anchor.Bottom), 0)
-      sm.addLayer(LayerNode(LineLayer("t2", testSources[0]), Anchor.Top), 0)
-      sm.applyChanges()
+      s.layerManager.addLayer(LayerNode(LineLayer("b2", testSources[0]), Anchor.Bottom), 0)
+      s.layerManager.addLayer(LayerNode(LineLayer("t2", testSources[0]), Anchor.Top), 0)
+      s.onEndChanges()
 
       assertEquals(
         listOf("b2", "b1", "foo", "bar", "baz", "t2", "t1"),
-        sm.style.getLayers().map(Layer::id),
+        s.style.getLayers().map(Layer::id),
       )
     }
   }

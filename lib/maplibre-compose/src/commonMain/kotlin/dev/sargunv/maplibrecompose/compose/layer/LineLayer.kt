@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.compose.MaplibreComposable
-import dev.sargunv.maplibrecompose.compose.engine.LocalStyleManager
+import dev.sargunv.maplibrecompose.compose.engine.LocalStyleNode
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
@@ -113,8 +113,8 @@ public fun LineLayer(
   onClick: FeaturesClickHandler? = null,
   onLongClick: FeaturesClickHandler? = null,
 ) {
-  val styleManager = LocalStyleManager.current
-  val resolvedPattern = styleManager.rememberResolved(pattern)
+  val styleNode = LocalStyleNode.current
+  val resolvedPattern = styleNode.imageManager.resolveImages(pattern)
 
   LayerNode(
     factory = { LineLayer(id = id, source = source) },
