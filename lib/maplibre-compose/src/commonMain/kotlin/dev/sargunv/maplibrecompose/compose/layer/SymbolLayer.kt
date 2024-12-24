@@ -42,7 +42,6 @@ import dev.sargunv.maplibrecompose.core.expression.TextRotationAlignment
 import dev.sargunv.maplibrecompose.core.expression.TextTransform
 import dev.sargunv.maplibrecompose.core.expression.TextUnitOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextUnitValue
-import dev.sargunv.maplibrecompose.core.expression.TextVariableAnchorOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.TextWritingMode
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.expression.ZeroPadding
@@ -311,21 +310,31 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  *   the next location+offset. Use [textJustify] = [TextJustify.Auto] to choose justification based
  *   on anchor position.
  *
- *   Each anchor location is accompanied by a point which defines the offset when the corresponding
- *   anchor location is used. Positive offset values indicate right and down, while negative values
- *   indicate left and up. Anchor locations may repeat, allowing the renderer to try multiple
- *   offsets to try and place a label using the same anchor.
+ * Each anchor location is accompanied by a point which defines the offset when the corresponding
+ * anchor location is used. Positive offset values indicate right and down, while negative values
+ * indicate left and up. Anchor locations may repeat, allowing the renderer to try multiple offsets
+ * to try and place a label using the same anchor.
  *
- *   When present, this property takes precedence over [textAnchor], [textVariableAnchor],
- *   [textOffset] and [textRadialOffset].
+ * When present, this property takes precedence over [textAnchor], [textVariableAnchor],
+ * [textOffset] and [textRadialOffset].
  *
- *   Example: ``` listOf( SymbolAnchor.Top to Point(0, 4), SymbolAnchor.Left to Point(3, 0),
- *   SymbolAnchor.Bottom to Point(1, 1) ``` When the renderer chooses the top anchor, [0, 4] will be
- *   used for [textOffset]; the text will be shifted down by 4 ems. When the renderer chooses the
- *   left anchor, [3, 0] will be used for [textOffset]; the text will be shifted right by 3 ems.
- *   Etc.
+ * Example:
+ * ```kt
+ * listOf(
+ *   SymbolAnchor.Top to Point(0, 4),
+ *   SymbolAnchor.Left to Point(3, 0),
+ *   SymbolAnchor.Bottom to Point(1, 1)
+ * )
+ * ```
  *
- *   Ignored if [textField] is not specified.
+ * When the renderer chooses the top anchor, [0, 4] will be used for [textOffset]; the text will be
+ * shifted down by 4 ems. When the renderer chooses the left anchor, [3, 0] will be used for
+ * [textOffset]; the text will be shifted right by 3 ems. Etc.
+ *
+ * Ignored if [textField] is not specified.
+ *
+ * NOTE: This property is currently not usable:
+ * https://github.com/sargunv/maplibre-compose/issues/143
  *
  * @param textPadding Size of the additional area in dp around the text bounding box used for
  *   detecting symbol collisions.
@@ -340,7 +349,8 @@ import dev.sargunv.maplibrecompose.core.util.JsOnlyApi
  *   Ignored if [textField] is not specified.
  *
  * @param textOverlap Controls whether to show an icon/text when it overlaps other symbols on the
- *   map. See [SymbolOverlap]. Overrides [textAllowOverlap].
+ *   map. See [SymbolOverlap][dev.sargunv.maplibrecompose.core.expression.SymbolOverlap]. Overrides
+ *   [textAllowOverlap].
  *
  *   Ignored if [textField] is not specified.
  *
@@ -454,7 +464,8 @@ public fun SymbolLayer(
   textOffset: Expression<TextUnitOffsetValue> = offset(0f.em, 0f.em),
   textVariableAnchor: Expression<ListValue<EnumValue<SymbolAnchor>>> = nil(),
   textRadialOffset: Expression<TextUnitValue> = const(0f.em),
-  textVariableAnchorOffset: Expression<TextVariableAnchorOffsetValue> = nil(),
+  //  textVariableAnchorOffset: Expression<TextVariableAnchorOffsetValue> = nil(),
+  textVariableAnchorOffset: Expression<Nothing> = nil(),
 
   // text collision
   textPadding: Expression<DpValue> = const(2.dp),
