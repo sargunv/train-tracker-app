@@ -45,21 +45,49 @@ internal fun TextWithHalo(
   maxLines: Int = Int.MAX_VALUE,
   minLines: Int = 1,
   onTextLayout: ((TextLayoutResult) -> Unit)? = null,
-  style: TextStyle = LocalTextStyle.current
+  style: TextStyle = LocalTextStyle.current,
 ) {
   // * 2 because the stroke is painted half outside and half inside of the text shape
   val strokeWidth = with(LocalDensity.current) { haloWidth.toPx() }
   val stroke = Stroke(strokeWidth * 2, cap = StrokeCap.Round, join = StrokeJoin.Round)
   Box {
     Text(
-      text, modifier, haloColor, fontSize, fontStyle, fontWeight, fontFamily,
-      letterSpacing, textDecoration, textAlign, lineHeight, overflow, softWrap, maxLines,
-      minLines, onTextLayout, style.copy(drawStyle = stroke)
+      text,
+      modifier,
+      haloColor,
+      fontSize,
+      fontStyle,
+      fontWeight,
+      fontFamily,
+      letterSpacing,
+      textDecoration,
+      textAlign,
+      lineHeight,
+      overflow,
+      softWrap,
+      maxLines,
+      minLines,
+      onTextLayout,
+      style.copy(drawStyle = stroke),
     )
     Text(
-      text, modifier, color, fontSize, fontStyle, fontWeight, fontFamily, letterSpacing,
-      textDecoration, textAlign, lineHeight, overflow, softWrap, maxLines, minLines,
-      null, style
+      text,
+      modifier,
+      color,
+      fontSize,
+      fontStyle,
+      fontWeight,
+      fontFamily,
+      letterSpacing,
+      textDecoration,
+      textAlign,
+      lineHeight,
+      overflow,
+      softWrap,
+      maxLines,
+      minLines,
+      null,
+      style,
     )
   }
 }

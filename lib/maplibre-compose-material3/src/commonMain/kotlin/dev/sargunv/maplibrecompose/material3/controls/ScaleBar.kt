@@ -94,10 +94,11 @@ public fun ScaleBar(
       onDraw = {
         horizontalLineWidthMeters = cameraState.metersPerDpAtTarget * size.width.toDp().value
 
-        val start = when (layoutDirection) {
-          LayoutDirection.Ltr -> 0f
-          LayoutDirection.Rtl -> size.width
-        }
+        val start =
+          when (layoutDirection) {
+            LayoutDirection.Ltr -> 0f
+            LayoutDirection.Rtl -> size.width
+          }
         val midHeight = size.height / 2
         val oneThirdHeight = size.height / 3
         val twoThirdsHeight = size.height * 2 / 3
@@ -158,7 +159,7 @@ public fun ScaleBar(
     Column(
       modifier = Modifier.fillMaxSize(),
       horizontalAlignment = Alignment.End,
-      verticalArrangement = Arrangement.SpaceAround
+      verticalArrangement = Arrangement.SpaceAround,
     ) {
       var metricUnits = stringResource(Res.string.meters_symbol)
       var metricDistance = horizontalLineWidthMeters
