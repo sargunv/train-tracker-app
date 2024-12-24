@@ -162,7 +162,10 @@ internal class IosMap(
 
     override fun mapView(mapView: MLNMapView, didFinishLoadingStyle: MLNStyle) {
       map.logger?.i { "Style finished loading" }
-      map.callbacks.onStyleChanged(map, IosStyle(didFinishLoadingStyle))
+      map.callbacks.onStyleChanged(
+        map = map,
+        style = IosStyle(style = didFinishLoadingStyle, getScale = { map.density.density }),
+      )
     }
 
     private val anyGesture =

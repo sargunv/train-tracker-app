@@ -7,7 +7,7 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
-import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -56,7 +56,7 @@ internal actual class FillLayer actual constructor(id: String, source: Source) :
     impl.fillTranslationAnchor = translateAnchor.toNSExpression()
   }
 
-  actual fun setFillPattern(pattern: Expression<ImageValue>) {
+  actual fun setFillPattern(pattern: Expression<ResolvedImageValue>) {
     // TODO: figure out how to unset a pattern in iOS
     if (pattern.value != null) {
       impl.fillPattern = pattern.toNSExpression()

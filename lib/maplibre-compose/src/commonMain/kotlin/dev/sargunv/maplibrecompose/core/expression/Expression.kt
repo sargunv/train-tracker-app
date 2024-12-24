@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 
 /** Wraps a JSON-like value that represents an expression, typically used for styling map layers. */
 public data class Expression<@Suppress("unused") out T : ExpressionValue>
@@ -10,6 +11,29 @@ private constructor(
   /** The JSON-like value that backs this expression. */
   public val value: Any?
 ) {
+  internal fun mapLeaves(transform: (Any?) -> Any?): Expression<*> {
+    fun mapLeavesImpl(value: Any?, transform: (Any?) -> Any?): Any? {
+      return when (value) {
+        is Map<*, *> -> value.mapValues { (_, v) -> mapLeavesImpl(v, transform) }
+        is List<*> -> value.map { v -> mapLeavesImpl(v, transform) }
+        else -> transform(value)
+      }
+    }
+
+    return Expression<ExpressionValue>(mapLeavesImpl(value, transform))
+  }
+
+  internal fun visitLeaves(action: (Any?) -> Unit) {
+    fun visitLeavesImpl(value: Any?) {
+      when (value) {
+        is Map<*, *> -> value.values.forEach { visitLeavesImpl(it) }
+        is List<*> -> value.forEach { visitLeavesImpl(it) }
+        else -> action(value)
+      }
+    }
+    visitLeavesImpl(value)
+  }
+
   internal companion object {
     private const val NUM_SMALL_NUMBERS = 512
     private const val SMALL_FLOAT_RESOLUTION = 0.05f
@@ -65,5 +89,7 @@ private constructor(
 
     fun ofPadding(padding: PaddingValues.Absolute) =
       if (padding == ZeroPadding) ofZeroPadding else Expression(padding)
+
+    fun ofBitmap(value: ImageBitmap): Expression<ImageValue> = Expression(listOf("image", value))
   }
 }

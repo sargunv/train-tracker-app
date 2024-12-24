@@ -6,14 +6,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asSkiaBitmap
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import cocoapods.MapLibre.MLNAttributionInfo
 import cocoapods.MapLibre.MLNCoordinateBounds
 import cocoapods.MapLibre.MLNFeatureProtocol
 import cocoapods.MapLibre.MLNOrnamentPosition
@@ -83,15 +81,6 @@ internal fun CValue<CGPoint>.toDpOffset(): DpOffset = useContents { DpOffset(x =
 
 internal fun DpOffset.toCGPoint(): CValue<CGPoint> =
   CGPointMake(x = x.value.toDouble(), y = y.value.toDouble())
-
-internal fun CValue<CGRect>.toDpRect(): DpRect = useContents {
-  DpRect(
-    left = origin.x.dp,
-    top = origin.y.dp,
-    right = (origin.x + size.width).dp,
-    bottom = (origin.y + size.height).dp,
-  )
-}
 
 internal fun DpRect.toCGRect(): CValue<CGRect> =
   CGRectMake(
@@ -170,14 +159,9 @@ internal fun Alignment.toMLNOrnamentPosition(layoutDir: LayoutDirection): MLNOrn
   }
 }
 
-internal fun MLNAttributionInfo.toHtmlString(): String {
-  // TODO escape HTML in the title and URL?
-  return if (URL == null) title.string else """<a href="$URL" target="_blank">${title.string}</a>"""
-}
-
-internal fun ImageBitmap.toUIImage(density: Density): UIImage {
+internal fun ImageBitmap.toUIImage(scale: Float): UIImage {
   return UIImage(
     data = Image.makeFromBitmap(this.asSkiaBitmap()).encodeToData()!!.bytes.toNSData(),
-    scale = density.density.toDouble(),
+    scale = scale.toDouble(),
   )
 }

@@ -4,7 +4,7 @@ import cocoapods.MapLibre.MLNBackgroundStyleLayer
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
-import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
 
 internal actual class BackgroundLayer actual constructor(id: String) : Layer() {
@@ -14,7 +14,7 @@ internal actual class BackgroundLayer actual constructor(id: String) : Layer() {
     impl.backgroundColor = color.toNSExpression()
   }
 
-  actual fun setBackgroundPattern(pattern: Expression<ImageValue>) {
+  actual fun setBackgroundPattern(pattern: Expression<ResolvedImageValue>) {
     // TODO: figure out how to unset a pattern in iOS
     if (pattern.value != null) {
       impl.backgroundPattern = pattern.toNSExpression()

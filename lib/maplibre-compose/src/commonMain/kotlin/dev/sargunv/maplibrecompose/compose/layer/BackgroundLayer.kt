@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.compose.layer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import dev.sargunv.maplibrecompose.compose.MaplibreComposable
+import dev.sargunv.maplibrecompose.compose.engine.LocalStyleManager
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.const
@@ -40,6 +41,9 @@ public fun BackgroundLayer(
   color: Expression<ColorValue> = const(Color.Black),
   pattern: Expression<ImageValue> = nil(),
 ) {
+  val styleManager = LocalStyleManager.current
+  val resolvedPattern = styleManager.rememberResolved(pattern)
+
   LayerNode(
     factory = { BackgroundLayer(id = id) },
     update = {
@@ -47,7 +51,7 @@ public fun BackgroundLayer(
       set(maxZoom) { layer.maxZoom = it }
       set(visible) { layer.visible = it }
       set(color) { layer.setBackgroundColor(it) }
-      set(pattern) { layer.setBackgroundPattern(it) }
+      set(resolvedPattern) { layer.setBackgroundPattern(it) }
       set(opacity) { layer.setBackgroundOpacity(it) }
     },
     onClick = null,

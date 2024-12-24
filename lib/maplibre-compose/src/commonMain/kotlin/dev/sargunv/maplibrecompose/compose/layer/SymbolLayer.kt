@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.compose.MaplibreComposable
+import dev.sargunv.maplibrecompose.compose.engine.LocalStyleManager
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.Defaults
@@ -468,6 +469,9 @@ public fun SymbolLayer(
   onClick: FeaturesClickHandler? = null,
   onLongClick: FeaturesClickHandler? = null,
 ) {
+  val styleManager = LocalStyleManager.current
+  val resolvedIconImage = styleManager.rememberResolved(iconImage)
+
   val textSizeSp = textSize.rememberTextUnitsAsSp(const(16f), 1f.em).cast<FloatValue>()
   val textLetterSpacingEm =
     textLetterSpacing.rememberTextUnitsAsEm(textSizeSp, 0f.em).cast<FloatValue>()
@@ -505,7 +509,7 @@ public fun SymbolLayer(
       set(iconSize) { layer.setIconSize(it) }
       set(iconTextFit) { layer.setIconTextFit(it) }
       set(iconTextFitPadding) { layer.setIconTextFitPadding(it) }
-      set(iconImage) { layer.setIconImage(it) }
+      set(resolvedIconImage) { layer.setIconImage(it) }
       set(iconRotate) { layer.setIconRotate(it) }
       set(iconPadding) { layer.setIconPadding(it) }
       set(iconKeepUpright) { layer.setIconKeepUpright(it) }

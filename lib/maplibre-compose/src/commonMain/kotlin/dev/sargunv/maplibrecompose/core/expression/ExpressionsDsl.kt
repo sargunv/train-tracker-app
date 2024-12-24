@@ -3,6 +3,7 @@ package dev.sargunv.maplibrecompose.core.expression
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.TextUnit
@@ -376,6 +377,7 @@ public object ExpressionsDsl {
    * Capitalizes the first letter of the features' property "name" and formats it to be extra-large,
    * the rest of the name is written normally.
    */
+  // TODO support images
   public fun format(
     vararg sections: Pair<Expression<StringValue>, FormatStyle>
   ): Expression<FormattedValue> =
@@ -418,8 +420,23 @@ public object ExpressionsDsl {
    * currently in the style. This validation process is synchronous and requires the image to have
    * been added to the style before requesting it in the image argument.
    */
-  public fun image(value: Expression<StringValue>): Expression<ImageValue> =
+  public fun image(value: Expression<StringValue>): Expression<ResolvedImageValue> =
     callFn("image", value).cast()
+
+  /**
+   * Returns an image type for use in `iconImage` (see
+   * [SymbolLayer][dev.sargunv.maplibrecompose.compose.layer.SymbolLayer]), `pattern` entries (see
+   * [BackgroundLayer][dev.sargunv.maplibrecompose.compose.layer.BackgroundLayer],
+   * [FillLayer][dev.sargunv.maplibrecompose.compose.layer.FillLayer],
+   * [FillExtrusionLayer][dev.sargunv.maplibrecompose.compose.layer.FillExtrusionLayer],
+   * [LineLayer][dev.sargunv.maplibrecompose.compose.layer.LineLayer]) and as a section in the
+   * [format] expression.
+   *
+   * The [ImageBitmap] will be registered with the style when it's referenced by a layer, and
+   * unregistered from the style if it's no longer referenced by any layer. An ID referencing the
+   * bitmap will be generated automatically and inserted into the expression.
+   */
+  public fun image(value: ImageBitmap): Expression<ImageValue> = Expression.ofBitmap(value)
 
   /**
    * Converts this number into a string representation using the provided formatting rules.

@@ -160,8 +160,13 @@ public sealed interface FormattedValue : ExpressionValue
 /** Represents an [Expression] that resolves to a geometry object. */
 public sealed interface GeoJsonValue : ExpressionValue
 
-/** Represents an [Expression] that resolves to an image. See [ExpressionsDsl.image]. */
+/** Represents an [Expression] that resolves to an image. See [ExpressionsDsl.image] */
 public sealed interface ImageValue : ExpressionValue
+
+/**
+ * Represents an [Expression] that resolves to an image referenced by ID. See [ExpressionsDsl.image]
+ */
+public sealed interface ResolvedImageValue : ExpressionValue
 
 /**
  * Represents an [Expression] that resolves to an interpolation type. See [ExpressionsDsl.linear],

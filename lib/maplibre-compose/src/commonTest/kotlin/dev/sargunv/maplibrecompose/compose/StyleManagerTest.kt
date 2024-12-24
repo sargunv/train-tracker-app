@@ -5,7 +5,6 @@ import androidx.compose.ui.test.runComposeUiTest
 import dev.sargunv.maplibrecompose.compose.engine.LayerNode
 import dev.sargunv.maplibrecompose.compose.engine.StyleManager
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
-import dev.sargunv.maplibrecompose.core.Image
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.layer.LineLayer
 import dev.sargunv.maplibrecompose.core.source.GeoJsonOptions
@@ -19,8 +18,6 @@ import kotlin.test.assertNull
 
 @OptIn(ExperimentalTestApi::class)
 abstract class StyleManagerTest {
-  private val testImages by lazy { emptyList<Image>() }
-
   private val testSources by lazy {
     listOf(
       GeoJsonSource("foo", FeatureCollection(), GeoJsonOptions()),
@@ -38,7 +35,7 @@ abstract class StyleManagerTest {
   }
 
   private fun makeStyleManager(): StyleManager {
-    return StyleManager(FakeStyle(testImages, testSources, testLayers), null)
+    return StyleManager(FakeStyle(emptyList(), testSources, testLayers), null)
   }
 
   @BeforeTest open fun platformSetup() {}

@@ -1,25 +1,35 @@
 package dev.sargunv.maplibrecompose.compose.engine
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.ImageBitmap
 import co.touchlab.kermit.Logger
 import dev.sargunv.maplibrecompose.compose.layer.Anchor
-import dev.sargunv.maplibrecompose.core.Image
 import dev.sargunv.maplibrecompose.core.Style
+import dev.sargunv.maplibrecompose.core.expression.Expression
+import dev.sargunv.maplibrecompose.core.expression.ExpressionsDsl.cast
+import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.source.Source
 
-internal class StyleManager(var style: Style, private var logger: Logger?) {
+// TODO I think StyleManager should split into individual SourceManager, LayerManager, ImageManager
+// and StyleNode holds references the style and its managers
+internal class StyleManager(var style: Style, internal var logger: Logger?) {
   private val baseSources = style.getSources().associateBy { it.id }
   private val baseLayers = style.getLayers().associateBy { it.id }
 
   // we queue up additions, but instantly execute removals
   // this way if an id is added and removed in the same frame, it will be removed before it's added
-  private val imagesToAdd = mutableListOf<Image>()
   private val sourcesToAdd = mutableListOf<Source>()
   private val userLayers = mutableListOf<LayerNode<*>>()
 
   // special handling for Replace anchors
   private val replacedLayers = mutableMapOf<Anchor.Replace, Layer>()
   private val replacementCounters = mutableMapOf<Anchor.Replace, Int>()
+
+  private val imageManager = ImageManager(this)
 
   internal fun getBaseSource(id: String): Source {
     return baseSources[id] ?: error("Source ID '$id' not found in base style")
@@ -166,4 +176,23 @@ internal class StyleManager(var style: Style, private var logger: Logger?) {
         is Anchor.Replace -> layerId
         else -> null
       }
+
+  // TODO move these below to ImageManager
+
+  @Composable
+  internal fun rememberResolved(expr: Expression<ImageValue>): Expression<ResolvedImageValue> {
+    DisposableEffect(expr) {
+      onDispose { expr.visitLeaves { if (it is ImageBitmap) imageManager.removeReference(it) } }
+    }
+    return remember(expr) {
+      expr
+        .mapLeaves {
+          when (it) {
+            is ImageBitmap -> imageManager.addReference(it)
+            else -> it
+          }
+        }
+        .cast()
+    }
+  }
 }

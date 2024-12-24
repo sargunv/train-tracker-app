@@ -1,14 +1,13 @@
 package dev.sargunv.maplibrecompose.core
 
+import androidx.compose.ui.graphics.ImageBitmap
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.source.Source
 
 internal interface Style {
-  fun getImage(id: String): Image?
+  fun addImage(id: String, image: ImageBitmap)
 
-  fun addImage(image: Image)
-
-  fun removeImage(image: Image)
+  fun removeImage(id: String)
 
   fun getSource(id: String): Source?
 
@@ -33,11 +32,9 @@ internal interface Style {
   fun removeLayer(layer: Layer)
 
   object Null : Style {
-    override fun getImage(id: String): Image? = null
+    override fun addImage(id: String, image: ImageBitmap) {}
 
-    override fun addImage(image: Image) {}
-
-    override fun removeImage(image: Image) {}
+    override fun removeImage(id: String) {}
 
     override fun getSource(id: String): Source? = null
 

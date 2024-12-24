@@ -1,26 +1,28 @@
 package dev.sargunv.maplibrecompose.compose
 
-import dev.sargunv.maplibrecompose.core.Image
+import androidx.compose.ui.graphics.ImageBitmap
 import dev.sargunv.maplibrecompose.core.Style
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.source.Source
 
-internal class FakeStyle(images: List<Image>, sources: List<Source>, layers: List<Layer>) : Style {
-  private val imageMap = images.associateBy { it.id }.toMutableMap()
+internal class FakeStyle(
+  images: List<Pair<String, ImageBitmap>>,
+  sources: List<Source>,
+  layers: List<Layer>,
+) : Style {
+  private val imageMap = images.toMap().toMutableMap()
   private val sourceMap = sources.associateBy { it.id }.toMutableMap()
   private val layerList = layers.toMutableList()
   private val layerMap = layers.associateBy { it.id }.toMutableMap()
 
-  override fun getImage(id: String): Image? = imageMap[id]
-
-  override fun addImage(image: Image) {
-    if (image.id in imageMap) error("Image ID '${image.id}' already exists in style")
-    imageMap[image.id] = image
+  override fun addImage(id: String, image: ImageBitmap) {
+    if (id in imageMap) error("Image ID '${id}' already exists in style")
+    imageMap[id] = image
   }
 
-  override fun removeImage(image: Image) {
-    if (image.id !in imageMap) error("Image ID '${image.id}' not found in style")
-    imageMap.remove(image.id)
+  override fun removeImage(id: String) {
+    if (id !in imageMap) error("Image ID '${id}' not found in style")
+    imageMap.remove(id)
   }
 
   override fun getSource(id: String): Source? = sourceMap[id]

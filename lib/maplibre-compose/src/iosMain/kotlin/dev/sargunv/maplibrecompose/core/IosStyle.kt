@@ -1,5 +1,6 @@
 package dev.sargunv.maplibrecompose.core
 
+import androidx.compose.ui.graphics.ImageBitmap
 import cocoapods.MapLibre.MLNSource
 import cocoapods.MapLibre.MLNStyle
 import cocoapods.MapLibre.MLNStyleLayer
@@ -7,22 +8,17 @@ import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.layer.UnknownLayer
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.source.UnknownSource
+import dev.sargunv.maplibrecompose.core.util.toUIImage
 
-internal class IosStyle(style: MLNStyle) : Style {
+internal class IosStyle(style: MLNStyle, private val getScale: () -> Float) : Style {
   private var impl: MLNStyle = style
 
-  override fun getImage(id: String): Image? {
-    return impl.imageForName(id)?.let {
-      return Image(id, it)
-    }
+  override fun addImage(id: String, image: ImageBitmap) {
+    impl.setImage(image.toUIImage(getScale()), forName = id)
   }
 
-  override fun addImage(image: Image) {
-    impl.setImage(image.impl, forName = image.id)
-  }
-
-  override fun removeImage(image: Image) {
-    impl.removeImageForName(image.id)
+  override fun removeImage(id: String) {
+    impl.removeImageForName(id)
   }
 
   override fun getSource(id: String): Source? {

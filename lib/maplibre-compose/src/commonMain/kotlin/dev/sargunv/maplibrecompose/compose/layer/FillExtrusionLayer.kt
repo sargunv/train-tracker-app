@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset
 import dev.sargunv.maplibrecompose.compose.FeaturesClickHandler
 import dev.sargunv.maplibrecompose.compose.MaplibreComposable
+import dev.sargunv.maplibrecompose.compose.engine.LocalStyleManager
 import dev.sargunv.maplibrecompose.core.expression.BooleanValue
 import dev.sargunv.maplibrecompose.core.expression.ColorValue
 import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
@@ -81,6 +82,9 @@ public fun FillExtrusionLayer(
   onClick: FeaturesClickHandler? = null,
   onLongClick: FeaturesClickHandler? = null,
 ) {
+  val styleManager = LocalStyleManager.current
+  val resolvedPattern = styleManager.rememberResolved(pattern)
+
   LayerNode(
     factory = { FillExtrusionLayer(id = id, source = source) },
     update = {
@@ -93,7 +97,7 @@ public fun FillExtrusionLayer(
       set(color) { layer.setFillExtrusionColor(it) }
       set(translate) { layer.setFillExtrusionTranslate(it) }
       set(translateAnchor) { layer.setFillExtrusionTranslateAnchor(it) }
-      set(pattern) { layer.setFillExtrusionPattern(it) }
+      set(resolvedPattern) { layer.setFillExtrusionPattern(it) }
       set(height) { layer.setFillExtrusionHeight(it) }
       set(base) { layer.setFillExtrusionBase(it) }
       set(verticalGradient) { layer.setFillExtrusionVerticalGradient(it) }

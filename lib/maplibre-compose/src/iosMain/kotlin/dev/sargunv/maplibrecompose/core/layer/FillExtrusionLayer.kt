@@ -7,7 +7,7 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
-import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 import dev.sargunv.maplibrecompose.core.util.toNSExpression
@@ -44,7 +44,7 @@ internal actual class FillExtrusionLayer actual constructor(id: String, source: 
     impl.fillExtrusionTranslationAnchor = anchor.toNSExpression()
   }
 
-  actual fun setFillExtrusionPattern(pattern: Expression<ImageValue>) {
+  actual fun setFillExtrusionPattern(pattern: Expression<ResolvedImageValue>) {
     // TODO figure out how to unset pattern
     if (pattern.value != null) impl.fillExtrusionPattern = pattern.toNSExpression()
   }

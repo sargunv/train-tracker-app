@@ -1,5 +1,7 @@
 package dev.sargunv.maplibrecompose.core
 
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import dev.sargunv.maplibrecompose.core.layer.Layer
 import dev.sargunv.maplibrecompose.core.layer.UnknownLayer
 import dev.sargunv.maplibrecompose.core.source.Source
@@ -9,16 +11,12 @@ import org.maplibre.android.maps.Style as MLNStyle
 internal class AndroidStyle(style: MLNStyle) : Style {
   private var impl: MLNStyle = style
 
-  override fun getImage(id: String): Image? {
-    return impl.getImage(id)?.let { Image(id, it) }
+  override fun addImage(id: String, image: ImageBitmap) {
+    impl.addImage(id, image.asAndroidBitmap())
   }
 
-  override fun addImage(image: Image) {
-    impl.addImage(image.id, image.impl)
-  }
-
-  override fun removeImage(image: Image) {
-    impl.removeImage(image.id)
+  override fun removeImage(id: String) {
+    impl.removeImage(id)
   }
 
   override fun getSource(id: String): Source? {

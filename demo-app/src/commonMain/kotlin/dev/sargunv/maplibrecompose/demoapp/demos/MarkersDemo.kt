@@ -60,7 +60,7 @@ object MarkersDemo : Demo {
       val marker = painterResource(Res.drawable.marker).rememberAsBitmap()
       val cameraState =
         rememberCameraState(firstPosition = CameraPosition(target = CHICAGO, zoom = 7.0))
-      val styleState = rememberStyleState(images = mapOf("demo-marker" to marker))
+      val styleState = rememberStyleState()
       var selectedFeature by remember { mutableStateOf<Feature?>(null) }
 
       Box(modifier = Modifier.fillMaxSize()) {
@@ -83,7 +83,7 @@ object MarkersDemo : Demo {
               selectedFeature = features.firstOrNull()
               ClickResult.Consume
             },
-            iconImage = image(const("demo-marker")),
+            iconImage = image(marker),
             iconAllowOverlap = const(true),
           )
         }

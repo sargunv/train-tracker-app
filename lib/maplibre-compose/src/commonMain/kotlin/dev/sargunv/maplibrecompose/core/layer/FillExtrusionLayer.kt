@@ -6,7 +6,7 @@ import dev.sargunv.maplibrecompose.core.expression.DpOffsetValue
 import dev.sargunv.maplibrecompose.core.expression.EnumValue
 import dev.sargunv.maplibrecompose.core.expression.Expression
 import dev.sargunv.maplibrecompose.core.expression.FloatValue
-import dev.sargunv.maplibrecompose.core.expression.ImageValue
+import dev.sargunv.maplibrecompose.core.expression.ResolvedImageValue
 import dev.sargunv.maplibrecompose.core.expression.TranslateAnchor
 import dev.sargunv.maplibrecompose.core.source.Source
 
@@ -23,7 +23,7 @@ internal expect class FillExtrusionLayer(id: String, source: Source) : FeatureLa
 
   fun setFillExtrusionTranslateAnchor(anchor: Expression<EnumValue<TranslateAnchor>>)
 
-  fun setFillExtrusionPattern(pattern: Expression<ImageValue>)
+  fun setFillExtrusionPattern(pattern: Expression<ResolvedImageValue>)
 
   fun setFillExtrusionHeight(height: Expression<FloatValue>)
 
