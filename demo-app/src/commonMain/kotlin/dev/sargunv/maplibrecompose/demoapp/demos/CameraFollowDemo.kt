@@ -87,7 +87,14 @@ object CameraFollowDemo : Demo {
           ) {
             LocationPuck(locationSource = rememberGeoJsonSource("target", Point(animatedPosition)))
           }
-          DemoMapControls(cameraState, styleState)
+          DemoMapControls(
+            cameraState,
+            styleState,
+            onCompassClick = {
+              isFollowing = false
+              cameraState.position = cameraState.position.copy()
+            },
+          )
         }
 
         Text(

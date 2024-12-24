@@ -149,10 +149,15 @@ fun DemoMapControls(
   cameraState: CameraState,
   styleState: StyleState,
   modifier: Modifier = Modifier,
+  onCompassClick: () -> Unit = {},
 ) {
   Box(modifier = modifier.fillMaxSize().padding(8.dp)) {
     DisappearingScaleBar(cameraState, modifier = Modifier.align(Alignment.TopStart))
-    DisappearingCompassButton(cameraState, modifier = Modifier.align(Alignment.TopEnd))
+    DisappearingCompassButton(
+      cameraState,
+      modifier = Modifier.align(Alignment.TopEnd),
+      onClick = onCompassClick,
+    )
     AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomEnd))
   }
 }
